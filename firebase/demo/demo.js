@@ -15,7 +15,7 @@ const app = initializeApp(firebaseConfig);
 // Initialize Realtime Database and get a reference to the service
 const database = getDatabase(app);
 
-/*
+
 function writeUserData(userId, name, email, imageUrl) {
   const db = getDatabase();
   set(ref(db, 'users/' + userId), {
@@ -24,11 +24,11 @@ function writeUserData(userId, name, email, imageUrl) {
     profile_picture : imageUrl
   });
 }
-*/
-
-//writeUserData("calvinmlee", "Calvin Mayce Lee", "calvinmlee@uchicago.edu", "calvinmlee.com")
 
 var userId = "calvinmlee"
+
+writeUserData(userID, "Calvin Mayce Lee", "calvinmlee@uchicago.edu", "calvinmlee.com")
+
 const dbRef = ref(getDatabase());
 get(child(dbRef, `users/${userId}`)).then((snapshot) => {
   if (snapshot.exists()) {
