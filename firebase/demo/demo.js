@@ -25,7 +25,7 @@ function writeUserData(userId, name, email, imageUrl) {
   });
 }
 
-var userId = "calvinmlee"
+var userId = "jason"
 
 writeUserData(userId, "Calvin Mayce Lee", "calvinmlee@uchicago.edu", "calvinmlee.com")
 
