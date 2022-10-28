@@ -1,0 +1,16 @@
+{
+  "name": "tests",
+  "version": "1.0.0",
+  "description": "Unit testing for firebase component of Geo-Mafia",
+  "scripts": {
+    "test-database": "mocha --exit database.spec.js",
+    "test": "mocha --exit"
+  },
+  "author": "Jason Chee",
+  "license": "ISC",
+  "devDependencies": {
+    "@firebase/rules-unit-testing": "^2.0.5",
+    "firebase": "^9.1.0",
+    "mocha": "^10.1.0"
+  }
+}
