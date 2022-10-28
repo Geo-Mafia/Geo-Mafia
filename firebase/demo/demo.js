@@ -27,7 +27,7 @@ function writeUserData(userId, name, email, imageUrl) {
 
 var userId = "calvinmlee"
 
-writeUserData(userID, "Calvin Mayce Lee", "calvinmlee@uchicago.edu", "calvinmlee.com")
+writeUserData(userId, "Calvin Mayce Lee", "calvinmlee@uchicago.edu", "calvinmlee.com")
 
 const dbRef = ref(getDatabase());
 get(child(dbRef, `users/${userId}`)).then((snapshot) => {
