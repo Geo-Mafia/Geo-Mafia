@@ -6,20 +6,6 @@ const SUCCESS = 10
 const FAILURE = -10
 const DAILYMAXKILLCOUNT = 2
 
-const player1 = new Player(1, 'player1', Location1, ALIVE, 0); 
-
-QUnit.test("a player gets killed", assert => {
-    assert.equal(player1.getKilled(), SUCCESS);
-});
-
-QUnit.test("takes a snapshot of player locations", assert => {
-    assert.equal(player1.takeSnapshot(), SUCCESS);
-});
-
-QUnit.test("player opens a snapshot", assert => {
-    assert.equal(player1.open_snapshot(), SUCCESS);
-});
-
 export class Location{
     location // An int
 
@@ -30,6 +16,21 @@ export class Location{
 
 const Location1 = new Location(1);
 const Location2 = new Location(2);
+
+const player1 = new Player(1, 'player1', Location1, ALIVE); 
+
+QUnit.test("a player gets killed", assert => {
+    assert.equal(player1.getKilled(), SUCCESS);
+    assert.equal(player1.alive, DEAD);
+});
+
+QUnit.test("takes a snapshot of player locations", assert => {
+    assert.equal(player1.takeSnapshot(), SUCCESS);
+});
+
+QUnit.test("player opens a snapshot", assert => {
+    assert.equal(player1.open_snapshot(), SUCCESS);
+});
 
 var playerMap = new Map();
 playerMap.set('player2', Location1);
@@ -57,7 +58,7 @@ QUnit.test("player votes for another player", assert => {
     assert.equal(player1.voteForExecution(player), SUCCESS);
 });
 
-const killer1 = new Killer(1, 'killer1', Location1, ALIVE, 0); 
+const killer1 = new Killer(1, 'killer1', Location1, ALIVE); 
 
 QUnit.test("killer kills a player", assert => {
     assert.equal(killer1.kill_player(player_id, Players), SUCCESS);
@@ -71,12 +72,3 @@ QUnit.test("the total number of kills remaining for killer1 after 1 kill",
 assert => {
     assert.equal(killer1.remaining_daily_kill_count(), (DAILYMAXKILLCOUNT-1));
 });
-
-
-
-
-
-
-
-
-

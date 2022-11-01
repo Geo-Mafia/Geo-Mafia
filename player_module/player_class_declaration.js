@@ -15,7 +15,7 @@ export class Player{
         this.username = username
         this.location = location
         this.alive = alive
-        this.votes = votes
+        this.votes = 0
     }
 
     getKilled(){
