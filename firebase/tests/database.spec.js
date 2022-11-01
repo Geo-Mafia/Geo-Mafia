@@ -22,23 +22,6 @@ before(async () => {
 
 after(async () => {
   await testEnv.cleanup();
-  /*
-  // Write the coverage report to a file
-  const coverageFile = 'database-coverage.html';
-  const fstream = createWriteStream(coverageFile);
-  await new Promise((resolve, reject) => {
-    const { host, port } = testEnv.emulators.database;
-    const quotedHost = host.includes(':') ? `[${host}]` : host;
-    http.get(`http://${quotedHost}:${port}/.inspect/coverage?ns=${testEnv.projectId}-default-rtdb`, (res) => {
-      res.pipe(fstream, { end: true });
-
-      res.on("end", resolve);
-      res.on("error", reject);
-    });
-  });
-
-  console.log(`View database rule coverage information at ${coverageFile}\n`);
-  */
 });
 
 beforeEach(async () => {
