@@ -25,6 +25,7 @@ export class Player{
         const scene_capture = new Snapshot() //Create a Snapshot object
         // Note: Snapshot class not done yet, will want some function to add
         // all information required for a snapshot
+        return SUCCESS
     }
 
     open_snapshot(Snapshots){
