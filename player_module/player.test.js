@@ -1,37 +1,82 @@
+import {Player} from './player_class_declaration.js';
+
 const DEAD = 0
 const ALIVE = 1
 const SUCCESS = 10
 const FAILURE = -10
+const DAILYMAXKILLCOUNT = 2
 
-test("a player gets killed", () => {
-    expect(getKilled()).toBe(SUCCESS);
-})
+const player1 = new Player(1, 'player1', Location1, ALIVE, 0); 
 
-test("takes a snapshot of player locations", () => {
-    expect(takeSnapshot()).toBe(SUCCESS)
-})
+QUnit.test("a player gets killed", assert => {
+    assert.equal(player1.getKilled(), SUCCESS);
+});
 
-test("player opens a snapshot", () => {
-    expect(open_snapshot()).toBe(SUCCESS)
-})
+QUnit.test("takes a snapshot of player locations", assert => {
+    assert.equal(player1.takeSnapshot(), SUCCESS);
+});
 
-// inline classes
+QUnit.test("player opens a snapshot", assert => {
+    assert.equal(player1.open_snapshot(), SUCCESS);
+});
+
+export class Location{
+    location // An int
+
+    constructor(location){
+        this.location = location
+    }
+}
+
+const Location1 = new Location(1);
+const Location2 = new Location(2);
 
 var playerMap = new Map();
 playerMap.set('player2', Location1);
 playerMap.set('player3', Location2);
-Player player1 = new Player(1, 'player1', Location, ALIVE); 
+
 // Need to user the player_class_declaration
-test("player checks the info of other people in the same bubble", () => {
-    expect(player1.see_people_in_bubble(playerMap)).toBe(['player2'])
-})
+QUnit.test("player checks the info of other people in the same bubble", 
+assert => {
+    assert.equal(player1.see_people_in_bubble(playerMap), ['player2']);
+});
 
-test("player opens a chat message", () => {
-    expect(open_chat()).toBe(SUCCESS)
-})
+QUnit.test("player opens a chat message", assert => {
+    assert.equal(player1.open_chat(), SUCCESS);
+});
 
-test("player sends out a chat message", () => {
-    expect(send_chat(message)).toBe(SUCCESS)
-})
+QUnit.test("player sends out a chat message", assert => {
+    assert.equal(player1.send_chat(message), SUCCESS);
+});
+
+QUnit.test("player receives a chat message", assert => {
+    assert.equal(player1.receive_chat(message), SUCCESS);
+});
+
+QUnit.test("player votes for another player", assert => {
+    assert.equal(player1.voteForExecution(player), SUCCESS);
+});
+
+const killer1 = new Killer(1, 'killer1', Location1, ALIVE, 0); 
+
+QUnit.test("killer kills a player", assert => {
+    assert.equal(killer1.kill_player(player_id, Players), SUCCESS);
+});
+
+QUnit.test("the total number of kills done by killer1 after 1 kill", assert => {
+    assert.equal(killer1.get_total_kill_count(), 1);
+});
+
+QUnit.test("the total number of kills remaining for killer1 after 1 kill", 
+assert => {
+    assert.equal(killer1.remaining_daily_kill_count(), (DAILYMAXKILLCOUNT-1));
+});
+
+
+
+
+
+
+
 
 

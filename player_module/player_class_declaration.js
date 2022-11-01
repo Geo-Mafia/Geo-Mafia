@@ -8,12 +8,14 @@ export class Player{
     username // A String
     location // A Coordinate Object
     alive // A Boolean
+    votes // An int
 
     constructor(userID, username, location, alive){
         this.userID = userID
         this.username = username
         this.location = location
         this.alive = alive
+        this.votes = votes
     }
 
     getKilled(){
@@ -69,11 +71,16 @@ export class Player{
     }
 
     receive_chat(chat, message){
-        // TODO
+        const received = chat.receive(message)
+        if (received == 1) {
+            return SUCCESS
+        }
+        return FAILURE
     }
 
     voteForExecution(player){
-        // TODO
+        player.votes++;
+        return SUCCESS
     }
 
 }
@@ -92,8 +99,8 @@ export class Killer extends Player{
     remaining_daily_kill_count //An integer
     total_kill_count //An integer
 
-    constructor(userID, username, location, alive){
-        super(userID, username, location, alive)
+    constructor(userID, username, location, alive, votes){
+        super(userID, username, location, alive, votes)
         this.max_daily_kill_count = DAILYMAXKILLCOUNT
         this.remaining_daily_kill_count = DAILYMAXKILLCOUNT
         this.total_kill_count = 0
