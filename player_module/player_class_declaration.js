@@ -59,9 +59,9 @@ export class Civilian extends Player{
 
 export class Killer extends Player{
     //Define some maximum amount of kills per day
-    max_daily_kill_count
-    remaining_daily_kill_count 
-    total_kill_count
+    max_daily_kill_count //An integer
+    remaining_daily_kill_count //An integer
+    total_kill_count //An integer
 
     constructor(userID, username, location, alive){
         super(userID, username, location, alive)
