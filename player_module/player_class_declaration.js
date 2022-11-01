@@ -4,10 +4,10 @@ const DAILYMAXKILLCOUNT = 2
 const SUCCESS = 10
 const FAILURE = -10
 export class Player{
-    userID //An int
-    username //A String
-    location //A Coordinate Object
-    alive //A Boolean
+    userID // An int
+    username // A String
+    location // A Coordinate Object
+    alive // A Boolean
 
     constructor(userID, username, location, alive){
         this.userID = userID
@@ -20,29 +20,42 @@ export class Player{
         this.alive = DEAD
         return SUCCESS
     }
+
     takeSnapshot(){
         const scene_capture = new Snapshot() //Create a Snapshot object
-        //Note: Snapshot class not done yet, will want some function to add
-        //all information required for a snapshot
+        // Note: Snapshot class not done yet, will want some function to add
+        // all information required for a snapshot
     }
+
     open_snapshot(Snapshots){
         // TODO
     }
+
     see_people_in_bubble(Players){
-        //Take in as input hash table from Map Class of Players
+        // Take in as input hash table from Map Class of Players
+        // The hash table maps each player's userID to the player's location
         player_list = []
-        // TO DO: Logic to sift through Hash Table and find nearby players
+        // Sift through Hash Table and find nearby players
+        for (var i in Players) {
+            if (Players[i] = this.location) {
+                player_list.push(Players[i])
+            }
+        }
         return player_list
     }
+
     open_chat(chat){
         // TODO
     }
+
     send_chat_message(chat, message){
         // TODO
     }
+
     receive_chat(chat, message){
         // TODO
     }
+
     voteForExecution(player){
         // TODO
     }
