@@ -25,11 +25,18 @@ export class Player{
         const scene_capture = new Snapshot() //Create a Snapshot object
         // Note: Snapshot class not done yet, will want some function to add
         // all information required for a snapshot
-        return SUCCESS
+        if (scene_capture == 1){
+            return SUCCESS
+        }
+        return FAILURE
     }
 
-    open_snapshot(Snapshots){
-        // TODO
+    open_snapshot(Snapshot){
+        const open = Snapshot.view()
+        if (open == 1) {
+            return SUCCESS
+        }
+        return FAILURE
     }
 
     see_people_in_bubble(Players){
@@ -46,11 +53,19 @@ export class Player{
     }
 
     open_chat(chat){
-        // TODO
+        const open = chat.view()
+        if (open == 1) {
+            return SUCCESS
+        }
+        return FAILURE
     }
 
     send_chat_message(chat, message){
-        // TODO
+        const sent = chat.send(message)
+        if (sent == 1) {
+            return SUCCESS
+        }
+        return FAILURE
     }
 
     receive_chat(chat, message){
