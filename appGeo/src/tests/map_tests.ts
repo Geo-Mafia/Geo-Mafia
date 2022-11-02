@@ -28,16 +28,30 @@ QUnit.test("Bubble Initialization", function(assert) {
     assert.equal(testbub.x_ub, 10, "x_ub should be 10");
     assert.equal(testbub.y_lb, 5, "y_lb should be 5");
     assert.equal(testbub.y_ub, 15, "y_up should be 15");
-    assert.equal(testbub.getPlayers(), NULL, "player list should be empty");
+    assert.equal(testbub.arr_len, 0, "player list should be empty");
+    assert.equal(testbub.getPlayers(), null, "player list should be empty");
 });
 
-QUnit.test("Bubble Updates", fucntion(assert) {
-    //create bubble and a player out of boundaries
-    //check that inBubble for player is false
+QUnit.test("Bubble Updates", function(assert) {
+    let testbub = bubble_init("testbub", 0, 15, 0, 15);
+    assert.equal(testbub.arr_len, 0, "player list should be empty");
+    assert.equal(testbub.getPlayers(), null, "player list should be empty");
+
+    let testPlayer = player_init();
+    //function that sets player location outside of bubble
+    assert.false(testbub.inBubble(testPlayer), "player should not be in bubble");
     //update player to be in boundaries
-    //check that inBubble for player is true
-    //test addplayer, check arr_len + player list with getPlayers
-    //>>Should addPlayer check inBubble(Player)?
-    //>>Or should inBubble call addPlayer and removePlayer?
-    //test removePlayer, check arr_len + player list with getPlayers
+    assert.true(testbub.inBubble(testPlayer), "player should be in bubble");
+
+    assert.true(testbub.addPlayer(testPlayer), "player should be added to bubble");
+    assert.equal(testbub.arr_len, 1, "player list should have one element");
+    //check that player is in list
+
+    assert.true(testbub.removePlayer(testPlayer), "player should be removed from bubble");
+    assert.equal(testbub.arr_len, 0, "player list should be empty");
+    assert.equal(testbub.getPlayers(), null, "player list should be empty");
+
+    /* Should addPlayer check inBubble(Player)? Or should inBubble call addPlayer and removePlayer?
+        >> inBubble, addPlayer, and removePlayer should not call each other but be called in game loop */
+    
 });
