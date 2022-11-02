@@ -182,4 +182,16 @@ QUnit.test("Game Start and End", function(assert) {
     assert_equal(test_game.end(), SUCCESS, "Can stop a game");
     assert_false(test_game.isGameActive(), "Stopped game is not active");
 
+    playerArray.push(player4);
+    playerArray.push(player5);
+
+    const soon = new Date(now.getTime() + 1000);
+
+    const test_game2 = new Game(playerArray, next_week, test_map);
+    assert_equal(test_game.start(), SUCCESS, "Game can start with five or more players");
+
+    //should delay by 1 second, need to write this in
+
+    assert_false(test_game.isGameActive(), "Stopped game is not active");
+
 }
