@@ -31,20 +31,33 @@ export class bubble {
     addPlayer(Player){
       //returns a t bool if a player is added
       //adds player to array and updates arr_len
-
+      return this.List.push(Player);
     }
 
     removePlayer(Player){
       // removes player from array and updates arr_len. returns bool
-
+      const index = array.indesOf(Player);
+      if (index > -1){
+        splice(index, 1);
+        return true;
+      } else {
+        return false
+      }
     }
+
     inBubble(Player){
       //checks player location to see if they are within bubble boundaries
+      if (Player.location > this.x_lb && Player.location < this.x_ub) { //for now implementation is simple based on playerdev's write up
+        return true;
+      } else {
+        return false;
+      }
 
     }
 
-    retPlayers(){
+    returnPlayers(){
       //returns list of players in Bubble
+      this.List.forEach(console.log);
     }
 
 

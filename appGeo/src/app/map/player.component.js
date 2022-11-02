@@ -127,5 +127,7 @@ export class Killer extends Player{
     get_remaining_daily_kill_count(){
         return this.remaining_daily_kill_count
     }
+
 }
 
+module.exports = Player;
