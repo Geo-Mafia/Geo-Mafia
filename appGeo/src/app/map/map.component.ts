@@ -16,7 +16,7 @@ export class bubble {
     arrlen: number;
     List: Array<Player>;
 
-    constructor(name: string, upperx: number, lowerx: number, lowery: number,
+    constructor(ID: string, upperx: number, lowerx: number, lowery: number,
                 uppery: number, arrlen = 0, List = Array<Player>) {
       this.ID = name;
       this.x_lB = lowerx;

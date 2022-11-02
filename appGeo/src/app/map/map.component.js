@@ -1,37 +1,51 @@
 //file added for simplicity reasons so that it can work with the files added by player dev
-
+import{Player} from './player.component.js';
 
 
 export class bubble {
     //variables
-    ID: string;
-    x_lB: number;
-    x_uB: number;
-    y_lB: number;
-    y_uB: number;
-    arrlen: number;
-    List: Array<Player>;
+    id //float
+    x_lb //float
+    x_ub //float
+    y_lb //float
+    y_ub // float
+    arrlen //int
+    List // Array<Player>
 
-    constructor(name: string, upperx: number, lowerx: number, lowery: number,
-                uppery: number, arrlen = 0, List = Array<Player>) {
-      this.ID = name;
-      this.x_lB = lowerx;
-      this.x_uB = upperx;
-      this.y_lB = lowery;
-      this.y_uB = uppery;
-      this.arrlen = arrlen;
-      this.List = new List;
+    constructor(id, x_lb, x_ub, y_lb, y_ub) {
+      this.id = id;
+      this.x_lb = lowerx;
+      this.x_ub = upperx;
+      this.y_lb = lowery;
+      this.y_ub = uppery;
+      this.arrlen = 0;
+      this.List = new Array();
     }
 
 
+    init_bubble(id, x_lb, x_ub, y_lb, y_ub){
+      return bubble(id, x_lb, x_ub, y_lb, y_ub);
+    }
 
     // //methods
     addPlayer(Player){
+      //returns a t bool if a player is added
+      //adds player to array and updates arr_len
 
     }
-    // -bool addPlayer(Player) //adds player to array and updates arr_len
-    // -bool removePlayer(Player) //removes player from array and updates arr_len
-    // -bool inBubble(Player) //checks player location to see if they are within bubble boundaries
-    // -Array<Players> retPlayers() //returns list of players in bubble
+
+    removePlayer(Player){
+      // removes player from array and updates arr_len. returns bool
+
+    }
+    inBubble(Player){
+      //checks player location to see if they are within bubble boundaries
+
+    }
+
+    retPlayers(){
+      //returns list of players in Bubble
+    }
+
 
 }
