@@ -1,5 +1,5 @@
 import { QUnit } from "qunit"; //import is from "qunit", where is it located?
-import { bubble } from "src/app/map/map.component";
+import { bubble } from "src/app/map/map.component"; //imports from map.component.ts
 // import { Player } from  --when player is merged
 
 QUnit.module("Bubble Tests");
@@ -18,11 +18,13 @@ QUnit.test("Bubble Initialization Tests", function(assert) {
 });
 
 QUnit.test("Bubble Update Tests", function(assert) {
+    /* NOTE: player functions will be added when player is merged,
+        however, player functions will not be tested in this file */
     let testbub = new bubble("testbub", 0, 15, 0, 15);
     assert.equal(testbub.arrlen, 0, "player list should be empty");
     assert.equal(testbub.returnPlayers(), null, "player list should be empty");
 
-    let testPlayer = new Player();
+    let testPlayer = new Player(); //player constructor, set username as "Test"
     //function that sets player location outside of bubble
     assert.false(testbub.inBubble(testPlayer), "player should not be in bubble");
     //update player to be in boundaries
@@ -30,7 +32,8 @@ QUnit.test("Bubble Update Tests", function(assert) {
 
     assert.true(testbub.addPlayer(testPlayer), "player should be added to bubble");
     assert.equal(testbub.arrlen, 1, "player list should have one element");
-    //check that player is in list
+    assert.equal(testbub.players[0].username, "Test", "player added should be identified by username Test");
+   //assert.equal(testbub.returnPlayers().[0].username, "Test", "player added should be identified by username Test");
 
     assert.true(testbub.removePlayer(testPlayer), "player should be removed from bubble");
     assert.equal(testbub.arrlen, 0, "player list should be empty");
