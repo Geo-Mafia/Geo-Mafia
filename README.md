@@ -7,3 +7,4 @@ Run the following commands after installing necessary packages:
 cd appGeo
 tns run ios
 ```
+Follow https://docs.nativescript.org/environment-setup.html with your device + iOS if any errors pop up.
