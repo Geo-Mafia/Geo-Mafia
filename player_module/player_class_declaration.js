@@ -11,16 +11,21 @@ export class Player{
     votes // An int
 
     constructor(userID, username, location, alive){
-        this.userID = userID
-        this.username = username
-        this.location = location
-        this.alive = alive
-        this.votes = 0
+        this.userID = userID;
+        this.username = username;
+        this.location = location;
+        this.alive = alive;
+        this.votes = 0;
+    }
+
+    /* get_alive_status: Return whether or not current player is Alive or Killed */
+    get_alive_status(){
+        return this.alive;
     }
 
     getKilled(){
-        this.alive = DEAD
-        return SUCCESS
+        this.alive = DEAD;
+        return SUCCESS;
     }
 
     takeSnapshot(){
@@ -28,59 +33,73 @@ export class Player{
         // Note: Snapshot class not done yet, will want some function to add
         // all information required for a snapshot
         if (scene_capture == 1){
-            return SUCCESS
+            return SUCCESS;
         }
-        return FAILURE
+        return FAILURE;
     }
 
     open_snapshot(Snapshot){
-        const open = Snapshot.view()
+        const open = Snapshot.view();
         if (open == 1) {
-            return SUCCESS
+            return SUCCESS;
         }
-        return FAILURE
+        return FAILURE;
     }
 
-    see_people_in_bubble(Players){
+    see_people_in_bubble(All_players){
         // Take in as input hash table from Map Class of Players
         // The hash table maps each player's userID to the player's location
-        player_list = []
+        player_list = [];
         // Sift through Hash Table and find nearby players
-        for (var i in Players) {
-            if (Players[i] = this.location) {
-                player_list.push(Players[i])
+        for (var i in All_players) {
+            if (All_players[i] = this.location) {
+                player_list.push(All_players[i]);
             }
         }
-        return player_list
+        return player_list;
     }
 
     open_chat(chat){
         const open = chat.view()
         if (open == 1) {
-            return SUCCESS
+            return SUCCESS;
         }
-        return FAILURE
+        return FAILURE;
     }
 
     send_chat_message(chat, message){
-        const sent = chat.send(message)
+        const sent = chat.send(message);
         if (sent == 1) {
-            return SUCCESS
+            return SUCCESS;
         }
-        return FAILURE
+        return FAILURE;
     }
 
     receive_chat(chat, message){
-        const received = chat.receive(message)
+        const received = chat.receive(message);
         if (received == 1) {
-            return SUCCESS
+            return SUCCESS;
         }
-        return FAILURE
+        return FAILURE;
+    }
+    /* voteForExecution(): Let current player vote for _another_ player to be executed
+     * Input: 
+     *      - A Player object (?) [I think that it should be a username or ID and we do
+     *        do some logic/map class does some logic such that it returns the player in question]
+     *        Ex: Player A votes for Player B. Take as input Player B's username
+     *        (which is the only thing that A can see)
+    */
+    voteForExecution(player){
+        player.increase_vote_count();
+        return SUCCESS;
     }
 
-    voteForExecution(player){
-        player.votes++;
-        return SUCCESS
+    /* increase_vote_count(): Increase current Player's number of votes
+     * Note: This function added for privacy concersn (don't want other players
+     * directly modifying the field of another player)
+    */
+    increase_vote_count(){
+        this.votes++;
     }
 
 }
@@ -89,7 +108,7 @@ export class Civilian extends Player{
     /* Currently will be just the same as Player Superclass, however this info
     may change when implementing chat feature or in the future */
     constructor(userID, username, location, alive){
-        super(userID, username, location, alive)
+        super(userID, username, location, alive);
     }
 }
 
@@ -100,30 +119,44 @@ export class Killer extends Player{
     total_kill_count //An integer
 
     constructor(userID, username, location, alive, votes){
-        super(userID, username, location, alive, votes)
-        this.max_daily_kill_count = DAILYMAXKILLCOUNT
-        this.remaining_daily_kill_count = DAILYMAXKILLCOUNT
-        this.total_kill_count = 0
+        super(userID, username, location, alive, votes);
+        this.max_daily_kill_count = DAILYMAXKILLCOUNT;
+        this.remaining_daily_kill_count = DAILYMAXKILLCOUNT;
+        this.total_kill_count = 0;
     }
-    kill_player(player_id, Players){
+
+    /* kill_player: Allows a killer to eliminate a Player from the game
+     * Input: 
+     *      -player_id: Player ID of whoever will be eliminated
+     *      -All_players: Hash Table that contains all players
+     * 
+    */
+    kill_player(player_id, All_players){
         //Take in from Game Class Players hash table and remove player_id
-        if (this.remaining_daily_kill_count > 0){
-            /*
-            player_id.get_killed()
-            remove_from_hash(player_id, Players)
-            this.total_kill_count = this.total_kill_count + 1
-            remaining_daily_kill_count = remaining_daily_kill_count - 1
-            */
-           return SUCCESS
+        people_can_be_killed = this.see_people_in_bubble()
+
+        if (people_can_be_killed.includes(player_id) == false){
+            // Then the person Killer attempted to kill is NOT in their own bubble
+            // Invalid Move!
+            return FAILURE;
+        }
+        if (this.get_remaining_daily_kill_count() > 0 && this.get_alive_status() == ALIVE){
+            // Killer has kills remaining, victim is in bubble and alive, can kill
+            player_id.get_killed();
+            remove_from_hash(player_id, All_players);
+            this.total_kill_count++;
+            remaining_daily_kill_count--;
+            
+           return SUCCESS;
         } else {
-            //Notify User in some way that they don't have any kills left for the day
-            return FAILURE
+            // Notify User in some way that they don't have any kills left for the day
+            return FAILURE;
         }
     }
     get_total_kill_count(){
-        return this.total_kill_count
+        return this.total_kill_count;
     }
     get_remaining_daily_kill_count(){
-        return this.remaining_daily_kill_count
+        return this.remaining_daily_kill_count;
     }
 }
