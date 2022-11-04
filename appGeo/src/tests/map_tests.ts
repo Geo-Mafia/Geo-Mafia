@@ -1,8 +1,9 @@
-import { QUnit } from "qunit"; //import is from "qunit", where is it located?
-import { bubble } from "src/app/map/map.component"; //imports from map.component.ts
-// import { Player } from  --when player is merged
+import { bubble } from 'src/app/map/map.component.js'; //imports from map.component.js
+import{Player} from 'src/app/map/player.component.js';
 
-QUnit.module("Bubble Tests");
+const Bubble_test = require('../map.component.js');
+
+QUnit.module("Bubble_test");
 
 //assumes bubble variables are not private
 QUnit.test("Bubble Initialization Tests", function(assert) {
@@ -32,7 +33,7 @@ QUnit.test("Bubble Update Tests", function(assert) {
 
     assert.true(testbub.addPlayer(testPlayer), "player should be added to bubble");
     assert.equal(testbub.arrlen, 1, "player list should have one element");
-    assert.equal(testbub.players[0].username, "Test", "player added should be identified by username Test");
+    assert.equal(testbub.List[0].username, "Test", "player added should be identified by username Test");
    //assert.equal(testbub.returnPlayers().[0].username, "Test", "player added should be identified by username Test");
 
     assert.true(testbub.removePlayer(testPlayer), "player should be removed from bubble");
@@ -41,5 +42,5 @@ QUnit.test("Bubble Update Tests", function(assert) {
 
     /* Should addPlayer check inBubble(Player)? Or should inBubble call addPlayer and removePlayer?
         >> inBubble, addPlayer, and removePlayer should not call each other but be called in game loop */
-    
+
 });
