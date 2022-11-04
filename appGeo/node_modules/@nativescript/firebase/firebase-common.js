@@ -1,0 +1,229 @@
+import { prompt, ApplicationSettings } from "@nativescript/core";
+import * as admob from "./admob/admob";
+import * as analytics from "./analytics/analytics";
+import * as crashlytics from "./crashlytics/crashlytics";
+import * as performance from "./performance/performance";
+import * as storage from "./storage/storage";
+import * as mlkit from "./mlkit";
+export class FieldValue {
+    constructor(type, value) {
+        this.type = type;
+        this.value = value;
+    }
+}
+FieldValue.serverTimestamp = () => "SERVER_TIMESTAMP";
+FieldValue.delete = () => "DELETE_FIELD";
+FieldValue.arrayUnion = (...elements) => new FieldValue("ARRAY_UNION", elements);
+FieldValue.arrayRemove = (...elements) => new FieldValue("ARRAY_REMOVE", elements);
+FieldValue.increment = (n) => new FieldValue("INCREMENT", n);
+export class GeoPoint {
+    constructor(latitude, longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+}
+export const firebase = {
+    initialized: false,
+    instance: null,
+    firebaseRemoteConfig: null,
+    currentAdditionalUserInfo: null,
+    authStateListeners: [],
+    _receivedNotificationCallback: null,
+    _dynamicLinkCallback: null,
+    admob,
+    analytics,
+    crashlytics,
+    performance,
+    storage,
+    mlkit,
+    firestore: {
+        FieldValue,
+        GeoPoint: (latitude, longitude) => new GeoPoint(latitude, longitude)
+    },
+    dynamicLinks: {
+        MATCH_CONFIDENCE: {
+            WEAK: 0,
+            STRONG: 1
+        }
+    },
+    LoginType: {
+        ANONYMOUS: "anonymous",
+        PASSWORD: "password",
+        PHONE: "phone",
+        CUSTOM: "custom",
+        FACEBOOK: "facebook",
+        GOOGLE: "google",
+        APPLE: "apple",
+        EMAIL_LINK: "emailLink"
+    },
+    LogComplexEventTypeParameter: {
+        STRING: "string",
+        INT: "int",
+        FLOAT: "float",
+        DOUBLE: "double",
+        LONG: "long",
+        ARRAY: "array",
+        BOOLEAN: "boolean"
+    },
+    QueryOrderByType: {
+        KEY: "key",
+        VALUE: "value",
+        CHILD: "child",
+        PRIORITY: "priority"
+    },
+    QueryLimitType: {
+        FIRST: "first",
+        LAST: "last"
+    },
+    QueryRangeType: {
+        START_AT: "startAt",
+        END_AT: "endAt",
+        EQUAL_TO: "equalTo"
+    },
+    addAuthStateListener: listener => {
+        if (firebase.authStateListeners.indexOf(listener) === -1) {
+            firebase.authStateListeners.push(listener);
+        }
+        return true;
+    },
+    removeAuthStateListener: listener => {
+        const index = firebase.authStateListeners.indexOf(listener);
+        if (index >= 0) {
+            firebase.authStateListeners.splice(index, 1);
+            return true;
+        }
+        else {
+            return false;
+        }
+    },
+    hasAuthStateListener: listener => {
+        return firebase.authStateListeners.indexOf(listener) >= 0;
+    },
+    notifyAuthStateListeners: data => {
+        firebase.authStateListeners.forEach(listener => {
+            try {
+                if (listener.thisArg) {
+                    listener.onAuthStateChanged.call(listener.thisArg, data);
+                }
+                else if (listener.onAuthStateChanged) {
+                    listener.onAuthStateChanged(data);
+                }
+                else {
+                    listener(data);
+                }
+            }
+            catch (ex) {
+                console.error("Firebase AuthStateListener failed to trigger", listener, ex);
+            }
+        });
+    },
+    rememberEmailForEmailLinkLogin: (email) => {
+        ApplicationSettings.setString("FirebasePlugin.EmailLinkLogin", email);
+    },
+    getRememberedEmailForEmailLinkLogin: () => {
+        return ApplicationSettings.getString("FirebasePlugin.EmailLinkLogin");
+    },
+    strongTypeify: value => {
+        if (value === "true") {
+            value = true;
+        }
+        else if (value === "false") {
+            value = false;
+        }
+        else if (parseFloat(value) === value) {
+            value = parseFloat(value);
+        }
+        else if (parseInt(value) === value) {
+            value = parseInt(value);
+        }
+        return value;
+    },
+    requestPhoneAuthVerificationCode: (onUserResponse, verificationPrompt) => {
+        prompt(verificationPrompt || "Verification code").then(promptResult => {
+            if (!promptResult.result) {
+                onUserResponse(undefined);
+            }
+            else {
+                onUserResponse(promptResult.text);
+            }
+        });
+    },
+    moveLoginOptionsToObjects: loginOptions => {
+        if (loginOptions.email) {
+            console.log("Please update your code: the 'email' property is deprecated and now expected at 'passwordOptions.email'");
+            if (!loginOptions.passwordOptions) {
+                loginOptions.passwordOptions = {};
+            }
+            if (!loginOptions.passwordOptions.email) {
+                loginOptions.passwordOptions.email = loginOptions.email;
+            }
+        }
+        if (loginOptions.password) {
+            console.log("Please update your code: the 'password' property is deprecated and now expected at 'passwordOptions.password'");
+            if (!loginOptions.passwordOptions) {
+                loginOptions.passwordOptions = {};
+            }
+            if (!loginOptions.passwordOptions.password) {
+                loginOptions.passwordOptions.password = loginOptions.password;
+            }
+        }
+        if (loginOptions.token) {
+            console.log("Please update your code: the 'token' property is deprecated and now expected at 'customOptions.token'");
+            if (!loginOptions.customOptions) {
+                loginOptions.customOptions = {};
+            }
+            if (!loginOptions.customOptions.token) {
+                loginOptions.customOptions.token = loginOptions.token;
+            }
+        }
+        if (loginOptions.tokenProviderFn) {
+            console.log("Please update your code: the 'tokenProviderFn' property is deprecated and now expected at 'customOptions.tokenProviderFn'");
+            if (!loginOptions.customOptions) {
+                loginOptions.customOptions = {};
+            }
+            if (!loginOptions.customOptions.tokenProviderFn) {
+                loginOptions.customOptions.tokenProviderFn = loginOptions.tokenProviderFn;
+            }
+        }
+        if (loginOptions.scope) {
+            console.log("Please update your code: the 'scope' property is deprecated and now expected at 'facebookOptions.scope'");
+            if (!loginOptions.facebookOptions) {
+                loginOptions.facebookOptions = {};
+            }
+            if (!loginOptions.facebookOptions.scope) {
+                loginOptions.facebookOptions.scope = loginOptions.scope;
+            }
+        }
+    },
+    merge: (obj1, obj2) => {
+        const result = {};
+        for (let i in obj1) {
+            if ((i in obj2) && (typeof obj1[i] === "object") && (i !== null)) {
+                result[i] = firebase.merge(obj1[i], obj2[i]);
+            }
+            else {
+                result[i] = obj1[i];
+            }
+        }
+        for (let i in obj2) {
+            if (i in result) {
+                continue;
+            }
+            result[i] = obj2[i];
+        }
+        return result;
+    }
+};
+export const firestore = firebase.firestore;
+export class DocumentSnapshot {
+    constructor(id, exists, documentData, ref) {
+        this.id = id;
+        this.exists = exists;
+        this.ref = ref;
+        this.data = () => exists ? documentData : undefined;
+    }
+}
+export function isDocumentReference(object) {
+    return object && object.discriminator === "docRef";
+}
+//# sourceMappingURL=firebase-common.js.map

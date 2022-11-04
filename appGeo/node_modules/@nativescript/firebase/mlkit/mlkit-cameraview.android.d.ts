@@ -1,0 +1,31 @@
+import { MLKitCameraView as MLKitCameraViewBase } from "./mlkit-cameraview-common";
+export declare abstract class MLKitCameraView extends MLKitCameraViewBase {
+    private surfaceView;
+    private bytesToByteBuffer;
+    private pendingFrameData;
+    protected rotation: any;
+    lastVisionImage: any;
+    private detector;
+    private camera;
+    private metadata;
+    disposeNativeView(): void;
+    createNativeView(): Object;
+    initNativeView(): void;
+    private hasCamera;
+    private wasCameraPermissionGranted;
+    private initView;
+    private runCamera;
+    private setMetadata;
+    private fixStretch;
+    protected updateTorch(): void;
+    protected pauseScanning(): void;
+    protected resumeScanning(): void;
+    protected abstract createDetector(): any;
+    protected abstract createSuccessListener(): any;
+    protected runDetector(imageByteBuffer: any, width: any, height: any): void;
+    private createFailureListener;
+    private generateValidPreviewSizeList;
+    private selectSizePair;
+    private createPreviewBuffer;
+    private setRotation;
+}

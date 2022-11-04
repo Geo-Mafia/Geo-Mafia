@@ -1,0 +1,10 @@
+import type { View } from '../ui/core/view';
+import { AndroidAccessibilityEvent } from './accessibility-types';
+export * from './accessibility-common';
+export * from './accessibility-types';
+export * from './font-scale';
+export declare function isAccessibilityServiceEnabled(): boolean;
+export declare function setupAccessibleView(view: Partial<View>): void;
+export declare function updateAccessibilityProperties(view: Partial<View>): void;
+export declare function sendAccessibilityEvent(view: View, eventType: AndroidAccessibilityEvent, text?: string): void;
+export declare function updateContentDescription(view: View, forceUpdate?: boolean): string | null;

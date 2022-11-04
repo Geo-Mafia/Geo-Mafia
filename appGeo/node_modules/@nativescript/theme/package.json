@@ -1,0 +1,20 @@
+{
+  "name": "@nativescript/theme",
+  "version": "3.0.2",
+  "description": "NativeScript Core Theme",
+  "main": "index",
+  "typings": "index.d.ts",
+  "author": "NativeScript <support@nativescript.org>",
+  "homepage": "https://www.nativescript.org",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NativeScript/theme"
+  },
+  "nativescript": {
+    "platforms": {
+      "android": "6.5.3",
+      "ios": "6.5.2"
+    }
+  }
+}
