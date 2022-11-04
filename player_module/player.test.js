@@ -19,8 +19,8 @@ const Location1 = new Location(1);
 const Location2 = new Location(2);
 
 const player1 = new Player(1, 'player1', Location1, ALIVE);
-const player2 = new Player(2, 'player1', Location1, ALIVE); 
-const player3 = new Killer(3, 'player1', Location2, ALIVE);  
+const player2 = new Player(2, 'player2', Location1, ALIVE); 
+const killer1 = new Killer(3, 'killer1', Location2, ALIVE); 
 
 QUnit.test("a player gets killed", assert => {
     assert.equal(player1.getKilled(), SUCCESS);
@@ -63,10 +63,8 @@ QUnit.test("player votes for another player", assert => {
     assert.equal(player2.votes, 1);
 });
 
-const killer1 = new Killer(1, 'killer1', Location1, ALIVE); 
-
 QUnit.test("killer kills a player", assert => {
-    assert.equal(player2.kill_player(player1, playerMap.get_player_hash()), SUCCESS);
+    assert.equal(killer1.kill_player(player1, playerMap.get_player_hash()), SUCCESS);
 });
 
 QUnit.test("the total number of kills done by killer1 after 1 kill", assert => {
