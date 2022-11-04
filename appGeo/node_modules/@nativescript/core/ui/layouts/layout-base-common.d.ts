@@ -1,0 +1,36 @@
+import { LayoutBase as LayoutBaseDefinition } from './layout-base';
+import { CoreTypes } from '../../core-types';
+import { View, CustomLayoutView, AddChildFromBuilder } from '../core/view';
+import { Property } from '../core/properties';
+export declare class LayoutBaseCommon extends CustomLayoutView implements LayoutBaseDefinition, AddChildFromBuilder {
+    private _subViews;
+    _addChildFromBuilder(name: string, value: any): void;
+    getChildrenCount(): number;
+    get _childrenCount(): number;
+    getChildAt(index: number): View;
+    getChildIndex(child: View): number;
+    getChildById(id: string): import("../core/view-base").ViewBase;
+    _registerLayoutChild(child: View): void;
+    _unregisterLayoutChild(child: View): void;
+    addChild(child: View): void;
+    insertChild(child: View, atIndex: number): void;
+    removeChild(child: View): void;
+    removeChildren(): void;
+    get padding(): string | CoreTypes.LengthType;
+    set padding(value: string | CoreTypes.LengthType);
+    get paddingTop(): CoreTypes.LengthType;
+    set paddingTop(value: CoreTypes.LengthType);
+    get paddingRight(): CoreTypes.LengthType;
+    set paddingRight(value: CoreTypes.LengthType);
+    get paddingBottom(): CoreTypes.LengthType;
+    set paddingBottom(value: CoreTypes.LengthType);
+    get paddingLeft(): CoreTypes.LengthType;
+    set paddingLeft(value: CoreTypes.LengthType);
+    clipToBounds: boolean;
+    isPassThroughParentEnabled: boolean;
+    _childIndexToNativeChildIndex(index?: number): number;
+    eachChildView(callback: (child: View) => boolean): void;
+    eachLayoutChild(callback: (child: View, isLast: boolean) => void): void;
+}
+export declare const clipToBoundsProperty: Property<LayoutBaseCommon, boolean>;
+export declare const isPassThroughParentEnabledProperty: Property<LayoutBaseCommon, boolean>;

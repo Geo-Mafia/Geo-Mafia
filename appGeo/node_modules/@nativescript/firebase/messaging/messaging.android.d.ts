@@ -1,0 +1,14 @@
+import { PushNotificationModel } from "./messaging.ios";
+import { firebase as fbNamespace } from "../firebase";
+export declare function initFirebaseMessaging(options?: fbNamespace.MessagingOptions): void;
+export declare function onAppModuleLaunchEvent(args: any): void;
+export declare function onAppModuleResumeEvent(args: any): void;
+export declare function registerForInteractivePush(model?: PushNotificationModel): void;
+export declare function getCurrentPushToken(): Promise<string>;
+export declare function addOnMessageReceivedCallback(callback: any): Promise<unknown>;
+export declare function addOnPushTokenReceivedCallback(callback: any): Promise<unknown>;
+export declare function registerForPushNotifications(options?: fbNamespace.MessagingOptions): Promise<void>;
+export declare function unregisterForPushNotifications(): Promise<void>;
+export declare function subscribeToTopic(topicName: any): Promise<unknown>;
+export declare function unsubscribeFromTopic(topicName: any): Promise<unknown>;
+export declare function areNotificationsEnabled(): any;

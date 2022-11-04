@@ -1,0 +1,3 @@
+import { MLKitNaturalLanguageIdentificationLanguage, MLKitNaturalLanguageIdentificationOptions, MLKitNaturalLanguageIdentificationResult } from "./index";
+export declare function identifyNaturalLanguage(options: MLKitNaturalLanguageIdentificationOptions): Promise<MLKitNaturalLanguageIdentificationResult>;
+export declare function indentifyPossibleLanguages(options: MLKitNaturalLanguageIdentificationOptions): Promise<Array<MLKitNaturalLanguageIdentificationLanguage>>;
