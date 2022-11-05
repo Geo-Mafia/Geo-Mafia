@@ -119,3 +119,6 @@ databaseEventListener(path: string, func: (data: firebase.FBData) => void)
 ```
 databaseEventListener puts a listener on the path, and then execute the function whenever a change in the node is detected.
 
+
+## Contact
+The APIs and API Documentations are written by Kyu and Jason. Please ask any clarification questions to us. 
