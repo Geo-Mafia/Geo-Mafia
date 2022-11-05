@@ -12,6 +12,7 @@ yarn-error.log*
 
 # General
 .DS_Store
+.vscode
 .AppleDouble
 .LSOverride
 .idea
@@ -26,3 +27,6 @@ typings/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+#Google Firebase Credentials
+App_Resources/iOS/GoogleService-Info.plist
