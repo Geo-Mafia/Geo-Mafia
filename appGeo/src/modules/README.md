@@ -111,7 +111,7 @@ databaseRemove("users")
 </details>
 
 
-## databaseEventListener
+### databaseEventListener
 ```ts
 databaseEventListener(path: string, func: (data: firebase.FBData) => void)
 ```
