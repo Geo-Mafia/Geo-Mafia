@@ -11,17 +11,17 @@
 		39940D9122C4EF600050DDE1 /* NativeScript.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 39940D8C22C4EAAA0050DDE1 /* NativeScript.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		39940E1C22C5DFFF0050DDE1 /* TKLiveSync.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 39940E1B22C5DFFF0050DDE1 /* TKLiveSync.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3ADEA76CAC2446619B1AF216 /* build.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = A5135AC47A9648C198203BBB /* build.xcconfig */; };
-		54C8D3DFB0874AD8B6B66736 /* NativeScriptEmbedder.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F029B4958548E0A30BCD72 /* NativeScriptEmbedder.m */; };
 		6813CDB700424291A370B4BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F9BE2CF7F7E46DF98089E36 /* LaunchScreen.storyboard */; };
 		6E11421A4C214FCEBD274AF5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8C1C03FA615F4F37B15C4C13 /* GoogleService-Info.plist */; };
 		7BA7A21F51CE4464A2208AC1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7BF31F14CB6041DC9A67D2AE /* Assets.xcassets */; };
 		858B842D18CA22B800AB12DE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 858B833A18CA111C00AB12DE /* InfoPlist.strings */; };
-		8DB3E7DB7453473C9930CCAA /* NativeScriptUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB7CA641EE542D2A8E75BEC /* NativeScriptUtils.m */; };
 		918F46C5CE0E439880E47927 /* TNSWidgets.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B4CA2357628940148A8C00BA /* TNSWidgets.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		A6EFF8B9D44FF07CD1D803F0 /* Pods_appGeo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64CCBB26049F7B8001C9FBB8 /* Pods_appGeo.framework */; };
 		CD45EE7C18DC2D5800FB50C0 /* app in Resources */ = {isa = PBXBuildFile; fileRef = CD45EE7A18DC2D5800FB50C0 /* app */; };
 		CD62955D1BB2678900AE3A93 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CD62955C1BB2678900AE3A93 /* main.m */; };
-		E44B0CDFEC3D42BC89FE6876 /* UIView+NativeScript.m in Sources */ = {isa = PBXBuildFile; fileRef = EC21E4AEDC1A4AFEB99C25AC /* UIView+NativeScript.m */; };
+		D2BC367E28434304A9FA50E9 /* NativeScriptEmbedder.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F398C9398E647E9802FB39F /* NativeScriptEmbedder.m */; };
+		28370AF2346A40BDBE8F22A9 /* NativeScriptUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C91FACFB007F4129B3DD01A2 /* NativeScriptUtils.m */; };
+		B1C76ED0691D4A6EADA72155 /* UIView+NativeScript.m in Sources */ = {isa = PBXBuildFile; fileRef = B312202C0BAA4196A0B3492F /* UIView+NativeScript.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -41,7 +41,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		066A457FA37A4F8AA998BF3F /* NativeScriptEmbedder.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = NativeScriptEmbedder.h; path = "../../node_modules/@nativescript/core/platforms/ios/src/NativeScriptEmbedder.h"; sourceTree = "<group>"; };
 		391174B521F1D7BF00BA2583 /* nativescript-build.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "nativescript-build.xcconfig"; path = "internal/nativescript-build.xcconfig"; sourceTree = SOURCE_ROOT; };
 		391174B721F1D99900BA2583 /* plugins-release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "plugins-release.xcconfig"; sourceTree = SOURCE_ROOT; };
 		391174B821F1D99900BA2583 /* plugins-debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "plugins-debug.xcconfig"; sourceTree = SOURCE_ROOT; };
@@ -54,7 +53,6 @@
 		42C751E5232B769100186695 /* nativescript-post-build */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "nativescript-post-build"; path = "internal/nativescript-post-build"; sourceTree = SOURCE_ROOT; };
 		42C751E6232B769100186695 /* nativescript-pre-build */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "nativescript-pre-build"; path = "internal/nativescript-pre-build"; sourceTree = SOURCE_ROOT; };
 		64CCBB26049F7B8001C9FBB8 /* Pods_appGeo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_appGeo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		66F029B4958548E0A30BCD72 /* NativeScriptEmbedder.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = NativeScriptEmbedder.m; path = "../../node_modules/@nativescript/core/platforms/ios/src/NativeScriptEmbedder.m"; sourceTree = "<group>"; };
 		6D3B2DE6C129A6D36A4C8281 /* Pods-appGeo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-appGeo.debug.xcconfig"; path = "Target Support Files/Pods-appGeo/Pods-appGeo.debug.xcconfig"; sourceTree = "<group>"; };
 		7BF31F14CB6041DC9A67D2AE /* Assets.xcassets */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = appGeo/Resources/Assets.xcassets; sourceTree = "<group>"; };
 		858B832E18CA111C00AB12DE /* appGeo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = appGeo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -65,9 +63,7 @@
 		8C1C03FA615F4F37B15C4C13 /* GoogleService-Info.plist */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "appGeo/Resources/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8F9BE2CF7F7E46DF98089E36 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = LaunchScreen.storyboard; path = appGeo/Resources/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		930F05DB22671AE300D269DC /* Swift-ObjC-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Swift-ObjC-Bridging-Header.h"; path = "internal/Swift-ObjC-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
-		A4670921DB194822971684E7 /* UIView+NativeScript.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = "UIView+NativeScript.h"; path = "../../node_modules/@nativescript/core/platforms/ios/src/UIView+NativeScript.h"; sourceTree = "<group>"; };
 		A5135AC47A9648C198203BBB /* build.xcconfig */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.xcconfig; name = build.xcconfig; path = appGeo/Resources/build.xcconfig; sourceTree = "<group>"; };
-		AAB7CA641EE542D2A8E75BEC /* NativeScriptUtils.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = NativeScriptUtils.m; path = "../../node_modules/@nativescript/core/platforms/ios/src/NativeScriptUtils.m"; sourceTree = "<group>"; };
 		B4CA2357628940148A8C00BA /* TNSWidgets.xcframework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = TNSWidgets.xcframework; path = "$(SRCROOT)/../../node_modules/@nativescript/core/platforms/ios/TNSWidgets.xcframework"; sourceTree = "<group>"; };
 		BFB9ADD3BEF58EDD1409AE24 /* Pods-appGeo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-appGeo.release.xcconfig"; path = "Target Support Files/Pods-appGeo/Pods-appGeo.release.xcconfig"; sourceTree = "<group>"; };
 		CD45EE7A18DC2D5800FB50C0 /* app */ = {isa = PBXFileReference; lastKnownFileType = folder; path = app; sourceTree = "<group>"; };
@@ -75,9 +71,13 @@
 		CDD59A261BB43B5D00EC2671 /* build-debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "build-debug.xcconfig"; sourceTree = "<group>"; };
 		CDD59A271BB43B5D00EC2671 /* build-release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "build-release.xcconfig"; sourceTree = "<group>"; };
 		CDF4743E1BA4855C0087EA85 /* build.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = build.xcconfig; sourceTree = "<group>"; };
-		E0CB0F4B811E4DB3AD63B589 /* module.modulemap */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = "sourcecode.module-map"; name = module.modulemap; path = "../../node_modules/@nativescript/core/platforms/ios/src/module.modulemap"; sourceTree = "<group>"; };
-		EC21E4AEDC1A4AFEB99C25AC /* UIView+NativeScript.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = "UIView+NativeScript.m"; path = "../../node_modules/@nativescript/core/platforms/ios/src/UIView+NativeScript.m"; sourceTree = "<group>"; };
-		F3A4589162814D9D97AA87A7 /* NativeScriptUtils.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = NativeScriptUtils.h; path = "../../node_modules/@nativescript/core/platforms/ios/src/NativeScriptUtils.h"; sourceTree = "<group>"; };
+		BB8EDF6942BA41EF96048222 /* NativeScriptEmbedder.h */ = {isa = PBXFileReference; name = NativeScriptEmbedder.h; path = "../../node_modules/@nativescript/core/platforms/ios/src/NativeScriptEmbedder.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		6F398C9398E647E9802FB39F /* NativeScriptEmbedder.m */ = {isa = PBXFileReference; name = NativeScriptEmbedder.m; path = "../../node_modules/@nativescript/core/platforms/ios/src/NativeScriptEmbedder.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		71AE231ABD5B4DF8953B011C /* NativeScriptUtils.h */ = {isa = PBXFileReference; name = NativeScriptUtils.h; path = "../../node_modules/@nativescript/core/platforms/ios/src/NativeScriptUtils.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		C91FACFB007F4129B3DD01A2 /* NativeScriptUtils.m */ = {isa = PBXFileReference; name = NativeScriptUtils.m; path = "../../node_modules/@nativescript/core/platforms/ios/src/NativeScriptUtils.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		FBE42D2606FE4103B00E0EC5 /* UIView+NativeScript.h */ = {isa = PBXFileReference; name = "UIView+NativeScript.h"; path = "../../node_modules/@nativescript/core/platforms/ios/src/UIView+NativeScript.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		B312202C0BAA4196A0B3492F /* UIView+NativeScript.m */ = {isa = PBXFileReference; name = "UIView+NativeScript.m"; path = "../../node_modules/@nativescript/core/platforms/ios/src/UIView+NativeScript.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		70C795D050204E6CA575F8C8 /* module.modulemap */ = {isa = PBXFileReference; name = module.modulemap; path = "../../node_modules/@nativescript/core/platforms/ios/src/module.modulemap"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = sourcecode.module-map; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,27 +93,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		10F662888FD74718993E69D6 /* @nativescript/firebase */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "@nativescript/firebase";
-			sourceTree = "<group>";
-		};
-		20ECA6CF82BC42AEBABDA175 /* @nativescript/core */ = {
-			isa = PBXGroup;
-			children = (
-				066A457FA37A4F8AA998BF3F /* NativeScriptEmbedder.h */,
-				66F029B4958548E0A30BCD72 /* NativeScriptEmbedder.m */,
-				F3A4589162814D9D97AA87A7 /* NativeScriptUtils.h */,
-				AAB7CA641EE542D2A8E75BEC /* NativeScriptUtils.m */,
-				A4670921DB194822971684E7 /* UIView+NativeScript.h */,
-				EC21E4AEDC1A4AFEB99C25AC /* UIView+NativeScript.m */,
-				E0CB0F4B811E4DB3AD63B589 /* module.modulemap */,
-			);
-			name = "@nativescript/core";
-			sourceTree = "<group>";
-		};
 		39940D8E22C4EBCC0050DDE1 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
@@ -145,13 +124,6 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		695CBC8E61FF401B94C2DECD /* nativescript-geolocation */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "nativescript-geolocation";
-			sourceTree = "<group>";
-		};
 		858B832518CA111C00AB12DE = {
 			isa = PBXGroup;
 			children = (
@@ -159,12 +131,12 @@
 				858B833718CA111C00AB12DE /* appGeo */,
 				858B833018CA111C00AB12DE /* Frameworks */,
 				858B832F18CA111C00AB12DE /* Products */,
-				20ECA6CF82BC42AEBABDA175 /* @nativescript/core */,
-				10F662888FD74718993E69D6 /* @nativescript/firebase */,
-				F062CD2082014796800BB789 /* @nativescript/unit-test-runner */,
-				695CBC8E61FF401B94C2DECD /* nativescript-geolocation */,
 				46D942B76BC843244432BA97 /* Pods */,
 				553F5DFE10B640E7AE942CAF /* TNSNativeSource */,
+				666D4CAD8F4E4517BBEF65AB /* @nativescript/core */,
+				06AE0BD5D85145ADBE415EB3 /* @nativescript/firebase */,
+				4A507D1FDE7D4C228ECA5103 /* @nativescript/unit-test-runner */,
+				8948B59626B84B128ED8A731 /* nativescript-geolocation */,
 			);
 			sourceTree = "<group>";
 		};
@@ -227,18 +199,46 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		F062CD2082014796800BB789 /* @nativescript/unit-test-runner */ = {
+		553F5DFE10B640E7AE942CAF /* TNSNativeSource */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = TNSNativeSource;
+			sourceTree = "<group>";
+		};
+		666D4CAD8F4E4517BBEF65AB /* @nativescript/core */ = {
+			isa = PBXGroup;
+			children = (
+				BB8EDF6942BA41EF96048222 /* NativeScriptEmbedder.h */,
+				6F398C9398E647E9802FB39F /* NativeScriptEmbedder.m */,
+				71AE231ABD5B4DF8953B011C /* NativeScriptUtils.h */,
+				C91FACFB007F4129B3DD01A2 /* NativeScriptUtils.m */,
+				FBE42D2606FE4103B00E0EC5 /* UIView+NativeScript.h */,
+				B312202C0BAA4196A0B3492F /* UIView+NativeScript.m */,
+				70C795D050204E6CA575F8C8 /* module.modulemap */,
+			);
+			name = "@nativescript/core";
+			sourceTree = "<group>";
+		};
+		06AE0BD5D85145ADBE415EB3 /* @nativescript/firebase */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "@nativescript/firebase";
+			sourceTree = "<group>";
+		};
+		4A507D1FDE7D4C228ECA5103 /* @nativescript/unit-test-runner */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			name = "@nativescript/unit-test-runner";
 			sourceTree = "<group>";
 		};
-		553F5DFE10B640E7AE942CAF /* TNSNativeSource */ = {
+		8948B59626B84B128ED8A731 /* nativescript-geolocation */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			name = TNSNativeSource;
+			name = nativescript-geolocation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -452,9 +452,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD62955D1BB2678900AE3A93 /* main.m in Sources */,
-				54C8D3DFB0874AD8B6B66736 /* NativeScriptEmbedder.m in Sources */,
-				8DB3E7DB7453473C9930CCAA /* NativeScriptUtils.m in Sources */,
-				E44B0CDFEC3D42BC89FE6876 /* UIView+NativeScript.m in Sources */,
+				D2BC367E28434304A9FA50E9 /* NativeScriptEmbedder.m in Sources */,
+				28370AF2346A40BDBE8F22A9 /* NativeScriptUtils.m in Sources */,
+				B1C76ED0691D4A6EADA72155 /* UIView+NativeScript.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -612,6 +612,10 @@
 					"\"$(SRCROOT)/../../node_modules/nativescript-geolocation/platforms/ios/src\"",
 					"\"$(SRCROOT)/../../App_Resources/iOS/src\"",
 					"\"$(SRCROOT)/../../App_Resources/iOS/src\"",
+					"\"$(SRCROOT)/../../node_modules/@nativescript/core/platforms/ios/src\"",
+					"\"$(SRCROOT)/../../node_modules/@nativescript/firebase/platforms/ios/src\"",
+					"\"$(SRCROOT)/../../node_modules/@nativescript/unit-test-runner/platforms/ios/src\"",
+					"\"$(SRCROOT)/../../node_modules/nativescript-geolocation/platforms/ios/src\"",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/appGeo/appGeo-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -650,6 +654,10 @@
 					"\"$(SRCROOT)/../../node_modules/nativescript-geolocation/platforms/ios/src\"",
 					"\"$(SRCROOT)/../../App_Resources/iOS/src\"",
 					"\"$(SRCROOT)/../../App_Resources/iOS/src\"",
+					"\"$(SRCROOT)/../../node_modules/@nativescript/core/platforms/ios/src\"",
+					"\"$(SRCROOT)/../../node_modules/@nativescript/firebase/platforms/ios/src\"",
+					"\"$(SRCROOT)/../../node_modules/@nativescript/unit-test-runner/platforms/ios/src\"",
+					"\"$(SRCROOT)/../../node_modules/nativescript-geolocation/platforms/ios/src\"",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/appGeo/appGeo-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
