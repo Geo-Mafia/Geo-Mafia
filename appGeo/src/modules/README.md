@@ -24,7 +24,7 @@ databaseInit();
 ```ts
 databaseAdd(path: string, data: object): void
 ```
-databaseAdd adds the data object (JSON) to the initialized Firebase Database, in the specified path. \
+databaseAdd adds the data object (JSON) to the initialized Firebase Database, in the specified path.
 <details>
  <summary>Usage</summary>
 
@@ -65,7 +65,7 @@ databaseGet("users/gypark23", console.log)
 ```ts
 databaseUpdate(path: string, data: object): void
 ```
-databaseUpdate updates the data object (JSON) to the initialized Firebase Database, in the specified path. \
+databaseUpdate updates the data object (JSON) to the initialized Firebase Database, in the specified path.
 <details>
  <summary>Usage</summary>
 
@@ -89,12 +89,12 @@ id : "jchee1"
 ```ts
 databaseRemove(path: string): void
 ```
-databaseRemove removes the node of the specified path, **including the node's children**. \
+databaseRemove removes the node of the specified path, **including the node's children**. 
 ### databaseUpdate
 ```ts
 databaseUpdate(path: string, data: object): void
 ```
-databaseUpdate updates the data object (JSON) to the initialized Firebase Database, in the specified path. \
+databaseUpdate updates the data object (JSON) to the initialized Firebase Database, in the specified path. 
 <details>
  <summary>Usage</summary>
 
