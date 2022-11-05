@@ -30,7 +30,7 @@ export function databaseInit() : void {
  * Must have the firebase database already initialized by calling databaseInit().
  * @param path - the exact node where the data will be put (ex. users/gypark23)
  * @param data - the JSON object that will be put in the database
- * @returns none
+ * @returns true if successful, false if error
  */
 export function databaseAdd(path: string, data: object): boolean {
     try {
@@ -48,18 +48,11 @@ export function databaseAdd(path: string, data: object): boolean {
  * but will execute the given function with the fetched JSON object.
  * @param path - the exact node where the data is located (ex. users/gypark23)
  * @param func - the function that will be executed taking the fetched JSON as an argument 
- * @returns none
+ * @returns Promise<any>
  */
-export async function databaseGet(path: string, func: Function): Promise<any> {
+export async function databaseGet(path: string): Promise<any> {
     const { value } = await firebase.getValue(path);
     return value;
-    /*
-    return firebase.getValue(path)
-        .then(result => {
-            func(JSON.stringify(result));
-        })
-        .catch(error => console.log(`error in databaseGet: ${error}`));
-        */
 }
 
 /**

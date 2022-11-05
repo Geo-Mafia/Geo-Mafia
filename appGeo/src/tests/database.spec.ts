@@ -24,7 +24,7 @@ QUnit.test("Firebase write then read API Unit Testing", function(assert) {
     assert.equal(databaseAdd(dir, successData), true);
 
     // able to read data now
-    const read = databaseGet(dir, console.log); // try to update get function to return json object
+    const read = databaseGet(dir);
     
     read.then(
         result => {
@@ -50,7 +50,7 @@ QUnit.test("Firebase delete API Unit Testing", function(assert) {
     assert.equal(databaseAdd(dir, data), true);
 
     // able to read data now
-    const read = databaseGet(dir, console.log); // try to update get function to return json object
+    const read = databaseGet(dir);
       
     read.then(
         result => {
@@ -80,7 +80,7 @@ QUnit.test("Update API Unit Testing", function(assert) {
     assert.equal(databaseAdd(dir, data), true);
 
     // able to read data now
-    const read = databaseGet(dir, console.log); //change later
+    const read = databaseGet(dir);
 
     read.then(
         result => {
@@ -102,7 +102,7 @@ QUnit.test("Update API Unit Testing", function(assert) {
     assert.equal(databaseUpdate(dir, data2), true);
 
     // shouldn't be able to read now
-    const read2 = databaseGet(dir, console.log); //change later
+    const read2 = databaseGet(dir);
 
     read2.then(
         result => {
