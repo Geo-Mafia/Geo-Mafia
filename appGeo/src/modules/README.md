@@ -90,11 +90,6 @@ id : "jchee1"
 databaseRemove(path: string): void
 ```
 databaseRemove removes the node of the specified path, **including the node's children**. 
-### databaseUpdate
-```ts
-databaseUpdate(path: string, data: object): void
-```
-databaseUpdate updates the data object (JSON) to the initialized Firebase Database, in the specified path. 
 <details>
  <summary>Usage</summary>
 
