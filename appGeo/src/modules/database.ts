@@ -11,7 +11,7 @@ import { firebase } from "@nativescript/firebase";
  * @param
  * @returns none
  */
-export function databaseInit() {
+export function databaseInit() : void {
     firebase.init({
         // Optionally pass in properties for database, authentication and cloud messaging,
         // see their respective docs.
@@ -32,11 +32,13 @@ export function databaseInit() {
  * @param data - the JSON object that will be put in the database
  * @returns none
  */
-export function databaseAdd(path: string, data: object): void {
+export function databaseAdd(path: string, data: object): boolean {
     try {
         firebase.setValue(path, data);
+        return true;
     } catch (error) {
         console.log(`error in databaseAdd: ${error}`);
+        return false;
     }
 }
 
@@ -48,12 +50,16 @@ export function databaseAdd(path: string, data: object): void {
  * @param func - the function that will be executed taking the fetched JSON as an argument 
  * @returns none
  */
-export function databaseGet(path: string, func: Function): void {
-    firebase.getValue(path)
+export async function databaseGet(path: string, func: Function): Promise<any> {
+    const { value } = await firebase.getValue(path);
+    return value;
+    /*
+    return firebase.getValue(path)
         .then(result => {
             func(JSON.stringify(result));
         })
         .catch(error => console.log(`error in databaseGet: ${error}`));
+        */
 }
 
 /**
@@ -62,11 +68,13 @@ export function databaseGet(path: string, func: Function): void {
  * @param data - the new updated JSON  
  * @returns none
  */
-export function databaseUpdate(path: string, data: object): void {
+export function databaseUpdate(path: string, data: object): boolean {
     try {
         firebase.update(path, data);
+        return true;
     } catch (error) {
         console.log(`error in databaseUpdate: ${error}`);
+        return false;
     }
 }
 
@@ -75,11 +83,13 @@ export function databaseUpdate(path: string, data: object): void {
  * @param path - the exact node where the node to be deleted is located (ex. users/gypark23)  
  * @returns none
  */
-export function databaseRemove(path: string): void {
+export function databaseRemove(path: string): boolean {
     try {
         firebase.remove(path)
+        return true;
     } catch (error) {
         console.log(`error in databaseRemove: ${path}`);
+        return false;
     }
 }
 
@@ -89,14 +99,16 @@ export function databaseRemove(path: string): void {
  * @param func - function that will be executed once the change in the node is detected
  * @returns none
  */
-export function databaseEventListener(path: string, func: (data: firebase.FBData) => void): void {
+export function databaseEventListener(path: string, func: (data: firebase.FBData) => void): boolean {
     try {
         firebase.addValueEventListener(func, path)
             .then(function (listenerWrapper) {
                 var path = listenerWrapper.path;
                 var listeners = listenerWrapper.listeners;
             })
+        return true;
     } catch (error) {
         console.log(`error in databaseEventListener: ${error}`);
+        return false;
     }
 }
