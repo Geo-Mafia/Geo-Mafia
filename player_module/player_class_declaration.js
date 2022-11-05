@@ -18,8 +18,8 @@ export class Player{
         this.votes = 0;
     }
 
-    /* get_alive_status: Return whether or not current player is Alive or Killed */
-    get_alive_status(){
+    /* getAliveStatus: Return whether or not current player is Alive or Killed */
+    getAliveStatus(){
         return this.alive;
     }
 
@@ -38,7 +38,7 @@ export class Player{
         return FAILURE;
     }
 
-    open_snapshot(Snapshot){
+    openSnapshot(Snapshot){
         const open = Snapshot.view();
         if (open == 1) {
             return SUCCESS;
@@ -46,7 +46,7 @@ export class Player{
         return FAILURE;
     }
 
-    see_people_in_bubble(All_players){
+    seePeopleInBubble(All_players){
         // Take in as input hash table from Map Class of Players
         // The hash table maps each player's userID to the player's location
         player_list = [];
@@ -59,7 +59,7 @@ export class Player{
         return player_list;
     }
 
-    open_chat(chat){
+    openChat(chat){
         const open = chat.view()
         if (open == 1) {
             return SUCCESS;
@@ -67,7 +67,7 @@ export class Player{
         return FAILURE;
     }
 
-    send_chat_message(chat, message){
+    sendChatMessage(chat, message){
         const sent = chat.send(message);
         if (sent == 1) {
             return SUCCESS;
@@ -75,7 +75,7 @@ export class Player{
         return FAILURE;
     }
 
-    receive_chat(chat, message){
+    receiveChat(chat, message){
         const received = chat.receive(message);
         if (received == 1) {
             return SUCCESS;
@@ -90,15 +90,15 @@ export class Player{
      *        (which is the only thing that A can see)
     */
     voteForExecution(player){
-        player.increase_vote_count();
+        player.increaseVoteCount();
         return SUCCESS;
     }
 
-    /* increase_vote_count(): Increase current Player's number of votes
+    /* increaseVoteCount(): Increase current Player's number of votes
      * Note: This function added for privacy concersn (don't want other players
      * directly modifying the field of another player)
     */
-    increase_vote_count(){
+    increaseVoteCount(){
         this.votes++;
     }
 
@@ -125,24 +125,24 @@ export class Killer extends Player{
         this.total_kill_count = 0;
     }
 
-    /* kill_player: Allows a killer to eliminate a Player from the game
+    /* killPlayer: Allows a killer to eliminate a Player from the game
      * Input: 
      *      -player_id: Player ID of whoever will be eliminated
      *      -All_players: Hash Table that contains all players
      * 
     */
-    kill_player(player_id, All_players){
+    killPlayer(player_id, All_players){
         //Take in from Game Class Players hash table and remove player_id
-        people_can_be_killed = this.see_people_in_bubble()
+        people_can_be_killed = this.seePeopleInBubble()
 
         if (people_can_be_killed.includes(player_id) == false){
             // Then the person Killer attempted to kill is NOT in their own bubble
             // Invalid Move!
             return FAILURE;
         }
-        if (this.get_remaining_daily_kill_count() > 0 && this.get_alive_status() == ALIVE){
+        if (this.getRemainingDailyKillCount() > 0 && this.getAliveStatus() == ALIVE){
             // Killer has kills remaining, victim is in bubble and alive, can kill
-            player_id.get_killed();
+            player_id.getKilled();
             remove_from_hash(player_id, All_players);
             this.total_kill_count++;
             remaining_daily_kill_count--;
@@ -153,10 +153,10 @@ export class Killer extends Player{
             return FAILURE;
         }
     }
-    get_total_kill_count(){
+    getTotalKillCount(){
         return this.total_kill_count;
     }
-    get_remaining_daily_kill_count(){
+    getRemainingDailyKillCount(){
         return this.remaining_daily_kill_count;
     }
 }

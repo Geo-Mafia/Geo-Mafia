@@ -32,7 +32,7 @@ QUnit.test("takes a snapshot of player locations", assert => {
 });
 
 QUnit.test("player opens a snapshot", assert => {
-    assert.equal(player1.open_snapshot(), SUCCESS);
+    assert.equal(player1.openSnapshot(), SUCCESS);
 });
 
 var playerMap = new Map();
@@ -43,19 +43,19 @@ playerMap.set('player3', Location2);
 // Need to user the player_class_declaration
 QUnit.test("player checks the info of other people in the same bubble", 
 assert => {
-    assert.equal(player1.see_people_in_bubble(playerMap), ['player2']);
+    assert.equal(player1.seePeopleInBubble(playerMap), ['player2']);
 });
 
 QUnit.test("player opens a chat message", assert => {
-    assert.equal(player1.open_chat(), SUCCESS);
+    assert.equal(player1.openChat(), SUCCESS);
 });
 
 QUnit.test("player sends out a chat message", assert => {
-    assert.equal(player1.send_chat(message), SUCCESS);
+    assert.equal(player1.sendChatMessage(message), SUCCESS);
 });
 
 QUnit.test("player receives a chat message", assert => {
-    assert.equal(player1.receive_chat(message), SUCCESS);
+    assert.equal(player1.receiveChat(message), SUCCESS);
 });
 
 QUnit.test("player votes for another player", assert => {
@@ -64,14 +64,14 @@ QUnit.test("player votes for another player", assert => {
 });
 
 QUnit.test("killer kills a player", assert => {
-    assert.equal(killer1.kill_player(player1, playerMap.get_player_hash()), SUCCESS);
+    assert.equal(killer1.killPlayer(player1, playerMap.get_player_hash()), SUCCESS);
 });
 
 QUnit.test("the total number of kills done by killer1 after 1 kill", assert => {
-    assert.equal(killer1.get_total_kill_count(), 1);
+    assert.equal(killer1.getTotalKillCount(), 1);
 });
 
 QUnit.test("the total number of kills remaining for killer1 after 1 kill has decremented", 
 assert => {
-    assert.equal(killer1.remaining_daily_kill_count(), (DAILYMAXKILLCOUNT-1));
+    assert.equal(killer1.getRemainingDailyKillCount(), (DAILYMAXKILLCOUNT-1));
 });
