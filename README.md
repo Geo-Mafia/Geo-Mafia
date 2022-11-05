@@ -22,7 +22,7 @@ Then run :
 ```
 npm install
 ```
-Go to appGeo/platforms/iOS/Podfile and delete ALL the text in the file
+Go to appGeo/platforms/iOS/Podfile and delete ALL the text in the file.
 Then run :
 ```
 tns run ios
