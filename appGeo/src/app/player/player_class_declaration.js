@@ -1,3 +1,6 @@
+import{Message} from '../chat/chat_class_declaration.js';
+import{Location} from './location_class_declaration.js';
+
 const DEAD = 0
 const ALIVE = 1
 const DAILYMAXKILLCOUNT = 2
@@ -6,11 +9,19 @@ const FAILURE = -10
 export class Player{
     userID // An int
     username // A String
+    geolocation // Object that is retunred from the Nativescript plugin
     location // A Coordinate Object
     alive // A Boolean
     votes // An int
 
     constructor(userID, username, location, alive){
+        /* NOTE: we may not even need location anymore. After setting up geolocation
+         * we should be able to just use this as well as get functions (getLongitue &
+         * getLatitue) throughout rest of code. May need to refactor this part
+         * SIDENOTE: Since other teams may use the field "location", maybe just delete current
+         *           location and rename "geolocatoin" as new location
+        */
+        this.geolocation = Location();
         this.userID = userID;
         this.username = username;
         this.location = location;
@@ -67,12 +78,34 @@ export class Player{
         return FAILURE;
     }
 
+    /* sendChatMessage: Insert a message that Player wants to send into the Chat
+     * Input:
+     *      - chat: The chat that the message will be posted in
+     *      - message: The string that the Player wants to send in chat
+    */
     sendChatMessage(chat, message){
-        const sent = chat.send(message);
-        if (sent == 1) {
+        const msg = new Message(message);
+        const sent = chat.insertMessage(msg);
+        if (sent == SUCCESS) {
             return SUCCESS;
         }
-        return FAILURE;
+        else {
+            console.log("error occured during when inserting new message into Chat");
+            return FAILURE;
+        }
+    }
+
+    /* display: Function that displays all messages received
+     * Input:
+     *      - messages: A list of Message objects 
+     * Output: Print out for Player all the message contents
+     * NOTE: Not sure if now we don't need receiveChat, need to consult with Annabelle
+    */
+    display(messages_list){
+        for (i = 0; i < messages_list.length; i++){
+            curr_msg = messages_list[i];
+            curr_msg.printMessage();
+        }
     }
 
     receiveChat(chat, message){
