@@ -2,13 +2,16 @@
   <Label text="Home Page"></Label>
 </ActionBar>
 
-<map></map>
-<player></player>
-
 <StackLayout>
-  <Label text = "After work a list should show here">
-    <map></map>
-  </Label>
-
-
+  <Label text = "After work a list should show here"></Label>
+  <StackLayout id="container">
+    <Label text = "{{bubble1.id}}"></Label>
+    <div *ngFor="let Player of bubble1.List">
+      <h3>
+        <a [title]="Player.username + ' details'">
+          {{ Player.username }}
+        </a>
+      </h3>
+    </div>
+  </StackLayout>
 </StackLayout>

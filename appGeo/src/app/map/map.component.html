@@ -1,13 +1,14 @@
-<h1>BUBBLE LOCATION</h1>
-<p class = 'BUBBLE'></p>
-<ul *ngFor="let Player of List">
-  <li>{{Player}}</li>
-</ul>
-<GridLayout>
-    <ListView [items]="List"  class="list-group">
-        <ng-template let-item ="item">
+<ActionBar>
+    <Label text="Testing if this will appear"></Label>
+  </ActionBar>
 
+<GridLayout>
+    <Label text = "Current Bubble"></Label>
+    <ListView [items]="List"  class="list-group">
+        <ng-template let-player="item" let-i="index">
+            <GridLayout>
+                <Label [text] = "player.name"></Label>
+            </GridLayout>
         </ng-template>
     </ListView>
-    <!-- << list-view-multy-template-index-xml -->
 </GridLayout>

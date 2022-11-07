@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { InjectableAnimationEngine } from '@nativescript/angular';
 import { Bubble } from '../map/map.component';
 
-type Point = {
+export type Point = {
   x: number;
   y: number;
 };

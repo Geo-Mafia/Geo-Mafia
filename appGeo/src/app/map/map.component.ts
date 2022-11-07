@@ -4,9 +4,8 @@ import{Player} from '../player/player.component.js';
 import { Component, Inject, Injectable } from '@angular/core';
 
 @Component({
-  selector: 'map',
+  selector: 'ng-Bubble',
   templateUrl: 'map.component.html',
-  //providers: [Player],
 })
 
 
@@ -63,10 +62,10 @@ export class Bubble {
 
     }
 
-    returnPlayers(){
+    get Players() : Array<Player>{
       //returns list of players in Bubble within the console
       //will use different implementation in html to display players
-      this.List.forEach(console.log);
+      return this.List;
     }
 
 
