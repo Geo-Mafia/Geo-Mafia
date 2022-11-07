@@ -8,9 +8,9 @@ QUnit.module("Bubble_test");
 
 //assumes bubble variables are not private
 QUnit.test("Bubble Initialization Tests", function(assert) {
-    let testbub = new bubble("testbub", 0, 10, 5, 15);
+    let testbub = new bubble("testbubble", 0, 10, 5, 15);
 
-    assert.equal(testbub.ID, "testbub", "bubble_init should set id as testbub");
+    assert.equal(testbub.ID, "testbubble", "id should be testbubble");
     assert.equal(testbub.x_lb, 0, "x_lb should be 0");
     assert.equal(testbub.x_ub, 10, "x_ub should be 10");
     assert.equal(testbub.y_lb, 5, "y_lb should be 5");
@@ -20,30 +20,28 @@ QUnit.test("Bubble Initialization Tests", function(assert) {
 });
 
 QUnit.test("Bubble Location Tests", function(assert) {
-    /* NOTE: player functions will be added when player is merged,
-        however, player functions will not be tested in this file */
-    let testbub = new bubble("testbub", 0, 15, 0, 15);
+    let testbub = new bubble("testbubble", 0, 15, 5, 10);
     let loc = [20, 20];
     let testPlayer = new Player(12, Test, loc, true);
 
     assert.false(testbub.inBubble(testPlayer), "player should not be in bubble");
-    testPlayer.location = [10, 20];
+    testPlayer.location = [10, 15];
     assert.false(testbub.inBubble(testPlayer), "player should not be in bubble");
-    testPlayer.location = [20, 10];
+    testPlayer.location = [16, 9];
     assert.false(testbub.inBubble(testPlayer), "player should not be in bubble");
-    testPlayer.location = [-1, -1];
+    testPlayer.location = [-1, 4];
     assert.false(testbub.inBubble(testPlayer), "player should not be in bubble");
     
-    testPlayer.location = [10,10];
+    testPlayer.location = [9,9];
     assert.true(testbub.inBubble(testPlayer), "player should be in bubble");
-    testPlayer.location = [0,0];
+    testPlayer.location = [0,5];
     assert.true(testbub.inBubble(testPlayer), "player should be in bubble");
-    testPlayer.location = [15,15];
+    testPlayer.location = [15,10];
     assert.true(testbub.inBubble(testPlayer), "player should be in bubble");
 });
 
 QUnit.test("Bubble-Player Tests", function(assert) {
-    let testbub = new bubble("testbub", 0, 15, 0, 15);
+    let testbub = new bubble("testbubble", 0, 15, 5, 10);
     assert.equal(testbub.List.size(), 0, "player list should be empty");
     assert.equal(testbub.returnPlayers(), null, "player list should be empty");
 
@@ -61,4 +59,4 @@ QUnit.test("Bubble-Player Tests", function(assert) {
 });
 
 /* Should addPlayer check inBubble(Player)? Or should inBubble call addPlayer and removePlayer?
-        >> inBubble, addPlayer, and removePlayer should not call each other but be called in game loop */
+    >> inBubble, addPlayer, and removePlayer should not call each other but be called in game loop */
