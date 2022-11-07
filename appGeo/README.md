@@ -2,10 +2,9 @@
   Created the NativeScript Angular base template
   Enabled strictTemplates on angularCompilerOptions
   Created tests folder
+  Added angularcli functinality
 
   Main work will surround adding components to our app,
-  for now those are the player characters and the bubbles
-  (including the functions related to those)
 
   Components will be in the /src/app folder
   Unit tests will be written in the /src/tests folder
@@ -55,6 +54,17 @@ Note from NS when placing test files:
   @nativescript/unit-test-runner was included in "dependencies" as a convenience to automatically adjust your app's Info.plist on iOS and AndroidManifest.xml on Android to ensure the socket connects properly.
 
   For production you may want to move to "devDependencies" and manage the settings yourself
+
+# Angular CLI was added
+  To generate new components in the future use
+    'ng generate component <name>'
+  Similar logic is used for modules:
+    'ng generate module <name>'
+Here is an overview of how components work in angular documentation:
+  https://angular.io/guide/component-overview
+Here is an explanation on what angular is and how it works:
+  https://angular.io/guide/what-is-angular
+
 
 # Running test files 
 You would need to configure project for unit testing on the testing framework we're using, QUnit. Run the command:

@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "cli": {
+      "$defaultCollection": "@nativescript/schematics",
+      "analytics": false
+  },
+  "projects": {
+      "appGeo": {
+          "root": "",
+          "sourceRoot": "src",
+          "projectType": "application",
+          "prefix": "ns"
+      }
+  },
+  "defaultProject": "appGeo"
+}
