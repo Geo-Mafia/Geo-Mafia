@@ -1,5 +1,5 @@
 //file added for simplicity reasons so that it can work with the files added by player dev
-import{Player} from './player.component.js';
+import{Player} from '../player/player.component.js';
 
 import { Component, Inject, Injectable } from '@angular/core';
 
@@ -20,19 +20,18 @@ export class Bubble {
   public List: Player[];
 
 
-    constructor( id: string, xLb: number, xUb: number, yLb: number,
-      yUb: number) {
+    constructor() {
+
+    }
+
+
+    init_bubble( id: string, xLb: number, xUb: number, yLb: number, yUb: number){
       this.id = id;
       this.xLb = xLb;
       this.xUb = xUb;
       this.yLb = yLb;
       this.yUb = yUb;
       this.List = new Array(); //Bubbles will be initialized naturally with an empty list of Players
-    }
-
-
-    init_bubble( id: string, xLb: number, xUb: number, yLb: number, yUb: number){
-      return new Bubble(id, xLb, xUb, yLb, yUb);
     }
 
     // //methods
