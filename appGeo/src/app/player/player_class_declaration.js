@@ -1,4 +1,5 @@
 import{Message} from '../chat/chat_class_declaration.js';
+import{Chat} from '../chat/chat_class_declaration.js';
 import{Location} from './location_class_declaration.js';
 
 const DEAD = 0
@@ -13,6 +14,7 @@ export class Player{
     location // A Coordinate Object
     alive // A Boolean
     votes // An int
+    chat_lists // List of Chat Objects that Player is a part of
 
     constructor(userID, username, location, alive){
         /* NOTE: we may not even need location anymore. After setting up geolocation
@@ -78,14 +80,26 @@ export class Player{
         return FAILURE;
     }
 
+
+    /* getChat: Function that returns the Chat object corresponding to chatID */
+    getChat(chatID){
+        for(i = 0; i < this.chat_lists.length; i++){
+            if (this.chat_lists[i].getChatID() == chatID):
+                return this.chat_lists[i];
+        }
+        // In case that accessing an unavailable chat
+        return null
+    }
+
     /* sendChatMessage: Insert a message that Player wants to send into the Chat
      * Input:
      *      - chat: The chat that the message will be posted in
      *      - message: The string that the Player wants to send in chat
     */
-    sendChatMessage(chat, message){
+    sendChatMessage(chatID, message){
+        main_chat = this.getChat(chatID);
         const msg = new Message(message);
-        const sent = chat.insertMessage(msg);
+        const sent = main_chat.insertMessage(msg);
         if (sent == SUCCESS) {
             return SUCCESS;
         }
@@ -95,13 +109,26 @@ export class Player{
         }
     }
 
-    /* display: Function that displays all messages received
+    /* insertChat(): Inserts a Chat object into the Chat List field within Player Object */
+    insertChat(chat){
+        this.chat_lists.push(chat)
+        return SUCCESS;
+    }
+
+    /* display: Function that displays all messages in a specific Chat
      * Input:
-     *      - messages: A list of Message objects 
+     *      - chatID: The chat we are interseted in accessing
      * Output: Print out for Player all the message contents
      * NOTE: Not sure if now we don't need receiveChat, need to consult with Annabelle
     */
-    display(messages_list){
+    display(chatID){
+        //First, retrieve the Chat Object interested in
+        main_chat = this.getChat(chatID);
+
+        //Secondly, get list of messages from the Chat 
+        messages_list = main_chat.history();
+
+        //Lastly, loop through list of messages and display
         for (i = 0; i < messages_list.length; i++){
             curr_msg = messages_list[i];
             curr_msg.printMessage();
