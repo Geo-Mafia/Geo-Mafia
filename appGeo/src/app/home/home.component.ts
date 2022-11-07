@@ -23,11 +23,11 @@ export class HomeComponent implements OnInit {
     var P1point = {x: 41.7901, y: -87.5999 };
     Player1.init_Player(1, "SUUUper", P1point, true);
     var P2point = {x: 41.000001, y: -87.590001};
-    Player2.init_Player(1, "Player2", P1point, true);
+    Player2.init_Player(1, "FunnY_Name", P1point, true);
 
     this.bubble1.addPlayer(Player1);
     this.bubble1.addPlayer(Player2);
-
+    this.bubble1.Players;
   }
 
 }

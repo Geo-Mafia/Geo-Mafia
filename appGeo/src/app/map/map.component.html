@@ -2,13 +2,14 @@
     <Label text="Testing if this will appear"></Label>
   </ActionBar>
 
-<GridLayout>
-    <Label text = "Current Bubble"></Label>
-    <ListView [items]="List"  class="list-group">
-        <ng-template let-player="item" let-i="index">
-            <GridLayout>
-                <Label [text] = "player.name"></Label>
-            </GridLayout>
-        </ng-template>
+<StackLayout>
+  <StackLayout id="container">
+    <Label text = "Players currently in {Bubble}"></Label>
+    <ListView row="0" [items]="List"  class="list-group">
+      <ng-template let-player="item" let-i="index">
+        <StackLayout>
+          <Label text = "{{player.username}}" textWrap="true"></Label>
+        </StackLayout>
+      </ng-template>
     </ListView>
-</GridLayout>
+</StackLayout>

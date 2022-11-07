@@ -35,6 +35,10 @@ export class Player implements OnInit {
     this.alive = alive;
     this.votes = 0;
   }
+  get name() : string {
+    return this.username;
+  }
+
   getKilled(){
     this.alive = DEAD
     return SUCCESS
