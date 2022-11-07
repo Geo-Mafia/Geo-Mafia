@@ -5,20 +5,18 @@ import{Player} from './player.component.js';
 export class bubble {
     //variables
     id //float
-    x_lb //float
-    x_ub //float
-    y_lb //float
-    y_ub // float
-    arrlen //int
+    xLb //float
+    xUb //float
+    yLb //float
+    yUb // float
     List // Array<Player>
 
-    constructor(id, x_lb, x_ub, y_lb, y_ub) {
+    constructor(id, xLb, xUb, yLb, yUb) {
       this.id = id;
-      this.x_lb = lowerx;
-      this.x_ub = upperx;
-      this.y_lb = lowery;
-      this.y_ub = uppery;
-      this.arrlen = 0;
+      this.xLb = xLb;
+      this.xUb = xUb;
+      this.yLb = yLb;
+      this.yUb = yUb;
       this.List = new Array();
     }
 
@@ -36,7 +34,7 @@ export class bubble {
 
     removePlayer(Player){
       // removes player from array and updates arr_len. returns bool
-      const index = array.indesOf(Player);
+      const index = array.indexOf(Player);
       if (index > -1){
         splice(index, 1);
         return true;
@@ -47,11 +45,11 @@ export class bubble {
 
     inBubble(Player){
       //checks player location to see if they are within bubble boundaries
-      /* implementation updated based on player dev intended implementation 
+      /* implementation updated based on player dev intended implementation
        * of coord as a pair and to facilitate map testing; may have to be
        * updated further depending on playerdev implementation of pair */
-      if (Player.location[0] >= this.x_lb && Player.location[0] <= this.x_ub &&
-          Player.location[1] >= this. y_lb && Player.location[1] <= this.y_ub) {
+      if (Player.location[0] >= this.xLb && Player.location[0] <= this.xUb &&
+          Player.location[1] >= this. yLb && Player.location[1] <= this.yUb) {
         return true;
       }
       return false;

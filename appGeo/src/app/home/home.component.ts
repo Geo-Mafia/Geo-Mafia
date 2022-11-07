@@ -12,7 +12,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     // Init your component properties here.
+    // Going to initialize a list of bubbles here;
+    var bubble1 =  new Bubble('Campus', 41.79, 41.78, -87.59, -87.6);
   }
-  // Going to initialize a list of bubbles here;
-  Bubble1 = new Bubble('Campus', 41.79, 41.78, -87.59, -87.6);
+
 }
