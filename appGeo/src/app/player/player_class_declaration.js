@@ -131,7 +131,6 @@ export class Player{
      * Input:
      *      - chatID: The chat we are interseted in accessing
      * Output: Print out for Player all the message contents
-     * NOTE: Not sure if now we don't need receiveChat, need to consult with Annabelle
     */
     display(chatID){
         //First, retrieve the Chat Object interested in
@@ -147,13 +146,6 @@ export class Player{
         }
     }
 
-    receiveChat(chat, message){
-        const received = chat.receive(message);
-        if (received == 1) {
-            return SUCCESS;
-        }
-        return FAILURE;
-    }
     /* voteForExecution(): Let current player vote for _another_ player to be executed
      * Input: 
      *      - A Player object (?) [I think that it should be a username or ID and we do
