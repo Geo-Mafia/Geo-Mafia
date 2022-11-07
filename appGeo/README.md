@@ -56,6 +56,19 @@ Note from NS when placing test files:
 
   For production you may want to move to "devDependencies" and manage the settings yourself
 
+# Running test files 
+You would need to configure project for unit testing on the testing framework we're using, QUnit. Run the command:
+
+```
+tns test init --framework qunit
+```
+
+Then to run the tests (which are located in appGeo/src/tests), run one of the following commands 
+
+```
+tns test ios
+tns test android
+```
 
 # ----- Located below is the raw README documentation provided by NativeScript:
 
