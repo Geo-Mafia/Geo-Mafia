@@ -31,9 +31,32 @@ export class Player{
         this.votes = 0;
     }
 
-    /* getAliveStatus: Return whether or not current player is Alive or Killed */
+    getUserID(){
+        return this.userID;
+    }
+    getUsername(){
+        return this.username;
+    }
+    getGeolocation(){
+        return this.geolocation;
+    }
     getAliveStatus(){
         return this.alive;
+    }
+    getVotes(){
+        return this.votes;
+    }
+    getChatList(){
+        return this.chat_lists;
+    }
+    /* getChat: Function that returns the Chat object corresponding to chatID */
+    getChat(chatID){
+        for(i = 0; i < this.chat_lists.length; i++){
+            if (this.chat_lists[i].getChatID() == chatID):
+                return this.chat_lists[i];
+        }
+        // In case that accessing an unavailable chat
+        return null
     }
 
     getKilled(){
@@ -80,20 +103,9 @@ export class Player{
         return FAILURE;
     }
 
-
-    /* getChat: Function that returns the Chat object corresponding to chatID */
-    getChat(chatID){
-        for(i = 0; i < this.chat_lists.length; i++){
-            if (this.chat_lists[i].getChatID() == chatID):
-                return this.chat_lists[i];
-        }
-        // In case that accessing an unavailable chat
-        return null
-    }
-
-    /* sendChatMessage: Insert a message that Player wants to send into the Chat
+    /* sendChatMessage: Insert a message that Player wants to send into a Chat
      * Input:
-     *      - chat: The chat that the message will be posted in
+     *      - chatID: A chatID representing the Chat Object that should be modified
      *      - message: The string that the Player wants to send in chat
     */
     sendChatMessage(chatID, message){
@@ -185,6 +197,16 @@ export class Killer extends Player{
         this.total_kill_count = 0;
     }
 
+    getTotalKillCount(){
+        return this.total_kill_count;
+    }
+    getRemainingDailyKillCount(){
+        return this.remaining_daily_kill_count;
+    }
+    getMaxDailyKillCount(){
+        return this.max_daily_kill_count;
+    }
+
     /* killPlayer: Allows a killer to eliminate a Player from the game
      * Input: 
      *      -player_id: Player ID of whoever will be eliminated
@@ -212,11 +234,5 @@ export class Killer extends Player{
             // Notify User in some way that they don't have any kills left for the day
             return FAILURE;
         }
-    }
-    getTotalKillCount(){
-        return this.total_kill_count;
-    }
-    getRemainingDailyKillCount(){
-        return this.remaining_daily_kill_count;
     }
 }
