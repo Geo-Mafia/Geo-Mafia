@@ -47,12 +47,14 @@ export class Chat{
     curr_ID; //Tracks what next message that gets added to this Chat should have
     chat_ID; //ID that marks a unique chat
     hash_ID_to_message;
+    player_list; //Tracks all the Player Objects that are in the Chat
 
     constructor(unique_chat){
         this.lower_ID = 0;
         this.curr_ID = 0;
         this.chat_ID = unique_chat
         this.hash_ID_to_message = new Map();
+        this.player_list = [];
     }
 
     getLowerID(){
@@ -66,6 +68,9 @@ export class Chat{
     }
     getHash(){
         return this.hash_ID_to_message;
+    }
+    getPlayerList(){
+        return this.player_list;
     }
 
     setLowerID(new_lower){
@@ -86,6 +91,23 @@ export class Chat{
         //Could be used in case the Game logic decides that hasn't optimally set ID of chat
         this.chat_ID = new_ID;
         return SUCCESS;
+    }
+
+    /* Take in a Player Object and add him to the Chat*/
+    insertPlayer(player_to_add){
+        // First, add the Player to the Player List within the chat
+        this.player_list.push(player_to_add);
+
+        // Then, Player Object gets updated so they know they've been updated with a Chat
+        player_to_add.insertChat(this);
+    }
+
+    /* prints out all Player Usernames that are currently in the chat */
+    printPlayers(){
+        for (i = 0; i < this.player_list.length; i++){
+            curr_player = player_list[i];
+            console.log(curr_player.getUsername())
+        }
     }
 
     history(){
@@ -124,5 +146,10 @@ export class Chat{
             console.log("error occured during insert Message function");
             return FAILURE
         }
+    }
+
+    view(){
+        //Will need to be taken care of by the UI
+        return SUCCESS
     }
 } 
