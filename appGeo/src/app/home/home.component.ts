@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
   
   
   login() {
-    console.log("function");
+    //console.log("function");
     
     GoogleLogin.login(result=>{
       console.log(result);
