@@ -11,7 +11,7 @@ module.exports = function (config) {
 
 
     // list of files / patterns to load in the browser. Leave empty for webpack projects
-    // files: [],
+    files: [],
 
 
     // list of files to exclude
