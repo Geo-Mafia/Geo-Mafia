@@ -1,6 +1,6 @@
 const SUCCESS = 10
 const FAILURE = -10
-
+const MAXMESSAGECOUNT = 100
 export class Message{
     timestamp; //Formatting of "mm/dd/yy hh:mm" 
     message_id; //Still to determine if unique to within a Chat or not
@@ -38,6 +38,7 @@ export class Message{
         let time = this.timestamp;
         let msg = this.message_content;
         console.log(time.concat(" ", msg));
+        return SUCCESS;
     }
 
 }
@@ -100,6 +101,8 @@ export class Chat{
 
         // Then, Player Object gets updated so they know they've been updated with a Chat
         player_to_add.insertChat(this);
+
+        return SUCCESS;
     }
 
     /* prints out all Player Usernames that are currently in the chat */
@@ -108,6 +111,8 @@ export class Chat{
             curr_player = player_list[i];
             console.log(curr_player.getUsername())
         }
+
+        return SUCCESS;
     }
 
     history(){
@@ -127,8 +132,11 @@ export class Chat{
             console.log("error occured during setMessageID() function")
             return FAILURE
         }
-        //Raise the lower ID since there is a new message that arrived, and set curr_ID accordingly
-        this.lower_ID++;
+
+        //Want to ensure maximum distance betwen lower ID and curr ID is MAXMESSAGECOUNT
+        if (this.curr_ID - this.lower_ID + 1 >= MAXMESSAGECOUNT){
+            this.lower_ID++;
+        }
         this.curr_ID++;
 
         //Lastly, update the hash with the appropriate key and message
@@ -137,7 +145,8 @@ export class Chat{
     }
     voteCommence(){
         //Function that inserts a Message Letting everyone know that voting has started
-        vote_message = Message("---Voting will now commense---");
+        message_content = "---Voting will now commense---"
+        vote_message = Message(message_content);
         bool = this.insertMessage(vote_message);
         if (bool == SUCCESS){
             return SUCCESS
