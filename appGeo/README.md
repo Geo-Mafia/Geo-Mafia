@@ -1,15 +1,20 @@
 # Summary of Updates
-  Created the NativeScript Angular base template
-  Enabled strictTemplates on angularCompilerOptions
-  Created tests folder
-  Added angularcli functinality
+*  Created the NativeScript Angular base template
+*  Added the component files for `Bubble`, 'CampusMap', `Player` and `Game` classes
+*  Enabled strictTemplates on angularCompilerOptions
+*  Created tests folder
+*  Added angularcli functionality
 
-  Main work will surround adding components to our app,
-
-  Components will be in the /src/app folder
-  Unit tests will be written in the /src/tests folder
+  Components will be in the `/src/app` folder
+  Unit tests will be written in the `/src/tests` folder
 
 Stuff added is as follows:
+
+# How to preview the app:
+  ### Initial Prep
+  install the [NativeScriptCLI for your OS](https://v7.docs.nativescript.org/angular/start/quick-setup)
+  Once the CLI is installed you can use the Preview to run the app on your phone using `tns preview`
+
 
 # Installed the nativescript-geolocation plugin
   The plugin will be our mode to recieve the player location data
@@ -66,14 +71,14 @@ Here is an explanation on what angular is and how it works:
   https://angular.io/guide/what-is-angular
 
 
-# Running test files 
+# Running test files
 You would need to configure project for unit testing on the testing framework we're using, QUnit. Run the command:
 
 ```
 tns test init --framework qunit
 ```
 
-Then to run the tests (which are located in appGeo/src/tests), run one of the following commands 
+Then to run the tests (which are located in appGeo/src/tests), run one of the following commands
 
 ```
 tns test ios
