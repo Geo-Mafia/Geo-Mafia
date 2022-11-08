@@ -109,7 +109,13 @@ export class Player{
      *      - message: The string that the Player wants to send in chat
     */
     sendChatMessage(chatID, message){
+
         main_chat = this.getChat(chatID);
+
+        if (this.getAliveStatus() == DEAD || main_chat == null){
+            return FAILURE;
+        } 
+
         const msg = new Message(message);
         const sent = main_chat.insertMessage(msg);
         if (sent == SUCCESS) {
@@ -144,17 +150,18 @@ export class Player{
             curr_msg = messages_list[i];
             curr_msg.printMessage();
         }
+
+        return SUCCESS;
     }
 
     /* voteForExecution(): Let current player vote for _another_ player to be executed
      * Input: 
-     *      - A Player object (?) [I think that it should be a username or ID and we do
-     *        do some logic/map class does some logic such that it returns the player in question]
-     *        Ex: Player A votes for Player B. Take as input Player B's username
-     *        (which is the only thing that A can see)
+     *      - A Player ID that will get looked up on the main General Chat 
     */
     voteForExecution(player){
-        player.increaseVoteCount();
+        main_chat = this.getChat(1) //Which a player should always be added to General Chat
+        Voted = main_chat.getPlayer(voted_player_ID) //Which a player would never pick a user ID that isn't present in the chat
+        Voted.increaseVoteCount();
         return SUCCESS;
     }
 
@@ -207,7 +214,7 @@ export class Killer extends Player{
     */
     killPlayer(player_id, All_players){
         //Take in from Game Class Players hash table and remove player_id
-        people_can_be_killed = this.seePeopleInBubble()
+        people_can_be_killed = this.seePeopleInBubble(All_players)
 
         if (people_can_be_killed.includes(player_id) == false){
             // Then the person Killer attempted to kill is NOT in their own bubble
