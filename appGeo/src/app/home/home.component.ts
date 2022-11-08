@@ -6,6 +6,7 @@ import {Player} from '../player/player.component'
   selector: 'Home',
   templateUrl: './home.component.html',
 })
+
 export class HomeComponent implements OnInit {
   bubble1: Bubble;
   constructor() {

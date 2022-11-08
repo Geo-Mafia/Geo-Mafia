@@ -1,7 +1,7 @@
 //file added for simplicity reasons so that it can work with the files added by player dev
 import{Player} from '../player/player.component.js';
 
-import { Component, Inject, Injectable } from '@angular/core';
+import { Component, Inject, Injectable} from '@angular/core';
 
 @Component({
   selector: 'ng-Bubble',
@@ -9,7 +9,7 @@ import { Component, Inject, Injectable } from '@angular/core';
 })
 
 
-export class Bubble {
+export class Bubble{
   //Variables we will be using
   public id: string;
   public xLb: number;
