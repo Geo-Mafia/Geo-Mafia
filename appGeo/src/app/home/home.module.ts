@@ -10,3 +10,4 @@ import { HomeComponent } from './home.component'
   schemas: [NO_ERRORS_SCHEMA],
 })
 export class HomeModule {}
+
