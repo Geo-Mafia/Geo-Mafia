@@ -2,19 +2,5 @@
   <Label text="Home Page"></Label>
 </ActionBar>
 
-<StackLayout>
-  <StackLayout id="container">
-    <Label text = "Players currently in {{bubble1.id}}"></Label>
-    <ListView row="0" [items]="bubble1.List"  class="list-group">
-      <ng-template let-player="item" let-i="index">
-        <StackLayout>
-          <Label text = "{{player.username}}" textWrap="true"></Label>
-        </StackLayout>
-      </ng-template>
-    </ListView>
-
-</StackLayout>
-
-
 <!-- Trying to get the component html transferred struggling with that atm -->
-<StackLayout><ng-Bubble></ng-Bubble></StackLayout>
+<StackLayout><campusMap></campusMap></StackLayout>

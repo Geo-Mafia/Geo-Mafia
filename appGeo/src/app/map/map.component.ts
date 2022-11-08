@@ -20,6 +20,7 @@ export class Bubble{
 
 
     constructor() {
+      this.List = new Array(); //Bubbles will be initialized naturally with an empty list of Players
 
     }
 
@@ -30,7 +31,6 @@ export class Bubble{
       this.xUb = xUb;
       this.yLb = yLb;
       this.yUb = yUb;
-      this.List = new Array(); //Bubbles will be initialized naturally with an empty list of Players
     }
 
     // //methods
@@ -63,8 +63,7 @@ export class Bubble{
     }
 
     get Players() : Array<Player>{
-      //returns list of players in Bubble within the console
-      //will use different implementation in html to display players
+      //returns list of players in Bubble made this a get
       return this.List;
     }
 
