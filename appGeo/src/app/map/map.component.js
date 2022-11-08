@@ -2,7 +2,7 @@
 import{Player} from '../player/player.component.js';
 
 
-export class bubble {
+export class Bubble {
     //variables
     id //float
     xLb //float
@@ -62,3 +62,4 @@ export class bubble {
 
 
 }
+module.exports = Bubble;

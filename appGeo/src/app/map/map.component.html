@@ -1,10 +1,6 @@
-<ActionBar>
-    <Label text="Testing if this will appear"></Label>
-  </ActionBar>
-
 <StackLayout>
   <StackLayout id="container">
-    <Label text = "Players currently in {Bubble}"></Label>
+    <Label text = "Players currently in {{id}}"></Label>
     <ListView row="0" [items]="List"  class="list-group">
       <ng-template let-player="item" let-i="index">
         <StackLayout>

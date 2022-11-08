@@ -70,3 +70,5 @@ export class Bubble {
 
 
 }
+
+export default Bubble;
