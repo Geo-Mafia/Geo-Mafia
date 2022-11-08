@@ -67,6 +67,12 @@ QUnit.test("Inserting Player1 into Chat1", assert => {
     assert.equal(Chat1.getPlayerList(), [Player1]);
     assert.equal(Player1.getChatList(), [Chat1]);
     assert.equal(Player1.getChat(1), Chat1);
+
+    //Since have added Player1 object, should be able to retrieve with getPlayer(1)
+    assert.equal(Chat1.getPlayer(1), Player1);
+
+    //Haven't added Player2 yet, so shouldn't be able to retrieve 
+    assert.equal(Chat1.getPlayer(2), null);
 });
 
 QUnit.test("Player1 sends a message to Chat1", assert => {

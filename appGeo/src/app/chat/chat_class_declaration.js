@@ -73,6 +73,19 @@ export class Chat{
     getPlayerList(){
         return this.player_list;
     }
+    
+    // Function that returns Player object that corresponds to the ID given as input
+    getPlayer(id_to_find){
+        for(i = 0; i < this.player_list.length; i++){
+            curr_player = this.player_list[i];
+            if (curr_player.getUserID() == id_to_find){
+                return curr_player;
+            }
+        }
+        //If couldn't find associated userID --->
+        return null
+    }
+
 
     setLowerID(new_lower){
         //Take care of the edge cases, what if pass lower than 0 ID
