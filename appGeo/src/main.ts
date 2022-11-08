@@ -2,7 +2,9 @@ import { platformNativeScript, runNativeScriptAngularApp } from '@nativescript/a
 
 import { AppModule } from './app/app.module';
 
+console.log('runnnnnnnnnnnnnnnnnnnnning');
 runNativeScriptAngularApp({
   appModuleBootstrap: () => platformNativeScript().bootstrapModule(AppModule),
 });
 
+console.log("doneneee");
