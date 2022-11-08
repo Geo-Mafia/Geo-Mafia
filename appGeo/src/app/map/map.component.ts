@@ -62,7 +62,7 @@ export class Bubble{
 
     }
 
-    get Players() : Array<Player>{
+    get returnPlayers() : Array<Player>{
       //returns list of players in Bubble made this a get
       return this.List;
     }
