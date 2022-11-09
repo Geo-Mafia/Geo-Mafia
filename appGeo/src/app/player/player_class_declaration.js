@@ -1,3 +1,7 @@
+import{Message} from '../chat/chat_class_declaration.js';
+import{Chat} from '../chat/chat_class_declaration.js';
+import{Location} from './location_class_declaration.js';
+
 const DEAD = 0
 const ALIVE = 1
 const DAILYMAXKILLCOUNT = 2
@@ -6,11 +10,20 @@ const FAILURE = -10
 export class Player{
     userID // An int
     username // A String
+    geolocation // Object that is retunred from the Nativescript plugin
     location // A Coordinate Object
     alive // A Boolean
     votes // An int
+    chat_lists // List of Chat Objects that Player is a part of
 
     constructor(userID, username, location, alive){
+        /* NOTE: we may not even need location anymore. After setting up geolocation
+         * we should be able to just use this as well as get functions (getLongitue &
+         * getLatitue) throughout rest of code. May need to refactor this part
+         * SIDENOTE: Since other teams may use the field "location", maybe just delete current
+         *           location and rename "geolocatoin" as new location
+        */
+        this.geolocation = Location();
         this.userID = userID;
         this.username = username;
         this.location = location;
@@ -18,9 +31,32 @@ export class Player{
         this.votes = 0;
     }
 
-    /* getAliveStatus: Return whether or not current player is Alive or Killed */
+    getUserID(){
+        return this.userID;
+    }
+    getUsername(){
+        return this.username;
+    }
+    getGeolocation(){
+        return this.geolocation;
+    }
     getAliveStatus(){
         return this.alive;
+    }
+    getVotes(){
+        return this.votes;
+    }
+    getChatList(){
+        return this.chat_lists;
+    }
+    /* getChat: Function that returns the Chat object corresponding to chatID */
+    getChat(chatID){
+        for(i = 0; i < this.chat_lists.length; i++){
+            if (this.chat_lists[i].getChatID() == chatID):
+                return this.chat_lists[i];
+        }
+        // In case that accessing an unavailable chat
+        return null
     }
 
     getKilled(){
@@ -67,30 +103,65 @@ export class Player{
         return FAILURE;
     }
 
-    sendChatMessage(chat, message){
-        const sent = chat.send(message);
-        if (sent == 1) {
+    /* sendChatMessage: Insert a message that Player wants to send into a Chat
+     * Input:
+     *      - chatID: A chatID representing the Chat Object that should be modified
+     *      - message: The string that the Player wants to send in chat
+    */
+    sendChatMessage(chatID, message){
+
+        main_chat = this.getChat(chatID);
+
+        if (this.getAliveStatus() == DEAD || main_chat == null){
+            return FAILURE;
+        } 
+
+        const msg = new Message(message);
+        const sent = main_chat.insertMessage(msg);
+        if (sent == SUCCESS) {
             return SUCCESS;
         }
-        return FAILURE;
+        else {
+            console.log("error occured during when inserting new message into Chat");
+            return FAILURE;
+        }
     }
 
-    receiveChat(chat, message){
-        const received = chat.receive(message);
-        if (received == 1) {
-            return SUCCESS;
-        }
-        return FAILURE;
+    /* insertChat(): Inserts a Chat object into the Chat List field within Player Object */
+    insertChat(chat){
+        this.chat_lists.push(chat)
+        return SUCCESS;
     }
+
+    /* display: Function that displays all messages in a specific Chat
+     * Input:
+     *      - chatID: The chat we are interseted in accessing
+     * Output: Print out for Player all the message contents
+    */
+    display(chatID){
+        //First, retrieve the Chat Object interested in
+        main_chat = this.getChat(chatID);
+
+        //Secondly, get list of messages from the Chat 
+        messages_list = main_chat.history();
+
+        //Lastly, loop through list of messages and display
+        for (i = 0; i < messages_list.length; i++){
+            curr_msg = messages_list[i];
+            curr_msg.printMessage();
+        }
+
+        return SUCCESS;
+    }
+
     /* voteForExecution(): Let current player vote for _another_ player to be executed
      * Input: 
-     *      - A Player object (?) [I think that it should be a username or ID and we do
-     *        do some logic/map class does some logic such that it returns the player in question]
-     *        Ex: Player A votes for Player B. Take as input Player B's username
-     *        (which is the only thing that A can see)
+     *      - A Player ID that will get looked up on the main General Chat 
     */
     voteForExecution(player){
-        player.increaseVoteCount();
+        main_chat = this.getChat(1) //Which a player should always be added to General Chat
+        Voted = main_chat.getPlayer(voted_player_ID) //Which a player would never pick a user ID that isn't present in the chat
+        Voted.increaseVoteCount();
         return SUCCESS;
     }
 
@@ -125,6 +196,16 @@ export class Killer extends Player{
         this.total_kill_count = 0;
     }
 
+    getTotalKillCount(){
+        return this.total_kill_count;
+    }
+    getRemainingDailyKillCount(){
+        return this.remaining_daily_kill_count;
+    }
+    getMaxDailyKillCount(){
+        return this.max_daily_kill_count;
+    }
+
     /* killPlayer: Allows a killer to eliminate a Player from the game
      * Input: 
      *      -player_id: Player ID of whoever will be eliminated
@@ -133,7 +214,7 @@ export class Killer extends Player{
     */
     killPlayer(player_id, All_players){
         //Take in from Game Class Players hash table and remove player_id
-        people_can_be_killed = this.seePeopleInBubble()
+        people_can_be_killed = this.seePeopleInBubble(All_players)
 
         if (people_can_be_killed.includes(player_id) == false){
             // Then the person Killer attempted to kill is NOT in their own bubble
@@ -152,11 +233,5 @@ export class Killer extends Player{
             // Notify User in some way that they don't have any kills left for the day
             return FAILURE;
         }
-    }
-    getTotalKillCount(){
-        return this.total_kill_count;
-    }
-    getRemainingDailyKillCount(){
-        return this.remaining_daily_kill_count;
     }
 }
