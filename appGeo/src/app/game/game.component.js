@@ -80,7 +80,7 @@ export class Game{
         return this.players.size()
     }
 
-    countRole(countKiller) {
+    getRoleCount(countKiller) {
         const playersList = this.map[Symbol.iterator]();
 
         var count = 0
@@ -95,7 +95,7 @@ export class Game{
 
     }
 
-    fractionRole(countKiller) {
+    getFractionRole(countKiller) {
         return (this.countRole(countKiller) / this.getPlayerCount())
     }
 

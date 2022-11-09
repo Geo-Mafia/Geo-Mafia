@@ -164,7 +164,7 @@ QUnit.test("Game Start and End", function(assert) {
     assert_equal(test_game.getRoleCount(CIVILIAN), 0, "No role assigned, no civilians");
     assert_equal(test_game.getRoleCount(KILLER), 0, "No role assigned, no killers");
 
-    assert_equal(test_game.getFractionCount(CIVILIAN), 0, "No role assigned, no civilians");
+    assert_equal(test_game.getFractionRole(CIVILIAN), 0, "No role assigned, no civilians");
     assert_equal(test_game.getFractionRole(KILLER), 0, "No role assigned, no killers");
 
     assert_equal(test_game.end(),FAILURE, "Unstarted game cannot end");
@@ -177,7 +177,7 @@ QUnit.test("Game Start and End", function(assert) {
     assert_equal(test_game.getRoleCount(CIVILIAN), 3, "Should start game with 3 civilians");
     assert_equal(test_game.getRoleCount(KILLER), 1, "Should start game with 1 killer");
 
-    assert_equal(test_game.getFractionCount(CIVILIAN), 0.8, "Should be 80% civilians");
+    assert_equal(test_game.getFractionRole(CIVILIAN), 0.8, "Should be 80% civilians");
     assert_equal(test_game.getFractionRole(KILLER), 0.2, "Should be 20% killers");
 
     assert_equal(test_game.end(), SUCCESS, "Can stop a game");
