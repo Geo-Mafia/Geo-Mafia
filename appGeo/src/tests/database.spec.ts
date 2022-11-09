@@ -24,7 +24,7 @@ QUnit.test("Firebase write then read API Unit Testing", function(assert) {
 
     // able to read data now
     const read = databaseGet(dir);
-    
+
     read.then(
         result => {
             assert.deepEqual(result, successData);
@@ -50,7 +50,7 @@ QUnit.test("Firebase delete API Unit Testing", function(assert) {
 
     // able to read data now
     const read = databaseGet(dir);
-      
+
     read.then(
         result => {
             assert.deepEqual(result, data);
@@ -60,7 +60,7 @@ QUnit.test("Firebase delete API Unit Testing", function(assert) {
                 throw new Error('error: ' + error);
               });
     });
-  
+
     // delete data now
     assert.equal(databaseRemove(dir), true);
 
@@ -96,7 +96,7 @@ QUnit.test("Update API Unit Testing", function(assert) {
         email: "new email",
         profile_picture : "test2"
     };
-  
+
     // update data now
     assert.equal(databaseUpdate(dir, data2), true);
 
