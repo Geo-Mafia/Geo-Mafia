@@ -86,7 +86,7 @@ QUnit.test("Add Player2 into Chat 1 and see if can see the message previously se
     assert.equal(Chat1.insertPlayer(Player2), SUCCESS);
     assert.equal(Chat1.getPlayerList(), [Player1, Player2]);
     assert.equal(Player2.getChatList(), [Chat1]);
-    assert.eequal(Player2.getChat(1), Chat1);
+    assert.equal(Player2.getChat(1), Chat1);
     //The Chat Objects that are returned by both Player 2 and Player 1 _should_ be the same
     assert.equal(Player2.getChat(1), Player1.getChat(1));
     var msg_list_for_Player2 = Player2.getChat(1).history();
