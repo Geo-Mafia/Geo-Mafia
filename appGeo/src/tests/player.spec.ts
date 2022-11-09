@@ -13,7 +13,7 @@ const SUCCESS = 10
 const FAILURE = -10
 const DAILYMAXKILLCOUNT = 2
 
-export class Location{
+class Location{
     location // An int
 
     constructor(location){
