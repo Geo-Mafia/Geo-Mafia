@@ -101,6 +101,7 @@ Connection should be seen simply by running Unit Tests as mentioned in 3
 ### Frontend
 1) Added Chats into this implementation when previous this was left for for next implementation cycle.
 2) Developed UI features for bubbles.
+3) Implemented all functions for game logic beyond the start and end game handling, which have been planned out.
 
 
 ### Backend
