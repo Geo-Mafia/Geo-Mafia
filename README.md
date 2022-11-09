@@ -68,7 +68,7 @@ No additional inputs required for map tests.
 
 
 ### Backend
-Connection should be seen simply by running Unit Tests as mentioned in 3
+Connection should be seen simply by running Unit Tests as mentioned in 3 above. 4/4 QUnit Tests should pass.
 
 
 
