@@ -7,6 +7,33 @@ Run the following commands to install necessary packages:
 cd appGeo
 npm install
 ```
+Then, install all necessary dependencies as listed in https://docs.nativescript.org/environment-setup.html. For MacOS users, you may install
+```bash
+brew install ruby@2.7
+brew link ruby@2.7
+sudo gem install cocoapods
+sudo gem install xcodeproj
+python3 -m pip install --upgrade pip
+python3 -m pip install six
+npm install -g nativescript
+```
+for the iOS simulator. Check that your device is configured correctly by running 
+```bash
+tns doctor ios
+```
+
+Once you installed everything and the command above confirms that you have configured everything correctly, you may run the command 
+```bash
+tns run ios
+```
+to see the app. 
+
+## Test
+After installing everything from above, run 
+```bash
+tns test ios
+```
+
 ### Apple Silicon ARM64 Processors (M1, M2) 
 There is compilation error when you do the commands above. The error is not fixable from our side, because it seems to be a human error coming from the installation. **Therefore, ARM64 Processors users must do the followings.** This is recommended to be done between ```npm install``` and ```tns run ios```, but it is okay even if  you fix it after the last command ```tns run ios```. It just will print out error that looks like this:
 ```
