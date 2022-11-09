@@ -29,7 +29,7 @@ typings/
 !.vscode/extensions.json
 
 #Google Firebase Credentials
-App_Resources/iOS/GoogleService-Info.plist
+#App_Resources/iOS/GoogleService-Info.plist
 
 # Ignore Gradle project-specific cache directory
 .gradle
