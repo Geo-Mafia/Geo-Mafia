@@ -53,7 +53,8 @@ export class Bubble{
 
     inBubble(Player){
       //checks player location to see if they are within bubble boundaries
-      if (Player.location > this.xLb && Player.location < this.xUb) {
+      if (Player.location > this.xLb && Player.location < this.xUb &&
+          Player.location[1] >= this. yLb && Player.location[1] <= this.yUb) {
         //for now implementation is simple based on playerdev's write up
         return true;
       } else {
