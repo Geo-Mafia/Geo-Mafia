@@ -64,6 +64,7 @@ tns test ios
 
 ## 4) Acceptance Tests
 ### Frontend 
+No additional inputs required for map tests.
 
 
 ### Backend
@@ -75,7 +76,7 @@ Connection should be seen simply by running Unit Tests as mentioned in 3
 ### Frontend
 1) The Player Class (and the subclasses of Civilian and Killer) have been declared and implemented. This includes the interaction between a Player and Chat Object where the Player wants to send a message to a specific Chat and _every_ player who is currently a part of that Chat will be able to retrive the message
 2) Game Logic
-3) Map and Bubble
+3) The bubble class has been implemented and should have functionality for creating bubbles and adding, removing, and listing players. A specific campus map bubble has been initialized and there should be some UI functionality for seeing bubbles and who is in them.
 
 
 ### Backend
@@ -89,7 +90,7 @@ Connection should be seen simply by running Unit Tests as mentioned in 3
 1) Player Declaration and tests - Annabelle & Jose.
 2) Chat Declaration and tests - Jose.
 3) Game Logic - Annabelle & Noah.
-4) Map and Bubble - Fatima & Nanci
+4) Map and Bubble - Fatimah & Nanci
 
 ### Backend
 1) Firebase Configuration - Kyu & Calvin.
@@ -99,6 +100,7 @@ Connection should be seen simply by running Unit Tests as mentioned in 3
 ## 7) Changes
 ### Frontend
 1) Added Chats into this implementation when previous this was left for for next implementation cycle.
+2) Developed UI features for bubbles.
 
 
 ### Backend
