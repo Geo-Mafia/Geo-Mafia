@@ -73,6 +73,9 @@ Connection should be seen simply by running Unit Tests as mentioned in 3
 
 ## 5) Text Description of what has been Implemented
 ### Frontend
+1) The Player Class (and the subclasses of Civilian and Killer) have been declared and implemented. This includes the interaction between a Player and Chat Object where the Player wants to send a message to a specific Chat and _every_ player who is currently a part of that Chat will be able to retrive the message
+2) Game Logic
+3) Map and Bubble
 
 
 ### Backend
@@ -83,6 +86,10 @@ Connection should be seen simply by running Unit Tests as mentioned in 3
 
 ## 6) Who did What
 ### Frontend
+1) Player Declaration and tests - Annabelle & Jose.
+2) Chat Declaration and tests - Jose.
+3) Game Logic - Annabelle & Noah.
+4) Map and Bubble - Fatima & Nanci
 
 ### Backend
 1) Firebase Configuration - Kyu & Calvin.
@@ -91,6 +98,8 @@ Connection should be seen simply by running Unit Tests as mentioned in 3
 
 ## 7) Changes
 ### Frontend
+1) Added Chats into this implementation when previous this was left for for next implementation cycle.
+
 
 ### Backend
 1) Dropped Android, and focused only on iOS.
