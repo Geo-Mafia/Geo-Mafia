@@ -55,8 +55,10 @@ to see the app.
 When running the app, you should see a single line "Google-signin", which when clicked will lead you to the google signin page. Following this you should be able to signin and information based on the signin will be console logged.
 
 ## 3) How to Test
-After installing everything from above, run 
+After installing everything from above, you need to configure project for unit testing on the testing framework we're using, QUnit. Then run the commands:
+
 ```bash
+tns test init --framework qunit
 tns test ios
 ```
 
@@ -74,16 +76,18 @@ Connection should be seen simply by running Unit Tests as mentioned in 3
 
 
 ### Backend
-Firebase has been configured to work with this repository and communication is confirmed. Firebase API has been setup and documented. Google logins have been setup and confirmed to be working.
+1) Firebase has been configured to work with this repository and communication is confirmed. 
+2) Firebase API has been setup and documented. 
+3) Google logins have been setup and confirmed to be working.
 
 
 ## 6) Who did What
 ### Frontend
 
 ### Backend
-Firebase Configuration - Kyu & Calvin.
-Firebase API/Documentation - Kyu & Jason. 
-Firebase Login - Calvin & Jason.
+1) Firebase Configuration - Kyu & Calvin.
+2) Firebase API/Documentation - Kyu & Jason. 
+3) Firebase Login - Calvin & Jason.
 
 ## 7) Changes
 ### Frontend
