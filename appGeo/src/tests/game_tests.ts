@@ -1,4 +1,5 @@
-/*
+/* Test change
+
 QUnit.test("Game Constructors and Basic Getters and Setters", function(assert) {
     const now = new Date();
     const next_week = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
