@@ -81,16 +81,16 @@ Firebase has been configured to work with this repository and communication is c
 ### Frontend
 
 ### Backend
-Firebase Configuration - Kyu & Calvin 
-Firebase API/Documentation - Kyu & Jason 
-Firebase Login - Calvin & Jason
+Firebase Configuration - Kyu & Calvin.
+Firebase API/Documentation - Kyu & Jason. 
+Firebase Login - Calvin & Jason.
 
 ## 7) Changes
 ### Frontend
 
 ### Backend
-1)Dropped Android, and focused only on iOS.
-2)Removed testing for security rules since those were unnecessary.
+1) Dropped Android, and focused only on iOS.
+2) Removed testing for security rules since those were unnecessary.
 
 ## 8) Other
 ### Frontend
