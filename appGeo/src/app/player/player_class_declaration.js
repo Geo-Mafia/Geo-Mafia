@@ -10,7 +10,7 @@ const FAILURE = -10
 export class Player{
     userID // An int
     username // A String
-    geolocation // Object that is retunred from the Nativescript plugin
+    //geolocation // Object that is retunred from the Nativescript plugin
     location // A Coordinate Object
     alive // A Boolean
     votes // An int
@@ -23,7 +23,7 @@ export class Player{
          * SIDENOTE: Since other teams may use the field "location", maybe just delete current
          *           location and rename "geolocatoin" as new location
         */
-        this.geolocation = Location();
+        //this.geolocation = Location();
         this.userID = userID;
         this.username = username;
         this.location = location;
@@ -52,7 +52,8 @@ export class Player{
     /* getChat: Function that returns the Chat object corresponding to chatID */
     getChat(chatID){
         for(i = 0; i < this.chat_lists.length; i++){
-            if (this.chat_lists[i].getChatID() == chatID):
+            curr_chat = this.chat_lists[i]
+            if (curr_chat.getChatID() == chatID)
                 return this.chat_lists[i];
         }
         // In case that accessing an unavailable chat

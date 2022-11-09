@@ -1,7 +1,7 @@
-import {Chat} from 'src/app/chat/chat_class_declaration.js';
-import {Message} from 'scr/app/chat/chat_class_declaration.js';
-import {Player} from 'src/app/player/player_class_declaration.js';
-import {Killer} from 'src/app/player/player_class_declaration.js';
+import {Chat} from '../app/chat/chat_class_declaration.js';
+import {Message} from '../app/chat/chat_class_declaration.js';
+import {Player} from '../app/player/player_class_declaration.js';
+import {Killer} from '../app/player/player_class_declaration.js';
 
 QUnit.module("chat_tests");
 
@@ -77,7 +77,7 @@ QUnit.test("Inserting Player1 into Chat1", assert => {
 
 QUnit.test("Player1 sends a message to Chat1", assert => {
     assert.equal(Player1.sendChatMessage(1, "First Message Sent"), SUCCESS);
-    msg_list = Chat1.history();
+    var msg_list = Chat1.history();
     assert.equal(msg_list.length, 1)
     assert.equal(msg_list[1].getMessageContent(), "First Message Sent")
 });
@@ -89,14 +89,14 @@ QUnit.test("Add Player2 into Chat 1 and see if can see the message previously se
     assert.eequal(Player2.getChat(1), Chat1);
     //The Chat Objects that are returned by both Player 2 and Player 1 _should_ be the same
     assert.equal(Player2.getChat(1), Player1.getChat(1));
-    msg_list_for_Player2 = Player2.getChat(1).history();
+    var msg_list_for_Player2 = Player2.getChat(1).history();
     assert.equal(msg_list_for_Player2.length, 1);
     assert.equal(msg_list_for_Player2[1].getMessageContent(), "First Message Sent");
 });
 
 QUnit.test("Inserting messages into Chat2", assert => {
     assert.equal(Chat2.insertMessage(Message2), SUCCESS);
-    msg_list = Chat2.history();
+    var msg_list = Chat2.history();
     assert.equal(msg_list.length, 1);
     assert.equal(msg_list[1].getMessageContent(), "Testing Message 2");
     //Ensure that the Message ID was set when being inserted into the Chat and
@@ -107,28 +107,28 @@ QUnit.test("Inserting messages into Chat2", assert => {
 /* The followin test would show how the general Game Logic would play out! */
 QUnit.test("Begin a Vote in Chat 1 with Player 1 & 2; and Killer 1", assert => {
     Chat1.insertPlayer(Killer1);
-    player_list = Chat1.getPlayerList();
+    var player_list = Chat1.getPlayerList();
     assert.equal(player_list.length, 3);
 
     //Before Sending out the Vote Commence
-    msg_list_before = Chat1.history();
+    var msg_list_before = Chat1.history();
     assert.equal(msg_list_before.length, 1)
 
     //Send out the Vote Commence
     assert.equal(Chat1.voteCommence(), SUCCESS);
 
     //After Sending out the Vote Commence
-    msg_list_after = Chat1.history();
+    var msg_list_after = Chat1.history();
     assert.equal(msg_list_after.length, 2);
 
     Player1.voteForExecution(3);
-    assert.equal(Player3.getVotes(), 1);
+    assert.equal(Killer1.getVotes(), 1);
 
     Player2.voteForExecution(3);
-    assert.equal(Player3.getVotes(), 2);
+    assert.equal(Killer1.getVotes(), 2);
 
     Killer1.voteForExecution(1);
-    assert.equal(Player1.getVotes(), 1);
+    assert.equal(Killer1.getVotes(), 1);
 
     //Killer 1 has been successfully voted off!!! -------------->>>>>>>>>>>>>>>
     assert.equal(Killer1.getKilled(), SUCCESS);
@@ -136,7 +136,7 @@ QUnit.test("Begin a Vote in Chat 1 with Player 1 & 2; and Killer 1", assert => {
 
     //Killer 1 should no longer be able to send messages
     assert.equal(Killer1.sendChatMessage(1, "This should never be sent"), FAILURE);
-    after_msg_list = Chat1.history();
+    var after_msg_list = Chat1.history();
     assert.equal(after_msg_list.length, 2)
 });
 
