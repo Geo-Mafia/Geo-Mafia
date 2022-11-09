@@ -18,7 +18,10 @@
     "@nativescript/firebase-core": "^2.4.4",
     "@nativescript/theme": "~3.0.2",
     "@nativescript/unit-test-runner": "^3.0.4",
+    "firebase": "^9.13.0",
     "nativescript-geolocation": "^5.1.0",
+    "nativescript-google-login": "^1.4.0",
+    "nativescript-plugin-firebase": "^10.6.3",
     "rxjs": "~7.5.0",
     "shelljs": "^0.8.5",
     "zone.js": "~0.11.5"

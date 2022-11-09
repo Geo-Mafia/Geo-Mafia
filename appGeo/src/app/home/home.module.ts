@@ -11,3 +11,4 @@ import {CampusMap} from '../map/campus-map.component'
   schemas: [NO_ERRORS_SCHEMA],
 })
 export class HomeModule {}
+

@@ -1,4 +1,3 @@
-import { firebase } from "@nativescript/firebase-core";
 import { databaseInit, databaseAdd, databaseGet, databaseUpdate, databaseRemove, databaseEventListener } from "../modules/database";
 
 

@@ -1,4 +1,5 @@
-/*
+/* Test change
+
 QUnit.test("Game Constructors and Basic Getters and Setters", function(assert) {
     const now = new Date();
     const next_week = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
@@ -161,11 +162,11 @@ QUnit.test("Game Start and End", function(assert) {
     test_game.add(player5);
 
     assert_equal(test_game.getPlayerCount(), 3, "Can count players outside of game");
-    assert_equal(test_game.getRoleCount(true), 0, "No role assigned, no civilians");
-    assert_equal(test_game.getRoleCount(false), 0, "No role assigned, no killers");
+    assert_equal(test_game.getRoleCount(CIVILIAN), 0, "No role assigned, no civilians");
+    assert_equal(test_game.getRoleCount(KILLER), 0, "No role assigned, no killers");
 
-    assert_equal(test_game.getFractionCount(true), 0, "No role assigned, no civilians");
-    assert_equal(test_game.getFractionRole(false), 0, "No role assigned, no killers");
+    assert_equal(test_game.getFractionRole(CIVILIAN), 0, "No role assigned, no civilians");
+    assert_equal(test_game.getFractionRole(KILLER), 0, "No role assigned, no killers");
 
     assert_equal(test_game.end(),FAILURE, "Unstarted game cannot end");
     assert_false(test_game.isGameActive(), "Unstarted game is not active");
@@ -174,11 +175,11 @@ QUnit.test("Game Start and End", function(assert) {
     assert_true(test_game.isGameActive(), "Started game is active");
 
     assert_equal(test_game.getPlayerCount(), 5, "Can count players in game");
-    assert_equal(test_game.getRoleCount(true), 3, "Should start game with 3 civilians");
-    assert_equal(test_game.getRoleCount(false), 1, "Should start game with 1 killer");
+    assert_equal(test_game.getRoleCount(CIVILIAN), 3, "Should start game with 3 civilians");
+    assert_equal(test_game.getRoleCount(KILLER), 1, "Should start game with 1 killer");
 
-    assert_equal(test_game.getFractionCount(true), 0.8, "Should be 80% civilians");
-    assert_equal(test_game.getFractionRole(false), 0.2, "Should be 20% killers");
+    assert_equal(test_game.getFractionRole(CIVILIAN), 0.8, "Should be 80% civilians");
+    assert_equal(test_game.getFractionRole(KILLER), 0.2, "Should be 20% killers");
 
     assert_equal(test_game.end(), SUCCESS, "Can stop a game");
     assert_false(test_game.isGameActive(), "Stopped game is not active");
