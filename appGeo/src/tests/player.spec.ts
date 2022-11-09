@@ -1,6 +1,11 @@
-import {Chat} from '../app/chat/chat_class_declaration.js';
-import {Player} from '../app/player/player_class_declaration.js';
-import {Killer} from '../app/player/player_class_declaration.js';
+// import {Chat} from '../app/chat/chat_class_declaration.js';
+// import {Player} from '../app/player/player_class_declaration.js';
+// import {Killer} from '../app/player/player_class_declaration.js';
+
+import {Chat} from '../app/chat/chat_class_declaration';
+import {Player} from '../app/player/player_class_declaration';
+import {Killer} from '../app/player/player_class_declaration';
+
 
 const DEAD = 0
 const ALIVE = 1
@@ -33,13 +38,13 @@ QUnit.test("a player gets killed", assert => {
     assert.equal(player1.alive, DEAD);
 });
 
-QUnit.test("takes a snapshot of player locations", assert => {
-    assert.equal(player1.takeSnapshot(), SUCCESS);
-});
+// QUnit.test("takes a snapshot of player locations", assert => {
+//     assert.equal(player1.takeSnapshot(), SUCCESS);
+// });
 
-QUnit.test("player opens a snapshot", assert => {
-    assert.equal(player1.openSnapshot(), SUCCESS);
-});
+// QUnit.test("player opens a snapshot", assert => {
+//     assert.equal(player1.openSnapshot(), SUCCESS);
+// });
 
 var playerMap = new Map();
 playerMap.set('player1', Location1);
@@ -52,9 +57,9 @@ assert => {
     assert.equal(player1.seePeopleInBubble(playerMap), ['player2']);
 });
 
-QUnit.test("player opens a chat message", assert => {
-    assert.equal(player1.openChat(), SUCCESS);
-});
+// QUnit.test("player opens a chat message", assert => {
+//     assert.equal(player1.openChat(), SUCCESS);
+// });
 
 QUnit.test("player sends out a chat message", assert => {
     assert.equal(player1.sendChatMessage(1, "Message that we are sending"), SUCCESS);

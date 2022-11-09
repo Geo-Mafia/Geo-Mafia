@@ -1,6 +1,6 @@
-import{Message} from '../chat/chat_class_declaration.js';
-import{Chat} from '../chat/chat_class_declaration.js';
-//import{Location} from './location_class_declaration.js';
+import{Message} from '../chat/chat_class_declaration';
+import{Chat} from '../chat/chat_class_declaration';
+//import{Location} from './location_class_declaration';
 
 const DEAD = 0
 const ALIVE = 1
@@ -51,8 +51,8 @@ export class Player{
     }
     /* getChat: Function that returns the Chat object corresponding to chatID */
     getChat(chatID){
-        for(i = 0; i < this.chat_lists.length; i++){
-            curr_chat = this.chat_lists[i]
+        for(var i = 0; i < this.chat_lists.length; i++){
+            var curr_chat = this.chat_lists[i]
             if (curr_chat.getChatID() == chatID)
                 return this.chat_lists[i];
         }
@@ -65,28 +65,28 @@ export class Player{
         return SUCCESS;
     }
 
-    takeSnapshot(){
-        const scene_capture = new Snapshot() //Create a Snapshot object
-        // Note: Snapshot class not done yet, will want some function to add
-        // all information required for a snapshot
-        if (scene_capture == 1){
-            return SUCCESS;
-        }
-        return FAILURE;
-    }
+    // takeSnapshot(){
+    //     const scene_capture = new Snapshot() //Create a Snapshot object
+    //     // Note: Snapshot class not done yet, will want some function to add
+    //     // all information required for a snapshot
+    //     if (scene_capture == 1){
+    //         return SUCCESS;
+    //     }
+    //     return FAILURE;
+    // }
 
-    openSnapshot(Snapshot){
-        const open = Snapshot.view();
-        if (open == 1) {
-            return SUCCESS;
-        }
-        return FAILURE;
-    }
+    // openSnapshot(Snapshot){
+    //     const open = Snapshot.view();
+    //     if (open == 1) {
+    //         return SUCCESS;
+    //     }
+    //     return FAILURE;
+    // }
 
     seePeopleInBubble(All_players){
         // Take in as input hash table from Map Class of Players
         // The hash table maps each player's userID to the player's location
-        player_list = [];
+        var player_list = [];
         // Sift through Hash Table and find nearby players
         for (var i in All_players) {
             if (All_players[i] = this.location) {
@@ -111,7 +111,7 @@ export class Player{
     */
     sendChatMessage(chatID, message){
 
-        main_chat = this.getChat(chatID);
+        var main_chat = this.getChat(chatID);
 
         if (this.getAliveStatus() == DEAD || main_chat == null){
             return FAILURE;
@@ -141,14 +141,14 @@ export class Player{
     */
     display(chatID){
         //First, retrieve the Chat Object interested in
-        main_chat = this.getChat(chatID);
+        var main_chat = this.getChat(chatID);
 
         //Secondly, get list of messages from the Chat 
-        messages_list = main_chat.history();
+        var messages_list = main_chat.history();
 
         //Lastly, loop through list of messages and display
-        for (i = 0; i < messages_list.length; i++){
-            curr_msg = messages_list[i];
+        for (var i = 0; i < messages_list.length; i++){
+            var curr_msg = messages_list[i];
             curr_msg.printMessage();
         }
 
@@ -160,8 +160,8 @@ export class Player{
      *      - A Player ID that will get looked up on the main General Chat 
     */
     voteForExecution(voted_player_ID){
-        main_chat = this.getChat(1) //Which a player should always be added to General Chat
-        Voted = main_chat.getPlayer(voted_player_ID) //Which a player would never pick a user ID that isn't present in the chat
+        var main_chat = this.getChat(1) //Which a player should always be added to General Chat
+        var Voted = main_chat.getPlayer(voted_player_ID) //Which a player would never pick a user ID that isn't present in the chat
         Voted.increaseVoteCount();
         return SUCCESS;
     }
@@ -190,8 +190,8 @@ export class Killer extends Player{
     remaining_daily_kill_count //An integer
     total_kill_count //An integer
 
-    constructor(userID, username, location, alive, votes){
-        super(userID, username, location, alive, votes);
+    constructor(userID, username, location, alive){
+        super(userID, username, location, alive);
         this.max_daily_kill_count = DAILYMAXKILLCOUNT;
         this.remaining_daily_kill_count = DAILYMAXKILLCOUNT;
         this.total_kill_count = 0;
@@ -215,7 +215,7 @@ export class Killer extends Player{
     */
     // killPlayer(player_id, All_players){
     //     //Take in from Game Class Players hash table and remove player_id
-    //     people_can_be_killed = this.seePeopleInBubble(All_players)
+    //     var people_can_be_killed = this.seePeopleInBubble(All_players)
 
     //     if (people_can_be_killed.includes(player_id) == false){
     //         // Then the person Killer attempted to kill is NOT in their own bubble

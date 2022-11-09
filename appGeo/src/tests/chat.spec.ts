@@ -1,7 +1,12 @@
-import {Chat} from '../app/chat/chat_class_declaration.js';
-import {Message} from '../app/chat/chat_class_declaration.js';
-import {Player} from '../app/player/player_class_declaration.js';
-import {Killer} from '../app/player/player_class_declaration.js';
+// import {Chat} from '../app/chat/chat_class_declaration.js';
+// import {Message} from '../app/chat/chat_class_declaration.js';
+// import {Player} from '../app/player/player_class_declaration.js';
+// import {Killer} from '../app/player/player_class_declaration.js';
+
+import {Chat} from '../app/chat/chat_class_declaration';
+import {Message} from '../app/chat/chat_class_declaration';
+import {Player} from '../app/player/player_class_declaration';
+import {Killer} from '../app/player/player_class_declaration';
 
 QUnit.module("chat_tests");
 
