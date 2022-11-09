@@ -57,3 +57,6 @@ You can also configure your iOS simulator setting by using the command
 tns doctor ios
 ```
 If something else happens which prevents you from running the program let us know (Kyu & Calvin).
+
+## Google Logins
+After making sure the simulator runs above, by following the aforementioned steps, and the app runs. As of now, there should be some text "Google sign-in" when you click on it, leads you to a google sign in page. In the next iteration, the UI will be changed by the frontend team and linked to individual players.
