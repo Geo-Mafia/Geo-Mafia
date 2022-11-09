@@ -4,4 +4,5 @@
 // To build for device with XCode you need to specify your development team.
 // DEVELOPMENT_TEAM = YOUR_TEAM_ID;
 ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-EXCLUDED_ARCHS[sdk=iphonesimulator*] = arm64
+EXCLUDED_ARCHS[sdk=iphonesimulator*] = arm64;
+IPHONEOS_DEPLOYMENT_TARGET = 12.0;
