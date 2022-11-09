@@ -87,7 +87,7 @@ Connection should be seen simply by running Unit Tests as mentioned in 3
 ### Backend
 1) Firebase Configuration - Kyu & Calvin.
 2) Firebase API/Documentation - Kyu & Jason. 
-3) Firebase Login - Calvin & Jason.
+3) Google Login/Authentication through Firebase (Also Button to test Google login) - Calvin & Jason.
 
 ## 7) Changes
 ### Frontend
