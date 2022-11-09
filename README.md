@@ -75,7 +75,7 @@ Connection should be seen simply by running Unit Tests as mentioned in 3
 ## 5) Text Description of what has been Implemented
 ### Frontend
 1) The Player Class (and the subclasses of Civilian and Killer) have been declared and implemented. This includes the interaction between a Player and Chat Object where the Player wants to send a message to a specific Chat and _every_ player who is currently a part of that Chat will be able to retrive the message
-2) Game Logic
+2) The game class has been declared and implemented. It is able to manage the list of players involved in the game, chats in the game, and all snapshots taken.
 3) The bubble class has been implemented and should have functionality for creating bubbles and adding, removing, and listing players. A specific campus map bubble has been initialized and there should be some UI functionality for seeing bubbles and who is in them.
 
 
