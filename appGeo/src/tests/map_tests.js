@@ -11,32 +11,32 @@ QUnit.test("Bubble Initialization Tests", function(assert) {
     let testbub = new bubble("testbubble", 0, 10, 5, 15);
 
     assert.equal(testbub.ID, "testbubble", "id should be testbubble");
-    assert.equal(testbub.x_lb, 0, "x_lb should be 0");
-    assert.equal(testbub.x_ub, 10, "x_ub should be 10");
-    assert.equal(testbub.y_lb, 5, "y_lb should be 5");
-    assert.equal(testbub.y_ub, 15, "y_up should be 15");
+    assert.equal(testbub.xLb, 0, "xLb should be 0");
+    assert.equal(testbub.xUb, 10, "xUb should be 10");
+    assert.equal(testbub.yLb, 5, "yLb should be 5");
+    assert.equal(testbub.yLb, 15, "yUb should be 15");
     assert.equal(testbub.List.size(), 0, "player list should be empty");
     assert.equal(testbub.returnPlayers(), null, "player list should be empty");
 });
 
 QUnit.test("Bubble Location Tests", function(assert) {
     let testbub = new bubble("testbubble", 0, 15, 5, 10);
-    let loc = [20, 20];
+    let loc = {x:20, y:20};
     let testPlayer = new Player(12, Test, loc, true);
 
     assert.false(testbub.inBubble(testPlayer), "player should not be in bubble");
-    testPlayer.location = [10, 15];
+    testPlayer.location = {x:10, y:15};
     assert.false(testbub.inBubble(testPlayer), "player should not be in bubble");
-    testPlayer.location = [16, 9];
+    testPlayer.location = {x:16, y:9};
     assert.false(testbub.inBubble(testPlayer), "player should not be in bubble");
-    testPlayer.location = [-1, 4];
+    testPlayer.location = {x:-1, y:4};
     assert.false(testbub.inBubble(testPlayer), "player should not be in bubble");
     
-    testPlayer.location = [9,9];
+    testPlayer.location = {x:9, y:9};
     assert.true(testbub.inBubble(testPlayer), "player should be in bubble");
-    testPlayer.location = [0,5];
+    testPlayer.location = {x:0, y:5};
     assert.true(testbub.inBubble(testPlayer), "player should be in bubble");
-    testPlayer.location = [15,10];
+    testPlayer.location = {x:15, y:10};
     assert.true(testbub.inBubble(testPlayer), "player should be in bubble");
 });
 
@@ -45,7 +45,7 @@ QUnit.test("Bubble-Player Tests", function(assert) {
     assert.equal(testbub.List.size(), 0, "player list should be empty");
     assert.equal(testbub.returnPlayers(), null, "player list should be empty");
 
-    let loc = [20, 20];
+    let loc = {x:20, y:20};
     let testPlayer = new Player(12, Test, loc, true);
     assert.true(testbub.addPlayer(testPlayer), "player1 should be added to bubble");
     assert.equal(testbub.List.size(), 1, "player list should have one element");
