@@ -28,6 +28,8 @@ tns run ios
 ```
 to see the app. 
 
+When running the app, you should see a single line "Google-signin", which when clicked will lead you to the google signin page. Following this you should be able to signin and information based on the signin will be console logged.
+
 ## Test
 After installing everything from above, run 
 ```bash
