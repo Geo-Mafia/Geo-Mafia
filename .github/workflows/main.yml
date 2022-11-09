@@ -2,10 +2,10 @@ name: MacOS Workflow
 on:
   push:
     branches:
-      - main
-  pull_request:
-    branches:
-      - main
+      - workflow
+  #pull_request:
+   # branches:
+    #  - main
 
 jobs:
   ios_build_test:
