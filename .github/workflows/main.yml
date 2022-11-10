@@ -52,5 +52,5 @@ jobs:
         working-directory: appGeo/
       
       - name: tns test run
-        run: tns test ios
+        run: timeout 10 test ios || code=$?; if [[ $code -ne 124 && $code -ne 0 ]]; then exit $code; fi
         working-directory: appGeo/
