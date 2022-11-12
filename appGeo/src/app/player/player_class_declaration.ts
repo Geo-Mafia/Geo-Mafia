@@ -165,6 +165,10 @@ export class Player{
      *      - A Player ID that will get looked up on the main General Chat 
     */
     voteForExecution(voted_player_ID){
+        if (this.getAliveStatus() == DEAD){
+            return FAILURE;
+        }
+
         var main_chat = this.getChat(1) //Which a player should always be added to General Chat
         var Voted = main_chat.getPlayer(voted_player_ID) //Which a player would never pick a user ID that isn't present in the chat
         Voted.increaseVoteCount();

@@ -60,12 +60,13 @@ assert => {
 // });
 
 QUnit.test("player sends out a chat message", assert => {
-    assert.equal(player1.sendChatMessage(1, "Message that we are sending"), SUCCESS);
+    assert.equal(player2.sendChatMessage(1, "Message that we are sending"), SUCCESS);
 });
 
 QUnit.test("player votes for another player", assert => {
     assert.equal(player1.voteForExecution(2), SUCCESS);
-    assert.equal(player2.votes, 1);
+    assert.equal(player2.voteForExecution(3), SUCCESS);
+    assert.equal(killer1.votes, 1);
 });
 
 // QUnit.test("killer kills a player", assert => {
