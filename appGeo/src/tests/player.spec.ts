@@ -51,9 +51,8 @@ var all_players = new Array(player1, player2, killer1);
 // Need to user the player_class_declaration
 QUnit.test("player checks the info of other people in the same bubble", 
 assert => {
-    var new_arr = new Array(player2)
     var in_bubble = player2.seePeopleInBubble(all_players);
-    assert.equal(in_bubble.length, 2)
+    assert.equal(in_bubble.length, 1)
     assert.equal(in_bubble[0].getUserID(), player2.getUserID());
 });
 
