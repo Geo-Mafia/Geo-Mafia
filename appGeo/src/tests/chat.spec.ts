@@ -10,6 +10,9 @@ import {Killer} from '../app/player/player_class_declaration';
 
 QUnit.module("chat_tests");
 
+//--------IMPORTANT: .length returns 1 higher than the highest index!!!--------
+
+
 const SUCCESS = 10
 const FAILURE = -10
 const DEAD = 0
@@ -89,25 +92,26 @@ QUnit.test("Player1 sends a message to Chat1", assert => {
     assert.equal(Player1.sendChatMessage(1, "First Message Sent"), SUCCESS);
     var msg_list = Chat1.history();
     var msg1 = msg_list[0]
-    assert.equal(msg_list.length, 1)
+    assert.equal(msg_list.length, 2)
     assert.equal(msg1.getMessageContent(), "First Message Sent")
 });
 
 QUnit.test("Add Player2 into Chat 1 and see if can see the message previously sent", assert => {
+    assert.equal(Chat1.insertPlayer(Player2), SUCCESS);
     //The Chat Objects that are returned by both Player 2 and Player 1 _should_ be the same
     var player2_chat = Player2.getChat(1);
     var player1_chat = Player1.getChat(1);
     assert.equal(player2_chat.getChatID(), player1_chat.getChatID());
 
     var msg_list_for_Player2 = player2_chat.history();
-    assert.equal(msg_list_for_Player2.length, 1);
+    assert.equal(msg_list_for_Player2.length, 2);
     assert.equal(msg_list_for_Player2[0].getMessageContent(), "First Message Sent");
 });
 
 QUnit.test("Inserting messages into Chat2", assert => {
     assert.equal(Chat2.insertMessage(Message2), SUCCESS);
     var msg_list = Chat2.history();
-    assert.equal(msg_list.length, 1);
+    assert.equal(msg_list.length, 2);
     assert.equal(msg_list[0].getMessageContent(), "Testing Message 2");
     //Ensure that the Message ID was set when being inserted into the Chat and
     //is no longer the default value
@@ -122,14 +126,14 @@ QUnit.test("Begin a Vote in Chat 1 with Player 1 & 2; and Killer 1", assert => {
 
     //Before Sending out the Vote Commence
     var msg_list_before = Chat1.history();
-    assert.equal(msg_list_before.length, 1)
+    assert.equal(msg_list_before.length, 2)
 
     //Send out the Vote Commence
     assert.equal(Chat1.voteCommence(), SUCCESS);
 
     //After Sending out the Vote Commence
     var msg_list_after = Chat1.history();
-    assert.equal(msg_list_after.length, 2);
+    assert.equal(msg_list_after.length, 3);
 
     Player1.voteForExecution(3);
     assert.equal(Killer1.getVotes(), 1);
@@ -147,7 +151,7 @@ QUnit.test("Begin a Vote in Chat 1 with Player 1 & 2; and Killer 1", assert => {
     //Killer 1 should no longer be able to send messages
     assert.equal(Killer1.sendChatMessage(1, "This should never be sent"), FAILURE);
     var after_msg_list = Chat1.history();
-    assert.equal(after_msg_list.length, 2)
+    assert.equal(after_msg_list.length, 3)
 });
 
 
