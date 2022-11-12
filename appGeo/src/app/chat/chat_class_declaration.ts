@@ -59,7 +59,7 @@ export class Chat{
         this.curr_ID = 0;
         this.chat_ID = unique_chat
         this.hash_ID_to_message = new Map();
-        this.player_list = [];
+        this.player_list = new Array();
     }
 
     getLowerID(){

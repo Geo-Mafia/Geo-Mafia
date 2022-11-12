@@ -29,6 +29,7 @@ export class Player{
         this.location = location;
         this.alive = alive;
         this.votes = 0;
+        this.chat_lists = new Array()
     }
 
     getUserID(){
@@ -86,7 +87,7 @@ export class Player{
     seePeopleInBubble(All_players){
         // Take in as input hash table from Map Class of Players
         // The hash table maps each player's userID to the player's location
-        var player_list = [];
+        var player_list = new Array();
         // Sift through Hash Table and find nearby players
         for (var i in All_players) {
             if (All_players[i] = this.location) {

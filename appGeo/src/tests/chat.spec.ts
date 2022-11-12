@@ -62,7 +62,8 @@ QUnit.test("Retrieving Chat ID for a Chat", assert => {
 });
 
 QUnit.test("Retrieving Player List for an empty Chat", assert => {
-    assert.equal(Chat1.getPlayerList(), []);
+    var empty_array = new Array()
+    assert.equal(Chat1.getPlayerList(), empty_array);
 });
 
 //----------------------- Now Test doing actions to the Chat ------------------ 
