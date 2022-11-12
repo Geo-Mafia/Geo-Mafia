@@ -94,7 +94,7 @@ export class Player{
         // Sift through Hash Table and find nearby players
         for (var i in All_players) {
             var curr_player = All_players[i];
-            if (curr_player.getLocation() == this.location) {
+            if (curr_player.getLocation() == this.location && curr_player.getAliveStatus() != DEAD) {
                 player_list.push(All_players[i]);
             }
         }
