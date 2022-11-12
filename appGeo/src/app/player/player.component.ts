@@ -2,13 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { InjectableAnimationEngine } from '@nativescript/angular';
 import { Bubble } from '../map/map.component';
 
-export type Point = {
-  x: number;
-  y: number;
-};
-
-const DEAD = false
-const ALIVE = true
+const DEAD = 0
+const ALIVE = 1
 const DAILYMAXKILLCOUNT = 2
 const SUCCESS = 10
 const FAILURE = -10
