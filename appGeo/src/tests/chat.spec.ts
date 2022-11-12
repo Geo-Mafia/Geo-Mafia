@@ -142,7 +142,7 @@ QUnit.test("Begin a Vote in Chat 1 with Player 1 & 2; and Killer 1", assert => {
     assert.equal(Killer1.getVotes(), 2);
 
     Killer1.voteForExecution(1);
-    assert.equal(Killer1.getVotes(), 1);
+    assert.equal(Player1.getVotes(), 1);
 
     //Killer 1 has been successfully voted off!!! -------------->>>>>>>>>>>>>>>
     assert.equal(Killer1.getKilled(), SUCCESS);
