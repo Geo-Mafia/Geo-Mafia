@@ -93,7 +93,7 @@ export class Player{
         var player_list = new Array();
         // Sift through Hash Table and find nearby players
         for (var i in All_players) {
-            if (All_players[i]. = this.location) {
+            if (All_players[i].getLocation() = this.location) {
                 player_list.push(All_players[i]);
             }
         }
