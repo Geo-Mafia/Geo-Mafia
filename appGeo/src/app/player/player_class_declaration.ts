@@ -87,13 +87,14 @@ export class Player{
     //     return FAILURE;
     // }
 
-    seePeopleInBubble(All_players){
+    seePeopleInBubble(All_players: Player[]){
         // Take in as input list of all players in Game
         // The hash table maps each player's userID to the player's location
         var player_list = new Array();
         // Sift through Hash Table and find nearby players
         for (var i in All_players) {
-            if (All_players[i].getLocation() = this.location) {
+            var curr_player = All_players[i];
+            if (curr_player.getLocation() == this.location) {
                 player_list.push(All_players[i]);
             }
         }
