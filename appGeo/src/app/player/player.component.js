@@ -7,6 +7,7 @@ const ALIVE = 1
 const DAILYMAXKILLCOUNT = 2
 const SUCCESS = 10
 const FAILURE = -10
+
 export class Player{
     userID // An int
     username // A String
@@ -52,7 +53,7 @@ export class Player{
     /* getChat: Function that returns the Chat object corresponding to chatID */
     getChat(chatID){
         for(i = 0; i < this.chat_lists.length; i++){
-            if (this.chat_lists[i].getChatID() == chatID):
+            if (this.chat_lists[i].getChatID() == chatID)
                 return this.chat_lists[i];
         }
         // In case that accessing an unavailable chat
