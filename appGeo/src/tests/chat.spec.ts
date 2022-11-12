@@ -62,20 +62,24 @@ QUnit.test("Retrieving Chat ID for a Chat", assert => {
 });
 
 QUnit.test("Retrieving Player List for an empty Chat", assert => {
-    var empty_array = new Array()
-    assert.equal(Chat1.getPlayerList(), empty_array);
+    assert.equal(Chat1.getPlayerList().length, 0);
 });
 
 //----------------------- Now Test doing actions to the Chat ------------------ 
 
 QUnit.test("Inserting Player1 into Chat1", assert => {
     assert.equal(Chat1.insertPlayer(Player1), SUCCESS);
-    assert.equal(Chat1.getPlayerList(), [Player1]);
-    assert.equal(Player1.getChatList(), [Chat1]);
-    assert.equal(Player1.getChat(1), Chat1);
+    var chat1_players = Chat1.getPlayerList();
+    var chat1_player1 = chat1_players[0];
+    assert.equal(chat1_player1.getUserID(), Player1.getUserID());
+
+    var player1_chats = Player1.getChatList();
+    var player1_chat1 = player1_chats[0]
+    assert.equal(player1_chat1.getChatID(), Chat1.getChatID());
 
     //Since have added Player1 object, should be able to retrieve with getPlayer(1)
-    assert.equal(Chat1.getPlayer(1), Player1);
+    var player_found = Chat1.getPlayer(1);
+    assert.equal(player_found.getUserID(), Player1.getUserID());
 
     //Haven't added Player2 yet, so shouldn't be able to retrieve 
     assert.equal(Chat1.getPlayer(2), null);
@@ -84,30 +88,30 @@ QUnit.test("Inserting Player1 into Chat1", assert => {
 QUnit.test("Player1 sends a message to Chat1", assert => {
     assert.equal(Player1.sendChatMessage(1, "First Message Sent"), SUCCESS);
     var msg_list = Chat1.history();
+    var msg1 = msg_list[0]
     assert.equal(msg_list.length, 1)
-    assert.equal(msg_list[1].getMessageContent(), "First Message Sent")
+    assert.equal(msg1.getMessageContent(), "First Message Sent")
 });
 
 QUnit.test("Add Player2 into Chat 1 and see if can see the message previously sent", assert => {
-    assert.equal(Chat1.insertPlayer(Player2), SUCCESS);
-    assert.equal(Chat1.getPlayerList(), [Player1, Player2]);
-    assert.equal(Player2.getChatList(), [Chat1]);
-    assert.equal(Player2.getChat(1), Chat1);
     //The Chat Objects that are returned by both Player 2 and Player 1 _should_ be the same
-    assert.equal(Player2.getChat(1), Player1.getChat(1));
-    var msg_list_for_Player2 = Player2.getChat(1).history();
+    var player2_chat = Player2.getChat(1);
+    var player1_chat = Player1.getChat(1);
+    assert.equal(player2_chat.getChatID(), player1_chat.getChatID());
+
+    var msg_list_for_Player2 = player2_chat.history();
     assert.equal(msg_list_for_Player2.length, 1);
-    assert.equal(msg_list_for_Player2[1].getMessageContent(), "First Message Sent");
+    assert.equal(msg_list_for_Player2[0].getMessageContent(), "First Message Sent");
 });
 
 QUnit.test("Inserting messages into Chat2", assert => {
     assert.equal(Chat2.insertMessage(Message2), SUCCESS);
     var msg_list = Chat2.history();
     assert.equal(msg_list.length, 1);
-    assert.equal(msg_list[1].getMessageContent(), "Testing Message 2");
+    assert.equal(msg_list[0].getMessageContent(), "Testing Message 2");
     //Ensure that the Message ID was set when being inserted into the Chat and
     //is no longer the default value
-    assert.equal(msg_list[1].getMessageID(), 0);
+    assert.equal(msg_list[0].getMessageID(), 0);
 });
 
 /* The followin test would show how the general Game Logic would play out! */

@@ -50,6 +50,9 @@ export class Player{
     getChatList(){
         return this.chat_lists;
     }
+    getLocation(){
+        return this.location;
+    }
     /* getChat: Function that returns the Chat object corresponding to chatID */
     getChat(chatID){
         for(var i = 0; i < this.chat_lists.length; i++){
@@ -85,12 +88,12 @@ export class Player{
     // }
 
     seePeopleInBubble(All_players){
-        // Take in as input hash table from Map Class of Players
+        // Take in as input list of all players in Game
         // The hash table maps each player's userID to the player's location
         var player_list = new Array();
         // Sift through Hash Table and find nearby players
         for (var i in All_players) {
-            if (All_players[i] = this.location) {
+            if (All_players[i]. = this.location) {
                 player_list.push(All_players[i]);
             }
         }

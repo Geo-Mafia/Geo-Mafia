@@ -135,7 +135,7 @@ export class Chat{
     history(){
         //Function that returns list of Messages
         //here is when we can use lower_ID and upper_ID so that we don’t overload users
-        var message_list = [];
+        var message_list = new Array();
         for (let i = this.lower_ID; i <= this.curr_ID; i++){
             var curr_message = this.hash_ID_to_message.get(i)
             message_list.push(curr_message);
