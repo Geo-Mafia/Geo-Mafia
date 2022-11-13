@@ -218,14 +218,13 @@ export class Killer extends Player{
   remaining_daily_kill_count: number //An integer
   total_kill_count: number //An integer
 
-  constructor(userID, username, location, alive, votes){
-      super();
-      super.init_Player(userID, username, location, alive);
-      this.votes = votes; //there was an additional param not in original documentation
-      this.max_daily_kill_count = DAILYMAXKILLCOUNT;
-      this.remaining_daily_kill_count = DAILYMAXKILLCOUNT;
-      this.total_kill_count = 0;
-  }
+  constructor(userID, username, location, alive){
+    super();
+    super.init_Player(userID, username, location, alive);
+    this.max_daily_kill_count = DAILYMAXKILLCOUNT;
+    this.remaining_daily_kill_count = DAILYMAXKILLCOUNT;
+    this.total_kill_count = 0;
+}
 
   get TotalKillCount(){
       return this.total_kill_count;
