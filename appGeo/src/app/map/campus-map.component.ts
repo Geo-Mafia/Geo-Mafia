@@ -12,12 +12,12 @@ import {Player} from '../player/player.component'
 export class CampusMap{
   [x: string]: any; //this is to go in the forEach logic
 
-  MapOfCampus: Array<Bubble>;
-  display: Bubble;
+  MapOfCampus: Map<string, Bubble>;
+  display: Bubble; //the CampusMap has a function inside to choose which Bubble the player will see to make things simpler
   constructor() {
     //the MapOfCampus will be fully initialized on call, will need to make getters and setters
 
-    this.MapOfCampus = new Array<Bubble>;
+    this.MapOfCampus = new Map<string, Bubble>;
 
     // Initializing the Campus Map as one variable atm know as `Campus`
     var Campus =  new Bubble();
@@ -34,7 +34,7 @@ export class CampusMap{
     // adding `Players` to the `List` within `Campus`
     Campus.addPlayer(Player1);
     Campus.addPlayer(Player2);
-    this.addToMap(Campus);
+    this.addToMap("Campus", Campus);
 
     //idea:call PlayerInBubble to find `Player`'s current `Bubble`
         //display is currently set to Campus-- will implement further logic soon
@@ -45,9 +45,9 @@ export class CampusMap{
 
   }
 
-    addToMap(Bubble){
+    set toMap(Bubble){
       //this is a function solely for use in this file to add bubbles to our mapOfCampus
-      this.MapOfCampus.push(Bubble);
+      this.MapOfCampus.set(Bubble.NameOfBubble, Bubble);
     }
 
     playerInBubble(Player){

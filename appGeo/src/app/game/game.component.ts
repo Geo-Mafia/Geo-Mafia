@@ -22,7 +22,7 @@ export class Game implements OnInit {
   map: CampusMap //a map object
 
   players: Map<number, Player> //a hashmap of mapping playerID ints to players
-  snapshots: Map<number, Snapshot> //a hashmap of mapping snapshotID ints to snapshots
+//  snapshots: Map<number, Snapshot> //a hashmap of mapping snapshotID ints to snapshots
   chats: Map<number, Chat> //a hashmap of mapping chatsID ints to chats
 
 
@@ -36,7 +36,7 @@ export class Game implements OnInit {
             this.players = new Map()
         }
 
-        this.snapshots = new Map()
+     //   this.snapshots = new Map()
         this.chats = new Map()
   }
 
@@ -95,7 +95,7 @@ export class Game implements OnInit {
 
   getRoleCount(countKiller) {
 
-      const playersList = this.map[Symbol.iterator]();//need to adjust the code for Campus Map for this to work
+      const playersList = this.map.MapOfCampus[Symbol.iterator]();//need to adjust the code for Campus Map for this to work
 
 
       var count = 0
@@ -112,7 +112,7 @@ export class Game implements OnInit {
       return (this.getRoleCount(countKiller) / this.PlayerCount)  //does this use RoleCount? the names are different
   }
 
-  getSnapshot(snapshotID) {
+/*   getSnapshot(snapshotID) {
       return this.snapshots.get(snapshotID)
   }
 
@@ -122,7 +122,7 @@ export class Game implements OnInit {
 
   removeSnapshot(snapshotID) {
       return this.snapshots.delete(snapshotID)
-  }
+  } */
 
   getChat(chatID) {
     return this.chats.get(chatID)
