@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Player, Killer, Civilian} from '../player/player.component';
 import{CampusMap} from '../map/campus-map.component'
-import {Chat, Message} from '../chat/chat.component'
+import {Chat, Message} from '../chat/chat_class_declaration'
 //A CampusMap is a Map of the Bubbles that exist on campus
 
 const INACTIVE = 0
