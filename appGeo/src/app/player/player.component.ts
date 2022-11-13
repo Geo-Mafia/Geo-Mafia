@@ -22,7 +22,7 @@ const FAILURE = -10
 export class Player implements OnInit {
   userID: number // An int
   username: string // A String
-  geolocation: CGPoint // A Coordinate Object will update according to what player dev does
+  location: CGPoint // A Coordinate Object will update according to what player dev does
   alive: number // A Boolean int value
   votes: number // An int
   chat_lists: Array<Chat> // List of Chat Objects that Player is a part of
@@ -33,9 +33,13 @@ export class Player implements OnInit {
     //I pushed things here because did not want to deal with injection atm
     this.userID = userID;
     this.username = username;
-    this.geolocation = location;//will change to what playerdev decides to do
+    this.location = location;//will change to what playerdev decides to do
     this.alive = alive;
     this.votes = 0;
+  }
+
+  ngOnInit(): void {
+    //calls you want to make some base initialization when data is loaded in
   }
 
   get UserID(){
@@ -44,8 +48,8 @@ export class Player implements OnInit {
   get Username() : string {
     return this.username;
   }
-  get Geolocation(){
-    return this.geolocation;
+  get Location(){
+    return this.location;
   }
 
   get AliveStatus(){
@@ -61,12 +65,13 @@ export class Player implements OnInit {
 
   getChat(chatID){
     for(var i = 0; i < this.chat_lists.length; i++){
-      if (this.chat_lists[i].getChatID() == chatID)
-          return this.chat_lists[i];
+        var curr_chat = this.chat_lists[i]
+        if (curr_chat.getChatID() == chatID)
+            return this.chat_lists[i];
     }
     // In case that accessing an unavailable chat
     return null
-  }
+}
   get Killed(){
     this.alive = DEAD
     return SUCCESS
@@ -94,17 +99,18 @@ open_snapshot(Snapshot){
 } */
 
 
-seePeopleInBubble(All_Players){
-    // Take in as input hash table from Map Class of Players
-    // The hash table maps each player's userID to the player's location
-    var player_list = []
-    // Sift through Hash Table and find nearby players
-    for (var i in Players) {
-        if (Players[i] = this.geolocation) {
-            player_list.push(Players[i])
-        }
-    }
-    return player_list
+seePeopleInBubble(All_players: Player[]){
+  // Take in as input list of all players in Game
+  // The hash table maps each player's userID to the player's location
+  var player_list = new Array();
+  // Sift through Hash Table and find nearby players
+  for (var i in All_players) {
+      var curr_player = All_players[i];
+      if (curr_player.Location == this.location && curr_player.AliveStatus != DEAD) {
+          player_list.push(All_players[i]);
+      }
+  }
+  return player_list;
 }
 
 
@@ -173,9 +179,12 @@ display(chatID){
      * Input:
      *      - A Player ID that will get looked up on the main General Chat
     */
-voteForExecution(player){
+voteForExecution(voted_player_ID){
+  if (this.AliveStatus == DEAD){
+    return FAILURE;
+  }
+
   var main_chat = this.getChat(1) //Which a player should always be added to General Chat
-  var voted_player_ID
   var Voted = main_chat.getPlayer(voted_player_ID) //Which a player would never pick a user ID that isn't present in the chat
   Voted.increaseVoteCount();
   return SUCCESS;
@@ -188,10 +197,6 @@ voteForExecution(player){
 increaseVoteCount(){
   this.votes++;
 }
-
-  ngOnInit(): void {
-    //calls you want to make some base initialization when data is loaded in
-  }
 
 }
 
