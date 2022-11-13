@@ -10,7 +10,6 @@ import {Player} from '../player/player.component'
 })
 
 export class CampusMap{
-  [x: string]: any; //this is to go in the forEach logic
 
   MapOfCampus: Map<string, Bubble>;
   display: Bubble; //the CampusMap has a function inside to choose which Bubble the player will see to make things simpler
@@ -45,14 +44,14 @@ export class CampusMap{
 
   }
 
-    set toMap(Bubble){
+    set addToMap(Bubble){
       //this is a function solely for use in this file to add bubbles to our mapOfCampus
       this.MapOfCampus.set(Bubble.NameOfBubble, Bubble);
     }
 
     playerInBubble(Player){
       //This will be the function to call to check if a player is in a Bubble within our list of Bubbles
-      this.campusMap.forEach(this.checkBubble);
+      this.MapOfCampus.forEach(this.checkBubble);
     }
 
 
@@ -60,7 +59,7 @@ export class CampusMap{
       //this is a function that calls on the bubble that is iterated through
       //when this is called on a bubble if true will change the bubble to display to the Player
       if(Bubble.inbubble(Player)){
-        this.display = this.Bubble;
+        this.display = Bubble;
       };
     }
 
