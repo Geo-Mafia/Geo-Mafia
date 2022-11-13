@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Player, Killer, Civilian} from '../player/player.component';
+import {Player, Killer, Civilian} from '../player/player_class_declaration';
 import{CampusMap} from '../map/campus-map.component'
 import {Chat, Message} from '../chat/chat_class_declaration'
 //A CampusMap is a Map of the Bubbles that exist on campus
@@ -110,6 +110,29 @@ export class Game implements OnInit {
 
   getFractionRole(countKiller) {
       return (this.getRoleCount(countKiller) / this.PlayerCount)  //does this use RoleCount? the names are different
+  }
+
+
+  countVoteProcess(){
+    var total_players_left = this.playersRemaining(); //Function that will be added in another branch
+    var voted_someone_out = false;
+
+    for (let [key, value] of this.players) {
+      if (value.getAliveStatus() == ACTIVE){
+        var votes = value.getVotes();
+        var fraction = votes / total_players_left;
+        if (fraction > 0.50){
+          //Means over half of the players voted a player ==> Kill the voted out person
+          value.getKilled();
+          voted_someone_out = true;
+        }
+
+        //Means that this player was not voted out ==> Reset their votes for the day
+        value.resetVotes();
+      }
+    }
+
+    return voted_someone_out;
   }
 
 /*   getSnapshot(snapshotID) {
