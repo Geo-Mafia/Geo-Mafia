@@ -10,7 +10,6 @@ import {Player} from '../player/player.component'
 })
 
 export class CampusMap{
-
   MapOfCampus: Map<string, Bubble>;
   display: Bubble; //the CampusMap has a function inside to choose which Bubble the player will see to make things simpler
   constructor() {
