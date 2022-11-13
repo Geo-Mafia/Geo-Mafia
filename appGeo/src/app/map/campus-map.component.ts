@@ -27,9 +27,9 @@ export class CampusMap{
 
     //Players that will go in the `Campus` Bubble
     var P1point = {x: 41.7901, y: -87.5999 };
-    Player1.init_Player(1, "SUUUper", P1point, true);
+    Player1.init_Player(1, "SUUUper", P1point, 1);
     var P2point = {x: 41.000001, y: -87.590001};
-    Player2.init_Player(1, "FunnY_Name", P1point, true);
+    Player2.init_Player(1, "FunnY_Name", P1point, 1);
 
     // adding `Players` to the `List` within `Campus`
     Campus.addPlayer(Player1);
