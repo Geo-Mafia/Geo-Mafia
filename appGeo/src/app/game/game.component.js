@@ -3,7 +3,10 @@ const ACTIVE = 1
 const CIVILIAN = 0
 const KILLER = 1
 
-import {Killer} from 'src/app/map/player.component.js';
+import {Player, Civillian, Killer} from '../player/player.component.js';
+import {CampusMap} from '../map/campus-map.component.js'
+//A CampusMap is a Map of the Bubbles that exist on campus
+
 
 export class Game{
     gameActive //a boolean
