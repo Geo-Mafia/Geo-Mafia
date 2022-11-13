@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Player, Killer, Civilian} from '../player/player.component';
 import{CampusMap} from '../map/campus-map.component'
+import {Chat, Message} from '../chat/chat.component'
 //A CampusMap is a Map of the Bubbles that exist on campus
 
 const INACTIVE = 0
@@ -98,11 +99,9 @@ export class Game implements OnInit {
 
 
       var count = 0
-
-      for(var p in playersList) {
-          if(!(typeof p == Killer) ^ (countKiller)) {
-              count += 1
-          }
+      var i = 0
+      if((playersList[i] instanceof Killer) && (countKiller) || !(playersList[i] instanceof Killer) && !(countKiller)){
+        count += 1
       }
 
       return count
@@ -110,7 +109,7 @@ export class Game implements OnInit {
   }
 
   getFractionRole(countKiller) {
-      return (this.countRole(countKiller) / this.PlayerCount)  //does this use RoleCount? the names are different
+      return (this.getRoleCount(countKiller) / this.PlayerCount)  //does this use RoleCount? the names are different
   }
 
   getSnapshot(snapshotID) {
@@ -118,7 +117,7 @@ export class Game implements OnInit {
   }
 
   addSnapshot(snapshot) {
-      this.snapshots.add(snapshot.getUserID(), snapshot)
+      this.snapshots.set(snapshot.getUserID(), snapshot)
   }
 
   removeSnapshot(snapshotID) {
@@ -130,7 +129,7 @@ export class Game implements OnInit {
   }
 
   addChat(chat) {
-    this.chats.add(chat.getUserID(), chat)
+    this.chats.set(chat.getUserID(), chat)
   }
 
   removeChat(chatID) {

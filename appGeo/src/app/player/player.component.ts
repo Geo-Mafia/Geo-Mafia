@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { InjectableAnimationEngine } from '@nativescript/angular';
 import { ChangeType } from '@nativescript/core';
 import { Bubble } from '../map/map.component';
+import {Chat, Message} from '../chat/chat.component'
+
 
 const DEAD = 0
 const ALIVE = 1
