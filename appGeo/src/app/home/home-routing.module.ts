@@ -9,9 +9,11 @@ import {Bubble} from '../map/map.component'
 import { HomeComponent } from './home.component'
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'campusMap', component: CampusMap},
-  { path: 'Chat', component: Chat}
+  { path: '',
+    component: HomeComponent,
+    children: [
+      {path: 'Chat', component: Chat}] },
+  { path: 'campusMap', component: CampusMap, pathMatch: 'full'},
 
 ]
 

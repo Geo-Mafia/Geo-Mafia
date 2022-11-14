@@ -3,10 +3,9 @@
 </ActionBar>
 
 
-<GridLayout>
-  <!-- Add your page content here -->
+<!-- <GridLayout>
   <Button text="Google Sign-in" (tap)="login()" class="btn" style="color:red"></Button>
-</GridLayout>
+</GridLayout> -->
 
 <!-- The template for the chat component should be represented if this is typed:
 <GridLayout>
@@ -15,10 +14,10 @@
  -->
 
 
-<!--
-  This is general idea of what a button to go to the class page would be like
-  if it doesn't work maybe adjuct the path to the chat.component.html
+
+  <!-- This is general idea of what a button to go to the class page would be like
+  if it doesn't work maybe adjuct the path to the chat.component.html -->
  <GridLayout>
-  <Button text="Take me to the Chat!" (tap)="goToChat()" class="chatBtn"></Button>
+  <Button text="Go To Chat" [nsRouterLink]="['Chat']" class="btn btn-primary btn-active" col="0"></Button>
 </GridLayout>
- -->
+

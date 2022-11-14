@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
   constructor(private router: Router) {
     // Use the component constructor to inject providers.
 
+
   }
 
   ngOnInit(): void {
@@ -58,8 +59,6 @@ export class HomeComponent implements OnInit {
     });
 
   }
-  goToChat() {
-    this.router.navigate(['/Chat']);
-  }
+
 
 }
