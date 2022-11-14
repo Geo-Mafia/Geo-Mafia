@@ -46,6 +46,10 @@ jobs:
       - name: tns build
         run: tns build ios
         working-directory: appGeo/
+        
+      - name: tns run ios
+        run: tns run ios --justlaunch
+        working-directory: appGeo/
       
       - name: tns test build
         run: tns test init --framework qunit
