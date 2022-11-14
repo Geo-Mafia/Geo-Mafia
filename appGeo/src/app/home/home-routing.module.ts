@@ -12,10 +12,11 @@ const routes: Routes = [
   { path: '',
     component: HomeComponent,
     children: [
-      {path: 'Chat', component: Chat}] },
+      {path: "Chat", component: Chat}] },
   { path: 'campusMap', component: CampusMap, pathMatch: 'full'},
 
 ]
+
 
 @NgModule({
   imports: [NativeScriptRouterModule.forChild(routes)],
