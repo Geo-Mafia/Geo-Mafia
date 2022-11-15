@@ -224,7 +224,7 @@ export class Game implements OnInit {
   }
 
   addChat(chat) {
-    this.chats.set(chat.getUserID(), chat)
+    this.chats.set(chat.getChatID(), chat)
     return SUCCESS;
   }
 

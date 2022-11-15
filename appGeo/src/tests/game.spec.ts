@@ -195,7 +195,7 @@ QUnit.test("Game Start and endGame", function(assert) {
     // assert.equal(test_game.getFractionRole(KILLER), 0.2, "Should be 20% killers");
 
     assert.equal(test_game.endGame(), SUCCESS, "Can stop a game");
-    assert.false(test_game.getGameActive(), "Stopped game is not active");
+    assert.equal(test_game.getGameActive(), INACTIVE, "Stopped game is not active");
 
     playerArray.push(player4);
     playerArray.push(player5);
@@ -204,7 +204,7 @@ QUnit.test("Game Start and endGame", function(assert) {
 
     //should delay by 1 second, need to write this in
 
-    assert.equal(test_game.getGameActive(), INACTIVE, "Stopped game is not active");
+    assert.equal(test_game.getGameActive(), ACTIVE, "Stopped game is not active");
 
 });
 
