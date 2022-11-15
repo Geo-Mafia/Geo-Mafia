@@ -9,6 +9,7 @@ const ACTIVE = 1
 const CIVILIAN = 7
 const KILLER = 8
 const SUCCESS = 10
+const INPROGRESS = 5
 
 @Component({
   selector: 'ns-game',
@@ -175,7 +176,7 @@ export class Game implements OnInit {
   }
 
   getFractionRole(countKiller) {
-      return (this.getRoleCount(countKiller) / this.PlayerCount)  //does this use RoleCount? the names are different
+      return (this.getRoleCount(countKiller) / this.getPlayerCount())  //does this use RoleCount? the names are different
   }
 
 
