@@ -29,7 +29,7 @@ export class Player implements OnInit {
 
   constructor(){}
 
-  init_Player(userID: number, username: string, location: CGPoint, alive: number){
+  init_Player(userID: number, username: string, location, alive: number){
     //I pushed things here because did not want to deal with injection atm
     this.userID = userID;
     this.username = username;
