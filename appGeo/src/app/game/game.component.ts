@@ -49,6 +49,7 @@ export class Game implements OnInit {
 
   startGame() {
     this.#setGameActive(ACTIVE)
+    return SUCCESS;
 
     //Randomly generate killer objects for 20% of the players and civilians for the rest
     //Rebuild the players list with these objects
@@ -57,6 +58,7 @@ export class Game implements OnInit {
 
   endGame() {
       this.#setGameActive(INACTIVE)
+      return SUCCESS;
 
       //TODO
   }
