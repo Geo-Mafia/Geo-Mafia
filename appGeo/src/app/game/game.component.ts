@@ -7,8 +7,8 @@ import {Chat, Message} from '../chat/chat_class_declaration'
 const INACTIVE = 0
 const ACTIVE = 1
 
-const CIVILIAN = 0
-const KILLER = 1
+export const CIVILIAN = 0
+export const KILLER = 1
 const INPROGRESS = 5
 
 @Component({
