@@ -120,26 +120,25 @@ QUnit.test("Game Hashtable Handling", function(assert) {
 
     const snapArray = [snap1];
 
-    // assert.equal(game1.addSnapshot(snap1), SUCCESS, "Snapshot added successfully");
-    // assert.equal(game1.getSnapshots(), snapArray, "Snap list successfully updated");
-    // assert.equal(game1.getSnapshot(snap1.getSnapshotID()), snap1, "Can successfully get snapshot");
+    assert.equal(game1.addSnapshot(snap1), SUCCESS, "Snapshot added successfully");
+    assert.equal(game1.getSnapshot(1).getSnapshotID(), snap1.getSnapshotID(), "Snap list successfully updated");
+    assert.equal(game1.getSnapshot(snap1.getSnapshotID()), snap1, "Can successfully get snapshot");
 
-    // assert.equal(game1.addSnapshot(snap2), SUCCESS, "Snapshot added successfully");
-    // snapArray.push(snap2);
-    // assert.equal(game1.getSnapshots(), snapArray, "Snap list successfully updated");
-    // assert.equal(game1.getSnapshot(snap2.getSnapshotID()), snap2, "Can successfully get snapshot");
+    assert.equal(game1.addSnapshot(snap2), SUCCESS, "Snapshot added successfully");
+    snapArray.push(snap2);
+    assert.equal(game1.getSnapshot(2).getSnapshotID(), snap2.getSnapshotID(), "Snap list successfully updated");
+    assert.equal(game1.getSnapshot(snap2.getSnapshotID()), snap2, "Can successfully get snapshot");
 
-    // assert.equal(game1.addSnapshot(snap3), SUCCESS, "Snapshot added successfully");
-    // snapArray.push(snap3);
-    // assert.equal(game1.getSnapshots(), snapArray, "Snap list successfully updated");
+    assert.equal(game1.addSnapshot(snap3), SUCCESS, "Snapshot added successfully");
+    snapArray.push(snap3);
+    assert.equal(game1.getSnapshot(3).getSnapshotID(), snap3.getSnapshotID(), "Snap list successfully updated");
 
-    // assert.equal(game1.getSnapshot(snap3.getSnapshotID()), snap3, "Can successfully get snapshot");
+    assert.equal(game1.getSnapshot(snap3.getSnapshotID()), snap3, "Can successfully get snapshot");
 
-    // assert.equal(game1.removeSnapshot(snap3.getSnapshotID()), snap3, "Can successfully remove snapshot");
-    // snapArray.pop();
-    // assert.equal(game1.getSnapshots(), snapArray, "Snap list successfully updated");
+    assert.equal(game1.removeSnapshot(3), true, "Can successfully remove snapshot");
+    snapArray.pop();
 
-    // assert.equal(game1.getSnapshot(snap3.getSnapshotID()), "", "A lack of snapshot should return failure");
+    assert.equal(game1.getSnapshot(3), undefined, "A lack of snapshot should return failure");
 
     const chat1 = new Chat(1);
     const chat2 = new Chat(2);

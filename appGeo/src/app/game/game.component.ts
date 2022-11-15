@@ -41,7 +41,7 @@ export class Game implements OnInit {
             this.players = new Map()
         }
 
-     //   this.snapshots = new Map()
+        this.snapshots = new Map()
         this.chats = new Map()
   }
 
@@ -213,7 +213,8 @@ export class Game implements OnInit {
   }
 
   addSnapshot(snapshot) {
-      this.snapshots.set(snapshot.getUserID(), snapshot)
+      this.snapshots.set(snapshot.getSnapshotID(), snapshot)
+      return SUCCESS;
   }
 
   removeSnapshot(snapshotID) {
