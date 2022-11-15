@@ -7,7 +7,8 @@ QUnit.module("Bubble_Testing");
 
 //assumes bubble variables are not private
 QUnit.test("Bubble Initialization Tests", function(assert) {
-    let testbub = new Bubble("testbubble", 0, 10, 5, 15);
+    let testbub = new Bubble();
+    testbub.init_bubble("testbubble", 0, 10, 5, 15)
 
     assert.equal(testbub.id, "testbubble", "id should be testbubble");
     assert.equal(testbub.xLb, 0, "xLb should be 0");
@@ -21,7 +22,8 @@ QUnit.test("Bubble Initialization Tests", function(assert) {
 QUnit.test("Bubble Location Tests", function(assert) {
     //the way location is set up, we can't assign testing values
     //hopefully, this will serve as sufficient approximation for testing logic
-    let testbub = new Bubble("testbubble", 0, 15, 5, 10);
+    let testbub = new Bubble();
+    testbub.init_bubble("testbubble", 0, 15, 5, 10)
     let loc = {longitude:20, latitiude:20};
     let testPlayer;
     testPlayer.init_Player(12, "Test", loc, true); //no Player Constructor, only init
@@ -33,7 +35,7 @@ QUnit.test("Bubble Location Tests", function(assert) {
     assert.false(testbub.inBubble(testPlayer), "player should not be in bubble");
     testPlayer.location = {longitude:-1, latitiude:4};
     assert.false(testbub.inBubble(testPlayer), "player should not be in bubble");
-    
+
     testPlayer.location = {longitude:9, latitiude:9};
     assert.true(testbub.inBubble(testPlayer), "player should be in bubble");
     testPlayer.location = {longitude:0, latitiude:5};
@@ -43,7 +45,8 @@ QUnit.test("Bubble Location Tests", function(assert) {
 });
 
 QUnit.test("Bubble-Player Tests", function(assert) {
-    let testbub = new Bubble("testbubble", 0, 15, 5, 10);
+    let testbub = new Bubble();
+    testbub.init_bubble("testbubble", 0, 15, 5, 10)
     assert.equal(testbub.List.size, 0, "player list should be empty");
     assert.equal(testbub.List, null, "player list should be empty");
     assert.equal(testbub.returnPlayers, null, "player list should be empty");
@@ -62,7 +65,7 @@ QUnit.test("Bubble-Player Tests", function(assert) {
     assert.true(testbub.List.has(12), "player1 should still be in list");
     assert.true(testbub.returnPlayers.has(12), "player1 should still be in list");
     assert.true(testbub.List.has(13), "player added should be identified by id 13");
-    assert.true(testbub.returnPlayers.has(13), "player added should be identified by id 13");    
+    assert.true(testbub.returnPlayers.has(13), "player added should be identified by id 13");
 
     assert.true(testbub.removePlayer(testPlayer), "player1 should be removed from list");
     assert.equal(testbub.List.size, 1, "player list should have one element");

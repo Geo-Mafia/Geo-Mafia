@@ -1,7 +1,8 @@
 <StackLayout>
   <StackLayout id="container">
     <Label text = "Players currently on {{display.id}}"></Label>
-    <ListView row="0" [items]="display.List"  class="list-group">
+    <!-- this should iterate throught the map thought I question it -->
+    <ListView row="0" [map.entry]="display.List"  class="list-group">
       <ng-template let-player="item" let-i="index">
         <StackLayout>
           <Label text = "{{player.username}}" textWrap="true"></Label>
