@@ -50,7 +50,9 @@ export class Bubble{
         return false
       }
     }
-
+    get NameOfBubble(){
+      return this.id;
+    }
     inBubble(Player){
       //checks player location to see if they are within bubble boundaries
       if (Player.location > this.xLb && Player.location < this.xUb &&
