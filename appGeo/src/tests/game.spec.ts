@@ -1,4 +1,5 @@
 import {Chat} from '../app/chat/chat_class_declaration';
+import {Snapshot} from '../app/snapshot/snapshot_class_declaration';
 import {Player} from '../app/player/player_class_declaration';
 import {Killer} from '../app/player/player_class_declaration';
 import {Civilian} from '../app/player/player_class_declaration';
@@ -110,13 +111,14 @@ QUnit.test("Game Hashtable Handling", function(assert) {
     playerArray.pop();
     assert.equal(game1.getPlayer(5), undefined, "players list successfully updated");
 
-        // Following code commented out because Snapshot not ready yet
+    let bub = new Bubble();
+    bub.init_bubble("Bubble", 0, 0, 0, 0);
+    
+    const snap1 = new Snapshot(1, bub);
+    const snap2 = new Snapshot(2, bub);
+    const snap3 = new Snapshot(3, bub);
 
-    // const snap1 = new GMSnapshot();
-    // const snap2 = new GMSnapshot();
-    // const snap3 = new GMSnapshot();
-
-    // const snapArray = [snap1];
+    const snapArray = [snap1];
 
     // assert.equal(game1.addSnapshot(snap1), SUCCESS, "Snapshot added successfully");
     // assert.equal(game1.getSnapshots(), snapArray, "Snap list successfully updated");
