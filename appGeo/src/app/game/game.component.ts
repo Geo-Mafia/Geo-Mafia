@@ -26,15 +26,15 @@ export class Game implements OnInit {
   chats: Map<number, Chat> //a hashmap of mapping chatsID ints to chats
 
 
-  constructor(endTime: Date, gameMap: CampusMap, players: Player[]) {
+  constructor(endTime: Date, gameMap: CampusMap, players: Map<number, Player>) {
     this.endTime = endTime
         this.map = gameMap
 
-        this.players = new Map()
+        
         if(players != undefined) {
-            for (let i = 0; i < players.length; i++) {
-              this.players.set(players[i].userID, players[i])
-            }
+          this.players = players
+        } else {
+          this.players = new Map()
         }
 
      //   this.snapshots = new Map()

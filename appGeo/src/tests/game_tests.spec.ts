@@ -31,6 +31,11 @@ QUnit.test("Game Constructors and Basic Getters and Setters", function(assert) {
     const player5 = new Player(1, 'player4', Location1, ALIVE);
     const playerArray = [player1, player2, player3, player4, player5];
 
+    const playersMap = new Map()
+    for (const p of playerArray) {
+        playersMap.set(p.userID, p)
+      }
+
     const game1 = new Game(next_week, test_map, null);
     assert.false(game1.isGameActive(), "New game is not active");
     assert.equal(game1.getEndTime(), next_week, "End date is set time");
@@ -46,7 +51,7 @@ QUnit.test("Game Constructors and Basic Getters and Setters", function(assert) {
     assert.equal(game1.getEndTime(), three_days_from_now, "End date is new set time");
     assert.equal(game1.getMap(), test_map2, "Map has been set properly");
 
-    const game2 = new Game(next_week, test_map, playerArray);
+    const game2 = new Game(next_week, test_map, playersMap);
     assert.equal(game2.getPlayers(), playerArray, "game players set properly in constructor");
     assert.false(game2.isGameActive(), "New game is not active");
     assert.equal(game2.getEndTime(), next_week, "End date is set time");
@@ -74,7 +79,12 @@ QUnit.test("Game Hashtable Handling", function(assert) {
     const player5 = new Player(1, 'player5', Location1, ALIVE);
     const playerArray = [player1, player2, player3];
 
-    const game1 = new Game(next_week, test_map, playerArray);
+    const playersMap = new Map()
+    for (const p of playerArray) {
+        playersMap.set(p.userID, p)
+      }
+
+    const game1 = new Game(next_week, test_map, playersMap);
     assert.equal(game1.getPlayers(), playerArray, "game players set properly in constructor");
     
     assert.equal(game1.addPlayer(player4), SUCCESS, "Player added successfully");
@@ -165,7 +175,12 @@ QUnit.test("Game Start and End", function(assert) {
 
    const playerArray = [player1, player2, player3];
 
-    const test_game = new Game(next_week, test_map, playerArray);
+   const playersMap = new Map()
+    for (const p of playerArray) {
+        playersMap.set(p.userID, p)
+      }
+
+    const test_game = new Game(next_week, test_map, playersMap);
 
     assert.equal(test_game.startGame(), FAILURE, "Game cannot start with too few players");
     assert.false(test_game.isGameActive(), "Unstarted game is not active");
@@ -201,12 +216,12 @@ QUnit.test("Game Start and End", function(assert) {
     assert.equal(test_game.endGame(), SUCCESS, "Can stop a game");
     assert.false(test_game.isGameActive(), "Stopped game is not active");
 
-    playerArray.push(player4);
-    playerArray.push(player5);
+    playersMap.set(player4.getUserID, player4);
+    playersMap.set(player5.getUserID, player5);
 
     const soon = new Date(now.getTime() + 1000);
 
-    const test_game2 = new Game(soon, test_map, playerArray);
+    const test_game2 = new Game(soon, test_map, playersMap);
     assert.equal(test_game2.startGame(), SUCCESS, "Game can start with five or more players");
 
     //should delay by 1 second, need to write this in
