@@ -29,6 +29,8 @@ export class Game implements OnInit {
 
 
   constructor(endTime: Date, gameMap: CampusMap, players: Map<number, Player>) {
+    this.gameActive = INACTIVE;
+    this.currentTime = new Date();
     this.endTime = endTime
         this.map = gameMap
 
