@@ -187,8 +187,8 @@ QUnit.test("Game Start and End", function(assert) {
     assert.equal(test_game.endGame(),FAILURE, "Unstarted game cannot end");
     assert.false(test_game.isGameActive(), "Unstarted game is not active");
 
-    const player4 = new Player(1, 'player4', Location1, ALIVE);
-    const player5 = new Player(1, 'player5', Location1, ALIVE);
+    const player4 = new Player(4, 'player4', Location1, ALIVE);
+    const player5 = new Player(5, 'player5', Location1, ALIVE);
 
     test_game.addPlayer(player4);
     test_game.addPlayer(player5);
