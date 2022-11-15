@@ -208,3 +208,91 @@
 //     assert.false(test_game.getGameActive(), "Stopped game is not active");
 
 // });
+
+
+// QUnit.test("Vote Handler when player is voted off", function(assert) {
+//     const now = new Date();
+//     const next_week = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+
+//     const test_map = new CampusMap();
+
+//     const Location1 = new Location(1);
+
+//     const player1 = new Player(1, 'player1', Location1, ALIVE); 
+//     const player2 = new Player(2, 'player2', Location1, ALIVE);
+//     const player3 = new Player(3, 'player3', Location1, ALIVE);
+
+//     //Initialize a Common chat so that players can vote for each other
+//     const chat1 = new Chat(1)
+//     chat1.insertPlayer(player1);
+//     chat1.insertPlayer(player2);
+//     chat1.insertPlayer(player3);
+
+//     const playerArray = [player1, player2, player3];
+//     const player_map = new Map(
+//         playerArray.map(object => {
+//           return [object.getUserID(), object];
+//         }),
+//       );
+
+//     const test_game = new Game(next_week, test_map, player_map);
+//     test_game.addChat(chat1);
+
+//     player1.voteForExecution(2);
+//     player2.voteForExecution(3);
+//     player3.voteForExecution(2);
+//     //Player2 should be voted out
+//     test_game.countVoteProcess();
+//     //After killing the function a couple things should have occurred:
+//     // 1) Player 2 should be dead
+//     // 2) Player 1 and 3 should have their votes reset to 0 again
+//     assert.equal(player2.getAliveStatus(), DEAD);
+//     assert.equal(player1.getVotes(), 0);
+//     assert.equal(player3.getVotes(), 0);
+
+// });
+
+// QUnit.test("Vote Handler when player is NOT voted off", function(assert) {
+//     const now = new Date();
+//     const next_week = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+
+//     const test_map = new CampusMap();
+
+//     const Location1 = new Location(1);
+
+//     const player1 = new Player(1, 'player1', Location1, ALIVE); 
+//     const player2 = new Player(2, 'player2', Location1, ALIVE);
+//     const player3 = new Player(3, 'player3', Location1, ALIVE);
+
+//     //Initialize a Common chat so that players can vote for each other
+//     const chat1 = new Chat(1)
+//     chat1.insertPlayer(player1);
+//     chat1.insertPlayer(player2);
+//     chat1.insertPlayer(player3);
+
+//     const playerArray = [player1, player2, player3];
+//     const player_map = new Map(
+//         playerArray.map(object => {
+//           return [object.getUserID(), object];
+//         }),
+//       );
+
+//     const test_game = new Game(next_week, test_map, player_map);
+//     test_game.addChat(chat1);
+
+//     player1.voteForExecution(2);
+//     player2.voteForExecution(3);
+//     player3.voteForExecution(1);
+//     //NO player should have been voted off, no one has over 50% of the votes
+//     test_game.countVoteProcess();
+//     //After killing the function a couple things should have occurred:
+//     // 1) All players should still be alive
+//     // 2) All players should have their vote field reset back to 0
+//     assert.equal(player1.getAliveStatus(), DEAD);
+//     assert.equal(player2.getAliveStatus(), DEAD);
+//     assert.equal(player3.getAliveStatus(), DEAD);
+//     assert.equal(player1.getVotes(), 0);
+//     assert.equal(player2.getVotes(), 0);
+//     assert.equal(player3.getVotes(), 0);
+
+// });
