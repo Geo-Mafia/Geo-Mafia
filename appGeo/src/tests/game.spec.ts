@@ -55,9 +55,9 @@ QUnit.test("Game Constructors and Basic Getters and Setters", function(assert) {
     assert.equal(game1.getEndTime(), three_days_from_now, "endGame date is new set time");
 
     const game2 = new Game(next_week, test_map, player_map);
-    assert.equal(game2.getPlayer(1).getUserID, player1.getUserID());
-    assert.equal(game2.getPlayer(2).getUserID, player2.getUserID());
-    assert.equal(game2.getPlayer(3).getUserID, player3.getUserID());
+    assert.equal(game2.getPlayer(1).getUserID(), player1.getUserID());
+    assert.equal(game2.getPlayer(2).getUserID(), player2.getUserID());
+    assert.equal(game2.getPlayer(3).getUserID(), player3.getUserID());
 
     game1.startGame();
 
@@ -86,9 +86,9 @@ QUnit.test("Game Hashtable Handling", function(assert) {
         }),
       );
     const game1 = new Game(next_week, test_map, player_map);
-    assert.equal(game1.getPlayer(1).getUserID, player1.getUserID());
-    assert.equal(game1.getPlayer(2).getUserID, player2.getUserID());
-    assert.equal(game1.getPlayer(3).getUserID, player3.getUserID());
+    assert.equal(game1.getPlayer(1).getUserID(), player1.getUserID());
+    assert.equal(game1.getPlayer(2).getUserID(), player2.getUserID());
+    assert.equal(game1.getPlayer(3).getUserID(), player3.getUserID());
     //Have set up all the appropriate players thus far
     
     assert.equal(game1.addPlayer(player4), SUCCESS, "Player added successfully");
@@ -140,7 +140,7 @@ QUnit.test("Game Hashtable Handling", function(assert) {
 
     assert.equal(game1.addChat(chat2), SUCCESS, "Chat added successfully");
     chatArray.push(chat2);
-    assert.equal(game1.getChat(2).getChatID, chat2.getChatID(), "Can successfully get Chat 2");
+    assert.equal(game1.getChat(2).getChatID(), chat2.getChatID(), "Can successfully get Chat 2");
 
     assert.equal(game1.removeChat(2), true, "Can successfully remove Chat");
     chatArray.pop();
