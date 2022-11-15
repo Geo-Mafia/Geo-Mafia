@@ -83,7 +83,7 @@ export class Game implements OnInit {
   }
 
   getPlayers() {
-    return this.players.values();
+    return Array.from(this.players.values());
   }
 
   getPlayer(playerID) {
@@ -134,7 +134,7 @@ export class Game implements OnInit {
   } */
 
   getChats() {
-    return this.chats.values();
+    return Array.from(this.chats.values());
   }
 
   getChat(chatID) {

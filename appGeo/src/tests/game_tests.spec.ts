@@ -52,7 +52,7 @@ QUnit.test("Game Constructors and Basic Getters and Setters", function(assert) {
     assert.equal(game1.getMap(), test_map2, "Map has been set properly");
 
     const game2 = new Game(next_week, test_map, playersMap);
-    assert.equal(game2.getPlayers(), playerArray, "game players set properly in constructor");
+    assert.deepEqual(game2.getPlayers(), playerArray, "game players set properly in constructor");
     assert.false(game2.isGameActive(), "New game is not active");
     assert.equal(game2.getEndTime(), next_week, "End date is set time");
     assert.equal(game2.getCurrentTime(), now, "Current game time updates over time");
@@ -73,10 +73,10 @@ QUnit.test("Game Hashtable Handling", function(assert) {
     const Location1 = new Location(1);
 
     const player1 = new Player(1, 'player1', Location1, ALIVE); 
-    const player2 = new Player(1, 'player2', Location1, ALIVE);
-    const player3 = new Player(1, 'player3', Location1, ALIVE);
-    const player4 = new Player(1, 'player4', Location1, ALIVE);
-    const player5 = new Player(1, 'player5', Location1, ALIVE);
+    const player2 = new Player(2, 'player2', Location1, ALIVE);
+    const player3 = new Player(3, 'player3', Location1, ALIVE);
+    const player4 = new Player(4, 'player4', Location1, ALIVE);
+    const player5 = new Player(5, 'player5', Location1, ALIVE);
     const playerArray = [player1, player2, player3];
 
     const playersMap = new Map()
@@ -85,19 +85,19 @@ QUnit.test("Game Hashtable Handling", function(assert) {
       }
 
     const game1 = new Game(next_week, test_map, playersMap);
-    assert.equal(game1.getPlayers(), playerArray, "game players set properly in constructor");
+    assert.deepEqual(game1.getPlayers(), playerArray, "game players set properly in constructor");
     
     assert.equal(game1.addPlayer(player4), SUCCESS, "Player added successfully");
     playerArray.push(player4);
-    assert.equal(game1.getPlayers(), playerArray, "players list successfully updated");
+    assert.deepEqual(game1.getPlayers(), playerArray, "players list successfully updated");
     assert.equal(game1.getPlayer(player4.getUserID()), player4, "Can get player from list");
     assert.equal(game1.addPlayer(player5), SUCCESS, "Player added successfully");
     playerArray.push(player5);
-    assert.equal(game1.getPlayers(), playerArray, "players list successfully updated");
+    assert.deepEqual(game1.getPlayers(), playerArray, "players list successfully updated");
 
     assert.equal(game1.removePlayer(player5.getUserID()), player5, "Player removed successfully");
     playerArray.pop();
-    assert.equal(game1.getPlayers(), playerArray, "players list successfully updated");
+    assert.deepEqual(game1.getPlayers(), playerArray, "players list successfully updated");
 
     assert.equal(game1.getPlayer(player5.getUserID()), "", "A lack of player should return failure");
 
@@ -132,29 +132,29 @@ QUnit.test("Game Hashtable Handling", function(assert) {
     */
 
     const chat1 = new Chat(1);
-    const chat2 = new Chat(1);
-    const chat3 = new Chat(1);
+    const chat2 = new Chat(2);
+    const chat3 = new Chat(3);
 
     const chatArray = [chat1];
 
     assert.equal(game1.addChat(chat1), SUCCESS, "Chat added successfully");
-    assert.equal(game1.getChats(), chatArray, "chat list successfully updated");
+    assert.deepEqual(game1.getChats(), chatArray, "chat list successfully updated");
     assert.equal(game1.getChat(chat1.getChatID()), chat1, "Can successfully get Chat");
 
     assert.equal(game1.addChat(chat2), SUCCESS, "Chat added successfully");
     chatArray.push(chat2);
-    assert.equal(game1.getChats(), chatArray, "chat list successfully updated");
+    assert.deepEqual(game1.getChats(), chatArray, "chat list successfully updated");
     assert.equal(game1.getChat(chat2.getChatID()), chat2, "Can successfully get Chat");
 
     assert.equal(game1.addChat(chat3), SUCCESS, "Chat added successfully");
     chatArray.push(chat3);
-    assert.equal(game1.getChats(), chatArray, "chat list successfully updated");
+    assert.deepEqual(game1.getChats(), chatArray, "chat list successfully updated");
 
     assert.equal(game1.getChat(chat3.getChatID()), chat3, "Can successfully get Chat");
 
     assert.equal(game1.removeChat(chat3.getChatID()), chat3, "Can successfully remove Chat");
     chatArray.pop();
-    assert.equal(game1.getChats(), chatArray, "chat list successfully updated");
+    assert.deepEqual(game1.getChats(), chatArray, "chat list successfully updated");
 
     assert.equal(game1.getChat(chat3.getChatID()), "", "A lack of Chat should return failure");
 
