@@ -216,8 +216,8 @@ QUnit.test("Game Start and End", function(assert) {
     assert.equal(test_game.endGame(), SUCCESS, "Can stop a game");
     assert.false(test_game.isGameActive(), "Stopped game is not active");
 
-    playersMap.set(player4.getUserID, player4);
-    playersMap.set(player5.getUserID, player5);
+    playersMap.set(player4.getUserID(), player4);
+    playersMap.set(player5.getUserID(), player5);
 
     const soon = new Date(now.getTime() + 1000);
 
