@@ -18,13 +18,18 @@ export class Bubble{
   public List: Map<number, Player>;
 
 
-    constructor(id: string, xLb: number, xUb: number, yLb: number, yUb: number) {
+    constructor() {
+      this.List = new Map<number, Player>(); //map<userID, Player>; initialized empty
+    }
+
+    init_bubble(id, xLb, xUb, yLb, yUb){
+      //this fn exists because it asks for injection tokens from the constructor
+      //if the params are but inside the constructor. otherwise this fn is not necessary
       this.id = id;
       this.xLb = xLb;
       this.xUb = xUb;
       this.yLb = yLb;
-      this.yUb = yUb;  
-      this.List = new Map<number, Player>(); //map<userID, Player>; initialized empty
+      this.yUb = yUb;
     }
 
     // adds player; returns true on success
