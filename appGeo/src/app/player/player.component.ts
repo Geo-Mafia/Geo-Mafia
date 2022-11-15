@@ -22,7 +22,7 @@ const FAILURE = -10
 export class Player implements OnInit {
   userID: number // An int
   username: string // A String
-  location: CGPoint // A Coordinate Object will update according to what player dev does
+  location // A Coordinate Object will update according to what player dev does
   alive: number // A Boolean int value
   votes: number // An int
   chat_lists: Array<Chat> // List of Chat Objects that Player is a part of
