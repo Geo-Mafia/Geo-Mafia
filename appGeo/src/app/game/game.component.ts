@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {Player, Killer, Civilian} from '../player/player.component';
+import {Player, Killer, Civilian} from '../player/player_class_declaration';
 import{CampusMap} from '../map/campus-map.component'
 import {Chat, Message} from '../chat/chat_class_declaration'
 //A CampusMap is a Map of the Bubbles that exist on campus
 
 const INACTIVE = 0
 const ACTIVE = 1
-const CIVILIAN = 0
-const KILLER = 1
+export const CIVILIAN = 0
+export const KILLER = 1
 
 @Component({
   selector: 'ns-game',
@@ -26,14 +26,15 @@ export class Game implements OnInit {
   chats: Map<number, Chat> //a hashmap of mapping chatsID ints to chats
 
 
-  constructor(endTime: Date, gameMap: CampusMap, players: Map<number, Player>) {
+  constructor(endTime: Date, gameMap: CampusMap, players: Player[]) {
     this.endTime = endTime
         this.map = gameMap
 
+        this.players = new Map()
         if(players != undefined) {
-            this.players = players
-        } else {
-            this.players = new Map()
+            for (let i = 0; i < players.length; i++) {
+              this.players.set(players[i].userID, players[i])
+            }
         }
 
      //   this.snapshots = new Map()
@@ -57,7 +58,7 @@ export class Game implements OnInit {
       //TODO
   }
 
-  getGameActive() {
+  isGameActive() {
       return this.gameActive
   }
 
@@ -75,6 +76,14 @@ export class Game implements OnInit {
 
   setEndTime(endTime) {
       this.endTime = endTime
+  }
+
+  getMap() {
+    return this.map;
+  }
+
+  getPlayers() {
+    return this.players.values();
   }
 
   getPlayer(playerID) {
@@ -123,6 +132,10 @@ export class Game implements OnInit {
   removeSnapshot(snapshotID) {
       return this.snapshots.delete(snapshotID)
   } */
+
+  getChats() {
+    return this.chats.values();
+  }
 
   getChat(chatID) {
     return this.chats.get(chatID)

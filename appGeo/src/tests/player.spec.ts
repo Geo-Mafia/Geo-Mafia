@@ -3,9 +3,7 @@
 // import {Killer} from '../app/player/player_class_declaration.js';
 
 import {Chat} from '../app/chat/chat_class_declaration';
-import {Player} from '../app/player/player_class_declaration';
-import {Killer} from '../app/player/player_class_declaration';
-
+import {Player, Killer} from '../app/player/player_class_declaration';
 
 const DEAD = 0
 const ALIVE = 1
