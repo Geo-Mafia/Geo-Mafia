@@ -110,6 +110,8 @@ QUnit.test("Game Hashtable Handling", function(assert) {
     playerArray.pop();
     assert.equal(game1.getPlayer(5), undefined, "players list successfully updated");
 
+        // Following code commented out because Snapshot not ready yet
+
     // const snap1 = new GMSnapshot();
     // const snap2 = new GMSnapshot();
     // const snap3 = new GMSnapshot();
