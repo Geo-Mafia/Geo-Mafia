@@ -31,7 +31,7 @@ export class Game implements OnInit {
   constructor(endTime: Date, gameMap: CampusMap, players: Map<number, Player>) {
     this.endTime = endTime
         this.map = gameMap
-
+        this.gameActive = INACTIVE
         
         if(players != undefined) {
           this.players = players
@@ -82,6 +82,10 @@ export class Game implements OnInit {
 
   getMap() {
     return this.map;
+  }
+
+  setMap(map: CampusMap) {
+    this.map = map;
   }
 
   getPlayers() {
@@ -166,13 +170,13 @@ export class Game implements OnInit {
 
   getRoleCount(countKiller) {
 
-      const playersList = this.map.MapOfCampus[Symbol.iterator]();//need to adjust the code for Campus Map for this to work
-
+      const playersList = Array.from(this.players.values())
 
       var count = 0
-      var i = 0
-      if((playersList[i] instanceof Killer) && (countKiller) || !(playersList[i] instanceof Killer) && !(countKiller)){
+      for (let player of playersList){
+      if((player instanceof Killer) && (countKiller) || !(player instanceof Killer) && !(countKiller)){
         count += 1
+        }
       }
 
       return count

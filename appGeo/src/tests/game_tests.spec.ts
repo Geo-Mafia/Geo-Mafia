@@ -38,25 +38,25 @@ QUnit.test("Game Constructors and Basic Getters and Setters", function(assert) {
 
     const game1 = new Game(next_week, test_map, null);
     assert.false(game1.isGameActive(), "New game is not active");
-    assert.equal(game1.getEndTime(), next_week, "End date is set time");
-    assert.equal(game1.getCurrentTime(), now, "Current game time updates over time");
-    assert.equal(game1.getMap(), test_map, "Map has been set properly");
+    assert.deepEqual(game1.getEndTime(), next_week, "End date is set time");
+    assert.deepEqual(game1.getCurrentTime(), now, "Current game time updates over time");
+    assert.deepEqual(game1.getMap(), test_map, "Map has been set properly");
 
     const three_days_from_now = new Date(now.getTime() + 3 * 24 * 60 * 60 * 1000);
     const test_map2 = new CampusMap();
 
-    assert.equal(game1.setEndTime(three_days_from_now), SUCCESS, "End date successfully set");
-    assert.equal(game1.getMap(), SUCCESS, "New map successfully set");
+    game1.setEndTime(three_days_from_now)
+    game1.setMap(test_map2)
 
-    assert.equal(game1.getEndTime(), three_days_from_now, "End date is new set time");
-    assert.equal(game1.getMap(), test_map2, "Map has been set properly");
+    assert.deepEqual(game1.getEndTime(), three_days_from_now, "End date is new set time");
+    assert.deepEqual(game1.getMap(), test_map2, "Map has been set properly");
 
     const game2 = new Game(next_week, test_map, playersMap);
     assert.deepEqual(game2.getPlayers(), playerArray, "game players set properly in constructor");
     assert.false(game2.isGameActive(), "New game is not active");
-    assert.equal(game2.getEndTime(), next_week, "End date is set time");
-    assert.equal(game2.getCurrentTime(), now, "Current game time updates over time");
-    assert.equal(game2.getMap(), test_map, "Map has been set properly");
+    assert.deepEqual(game2.getEndTime(), next_week, "End date is set time");
+    assert.deepEqual(game2.getCurrentTime(), now, "Current game time updates over time");
+    assert.deepEqual(game2.getMap(), test_map, "Map has been set properly");
 
     game1.startGame();
 
@@ -139,24 +139,24 @@ QUnit.test("Game Hashtable Handling", function(assert) {
 
     assert.equal(game1.addChat(chat1), SUCCESS, "Chat added successfully");
     assert.deepEqual(game1.getChats(), chatArray, "chat list successfully updated");
-    assert.equal(game1.getChat(chat1.getChatID()), chat1, "Can successfully get Chat");
+    assert.deepEqual(game1.getChat(chat1.getChatID()), chat1, "Can successfully get Chat");
 
     assert.equal(game1.addChat(chat2), SUCCESS, "Chat added successfully");
     chatArray.push(chat2);
     assert.deepEqual(game1.getChats(), chatArray, "chat list successfully updated");
-    assert.equal(game1.getChat(chat2.getChatID()), chat2, "Can successfully get Chat");
+    assert.deepEqual(game1.getChat(chat2.getChatID()), chat2, "Can successfully get Chat");
 
     assert.equal(game1.addChat(chat3), SUCCESS, "Chat added successfully");
     chatArray.push(chat3);
     assert.deepEqual(game1.getChats(), chatArray, "chat list successfully updated");
 
-    assert.equal(game1.getChat(chat3.getChatID()), chat3, "Can successfully get Chat");
+    assert.deepEqual(game1.getChat(chat3.getChatID()), chat3, "Can successfully get Chat");
 
-    assert.equal(game1.removeChat(chat3.getChatID()), chat3, "Can successfully remove Chat");
+    assert.deepEqual(game1.removeChat(chat3.getChatID()), true, "Can successfully remove Chat");
     chatArray.pop();
     assert.deepEqual(game1.getChats(), chatArray, "chat list successfully updated");
 
-    assert.equal(game1.getChat(chat3.getChatID()), "", "A lack of Chat should return failure");
+    assert.deepEqual(game1.getChat(chat3.getChatID()), null, "A lack of Chat should return failure");
 
 
 });
@@ -193,7 +193,7 @@ QUnit.test("Game Start and End", function(assert) {
     test_game.addPlayer(player4);
     test_game.addPlayer(player5);
 
-    assert.equal(test_game.PlayerCount, 3, "Can count players outside of game");
+    assert.equal(test_game.PlayerCount, 5, "Can count players outside of game");
     assert.equal(test_game.getRoleCount(CIVILIAN), 0, "No role assigned, no civilians");
     assert.equal(test_game.getRoleCount(KILLER), 0, "No role assigned, no killers");
 
