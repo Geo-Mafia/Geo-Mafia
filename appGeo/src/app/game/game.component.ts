@@ -77,8 +77,9 @@ export class Game implements OnInit {
       return this.endTime
   }
 
-  setEndTime(endTime) {
+  setEndTime(endTime: Date) {
       this.endTime = endTime
+      return SUCCESS
   }
 
   getPlayer(playerID) {

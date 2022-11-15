@@ -42,24 +42,24 @@ export class Player implements OnInit {
     //calls you want to make some base initialization when data is loaded in
   }
 
-  get UserID(){
+  getUserID(){
     return this.userID;
   }
-  get Username() : string {
+  getUsername() : string {
     return this.username;
   }
-  get Location(){
+  getLocation(){
     return this.location;
   }
 
-  get AliveStatus(){
+  getAliveStatus(){
     return this.alive;
   }
-  get Votes(){
+  getVotes(){
     return this.votes;
   }
 
-  get ChatList(){
+  getChatList(){
     return this.chat_lists;
   }
 

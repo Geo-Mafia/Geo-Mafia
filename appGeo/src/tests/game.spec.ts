@@ -5,7 +5,8 @@ import {Game} from '../app/game/game.component';
 import {Bubble} from '../app/map/map.component'
 import {CampusMap} from '../app/map/campus-map.component'
 
-
+const INACTIVE = 0
+const ACTIVE = 1
 const DEAD = 0
 const ALIVE = 1
 const INPROGRESS = 5
@@ -42,9 +43,9 @@ QUnit.test("Game Constructors and Basic Getters and Setters", function(assert) {
       );
 
     const game1 = new Game(next_week, test_map, player_map);
-    assert.false(game1.getGameActive(), "New game is not active");
-    assert.equal(game1.getEndTime(), next_week, "endGame date is set time");
-    assert.equal(game1.getCurrentTime(), now, "Current game time updates over time");
+    assert.equal(game1.getGameActive(), INACTIVE, "New game is not active");
+    assert.equal(game1.getEndTime().getTime(), next_week.getTime(), "endGame date is set time");
+    assert.equal(game1.getCurrentTime().getTime(), now.getTime(), "Current game time updates over time");
     assert.equal(game1.getMap(), test_map, "Map has been set properly");
 
     const three_days_from_now = new Date(now.getTime() + 3 * 24 * 60 * 60 * 1000);
@@ -57,14 +58,9 @@ QUnit.test("Game Constructors and Basic Getters and Setters", function(assert) {
     assert.equal(game2.getPlayer(2).getUserID, player2.getUserID());
     assert.equal(game2.getPlayer(3).getUserID, player3.getUserID());
 
-    assert.false(game2.getGameActive(), "New game is not active");
-    assert.equal(game2.getEndTime(), next_week, "endGame date is set time");
-    assert.equal(game2.getCurrentTime(), now, "Current game time updates over time");
-    assert.equal(game2.getMap(), test_map, "Map has been set properly");
-
     game1.startGame();
 
-    assert.true(game1.getGameActive(), "Game reads as active after start");
+    assert.equal(game1.getGameActive(), ACTIVE, "Game reads as active after start");
 
 });
 
@@ -96,11 +92,11 @@ QUnit.test("Game Hashtable Handling", function(assert) {
     
     assert.equal(game1.addPlayer(player4), SUCCESS, "Player added successfully");
     playerArray.push(player4);
-    assert.equal(game1.getPlayer(4), player4.getUserID(), "players list successfully updated");
+    assert.equal(game1.getPlayer(4).getUserID(), player4.getUserID(), "players list successfully updated");
 
     assert.equal(game1.addPlayer(player5), SUCCESS, "Player added successfully");
     playerArray.push(player5);
-    assert.equal(game1.getPlayer(5), player5.getUserID(), "players list successfully updated");
+    assert.equal(game1.getPlayer(5).getUserID(), player5.getUserID(), "players list successfully updated");
 
     assert.equal(game1.removePlayer(player5.getUserID()), true, "Player removed successfully");
     playerArray.pop();
