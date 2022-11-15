@@ -46,7 +46,14 @@ QUnit.test("Game Constructors and Basic Getters and Setters", function(assert) {
     const game1 = new Game(next_week, test_map, player_map);
     assert.equal(game1.getGameActive(), INACTIVE, "New game is not active");
     assert.equal(game1.getEndTime().getTime(), next_week.getTime(), "endGame date is set time");
-    assert.equal(game1.getCurrentTime().getTime(), now.getTime(), "Current game time updates over time");
+
+    //Because of lag when running the tests, give a 5 second timeframe to see if current time was set appropriately
+    var bool = false;
+    const current_time = game1.getCurrentTime().getTime()
+    if (current_time - now.getTime() > -5 || current_time - now.getTime() < 5){
+        bool = true;
+    }
+    assert.equal(bool, true, "Current game time updates over time");
     assert.equal(game1.getMap(), test_map, "Map has been set properly");
 
     const three_days_from_now = new Date(now.getTime() + 3 * 24 * 60 * 60 * 1000);
