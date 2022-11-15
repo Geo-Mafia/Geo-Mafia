@@ -6,8 +6,9 @@ import {Chat, Message} from '../chat/chat_class_declaration'
 
 const INACTIVE = 0
 const ACTIVE = 1
-const CIVILIAN = 0
-const KILLER = 1
+const CIVILIAN = 7
+const KILLER = 8
+const SUCCESS = 10
 
 @Component({
   selector: 'ns-game',
@@ -81,15 +82,20 @@ export class Game implements OnInit {
       return this.players.get(playerID)
   }
 
+  getMap(){
+      return this.map;
+  }
+
   addPlayer(player) {
       this.players.set(player.getUserID(), player)
+      return SUCCESS;
   }
 
   removePlayer(playerID) {
     return this.players.delete(playerID)
   }
 
-  get PlayerCount() {
+  getPlayerCount() {
     return this.players.size
   }
 
@@ -153,6 +159,7 @@ export class Game implements OnInit {
 
   addChat(chat) {
     this.chats.set(chat.getUserID(), chat)
+    return SUCCESS;
   }
 
   removeChat(chatID) {
