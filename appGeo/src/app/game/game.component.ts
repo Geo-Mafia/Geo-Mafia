@@ -6,8 +6,10 @@ import {Chat, Message} from '../chat/chat_class_declaration'
 
 const INACTIVE = 0
 const ACTIVE = 1
-export const CIVILIAN = 0
-export const KILLER = 1
+
+const CIVILIAN = 0
+const KILLER = 1
+const INPROGRESS = 5
 
 @Component({
   selector: 'ns-game',
@@ -100,6 +102,66 @@ export class Game implements OnInit {
 
   get PlayerCount() {
     return this.players.size
+  }
+
+  /* playersRemaining(): 
+   * Functiont that iterates through the hash map of all Players to see how many are still alive 
+   */
+  playersRemaining(){
+    var count = 0;
+    for (let [key, value] of this.players){
+      if (value.getAliveStatus() == ACTIVE){
+          count = count + 1;
+      }
+    }
+
+    return count;
+  }
+
+  /* killersRemaining()
+   * Function that iterates through the hash map of all Players to see how many Killers are still alive
+   */
+  killersRemaining(){
+    var count = 0;
+    for (let [key, value] of this.players){
+      if (value.getAliveStatus() == ACTIVE && value instanceof Killer){
+        count = count + 1;
+      }
+    }
+
+    return count;
+  }
+
+  /* civiliansRemaining()
+   * Function that iterates through the hash map of all Players to see how many Civilians are still alive
+  */
+  civiliansRemaining(){
+    var count = 0;
+    for (let [key, value] of this.players){
+      if (value.getAliveStatus() == ACTIVE && value instanceof Civilian){
+        count = count + 1;
+      }
+    }
+  
+    return count;
+  }
+
+  winningCondition(){
+    var killers_left = this.killersRemaining();
+    var civilians_left = this.civiliansRemaining();
+
+    if (killers_left > 0 && civilians_left == 0){
+      //Killers have won!
+      return KILLER;
+    }
+    
+    if (killers_left == 0 && civilians_left > 0){
+      //Civilians have won!
+      return CIVILIAN;
+    }
+
+    //Game still hasn't ended, return in progress
+    return INPROGRESS;
   }
 
   getRoleCount(countKiller) {
