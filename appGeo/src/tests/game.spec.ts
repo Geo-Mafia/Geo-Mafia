@@ -345,8 +345,8 @@ QUnit.test("Players remainding + Killers win", function(assert) {
 
     const Location1 = new Location(1);
 
-    const player1 = new Player(1, 'player1', Location1, ALIVE); 
-    const player2 = new Player(2, 'player2', Location1, ALIVE);
+    const player1 = new Civilian(1, 'player1', Location1, ALIVE); 
+    const player2 = new Civilian(2, 'player2', Location1, ALIVE);
     const player3 = new Killer(3, 'player3', Location1, ALIVE);
 
     const playerArray = [player1, player2, player3];
@@ -361,11 +361,11 @@ QUnit.test("Players remainding + Killers win", function(assert) {
     const remaining_players = test_game.playersRemaining();
     const remaining_civilians = test_game.civiliansRemaining();
     const remaining_killers = test_game.killersRemaining();
-    assert.equal(remaining_players, 3);
-    assert.equal(remaining_civilians, 2);
-    assert.equal(remaining_killers, 1);
+    assert.equal(remaining_players, 3, "Total players at init game");
+    assert.equal(remaining_civilians, 2, "Total civilians at init game");
+    assert.equal(remaining_killers, 1, "Total killers at init game");
 
-    //Kill off Player 1
+    //Kill off Player 1 & 2
     player1.getKilled();
     player2.getKilled();
     assert.equal(player1.getAliveStatus(), DEAD);
@@ -373,10 +373,10 @@ QUnit.test("Players remainding + Killers win", function(assert) {
     assert.equal(player3.getAliveStatus(), ALIVE);
 
     const new_remaining_civilians = test_game.civiliansRemaining();
-    assert.equal(new_remaining_civilians, 0);
+    assert.equal(new_remaining_civilians, 0, "All civilians were killed off");
 
     const winning_con = test_game.winningCondition();
-    assert.equal(winning_con, KILLER);
+    assert.equal(winning_con, KILLER, "Killers should have won");
 });
 
 QUnit.test("Players remainding + Game in Progress", function(assert) {
@@ -387,8 +387,8 @@ QUnit.test("Players remainding + Game in Progress", function(assert) {
 
     const Location1 = new Location(1);
 
-    const player1 = new Player(1, 'player1', Location1, ALIVE); 
-    const player2 = new Player(2, 'player2', Location1, ALIVE);
+    const player1 = new Civilian(1, 'player1', Location1, ALIVE); 
+    const player2 = new Civilian(2, 'player2', Location1, ALIVE);
     const player3 = new Killer(3, 'player3', Location1, ALIVE);
 
     const playerArray = [player1, player2, player3];
@@ -419,5 +419,5 @@ QUnit.test("Players remainding + Game in Progress", function(assert) {
     assert.equal(new_remaining_killers, 1);
 
     const winning_con = test_game.winningCondition();
-    assert.equal(winning_con, INPROGRESS);
+    assert.equal(winning_con, INPROGRESS, "Game not over yet");
 });
