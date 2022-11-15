@@ -25,10 +25,10 @@ QUnit.test("Game Constructors and Basic Getters and Setters", function(assert) {
     const Location1 = new Location(1);
 
     const player1 = new Player(1, 'player1', Location1, ALIVE); 
-    const player2 = new Player(1, 'player2', Location1, ALIVE);
-    const player3 = new Player(1, 'player3', Location1, ALIVE);
-    const player4 = new Player(1, 'player4', Location1, ALIVE);
-    const player5 = new Player(1, 'player4', Location1, ALIVE);
+    const player2 = new Player(2, 'player2', Location1, ALIVE);
+    const player3 = new Player(3, 'player3', Location1, ALIVE);
+    const player4 = new Player(4, 'player4', Location1, ALIVE);
+    const player5 = new Player(5, 'player4', Location1, ALIVE);
     const playerArray = [player1, player2, player3, player4, player5];
 
     const playersMap = new Map()
@@ -170,8 +170,8 @@ QUnit.test("Game Start and End", function(assert) {
     const Location1 = new Location(1);
 
     const player1 = new Player(1, 'player1', Location1, ALIVE); 
-    const player2 = new Player(1, 'player2', Location1, ALIVE);
-    const player3 = new Player(1, 'player3', Location1, ALIVE);
+    const player2 = new Player(2, 'player2', Location1, ALIVE);
+    const player3 = new Player(3, 'player3', Location1, ALIVE);
 
    const playerArray = [player1, player2, player3];
 
