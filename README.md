@@ -9,7 +9,8 @@ Geo-Mafia is a real-time mafia game played in real life using players' real-time
 We intend to add the game timer and events such that the game start functionality, voting events, and end conditions can be met. We also intend to make the Snapshot Class functional so that we can integrate all things (player, map, chat, snapshot) and run them within the game logic of the game. Other implementation is the UI for the actual app where he we note that there is not _explicit_ unit testing that we can do; but there are acceptance & requirements tests that we've thought off for our app to be usable.
 
 ### Backend
-We plan to implement chatting between players through firebase. When a snapshot is taken, the location will be shared to all players again through firebase. Also when the location of all players will be displayed on the map and sent to every player during the game.
+We plan to implement chatting between players through firebase. When a snapshot is taken, the location will be shared to all players again through firebase. Additionally, the map will be displayed to all involved in the app. In general, most of the backend work is still configuring firebase and making sure it can support player to player communication.
+
 ## 2) A brief description about how the work will be divided among all pairs of people in your team.
 ### Frontend
 1. Timer/Game Event Scheduling - Noah
@@ -44,8 +45,7 @@ Github Actions, Workflows are now configured. We automate the app building, test
 \
 For those interested in configuring the machine environment, see below. 
 
-# Milestone 3.B 
-(I'm going to delete this later just for reference - Like take unit tests from here. After everyone is done, I'll consolidate this into one section)
+# From Previous Milestones 
 
 ## 1) How to Compile
 After cloning the repository, run the following commands to install necessary packages:
