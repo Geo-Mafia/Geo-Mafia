@@ -58,6 +58,10 @@ export class Bubble{
     get returnPlayers() : Map<number, Player>{
       return this.List;
     }
+    get playerArray(){
+      var displayPlayers = Array.from(this.List.values())
+      return displayPlayers
+    }
 }
 
 export default Bubble;

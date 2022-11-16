@@ -12,6 +12,7 @@ import {Player} from '../player/player.component'
 export class CampusMap{
   public MapOfCampus: Map<string, Bubble>;
   public display: Bubble; //the CampusMap has a function inside to choose which Bubble the player will see to make things simpler
+  playerlist: Array<Player>
   constructor() {
   //the MapOfCampus will be fully initialized on call, will need to make getters and setters
     this.MapOfCampus = new Map<string, Bubble>;
@@ -52,11 +53,14 @@ export class CampusMap{
     var P1point = {x: 41.7901, y: -87.5999 };
     Player1.init_Player(1, "SUUUper", P1point, 1);
     var P2point = {x: 41.000001, y: -87.590001};
-    Player2.init_Player(1, "FunnY_Name", P2point, 1);
+    Player2.init_Player(2, "FunnY_Name", P2point, 1);
+    var Player3 = new Player()
+    Player3.init_Player(3, "checking", P2point, 1);
 
   // adding `Players` to the `List` within `Crerar`
     Crerar.addPlayer(Player1)
     Crerar.addPlayer(Player2)
+    Crerar.addPlayer(Player3)
 
 
 
@@ -69,10 +73,14 @@ export class CampusMap{
     this.addToMap(Godspeed.id, Godspeed)
     this.addToMap(Weiboldt.id, Weiboldt)
     this.addToMap(Harper.id, Harper)
+
+
     this.display = Crerar;
+    this.playerlist = this.display.playerArray
+    console.log(this.display.playerArray)
     //idea: call PlayerInBubble to find the `Bubble` `Player` is in
     //display is currently set to Crerar-- will implement further logic soon
-    //console.log(this.display); //commented out, this is to see what was received
+
   }
 
     addToMap(name: string, toAdd: Bubble){
@@ -80,18 +88,24 @@ export class CampusMap{
       this.MapOfCampus.set(name, toAdd);
     }
 
-    playerInBubble(Player){
+    playerInBubble(pToCheck: Player){
       //This will be the function to call to check if a player is in a Bubble within our list of Bubbles
-      this.MapOfCampus.forEach(this.checkBubble);
+      for (let bubb of this.MapOfCampus.values()) {
+        this.checkBubble(bubb, pToCheck)
+      }
     }
 
 
-    checkBubble(checkIfIn : Bubble){
+    checkBubble(checkIfIn : Bubble, pToCheck : Player){
       //this is a function that calls on the bubble that is iterated through
       //when this is called on a bubble if true will change the bubble to display to the Player
-      if(checkIfIn.inBubble(Player)){ //should have more logic to remove a player that is in said bubble List but not in the bubble boundary
+      if(checkIfIn.inBubble(pToCheck) && checkIfIn.List.has(pToCheck.UserID)){
+        //intentionally left blank
+      } else if(checkIfIn.inBubble(pToCheck) && !checkIfIn.List.has(pToCheck.UserID)){ //should have more logic to remove a player that is in said bubble List but not in the bubble boundary
         this.display = checkIfIn;
-      };
+      } else if(!checkIfIn.inBubble(pToCheck) && checkIfIn.List.has(pToCheck.UserID)){
+        checkIfIn.removePlayer(pToCheck)
+      }
     }
 
 }
