@@ -7,20 +7,26 @@ Geo-Mafia is a real-time mafia game played in real life using players' real-time
 ### Frontend
 
 ### Backend
-
+We plan to implement chatting between players through firebase. When a snapshot is taken, the location will be shared to all players again through firebase. Also when the location of all players will be displayed on the map and sent to every player during the game.
 ## 2) A brief description about how the work will be divided among all pairs of people in your team.
 ### Frontend
 
 ### Backend
-
+Chat - Calvin, Jason, Kyu
+Location - Jason, Kyu
+Map - Calvin
 ## 3) Unit test cases 
 (Note : Include tests from iteration 1, and mention the new tests from iteration 2)
 
 ### Frontend
 
 ### Backend
+1) Firebase has been configured to work with this repository and communication is confirmed. 
+2) Firebase API has been setup and documented. 
+3) Google logins have been setup and confirmed to be working.
+4) Firebase message sending has been confirmed to be working (For chat, location and map)
 
-
+## 4) Environment Setup (See Below)
 # Milestone 3.B 
 (I'm going to delete this later just for reference - Like take unit tests from here. After everyone is done, I'll consolidate this into one section)
 
