@@ -183,6 +183,13 @@ export class Player{
         this.votes++;
     }
 
+    /* resetVotes(): Reset current Player's number of votes back down to 0
+     * Note: This will be called at the end of each day / in vote process logic
+    */
+    resetVotes(){
+        this.votes = 0;
+    }
+
 }
 
 export class Civilian extends Player{

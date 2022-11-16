@@ -32,7 +32,7 @@ export class CampusMap{
     // adding `Players` to the `List` within `Campus`
     Campus.addPlayer(Player1);
     Campus.addPlayer(Player2);
-
+    this.addToMap(Campus);
 
     //idea:call PlayerInBubble to find `Player`'s current `Bubble`
         //display is currently set to Campus-- will implement further logic soon
@@ -43,7 +43,7 @@ export class CampusMap{
 
   }
 
-    set addToMap(Bubble){
+    addToMap(Bubble){
       //this is a function solely for use in this file to add bubbles to our mapOfCampus
       this.MapOfCampus.set(Bubble.NameOfBubble, Bubble);
     }
