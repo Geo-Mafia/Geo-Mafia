@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Player, Killer, Civilian} from '../player/player_class_declaration';
 import{CampusMap} from '../map/campus-map.component'
 import {Chat, Message} from '../chat/chat_class_declaration'
+import { GameRules} from './game-rules.component'
 import {Snapshot} from '../snapshot/snapshot_class_declaration'
 //A CampusMap is a Map of the Bubbles that exist on campus
 
@@ -18,8 +19,10 @@ const INPROGRESS = 5
   styleUrls: ['./game.component.css']
 })
 export class Game implements OnInit {
+  gameRules: GameRules //the object containing the game rules
+
   gameActive: number //a boolean number
-  currentTime: Date //a Date object
+  startTime: Date //a Date object
   endTime: Date //a Date object
 
   map: CampusMap //a map object
@@ -29,20 +32,29 @@ export class Game implements OnInit {
   chats: Map<number, Chat> //a hashmap of mapping chatsID ints to chats
 
 
-  constructor(endTime: Date, gameMap: CampusMap, players: Map<number, Player>) {
+  constructor(gameRules: GameRules, gameMap: CampusMap, players: Map<number, Player>) {
+    this.gameRules = gameRules
     this.gameActive = INACTIVE;
-    this.currentTime = new Date();
-    this.endTime = endTime
-        this.map = gameMap
 
-        if(players != undefined) {
-            this.players = players
-        } else {
-            this.players = new Map()
-        }
+    this.startTime = new Date();
 
-        this.snapshots = new Map()
-        this.chats = new Map()
+    if(gameRules.isScheduledEnd) {
+      this.endTime = new Date(this.startTime.getTime() + 
+                              (gameRules.getGameLengthHours() * 60 * 60 * 1800))
+    } else {
+      this.endTime = null
+    }
+    
+    this.map = gameMap
+
+    if(players != undefined) {
+        this.players = players
+    } else {
+        this.players = new Map()
+    }
+
+    this.snapshots = new Map()
+    this.chats = new Map()
   }
 
   ngOnInit(): void {
@@ -72,8 +84,8 @@ export class Game implements OnInit {
       this.gameActive = status
   }
 
-  getCurrentTime() {
-      return this.currentTime
+  getStartTime() {
+      return this.startTime
   }
 
   getEndTime() {
