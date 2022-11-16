@@ -72,7 +72,7 @@ export class GameRules {
         this.maxSoloKills = MIN_MAX_KILL
         this.maxGlobalKills = DEF_MAX_GLOBAL_KILL
     }
-    
+
     isScheduledEnd() {
         return this.scheduledEnd
     }
@@ -137,7 +137,7 @@ export class GameRules {
     }
 
     setFractionKillers(frac: number) {
-        if((frac > 1) || (frac < 0)) {
+        if((frac > 1) || (frac <= 0)) {
             return FAILURE
         }
 

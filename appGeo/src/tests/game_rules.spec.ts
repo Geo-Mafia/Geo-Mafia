@@ -33,7 +33,7 @@ QUnit.test("Constructor and Setting", function(assert) {
     assert.equal(gameRule.getMinPlayers(), 10, "Set min players updates")
 
     assert.equal(gameRule.setFractionKillers(0.4), SUCCESS, "Can change killer frac")
-    assert.equal(gameRule.setFractionKillers(0.1), FAILURE, "Cannot set min players smaller than 0.2")
+    assert.equal(gameRule.setFractionKillers(0), FAILURE, "Cannot set min players as 0")
     assert.equal(gameRule.setFractionKillers(1.1), FAILURE, "Cannot set min players bigger than 1")
     assert.equal(gameRule.getFractionKillers(), 0.4, "Killer fraciton updates correctly")
 
