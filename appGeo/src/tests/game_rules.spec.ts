@@ -13,9 +13,9 @@ QUnit.test("Constructor and Setting", function(assert) {
     assert.equal(gameRule.getDayCycleLength(), 1440, "Default game cycle is 24 hours")
     assert.equal(gameRule.getSafeLength(), 480, "Default safe period is 8 hours")
     assert.equal(gameRule.getVoteLength(), 60, "Default vote period is 1 hour")
-    assert.equal(gameRule.getVoteTime, 960, "Default vote time is 16 hours into game")
-    assert.equal(gameRule.getMaxSoloKill, 1, "Default maximum kills per day by a killer is 1")
-    assert.equal(gameRule.getMaxGlobalKill, Infinity, "Default maximum kills per day overall is infinity")
+    assert.equal(gameRule.getVoteTime(), 960, "Default vote time is 16 hours into game")
+    assert.equal(gameRule.getMaxSoloKill(), 1, "Default maximum kills per day by a killer is 1")
+    assert.equal(gameRule.getMaxGlobalKill(), Infinity, "Default maximum kills per day overall is infinity")
 
     assert.equal(gameRule.setGameDurations(1500, 250, 125, 125), SUCCESS, "Can set game durations to minimum relations")
     assert.equal(gameRule.setGameDurations(600, 100, 50, 50), FAILURE, "Cannot set too small a game length")
@@ -23,10 +23,10 @@ QUnit.test("Constructor and Setting", function(assert) {
     assert.equal(gameRule.setGameDurations(1500, 100, 75, 50), FAILURE, "Cannot set safe time longer than 1/2 of day cycle")
     assert.equal(gameRule.setGameDurations(1500, 100, 50, 51), FAILURE, "Cannot set vote time longer than safe time")
 
-    assert.equal(gameRule.gameLength, 1500, "game length sets correctly")
-    assert.equal(gameRule.dayCycleLength, 250, "game cycle sets correctly")
-    assert.equal(gameRule.safeLength, 125, "safe period sets correctly")
-    assert.equal(gameRule.voteLength, 125, "vote period sets correctly")
+    assert.equal(gameRule.getGameLength(), 1500, "game length sets correctly")
+    assert.equal(gameRule.getDayCycleLength(), 250, "game cycle sets correctly")
+    assert.equal(gameRule.getSafeLength(), 125, "safe period sets correctly")
+    assert.equal(gameRule.getVoteLength(), 125, "vote period sets correctly")
 
     assert.equal(gameRule.setMinPlayers(10), SUCCESS, "Can set larger min players")
     assert.equal(gameRule.setMinPlayers(4), FAILURE, "Cannot set min players smaller than 5")

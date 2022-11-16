@@ -49,7 +49,7 @@ export class GameRules {
     maxSoloKills: number //number of kills a single killer can do a day
     maxGlobalKills: number //number of kills per day allowed total
 
-    constructor(gameLengthHours?) {
+    constructor() {
         this.scheduledEnd = true
         this.wipeOutEnd = true
         this.testing_overrule = false
@@ -57,13 +57,9 @@ export class GameRules {
         this.minPlayers = MIN_MIN_PLAYERS
         this.fractionKillers = MIN_FRACTION_KILLERS
 
-        if(gameLengthHours != undefined) {
-            this.gameLength = gameLengthHours * 60
-            this.dayCycleLength = this.gameLength/6
-        } else {
-            this.gameLength = DEF_GAME_LENGTH
-            this.dayCycleLength = DEF_CYCLE_LEN
-        }
+        this.gameLength = DEF_GAME_LENGTH
+        this.dayCycleLength = DEF_CYCLE_LEN
+        
         this.safeLength = this.dayCycleLength/3
         this.voteLength = MIN_VOTE_LENGTH
 
@@ -83,10 +79,12 @@ export class GameRules {
 
     setScheduledEnd(b: boolean) {
         this.scheduledEnd = b
+        return SUCCESS
     }
 
     setWipeoutEnd(b: boolean) {
         this.wipeOutEnd = b
+        return SUCCESS
     }
 
     //GETTERS
@@ -96,6 +94,10 @@ export class GameRules {
 
     getFractionKillers() {
         return this.fractionKillers
+    }
+
+    getGameLength() {
+        return this.gameLength
     }
 
     getGameLengthHours() {
@@ -197,6 +199,7 @@ export class GameRules {
 
     setTestingOverrule(b: boolean) {
         this.testing_overrule = b
+        return SUCCESS
     }
 
 }
