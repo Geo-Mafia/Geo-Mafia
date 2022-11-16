@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Player, Killer, Civilian} from '../player/player_class_declaration';
 import{CampusMap} from '../map/campus-map.component'
 import {Chat, Message} from '../chat/chat_class_declaration'
+import {Snapshot} from '../snapshot/snapshot_class_declaration'
 //A CampusMap is a Map of the Bubbles that exist on campus
 
 const INACTIVE = 0
@@ -24,7 +25,7 @@ export class Game implements OnInit {
   map: CampusMap //a map object
 
   players: Map<number, Player> //a hashmap of mapping playerID ints to players
-//  snapshots: Map<number, Snapshot> //a hashmap of mapping snapshotID ints to snapshots
+  snapshots: Map<number, Snapshot> //a hashmap of mapping snapshotID ints to snapshots
   chats: Map<number, Chat> //a hashmap of mapping chatsID ints to chats
 
 
@@ -40,7 +41,7 @@ export class Game implements OnInit {
             this.players = new Map()
         }
 
-     //   this.snapshots = new Map()
+        this.snapshots = new Map()
         this.chats = new Map()
   }
 
@@ -207,17 +208,18 @@ export class Game implements OnInit {
     return voted_someone_out;
   }
 
-/*   getSnapshot(snapshotID) {
+  getSnapshot(snapshotID) {
       return this.snapshots.get(snapshotID)
   }
 
   addSnapshot(snapshot) {
-      this.snapshots.set(snapshot.getUserID(), snapshot)
+      this.snapshots.set(snapshot.getSnapshotID(), snapshot)
+      return SUCCESS;
   }
 
   removeSnapshot(snapshotID) {
       return this.snapshots.delete(snapshotID)
-  } */
+  }
 
   getChat(chatID) {
     return this.chats.get(chatID)
