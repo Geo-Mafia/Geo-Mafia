@@ -1,4 +1,4 @@
-import { databaseInit, databaseAdd, databaseGet, databaseUpdate, databaseRemove, databaseEventListener } from "../modules/database";
+import { databaseInit, databaseAdd, chatPush, databaseGet, databaseUpdate, databaseRemove, databaseEventListener } from "../modules/database";
 
 
 const projectId = "geo-mafia";
@@ -116,5 +116,55 @@ QUnit.test("Update API Unit Testing", function(assert) {
     // delete data again
     assert.equal(databaseRemove(dir), true);
     console.log("test3 yayyy");
+
+});
+
+
+/* Tests for chat array objects */
+
+
+QUnit.test("Writing Chat Array to Firebase and Reading", function(assert) {
+    const data = ["Kyu is cool","Calvin is really cool", "Jason is cool too"];
+    const dir = "game/chats/test";
+    // writeData should return true
+    assert.equal(databaseAdd(dir, data), true);
+
+    // able to read data now
+    const read = databaseGet(dir);
+
+    read.then(
+        result => {
+            assert.deepEqual(result, data);
+
+        })
+        .catch(error => {
+            assert.throws(function () {
+                throw new Error('error: ' + error);
+              });
+    });
+
+    //new value to be pushed
+    const newValue = "Kyu actually";
+
+    data.push(newValue);
+
+    // update data now
+    assert.equal(chatPush(newValue), true);
+
+    const read2 = databaseGet(dir);
+
+    read2.then(
+        result => {
+            console.log("result: " + JSON.stringify(result));
+            assert.deepEqual(result, data);
+        })
+        .catch(error => {
+            assert.throws(function () {
+                throw new Error('error: ' + error);
+              });
+    });
+    // delete data again
+    assert.equal(databaseRemove(dir), true);
+    console.log("chat firebase yayyy");
 
 });
