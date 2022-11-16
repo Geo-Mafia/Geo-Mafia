@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Player, Killer, Civilian} from '../player/player_class_declaration';
 import{CampusMap} from '../map/campus-map.component'
 import {Chat, Message} from '../chat/chat_class_declaration'
+import { GameRules} from './game-rules.component'
 //A CampusMap is a Map of the Bubbles that exist on campus
 
 const INACTIVE = 0
@@ -18,7 +19,7 @@ const INPROGRESS = 5
 })
 export class Game implements OnInit {
   gameActive: number //a boolean number
-  currentTime: Date //a Date object
+  startTime: Date //a Date object
   endTime: Date //a Date object
 
   map: CampusMap //a map object
@@ -30,7 +31,7 @@ export class Game implements OnInit {
 
   constructor(endTime: Date, gameMap: CampusMap, players: Map<number, Player>) {
     this.gameActive = INACTIVE;
-    this.currentTime = new Date();
+    this.startTime = new Date();
     this.endTime = endTime
         this.map = gameMap
 
@@ -71,8 +72,8 @@ export class Game implements OnInit {
       this.gameActive = status
   }
 
-  getCurrentTime() {
-      return this.currentTime
+  getstartTime() {
+      return this.startTime
   }
 
   getEndTime() {
