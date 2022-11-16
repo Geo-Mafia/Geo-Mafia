@@ -9,7 +9,6 @@ Geo-Mafia is a real-time mafia game played in real life using players' real-time
 We intend to add the game timer and events such that the game start functionality, voting events, and end conditions can be met. 
 We intend to integrate map functionality in the game so that players can receive the map they individually are in. As well as initializing more bubbles into the CampusMap
 
-
 ### Backend
 We plan to implement chatting between players through firebase. When a snapshot is taken, the location will be shared to all players again through firebase. Additionally, the map will be displayed to all involved in the app. In general, most of the backend work is still configuring firebase and making sure it can support player to player communication.
 
@@ -25,9 +24,8 @@ We plan to implement chatting between players through firebase. When a snapshot 
 1. Chat firebase interactions - Calvin, Jason, Kyu
 2. Location firebase interactions - Jason, Kyu
 3. Map firebase interactions - Calvin
-## 3) Unit test cases 
-(Note : Include tests from iteration 1, and mention the new tests from iteration 2)
 
+## 3) Unit test cases 
 ### Frontend
 
 Here _new_ tests from iteration 2 will be:
@@ -50,6 +48,7 @@ CampusMap tests that:
 * Tests for testing the new functionality for the game rules.
 
 As mentioned in the brief description of what we plan to implement, UI is one of the items. For this, our description of testing is a working model of the game (not necessarily with pretty graphic as we would like). This can include things like first just listing out the chat content for the player to see rather than having it in a pretty overlay with border, details, etc. An interface where players can check who else is in their bubble, and if they are the killer, kill another player successfully. Geolocation accurately tracking players and mapping that to bubbles (just have to see the bubble, doesn't have to be fine detail of map). And that the game can end when condition is fulfilled (just a message in the chat would be fine for notifying players).
+
 ### Backend
 1) Firebase has been configured to work with this repository and communication is confirmed. 
 2) Firebase API has been setup and documented. 
