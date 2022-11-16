@@ -15,6 +15,7 @@ We plan to implement chatting between players through firebase. When a snapshot 
 1. Timer/Game Event Scheduling - Noah
 2. Working on certain UI parts(Chat and Location) - Jose + Nanci
 3. Snapshots - Annabelle
+   * After finishing Snapshots (ideally won't take too long to finish implementation) Annabelle will help out with the UI 
 ### Backend
 1. Chat firebase interactions - Calvin, Jason, Kyu
 2. Location firebase interactions - Jason, Kyu
@@ -25,7 +26,9 @@ We plan to implement chatting between players through firebase. When a snapshot 
 ### Frontend
 Here _new_ tests from iteration 2 will be:
 * tests that handle game voting and killing that occurs in the game (can find this in game.spec.ts)
+   * Extra detail: These unit tests added tests different stages off the game that could and _would_ occur in regular usage of our game such as: when killers win, when civilians win, when people are killed off but the game is still in Progress, how many Civilians and Killers are left.
 * tests about Snapshot functionality (can find this in snapshot.spec.ts)
+   * Extra detail: One of the things that the unit tests really capture is the following scenario. Consider a killing happeens in Bubble A and snapshot _alpha_ captures player1,2,& 3 to be in the bubble when it occurred. We want to make sure that when the bubble gets modified later on (let's say player1 leaves the bubble), that snapshot _alpha_ has a *different* memory location and still retains its information (i.e. that player1,2,&3 were preseent when killing occurred). 
 * further tests about map reorganization that has been done (mixed/improved with previous unit test in map_tests.spec.ts)
 ### Backend
 1) Firebase has been configured to work with this repository and communication is confirmed. 
