@@ -6,11 +6,13 @@ Geo-Mafia is a real-time mafia game played in real life using players' real-time
 ## 1) A brief description about what you plan to implement in the 2nd iteration.
 ### Frontend
 
+We intend to add the game timer and events such that the game start functionality, voting events, and end conditions can be met. 
+
 ### Backend
 We plan to implement chatting between players through firebase. When a snapshot is taken, the location will be shared to all players again through firebase. Also when the location of all players will be displayed on the map and sent to every player during the game.
 ## 2) A brief description about how the work will be divided among all pairs of people in your team.
 ### Frontend
-
+Timer/Game Event Scheduling - Noah
 ### Backend
 Chat - Calvin, Jason, Kyu
 Location - Jason, Kyu
