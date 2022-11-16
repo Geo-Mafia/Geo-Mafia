@@ -41,7 +41,6 @@ export class Game implements OnInit {
     if(gameRules.isScheduledEnd) {
       this.endTime = new Date(this.startTime.getTime() + 
                               (gameRules.getGameLengthHours() * 60 * 60 * 1800))
-      this.endTime.setHours(24, 0, 0, 0)
     } else {
       this.endTime = null
     }

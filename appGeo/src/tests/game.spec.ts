@@ -29,7 +29,6 @@ export class Location{
 QUnit.test("Game Constructors and Basic Getters and Setters", function(assert) {
     const now = new Date();
     const endTime = new Date(now.getTime() + 1800 * 60 * 60 * 24 * 7);
-    endTime.setHours(24, 0, 0, 0);
     const gameRules = new GameRules();
 
     const test_map = new CampusMap();
