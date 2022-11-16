@@ -12,7 +12,7 @@ export class Snapshot {
         this.snapshot_id = id;
         const bub = new Bubble();
         bub.init_bubble(content.id, content.xLb, content.xUb, content.yLb, content.yUb);
-        let playerListCopy = content.returnPlayers.slice();
+        let playerListCopy = content.List;
         bub.List = playerListCopy;
         this.snapshot_content = bub;
     }
@@ -20,8 +20,8 @@ export class Snapshot {
     getSnapshotID(){
         return this.snapshot_id;
     }
-    
+
     getSnapshotContent(){
-        return this.snapshot_content;
+        return this.snapshot_content.playerArray;
     }
 }
