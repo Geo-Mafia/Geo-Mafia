@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { databaseAdd, databaseGet } from '../../modules/database'
+import { databaseAdd, databaseGet, databaseEventListener } from '../../modules/database'
 import { firebase } from "@nativescript/firebase";
 
 @Component({
@@ -9,7 +9,7 @@ import { firebase } from "@nativescript/firebase";
 })
 export class Chat implements OnInit {
 
-  public chats: String[]; //change String to any or Message class later
+  public chats: Array<any>; //change String to any or Message class later
 
 
   constructor() { 
@@ -18,20 +18,26 @@ export class Chat implements OnInit {
 
   ngOnInit(): void {
     this.chats = this.getMsgs();
-    firebase.addValueEventListener(this.updateMsg, "game/chats");
+    databaseEventListener("game/chats", this.updateMsg.bind(this));
+    console.log("got to chat");
   }
 
   getMsgs() {
     let msgs = [];
     databaseGet('game/chats').then(value => {
-      msgs.concat(value);
-      console.log("all msgs: " + msgs);
+      //console.log("val: " + value);
+      msgs = value;
+      //console.log("all msgs: " + msgs);
     });
     return msgs;
-  }
+  } 
 
   updateMsg(data: object) {
-    var list = data["value"];
+    //get current chats
+    this.chats = [];
+
+    //console.log("data: " + JSON.stringify(data));
+    let list = data["value"];
     this.chats = list;
   }
 
