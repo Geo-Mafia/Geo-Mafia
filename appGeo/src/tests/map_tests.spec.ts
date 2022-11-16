@@ -1,9 +1,9 @@
 import {Bubble} from 'src/app/map/map.component';
 import{Player} from 'src/app/player/player.component';
 
-const Bubble_test = require('../map.component');
+const Bubble_test = require('src/app/map/map.component');
 
-QUnit.module("Bubble_Testing");
+QUnit.module("Bubble_test");
 
 //assumes bubble variables are not private
 QUnit.test("Bubble Initialization Tests", function(assert) {

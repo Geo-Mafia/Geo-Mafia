@@ -4,7 +4,7 @@ import{Player} from 'src/app/player/player.component';
 
 const CampusMap_test = require('src/app/map/campus-map.component');
 
-QUnit.module("CampusMap_Testing");
+QUnit.module("CampusMap_test");
 
 class Location{
 
