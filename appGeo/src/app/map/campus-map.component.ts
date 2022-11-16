@@ -1,6 +1,7 @@
 import { Component, Inject, Injectable, OnInit} from '@angular/core';
 import {Bubble} from './map.component'
 import {Player} from '../player/player.component'
+import { push } from 'nativescript-plugin-firebase';
 
 
 
@@ -100,6 +101,7 @@ export class CampusMap implements OnInit {
         //intentionally left blank
       } else if(checkIfIn.inBubble(pToCheck) && !checkIfIn.List.has(pToCheck.userID)){ //should have more logic to remove a player that is in said bubble List but not in the bubble boundary
         this.display = checkIfIn;
+        this.playerlist = checkIfIn.playerArray //reassigning our shallow copy of names
       } else if(!checkIfIn.inBubble(pToCheck) && checkIfIn.List.has(pToCheck.userID)){
         checkIfIn.removePlayer(pToCheck)
       }

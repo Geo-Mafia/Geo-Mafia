@@ -24,10 +24,10 @@ QUnit.test("Snapshot Tests", function(assert) {
 
     const snap = new Snapshot(1, bub);
     assert.equal(snap.getSnapshotID(), 1, "snapshot id should be 1");
-    assert.equal(snap.getSnapshotContent().id, "Bubble", "bubble stored should have id Bubble");
+    assert.equal(snap.getSnapshotBubbleId(), "Bubble", "should have id: Bubble");
 
     const player_map = new Map(
-        snap.getSnapshotContent().playerArray.map(object => {
+        snap.getSnapshotContent().map(object => {
           return [object.getUserID(), object];
         }),
       );
@@ -39,7 +39,7 @@ QUnit.test("Snapshot Tests", function(assert) {
     assert.true(bub.removePlayer(player1), "player should be removed from original bubble");
 
     const player_map2 = new Map(
-      snap.getSnapshotContent().playerArray.map(object => {
+      snap.getSnapshotContent().map(object => {
         return [object.getUserID(), object];
       }),
     );
