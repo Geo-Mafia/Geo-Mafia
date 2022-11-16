@@ -1,6 +1,28 @@
 # Geo-Mafia
 Geo-Mafia is a real-time mafia game played in real life using players' real-time geo-locations
 
+# Milestone 4.A
+
+## 1) A brief description about what you plan to implement in the 2nd iteration.
+### Frontend
+
+### Backend
+
+## 2) A brief description about how the work will be divided among all pairs of people in your team.
+### Frontend
+
+### Backend
+
+## 3) Unit test cases 
+(Note : Include tests from iteration 1, and mention the new tests from iteration 2)
+
+### Frontend
+
+### Backend
+
+
+# Milestone 3.B 
+(I'm going to delete this later just for reference - Like take unit tests from here. After everyone is done, I'll consolidate this into one section)
 
 ## 1) How to Compile
 After cloning the repository, run the following commands to install necessary packages:

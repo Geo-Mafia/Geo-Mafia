@@ -42,24 +42,24 @@ export class Player implements OnInit {
     //calls you want to make some base initialization when data is loaded in
   }
 
-  get UserID(){
+  getUserID(){
     return this.userID;
   }
-  get Username() : string {
+  getUsername() : string {
     return this.username;
   }
-  get Location(){
+  getLocation(){
     return this.location;
   }
 
-  get AliveStatus(){
+  getAliveStatus(){
     return this.alive;
   }
-  get Votes(){
+  getVotes(){
     return this.votes;
   }
 
-  get ChatList(){
+  getChatList(){
     return this.chat_lists;
   }
 
@@ -72,7 +72,7 @@ export class Player implements OnInit {
     // In case that accessing an unavailable chat
     return null
 }
-  get Killed(){
+  getKilled(){
     this.alive = DEAD
     return SUCCESS
 }
@@ -106,7 +106,7 @@ seePeopleInBubble(All_players: Player[]){
   // Sift through Hash Table and find nearby players
   for (var i in All_players) {
       var curr_player = All_players[i];
-      if (curr_player.Location == this.location && curr_player.AliveStatus != DEAD) {
+      if (curr_player.getLocation() == this.getLocation() && curr_player.getAliveStatus() != DEAD) {
           player_list.push(All_players[i]);
       }
   }
@@ -131,7 +131,7 @@ open_chat(chat){
 sendChatMessage(chatID, message){
   var main_chat = this.getChat(chatID);
 
-  if (this.AliveStatus == DEAD || main_chat == null){
+  if (this.getAliveStatus() == DEAD || main_chat == null){
       return FAILURE;
   }
 
@@ -180,7 +180,7 @@ display(chatID){
      *      - A Player ID that will get looked up on the main General Chat
     */
 voteForExecution(voted_player_ID){
-  if (this.AliveStatus == DEAD){
+  if (this.getAliveStatus() == DEAD){
     return FAILURE;
   }
 
@@ -197,6 +197,13 @@ voteForExecution(voted_player_ID){
 increaseVoteCount(){
   this.votes++;
 }
+
+  /* resetVotes(): Reset current Player's number of votes back down to 0
+   * Note: This will be called at the end of each day / in vote process logic
+  */
+  resetVotes(){
+      this.votes = 0;
+  }
 
 }
 
@@ -226,13 +233,13 @@ export class Killer extends Player{
     this.total_kill_count = 0;
 }
 
-  get TotalKillCount(){
+  getTotalKillCount(){
       return this.total_kill_count;
   }
-  get RemainingDailyKillCount(){
+  getRemainingDailyKillCount(){
       return this.remaining_daily_kill_count;
   }
-  get MaxDailyKillCount(){
+  getMaxDailyKillCount(){
       return this.max_daily_kill_count;
   }
 
@@ -251,7 +258,7 @@ export class Killer extends Player{
           // Invalid Move!
           return FAILURE;
       }
-      if (this.RemainingDailyKillCount > 0 && this.AliveStatus == ALIVE){
+      if (this.getRemainingDailyKillCount() > 0 && this.getAliveStatus() == ALIVE){
           // Killer has kills remaining, victim is in bubble and alive, can kill
           player_id.getKilled();
           All_players.delete(player_id); //will delete the players from the map ... implementation of /bubble will need to be fixed
