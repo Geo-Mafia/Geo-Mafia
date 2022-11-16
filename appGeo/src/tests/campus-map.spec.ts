@@ -1,5 +1,5 @@
-import {CampusMap} from 'src/app/map/campus-map.component';
-import {Bubble} from 'src/app/map/map.component'
+import {Bubble} from '../app/map/map.component'
+import {CampusMap} from '../app/map/campus-map.component'
 import{Player} from 'src/app/player/player.component';
 
 class Location{

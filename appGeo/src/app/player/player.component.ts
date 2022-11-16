@@ -272,5 +272,6 @@ export class Killer extends Player{
       }
   }
 }
+module.exports = Player;
 
 
