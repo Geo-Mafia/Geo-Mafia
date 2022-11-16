@@ -1,5 +1,5 @@
 import {Bubble} from '../app/map/map.component'
-import{Player} from 'src/app/player/player.component';
+import{Player} from '../app/player/player.component';
 
 
 //assumes bubble variables are not private
