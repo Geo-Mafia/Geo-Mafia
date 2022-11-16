@@ -1,6 +1,6 @@
-import {Bubble} from '../app/map/map.component'
-import {CampusMap} from '../app/map/campus-map.component'
-import{Player} from '../app/player/player.component';
+import {Bubble} from '~/app/map/map.component'
+import {CampusMap} from '~/app/map/campus-map.component'
+import{Player} from '~/app/player/player.component';
 
 class Location{
 
