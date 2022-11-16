@@ -16,7 +16,7 @@ We plan to implement chatting between players through firebase. When a snapshot 
 ### Frontend
 1. Timer/Game Event Scheduling - Noah
 2. Working on certain UI parts(Chat and Location) - Jose + Nanci
-3. Snapshots - Annabelle
+3. Snapshot Declaration and Tests - Annabelle + Fatimah
    * After finishing Snapshots (ideally won't take too long to finish implementation) Annabelle will help out with the UI 
 4. CampusMap integration with game class - Nanci & Noah
 
@@ -33,7 +33,7 @@ Here _new_ tests from iteration 2 will be:
 * tests that handle game voting and killing that occurs in the game (can find this in game.spec.ts)
    * Extra detail: These unit tests added tests different stages of the game that could and _would_ occur in regular usage of our game such as: when killers win, when civilians win, when people are killed off but the game is still in Progress, how many Civilians and Killers are left.
 * tests about Snapshot functionality (can find this in snapshot.spec.ts)
-   * Extra detail: One of the things that the unit tests really capture is the following scenario. Consider a killing happeens in Bubble A and snapshot _alpha_ captures player1,2,& 3 to be in the bubble when it occurred. We want to make sure that when the bubble gets modified later on (let's say player1 leaves the bubble), that snapshot _alpha_ has a *different* memory location and still retains its information (i.e. that player1,2,&3 were preseent when killing occurred). 
+   * Extra detail: One of the things that the unit tests really capture is the following scenario. Consider a killing happeens in Bubble A and snapshot _alpha_ captures player1,2,& 3 to be in the bubble when it occurred. We want to make sure that when the bubble gets modified later on (let's say player1 leaves the bubble), that snapshot _alpha_ has a *different* memory location and still retains its information (i.e. that player1,2,&3 were preseent when killing occurred). This is achieved by doing a deep copy of the bubble information to memory.
 * further tests about map reorganization that has been done (mixed/improved with previous unit test in map_tests.spec.ts)
 CampusMap tests that: 
 * Test the display variable and if it changes with the function playerInBubble. 
@@ -56,6 +56,10 @@ As mentioned in the brief description of what we plan to implement, UI is one of
 4) Firebase message sending has been confirmed to be working (For chat, location and map)
 
 ## 4) Environment Setup (See Below)
+Github Actions, Workflows are now configured. We automate the app building, testing process using the Github Actions and yaml workflows. If your machine is not configured to build the app or run the tests, you may utilize Github Actions to remotely build and test the app. You can see the workflow runs at  https://github.com/Geo-Mafia/Geo-Mafia/actions. \
+\
+For those interested in configuring the machine environment, see below. 
+
 # Milestone 3.B 
 (I'm going to delete this later just for reference - Like take unit tests from here. After everyone is done, I'll consolidate this into one section)
 
