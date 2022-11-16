@@ -9,12 +9,16 @@ Geo-Mafia is a real-time mafia game played in real life using players' real-time
 We intend to add the game timer and events such that the game start functionality, voting events, and end conditions can be met. 
 We intend to integrate map functionality in the game so that players can receive the map they individually are in. As well as initializing more bubbles into the CampusMap
 
+
 ### Backend
 We plan to implement chatting between players through firebase. When a snapshot is taken, the location will be shared to all players again through firebase. Also when the location of all players will be displayed on the map and sent to every player during the game.
 ## 2) A brief description about how the work will be divided among all pairs of people in your team.
 ### Frontend
 1. Timer/Game Event Scheduling - Noah
-2. CampusMap integration with game class - Nanci & Noah
+2. Working on certain UI parts(Chat and Location) - Jose + Nanci
+3. Snapshots - Annabelle
+   * After finishing Snapshots (ideally won't take too long to finish implementation) Annabelle will help out with the UI 
+4. CampusMap integration with game class - Nanci & Noah
 
 ### Backend
 1. Chat firebase interactions - Calvin, Jason, Kyu
@@ -23,13 +27,23 @@ We plan to implement chatting between players through firebase. When a snapshot 
 ## 3) Unit test cases 
 (Note : Include tests from iteration 1, and mention the new tests from iteration 2)
 
-
 ### Frontend
 
-CampusMap tests: 
-* The tests for this component will be testing if the display variable changes with the function playerInBubble. The purpose of the function is to update the bubble to present for the current player and should be shown to change when the test players are moved around.
+Here _new_ tests from iteration 2 will be:
+* tests that handle game voting and killing that occurs in the game (can find this in game.spec.ts)
+   * Extra detail: These unit tests added tests different stages off the game that could and _would_ occur in regular usage of our game such as: when killers win, when civilians win, when people are killed off but the game is still in Progress, how many Civilians and Killers are left.
+* tests about Snapshot functionality (can find this in snapshot.spec.ts)
+   * Extra detail: One of the things that the unit tests really capture is the following scenario. Consider a killing happeens in Bubble A and snapshot _alpha_ captures player1,2,& 3 to be in the bubble when it occurred. We want to make sure that when the bubble gets modified later on (let's say player1 leaves the bubble), that snapshot _alpha_ has a *different* memory location and still retains its information (i.e. that player1,2,&3 were preseent when killing occurred). 
+* further tests about map reorganization that has been done (mixed/improved with previous unit test in map_tests.spec.ts)
+CampusMap tests that: 
+* Test the display variable and if it changes with the function playerInBubble. 
+  The purpose of the function is to update the bubble to present for the current player 
+  and should be shown to change when the test players are moved around.
 
-* The tests also check if a bubble can be apropriately pushed to the CampusMap by using a displayMap function created in the test file to check if they are printed out appropriately to the console. This is only there so there is some sort of visual representation of the additions to the CampusMap since being hashmap the CampusMap doesn't display neatly in the console
+* Check if a bubble can be apropriately pushed to the CampusMap by using a displayMap function 
+  created in the test file to check if they are printed out appropriately to the console. 
+  This is only there so there is some sort of visual representation of the additions to the CampusMap 
+  since being hashmap the CampusMap doesn't display neatly in the console
 
 ### Backend
 1) Firebase has been configured to work with this repository and communication is confirmed. 
