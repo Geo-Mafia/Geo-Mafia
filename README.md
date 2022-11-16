@@ -12,11 +12,11 @@ We intend to add the game timer and events such that the game start functionalit
 We plan to implement chatting between players through firebase. When a snapshot is taken, the location will be shared to all players again through firebase. Also when the location of all players will be displayed on the map and sent to every player during the game.
 ## 2) A brief description about how the work will be divided among all pairs of people in your team.
 ### Frontend
-Timer/Game Event Scheduling - Noah
+1. Timer/Game Event Scheduling - Noah
 ### Backend
-Chat - Calvin, Jason, Kyu
-Location - Jason, Kyu
-Map - Calvin
+1. Chat firebase interactions - Calvin, Jason, Kyu
+2. Location firebase interactions - Jason, Kyu
+3. Map firebase interactions - Calvin
 ## 3) Unit test cases 
 (Note : Include tests from iteration 1, and mention the new tests from iteration 2)
 
