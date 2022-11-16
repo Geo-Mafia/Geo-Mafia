@@ -1,6 +1,6 @@
-import {Bubble} from 'src/app/map/map.component'
-import {Player} from 'src/app/player/player_class_declaration';
-import {Snapshot} from 'src/app/snapshot/snapshot_class_declaration'
+import {Bubble} from '../app/map/map.component'
+import {Player} from '../app/player/player_class_declaration';
+import {Snapshot} from '../app/snapshot/snapshot_class_declaration'
 
 const ALIVE = 1
 
