@@ -74,9 +74,7 @@ export class CampusMap{
     this.addToMap(Harper.id, Harper)
 
 
-    this.display = Crerar;
-    this.playerlist = this.display.playerArray
-    console.log(this.display.playerArray)
+
     //idea: call PlayerInBubble to find the `Bubble` `Player` is in
     //display is currently set to Crerar-- will implement further logic soon
 
