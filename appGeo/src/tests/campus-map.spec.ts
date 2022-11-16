@@ -2,9 +2,6 @@ import {CampusMap} from 'src/app/map/campus-map.component';
 import {Bubble} from 'src/app/map/map.component'
 import{Player} from 'src/app/player/player.component';
 
-
-QUnit.module("CampusMap_test");
-
 class Location{
 
   is_tracking = false;
