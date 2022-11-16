@@ -9,7 +9,7 @@ import {Player} from '../player/player.component'
   templateUrl: './campus-map.component.html',
 })
 
-export class CampusMap{
+export class CampusMap implements OnInit {
   public MapOfCampus: Map<string, Bubble>;
   public display: Bubble; //the CampusMap has a function inside to choose which Bubble the player will see to make things simpler
   playerlist: Array<Player>
