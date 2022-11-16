@@ -18,6 +18,8 @@ const INPROGRESS = 5
   styleUrls: ['./game.component.css']
 })
 export class Game implements OnInit {
+  gameRules: GameRules //the object containing the game rules
+
   gameActive: number //a boolean number
   startTime: Date //a Date object
   endTime: Date //a Date object
@@ -29,20 +31,30 @@ export class Game implements OnInit {
   chats: Map<number, Chat> //a hashmap of mapping chatsID ints to chats
 
 
-  constructor(endTime: Date, gameMap: CampusMap, players: Map<number, Player>) {
+  constructor(gameRules: GameRules, gameMap: CampusMap, players: Map<number, Player>) {
+    this.gameRules = gameRules
     this.gameActive = INACTIVE;
+
     this.startTime = new Date();
-    this.endTime = endTime
-        this.map = gameMap
 
-        if(players != undefined) {
-            this.players = players
-        } else {
-            this.players = new Map()
-        }
+    if(gameRules.isScheduledEnd) {
+      this.endTime = new Date(this.startTime.getTime() + 
+                              (gameRules.getGameLengthHours() * 60 * 60 * 1800))
+      this.endTime.setHours(24, 0, 0, 0)
+    } else {
+      this.endTime = null
+    }
+    
+    this.map = gameMap
 
-     //   this.snapshots = new Map()
-        this.chats = new Map()
+    if(players != undefined) {
+        this.players = players
+    } else {
+        this.players = new Map()
+    }
+
+    //this.snapshots = new Map()
+    this.chats = new Map()
   }
 
   ngOnInit(): void {
