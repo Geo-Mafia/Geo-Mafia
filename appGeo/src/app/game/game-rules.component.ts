@@ -49,7 +49,9 @@ export class GameRules {
     maxSoloKills: number //number of kills a single killer can do a day
     maxGlobalKills: number //number of kills per day allowed total
 
-    constructor(gameLengthHours?: number) {
+    constructor() {}
+
+    init_Player(gameLengthHours?: number) {
         this.scheduledEnd = true
         this.wipeOutEnd = true
         this.testing_overrule = false
@@ -71,7 +73,6 @@ export class GameRules {
 
         this.maxSoloKills = MIN_MAX_KILL
         this.maxGlobalKills = DEF_MAX_GLOBAL_KILL
-
     }
 
     isScheduledEnd() {
