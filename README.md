@@ -40,6 +40,10 @@ As mentioned in the brief description of what we plan to implement, UI is one of
 4) Firebase message sending has been confirmed to be working (For chat, location and map)
 
 ## 4) Environment Setup (See Below)
+Github Actions, Workflows are now configured. We automate the app building, testing process using the Github Actions and yaml workflows. If your machine is not configured to build the app or run the tests, you may utilize Github Actions to remotely build and test the app. You can see the workflow runs at  https://github.com/Geo-Mafia/Geo-Mafia/edit/main/README.md. \
+\
+For those interested in configuring the machine environment, see below. 
+
 # Milestone 3.B 
 (I'm going to delete this later just for reference - Like take unit tests from here. After everyone is done, I'll consolidate this into one section)
 
