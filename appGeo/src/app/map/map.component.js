@@ -11,18 +11,19 @@ export class Bubble {
     yUb // float
     List // Array<Player>
 
-    constructor(id, xLb, xUb, yLb, yUb) {
+    constructor() {
+      this.List = new Array();
+    }
+
+
+    init_bubble(id, xLb, xUb, yLb, yUb){
+      //this fn exists because it asks for injection tokens from the constructor
+      //if the params are but inside the constructor. otherwise this fn is not necessary
       this.id = id;
       this.xLb = xLb;
       this.xUb = xUb;
       this.yLb = yLb;
       this.yUb = yUb;
-      this.List = new Array();
-    }
-
-
-    init_bubble(id, x_lb, x_ub, y_lb, y_ub){
-      return bubble(id, x_lb, x_ub, y_lb, y_ub);
     }
 
     // //methods

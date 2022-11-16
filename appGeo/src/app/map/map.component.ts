@@ -10,22 +10,21 @@ import { Component, Inject, Injectable} from '@angular/core';
 
 
 export class Bubble{
-  //Variables we will be using
   public id: string;
   public xLb: number;
   public xUb: number;
   public yLb: number;
   public yUb: number;
-  public List: Player[];
+  public List: Map<number, Player>;
 
 
     constructor() {
-      this.List = new Array(); //Bubbles will be initialized naturally with an empty list of Players
-
+      this.List = new Map<number, Player>(); //map<userID, Player>; initialized empty
     }
 
-
-    init_bubble( id: string, xLb: number, xUb: number, yLb: number, yUb: number){
+    init_bubble(id, xLb, xUb, yLb, yUb){
+      //this fn exists because it asks for injection tokens from the constructor
+      //if the params are but inside the constructor. otherwise this fn is not necessary
       this.id = id;
       this.xLb = xLb;
       this.xUb = xUb;
@@ -33,44 +32,36 @@ export class Bubble{
       this.yUb = yUb;
     }
 
-    // //methods
+    // adds player; returns true on success
     addPlayer(Player){
-      //returns a t bool if a player is added
-      //adds player to array and updates arr_len
-      return this.List.push(Player);
+      return this.List.set(Player.userID, Player);
     }
 
+    // removes player, returns true on success
     removePlayer(Player){
-      // removes player from array and updates arr_len. returns bool
-      const index = this.List.indexOf(Player, 0);
-      if (index > -1){
-        this.List.splice(index, 1);
-        return true;
-      } else {
-        return false
-      }
+      return this.List.delete(Player.userID);
     }
+
+    // returns bubble id
     get NameOfBubble(){
       return this.id;
     }
-    inBubble(Player){
-      //checks player location to see if they are within bubble boundaries
-      if (Player.location > this.xLb && Player.location < this.xUb &&
-          Player.location[1] >= this. yLb && Player.location[1] <= this.yUb) {
-        //for now implementation is simple based on playerdev's write up
-        return true;
-      } else {
-        return false;
-      }
 
+    // returns true if player is within bubble boundaries
+    inBubble(Player){
+      //longitude tracks x, latitiude tracks y
+      return Player.location.longitude >= this.xLb && Player.location.longitude <= this.xUb &&
+          Player.location.latitude >= this. yLb && Player.location.latitude <= this.yUb;
     }
 
-    get returnPlayers() : Array<Player>{
-      //returns list of players in Bubble made this a get
+    // returns list of players in bubble
+    get returnPlayers() : Map<number, Player>{
       return this.List;
     }
-
-
+    get playerArray(){
+      var displayPlayers = Array.from(this.List.values())
+      return displayPlayers
+    }
 }
 
 export default Bubble;
