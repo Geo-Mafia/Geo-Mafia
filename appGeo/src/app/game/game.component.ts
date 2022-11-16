@@ -84,7 +84,7 @@ export class Game implements OnInit {
       this.gameActive = status
   }
 
-  getstartTime() {
+  getStartTime() {
       return this.startTime
   }
 

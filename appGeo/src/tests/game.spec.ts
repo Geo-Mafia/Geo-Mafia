@@ -5,6 +5,7 @@ import {Civilian} from '../app/player/player_class_declaration';
 import {Game} from '../app/game/game.component';
 import {Bubble} from '../app/map/map.component'
 import {CampusMap} from '../app/map/campus-map.component'
+import { GameRules } from '~/app/game/game-rules.component';
 
 const INACTIVE = 0
 const ACTIVE = 1
@@ -26,7 +27,9 @@ export class Location{
 
 QUnit.test("Game Constructors and Basic Getters and Setters", function(assert) {
     const now = new Date();
-    const next_week = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+    const endTime = new Date(now.getTime() + 1800 * 60 * 60 * 24 * 7);
+    endTime.setHours(24, 0, 0, 0);
+    const gameRules = new GameRules();
 
     const test_map = new CampusMap();
 
@@ -43,17 +46,25 @@ QUnit.test("Game Constructors and Basic Getters and Setters", function(assert) {
         }),
       );
 
-    const game1 = new Game(next_week, test_map, player_map);
+    const game1 = new Game(gameRules, test_map, player_map);
     assert.equal(game1.getGameActive(), INACTIVE, "New game is not active");
-    assert.equal(game1.getEndTime().getTime(), next_week.getTime(), "endGame date is set time");
+    assert.equal(game1.getEndTime().getTime(), endTime.getTime(), "endGame date is set time");
 
-    //Because of lag when running the tests, give a 5 second timeframe to see if current time was set appropriately
+    //Because of lag when running the tests, give a 5 second timeframe to see if end time was set appropriately
     var bool = false;
-    const current_time = game1.getCurrentTime().getTime()
-    if (current_time - now.getTime() > -5 || current_time - now.getTime() < 5){
+    const actEndTime = game1.getEndTime().getTime()
+    if (actEndTime - endTime.getTime() > -5 || actEndTime - endTime.getTime() < 5){
         bool = true;
     }
-    assert.equal(bool, true, "Current game time updates over time");
+    assert.equal(bool, true, "End game time updates over time");
+
+    //Because of lag when running the tests, give a 5 second timeframe to see if start time was set appropriately
+    bool = false;
+    const start_time = game1.getStartTime().getTime()
+    if (start_time - now.getTime() > -5 || start_time - now.getTime() < 5){
+        bool = true;
+    }
+    assert.equal(bool, true, "Start game time updates over time");
     assert.equal(game1.getMap(), test_map, "Map has been set properly");
 
     const three_days_from_now = new Date(now.getTime() + 3 * 24 * 60 * 60 * 1000);
@@ -61,7 +72,7 @@ QUnit.test("Game Constructors and Basic Getters and Setters", function(assert) {
     assert.equal(game1.setEndTime(three_days_from_now), SUCCESS, "endGame date successfully set");
     assert.equal(game1.getEndTime(), three_days_from_now, "endGame date is new set time");
 
-    const game2 = new Game(next_week, test_map, player_map);
+    const game2 = new Game(gameRules, test_map, player_map);
     assert.equal(game2.getPlayer(1).getUserID(), player1.getUserID());
     assert.equal(game2.getPlayer(2).getUserID(), player2.getUserID());
     assert.equal(game2.getPlayer(3).getUserID(), player3.getUserID());
@@ -73,8 +84,9 @@ QUnit.test("Game Constructors and Basic Getters and Setters", function(assert) {
 });
 
 QUnit.test("Game Hashtable Handling", function(assert) {
+    const gameRules = new GameRules();
+
     const now = new Date();
-    const next_week = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
 
     const test_map = new CampusMap();
 
@@ -92,7 +104,7 @@ QUnit.test("Game Hashtable Handling", function(assert) {
           return [object.getUserID(), object];
         }),
       );
-    const game1 = new Game(next_week, test_map, player_map);
+    const game1 = new Game(gameRules, test_map, player_map);
     assert.equal(game1.getPlayer(1).getUserID(), player1.getUserID());
     assert.equal(game1.getPlayer(2).getUserID(), player2.getUserID());
     assert.equal(game1.getPlayer(3).getUserID(), player3.getUserID());
@@ -158,8 +170,9 @@ QUnit.test("Game Hashtable Handling", function(assert) {
 });
 
 QUnit.test("Game Start and endGame", function(assert) {
+    const gameRules = new GameRules();
+
     const now = new Date();
-    const next_week = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
 
     const test_map = new CampusMap();
 
@@ -176,7 +189,7 @@ QUnit.test("Game Start and endGame", function(assert) {
         }),
       );
 
-    const test_game = new Game(next_week, test_map, player_map);
+    const test_game = new Game(gameRules, test_map, player_map);
 
     assert.equal(test_game.startGame(), SUCCESS, "Game starts with players");
     assert.equal(test_game.getGameActive(), ACTIVE, "Started game is not active");
@@ -219,8 +232,9 @@ QUnit.test("Game Start and endGame", function(assert) {
 
 
 QUnit.test("Vote Handler when player is voted off", function(assert) {
+    const gameRules = new GameRules();
+
     const now = new Date();
-    const next_week = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
 
     const test_map = new CampusMap();
 
@@ -243,7 +257,7 @@ QUnit.test("Vote Handler when player is voted off", function(assert) {
         }),
       );
 
-    const test_game = new Game(next_week, test_map, player_map);
+    const test_game = new Game(gameRules, test_map, player_map);
     test_game.addChat(chat1);
 
     player1.voteForExecution(2);
@@ -261,8 +275,9 @@ QUnit.test("Vote Handler when player is voted off", function(assert) {
 });
 
 QUnit.test("Vote Handler when player is NOT voted off", function(assert) {
+    const gameRules = new GameRules();
+
     const now = new Date();
-    const next_week = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
 
     const test_map = new CampusMap();
 
@@ -285,7 +300,7 @@ QUnit.test("Vote Handler when player is NOT voted off", function(assert) {
         }),
       );
 
-    const test_game = new Game(next_week, test_map, player_map);
+    const test_game = new Game(gameRules, test_map, player_map);
     test_game.addChat(chat1);
 
     player1.voteForExecution(2);
@@ -306,8 +321,9 @@ QUnit.test("Vote Handler when player is NOT voted off", function(assert) {
 });
 
 QUnit.test("Players remaining plus no killers", function(assert) {
+    const gameRules = new GameRules();
+  
     const now = new Date();
-    const next_week = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
 
     const test_map = new CampusMap();
 
@@ -324,7 +340,7 @@ QUnit.test("Players remaining plus no killers", function(assert) {
         }),
       );
 
-    const test_game = new Game(next_week, test_map, player_map);
+    const test_game = new Game(gameRules, test_map, player_map);
 
     const remaining_players = test_game.playersRemaining();
     const remaining_civilians = test_game.civiliansRemaining();
@@ -347,8 +363,9 @@ QUnit.test("Players remaining plus no killers", function(assert) {
 });
 
 QUnit.test("Players remainding + Killers win", function(assert) {
+    const gameRules = new GameRules();
+
     const now = new Date();
-    const next_week = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
 
     const test_map = new CampusMap();
 
@@ -365,7 +382,7 @@ QUnit.test("Players remainding + Killers win", function(assert) {
         }),
       );
 
-    const test_game = new Game(next_week, test_map, player_map);
+    const test_game = new Game(gameRules, test_map, player_map);
 
     const remaining_players = test_game.playersRemaining();
     const remaining_civilians = test_game.civiliansRemaining();
@@ -389,8 +406,9 @@ QUnit.test("Players remainding + Killers win", function(assert) {
 });
 
 QUnit.test("Players remainding + Game in Progress", function(assert) {
+    const gameRules = new GameRules();
+
     const now = new Date();
-    const next_week = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
 
     const test_map = new CampusMap();
 
@@ -407,7 +425,7 @@ QUnit.test("Players remainding + Game in Progress", function(assert) {
         }),
       );
 
-    const test_game = new Game(next_week, test_map, player_map);
+    const test_game = new Game(gameRules, test_map, player_map);
 
     const remaining_players = test_game.playersRemaining();
     const remaining_civilians = test_game.civiliansRemaining();

@@ -139,7 +139,7 @@ export class GameRules {
     }
 
     //SETTERS
-    setMinPlayers(minPlayers :number) {
+    setMinPlayers(minPlayers: number) {
         this.minPlayers = minPlayers
     }
 
