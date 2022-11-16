@@ -7,6 +7,7 @@ import {Game} from '../app/game/game.component';
 import {Bubble} from '../app/map/map.component'
 import {CampusMap} from '../app/map/campus-map.component'
 import { GameRules } from '~/app/game/game-rules.component';
+import { test } from 'qunit';
 
 const INACTIVE = 0
 const ACTIVE = 1
@@ -206,15 +207,15 @@ QUnit.test("Game Start and endGame", function(assert) {
     assert.equal(test_game.getRoleCount(CIVILIAN), 0, "No role assigned, no civilians");
     assert.equal(test_game.getRoleCount(KILLER), 0, "No role assigned, no killers");
 
-    // assert.equal(test_game.getFractionRole(CIVILIAN), 0, "No role assigned, no civilians");
-    // assert.equal(test_game.getFractionRole(KILLER), 0, "No role assigned, no killers");
+    assert.equal(test_game.getFractionRole(CIVILIAN), 0, "No role assigned, no civilians");
+    assert.equal(test_game.getFractionRole(KILLER), 0, "No role assigned, no killers");
 
-    // assert.equal(test_game.getPlayerCount(), 5, "Can count players in game");
-    // assert.equal(test_game.getRoleCount(CIVILIAN), 4, "Should start game with 3 civilians");
-    // assert.equal(test_game.getRoleCount(KILLER), 1, "Should start game with 1 killer");
+    assert.equal(test_game.getPlayerCount(), 5, "Can count players in game");
+    assert.equal(test_game.getRoleCount(CIVILIAN), 4, "Should start game with 3 civilians");
+    assert.equal(test_game.getRoleCount(KILLER), 1, "Should start game with 1 killer");
 
-    // assert.equal(test_game.getFractionRole(CIVILIAN), 0.8, "Should be 80% civilians");
-    // assert.equal(test_game.getFractionRole(KILLER), 0.2, "Should be 20% killers");
+    assert.equal(test_game.getFractionRole(CIVILIAN), 0.8, "Should be 80% civilians");
+    assert.equal(test_game.getFractionRole(KILLER), 0.2, "Should be 20% killers");
 
     assert.equal(test_game.endGame(), SUCCESS, "Can stop a game");
     assert.equal(test_game.getGameActive(), INACTIVE, "Stopped game is not active");
@@ -224,9 +225,9 @@ QUnit.test("Game Start and endGame", function(assert) {
 
     assert.equal(test_game.startGame(), SUCCESS, "Game can start with five or more players");
 
-    //should delay by 1 second, need to write this in
-
-    assert.equal(test_game.getGameActive(), ACTIVE, "Stopped game is not active");
+    setTimeout(() => {
+    assert.equal(test_game.getGameActive(), INACTIVE, "Stopped game is not active")
+    }, 10000)
 
 });
 

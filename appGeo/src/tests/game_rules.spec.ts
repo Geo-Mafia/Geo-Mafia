@@ -3,9 +3,9 @@ import { GameRules, SUCCESS, FAILURE } from '~/app/game/game-rules.component';
 QUnit.test("Constructor and Setting", function(assert) {
     const gameRule = new GameRules();
 
-    assert.true(gameRule.isScheduledEnd, "Scheduled End is true by default")
-    assert.true(gameRule.isWipeoutEnd, "Wipeout End is true by default")
-    assert.false(gameRule.isTestingOverrule, "Testing Overrule is true by default")
+    assert.true(gameRule.isScheduledEnd(), "Scheduled End is true by default")
+    assert.true(gameRule.isWipeoutEnd(), "Wipeout End is true by default")
+    assert.false(gameRule.isTestingOverrule(), "Testing Overrule is true by default")
 
     assert.equal(gameRule.getMinPlayers(), 5, "Default min players is 5")
     assert.equal(gameRule.getFractionKillers(), 0.2, "Default fraction killers is 0.2")
