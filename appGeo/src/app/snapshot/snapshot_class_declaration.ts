@@ -9,8 +9,12 @@ export class Snapshot {
     snapshot_content: Bubble;
 
     constructor(id: number, content: Bubble){
-        this.snapshot_id = id
-        this.snapshot_content = content
+        this.snapshot_id = id;
+        const bub = new Bubble();
+        bub.init_bubble(content.id, content.xLb, content.xUb, content.yLb, content.yUb);
+        let playerListCopy = content.returnPlayers.slice();
+        bub.List = playerListCopy;
+        this.snapshot_content = bub;
     }
 
     getSnapshotID(){
