@@ -22,6 +22,6 @@ export class Snapshot {
     }
 
     getSnapshotContent(){
-        return this.snapshot_content.playerArray;
+        return this.snapshot_content;
     }
 }
