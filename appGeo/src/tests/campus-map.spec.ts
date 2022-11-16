@@ -2,7 +2,6 @@ import {CampusMap} from 'src/app/map/campus-map.component';
 import {Bubble} from 'src/app/map/map.component'
 import{Player} from 'src/app/player/player.component';
 
-const CampusMap_test = require('src/app/map/campus-map.component');
 
 QUnit.module("CampusMap_test");
 
