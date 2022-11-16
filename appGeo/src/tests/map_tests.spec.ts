@@ -1,7 +1,7 @@
 import {Bubble} from 'src/app/map/map.component';
 import{Player} from 'src/app/player/player.component';
 
-const Bubble_test = require('../map.component.js');
+const Bubble_test = require('../map.component');
 
 QUnit.module("Bubble_Testing");
 
