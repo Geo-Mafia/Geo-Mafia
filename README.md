@@ -44,6 +44,7 @@ CampusMap tests that:
   created in the test file to check if they are printed out appropriately to the console. 
   This is only there so there is some sort of visual representation of the additions to the CampusMap 
   since being hashmap the CampusMap doesn't display neatly in the console
+  
 
 ### Backend
 1) Firebase has been configured to work with this repository and communication is confirmed. 
