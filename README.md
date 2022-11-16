@@ -30,6 +30,8 @@ Here _new_ tests from iteration 2 will be:
 * tests about Snapshot functionality (can find this in snapshot.spec.ts)
    * Extra detail: One of the things that the unit tests really capture is the following scenario. Consider a killing happeens in Bubble A and snapshot _alpha_ captures player1,2,& 3 to be in the bubble when it occurred. We want to make sure that when the bubble gets modified later on (let's say player1 leaves the bubble), that snapshot _alpha_ has a *different* memory location and still retains its information (i.e. that player1,2,&3 were preseent when killing occurred). 
 * further tests about map reorganization that has been done (mixed/improved with previous unit test in map_tests.spec.ts)
+
+As mentioned in the brief description of what we plan to implement, UI is one of the items. For this, our description of testing is a working model of the game (not necessarily with pretty graphic as we would like). This can include things like first just listing out the chat content for the player to see rather than having it in a pretty overlay with border, details, etc. An interface where players can check who else is in their bubble, and if they are the killer, kill another player successfully. Geolocation accurately tracking players and mapping that to bubbles (just have to see the bubble, doesn't have to be fine detail of map). And that the game can end when condition is fulfilled (just a message in the chat would be fine for notifying players).
 ### Backend
 1) Firebase has been configured to work with this repository and communication is confirmed. 
 2) Firebase API has been setup and documented. 
