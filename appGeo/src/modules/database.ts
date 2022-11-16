@@ -72,6 +72,37 @@ export function databaseUpdate(path: string, data: object): boolean {
 }
 
 /**
+ * Update the entry in the database
+ * @param path - the exact node where the data is located (ex. users/gypark23)
+ * @param data - the new updated JSON  
+ * @returns none
+ */
+ export function chatPush(data: any): boolean {
+    try {
+        /*
+        firebase.getValue('game/chats').then(value => {
+            let arr = value["value"];
+            console.log(arr);
+            arr.push("Jose");
+            console.log(arr);
+            firebase.setValue('game/chats', arr);
+          });
+          */
+        
+        let path : string = "game/chats"
+        databaseGet(path).then(value => {
+            let currChats = value["value"];
+            currChats.push(data);
+            databaseUpdate(path, currChats);
+        });
+        return true;
+    } catch (error) {
+        console.log(`error in chatPush: ${error}`);
+        return false;
+    }
+}
+
+/**
  * Remove the node in database, including children 
  * @param path - the exact node where the node to be deleted is located (ex. users/gypark23)  
  * @returns none
