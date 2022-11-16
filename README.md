@@ -18,6 +18,11 @@ Map - Calvin
 ## 3) Unit test cases 
 (Note : Include tests from iteration 1, and mention the new tests from iteration 2)
 
+CampusMap tests: 
+* The tests for this component will be testing if the display variable changes with the function playerInBubble. The purpose of the function is to update the bubble to present for the current player and should be shown to change when the test players are moved around.
+
+* The tests also check if a bubble can be apropriately pushed to the CampusMap by using a displayMap function created in the test file to check if they are printed out appropriately to the console. This is only there so there is some sort of visual representation of the additions to the CampusMap since being hashmap the CampusMap doesn't display neatly in the console
+
 ### Frontend
 
 ### Backend
