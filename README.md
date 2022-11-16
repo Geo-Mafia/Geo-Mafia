@@ -6,13 +6,15 @@ Geo-Mafia is a real-time mafia game played in real life using players' real-time
 ## 1) A brief description about what you plan to implement in the 2nd iteration.
 ### Frontend
 
-We intend to add the game timer and events such that the game start functionality, voting events, and end conditions can be met. 
+We intend to add the game timer and events such that the game start functionality, voting events, and end conditions can be met. We also intend to make the Snapshot Class functional so that we can integrate all things (player, map, chat, snapshot) and run them within the game logic of the game. Other implementation is the UI for the actual app where he we note that there is not _explicit_ unit testing that we can do; but there are acceptance & requirements tests that we've thought off for our app to be usable.
 
 ### Backend
 We plan to implement chatting between players through firebase. When a snapshot is taken, the location will be shared to all players again through firebase. Also when the location of all players will be displayed on the map and sent to every player during the game.
 ## 2) A brief description about how the work will be divided among all pairs of people in your team.
 ### Frontend
 1. Timer/Game Event Scheduling - Noah
+2. Working on certain UI parts(Chat and Location) - Jose + Nanci
+3. Snapshots - Annabelle
 ### Backend
 1. Chat firebase interactions - Calvin, Jason, Kyu
 2. Location firebase interactions - Jason, Kyu
@@ -21,7 +23,10 @@ We plan to implement chatting between players through firebase. When a snapshot 
 (Note : Include tests from iteration 1, and mention the new tests from iteration 2)
 
 ### Frontend
-
+Here _new_ tests from iteration 2 will be:
+* tests that handle game voting and killing that occurs in the game (can find this in game.spec.ts)
+* tests about Snapshot functionality (can find this in snapshot.spec.ts)
+* further tests about map reorganization that has been done (mixed/improved with previous unit test in map_tests.spec.ts)
 ### Backend
 1) Firebase has been configured to work with this repository and communication is confirmed. 
 2) Firebase API has been setup and documented. 
