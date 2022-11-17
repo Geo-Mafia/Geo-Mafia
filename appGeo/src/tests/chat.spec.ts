@@ -3,10 +3,8 @@
 // import {Player} from '../app/player/player_class_declaration.js';
 // import {Killer} from '../app/player/player_class_declaration.js';
 
-import {Chat} from '../app/chat/chat_class_declaration';
-import {Message} from '../app/chat/chat_class_declaration';
-import {Player} from '../app/player/player_class_declaration';
-import {Killer} from '../app/player/player_class_declaration';
+import {Chat, Message} from '../app/chat/chat.component';
+import {Player, Killer} from '../app/player/player.component';
 
 QUnit.module("chat_tests");
 
@@ -35,9 +33,12 @@ export class Location{
 const Location1 = new Location(1);
 const Location2 = new Location(2);
 
-const Player1 = new Player(1, 'player1', Location1, ALIVE);
-const Player2 = new Player(2, 'player2', Location1, ALIVE); 
-const Killer1 = new Killer(3, 'killer1', Location2, ALIVE); 
+const Player1 = new Player();
+Player1.init(1, 'player1', Location1, ALIVE);
+const Player2 = new Player()
+Player2.init(2, 'player2', Location1, ALIVE);
+const Killer1 = new Killer()
+Killer1.init(3, 'killer1', Location2, ALIVE); 
 
 QUnit.test("Retrieving message_id when only initialized", assert => {
     assert.equal(Message1.getMessageID(), -1);

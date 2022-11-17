@@ -21,8 +21,6 @@ export class CampusMap implements OnInit {
     //===== Initializing Crerar ====
     var Crerar =  new Bubble()
     Crerar.init_bubble('Crerar', 41.7901331, 41.7909298, -87.6025138, -87.6031023)
-    var Player1 = new Player()
-    var Player2 = new Player()
   //==== Initializing Bookstore ====
     var Bookstore = new Bubble()
     Bookstore.init_bubble('Bookstore', 41.7896584,41.7899199,-87.6013954,-87.6018721)
@@ -51,11 +49,13 @@ export class CampusMap implements OnInit {
 
   //Players that will go in the `Crerar` Bubble
     var P1point = {x: 41.7901, y: -87.5999 };
-    Player1.init_Player(1, "SUUUper", P1point, 1);
+    var Player1 = new Player()
+    Player1.init(1, "SUUUper", P1point, 1);
     var P2point = {x: 41.000001, y: -87.590001};
-    Player2.init_Player(2, "FunnY_Name", P2point, 1);
+    var Player2 = new Player()
+    Player2.init(2, "FunnY_Name", P2point, 1);
     var Player3 = new Player()
-    Player3.init_Player(3, "checking", P2point, 1);
+    Player3.init(3, "checking", P2point, 1);
 
   // adding `Players` to the `List` within `Crerar`
     Crerar.addPlayer(Player1)
