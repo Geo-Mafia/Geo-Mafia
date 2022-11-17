@@ -3,12 +3,12 @@ import { NativeScriptCommonModule } from '@nativescript/angular'
 
 import { HomeRoutingModule } from './home-routing.module'
 import { HomeComponent } from './home.component'
-import {Chat} from '../chat/chat.component'
+import { ChatComponent} from '../chat/chat.component'
 import {Bubble} from '../map/map.component'
 import {CampusMap} from '../map/campus-map.component'
 @NgModule({
   imports: [NativeScriptCommonModule, HomeRoutingModule],
-  declarations: [HomeComponent, Bubble, CampusMap, Chat],
+  declarations: [HomeComponent, Bubble, CampusMap, ChatComponent],
   schemas: [NO_ERRORS_SCHEMA],
 })
 export class HomeModule {}

@@ -2,9 +2,8 @@
 // import {Player} from '../app/player/player_class_declaration.js';
 // import {Killer} from '../app/player/player_class_declaration.js';
 
-import {Chat} from '../app/chat/chat_class_declaration';
-import {Player} from '../app/player/player_class_declaration';
-import {Killer} from '../app/player/player_class_declaration';
+import {Chat} from '../app/chat/chat.component';
+import {Player, Killer} from '../app/player/player.component';
 
 
 const DEAD = 0
@@ -24,9 +23,12 @@ class Location{
 const Location1 = new Location(1);
 const Location2 = new Location(2);
 
-const player1 = new Player(1, 'player1', Location1, ALIVE);
-const player2 = new Player(2, 'player2', Location1, ALIVE); 
-const killer1 = new Killer(3, 'killer1', Location2, ALIVE); 
+const player1 = new Player()
+player1.init(1, 'player1', Location1, ALIVE);
+const player2 = new Player()
+player2.init(2, 'player2', Location1, ALIVE); 
+const killer1 = new Killer()
+killer1.init(3, 'killer1', Location2, ALIVE); 
 
 const chat1 = new Chat(1);
 chat1.insertPlayer(player1)
