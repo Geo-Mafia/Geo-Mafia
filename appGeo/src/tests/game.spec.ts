@@ -53,7 +53,6 @@ QUnit.test("Game Constructors and Basic Getters and Setters", function(assert) {
     const game1 = new Game(gameRules, test_map, undefined);
 
     assert.equal(game1.getGameActive(), INACTIVE, "New game is not active");
-    assert.equal(game1.getEndTime().getTime(), endTime.getTime(), "endGame date is set time");
 
     //Because of lag when running the tests, give a 5 second timeframe to see if end time was set appropriately
     var bool = false;

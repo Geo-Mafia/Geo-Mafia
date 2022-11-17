@@ -155,9 +155,9 @@ export class GameRules {
             return FAILURE
         } else if((cycleMinutes > (gameMinutes / 6)) || (cycleMinutes < 0)) {
             return FAILURE
-        } else if((safeMinutes > (cycleMinutes / 2)) || (safeMinutes < 600)) {
+        } else if((safeMinutes > (cycleMinutes / 2)) || (safeMinutes < MIN_VOTE_LENGTH)) {
             return FAILURE
-        } else if((voteMinutes > safeMinutes) || (voteMinutes < 0)) {
+        } else if((voteMinutes > safeMinutes) || (voteMinutes < MIN_VOTE_LENGTH)) {
             return FAILURE
         }
 
