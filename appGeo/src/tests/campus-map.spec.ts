@@ -35,6 +35,7 @@ class Location{
     }
   }
 
+QUnit.module("Campus Map tests")
 
 QUnit.test("testing the display variable and playerInBubble", function(assert){
   assert.equal(testMap.display,

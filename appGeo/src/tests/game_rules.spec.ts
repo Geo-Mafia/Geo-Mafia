@@ -1,5 +1,7 @@
 import { GameRules, SUCCESS, FAILURE } from '~/app/game/game-rules.component';
 
+QUnit.module("Game Rule Tests")
+
 QUnit.test("Constructor and Setting", function(assert) {
     const gameRule = new GameRules();
 
@@ -19,9 +21,9 @@ QUnit.test("Constructor and Setting", function(assert) {
 
     assert.equal(gameRule.setGameDurations(1500, 250, 125, 125), SUCCESS, "Can set game durations to minimum relations")
     assert.equal(gameRule.setGameDurations(600, 100, 50, 50), FAILURE, "Cannot set too small a game length")
-    assert.equal(gameRule.setGameDurations(1500, 500, 50, 50), FAILURE, "Cannot set day cycle longer than 1/6 of game length")
-    assert.equal(gameRule.setGameDurations(1500, 100, 75, 50), FAILURE, "Cannot set safe time longer than 1/2 of day cycle")
-    assert.equal(gameRule.setGameDurations(1500, 100, 50, 51), FAILURE, "Cannot set vote time longer than safe time")
+    assert.equal(gameRule.setGameDurations(1600, 500, 50, 50), FAILURE, "Cannot set day cycle longer than 1/6 of game length")
+    assert.equal(gameRule.setGameDurations(1600, 100, 75, 50), FAILURE, "Cannot set safe time longer than 1/2 of day cycle")
+    assert.equal(gameRule.setGameDurations(1600, 100, 50, 51), FAILURE, "Cannot set vote time longer than safe time")
 
     assert.equal(gameRule.getGameLength(), 1500, "game length sets correctly")
     assert.equal(gameRule.getDayCycleLength(), 250, "game cycle sets correctly")
@@ -36,6 +38,18 @@ QUnit.test("Constructor and Setting", function(assert) {
     assert.equal(gameRule.setFractionKillers(0), FAILURE, "Cannot set min players as 0")
     assert.equal(gameRule.setFractionKillers(1.1), FAILURE, "Cannot set min players bigger than 1")
     assert.equal(gameRule.getFractionKillers(), 0.4, "Killer fraciton updates correctly")
+
+    assert.equal(gameRule.setMaxSoloKill(30), SUCCESS, "Can set Max Solo Kill higher")
+    assert.equal(gameRule.setMaxSoloKill(0), FAILURE, "Can set Max Solo Kill higher")
+    assert.equal(gameRule.setMaxSoloKill(-30), FAILURE, "Can set Max Solo Kill higher")
+
+    assert.equal(gameRule.getMaxSoloKill(), 30, "Max Solo Kill set properly")
+
+    assert.equal(gameRule.setMaxGlobalKill(50), SUCCESS, "Can set Max Global Kill higher")
+    assert.equal(gameRule.setMaxGlobalKill(0), FAILURE, "Can set Max Global Kill higher")
+    assert.equal(gameRule.setMaxGlobalKill(-50), FAILURE, "Can set Max Global Kill higher")
+
+    assert.equal(gameRule.getMaxGlobalKill(), 50, "Max Global Kill set properly")
 
 }
 

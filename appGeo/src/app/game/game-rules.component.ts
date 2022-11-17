@@ -47,7 +47,7 @@ export class GameRules {
     voteTime: number //number of minutes 
 
     maxSoloKills: number //number of kills a single killer can do a day
-    maxGlobalKills: number //number of kills per day allowed total
+    maxGlobalKills: number //number of kills per day allowed total across all killers
 
     constructor() {
         this.scheduledEnd = true
@@ -151,11 +151,11 @@ export class GameRules {
                      safeMinutes: number, voteMinutes: number) {
         var gameMinutes = gameHours * 60
 
-        if(((gameMinutes) > MIN_GAME_LENGTH)) {
+        if(((gameMinutes) < MIN_GAME_LENGTH)) {
             return FAILURE
-        } else if((cycleMinutes > gameMinutes / 6) || (cycleMinutes < 0)) {
+        } else if((cycleMinutes > (gameMinutes / 6)) || (cycleMinutes < 0)) {
             return FAILURE
-        } else if((safeMinutes > cycleMinutes / 2) || (safeMinutes < 600)) {
+        } else if((safeMinutes > (cycleMinutes / 2)) || (safeMinutes < 600)) {
             return FAILURE
         } else if((voteMinutes > safeMinutes) || (voteMinutes < 0)) {
             return FAILURE
@@ -165,15 +165,6 @@ export class GameRules {
         this.dayCycleLength = cycleMinutes
         this.safeLength = safeMinutes
         this.voteLength = voteMinutes
-        return SUCCESS
-    }
-
-    setVoteTime(minutesIntoCycle: number) {
-        if(minutesIntoCycle > (this.dayCycleLength - this.safeLength) || minutesIntoCycle < 0) {
-            return FAILURE
-        }
-
-        this.voteTime = minutesIntoCycle
         return SUCCESS
     }
 
