@@ -1,15 +1,16 @@
 <ActionBar>
-    <Label text="Chat"></Label>
+      <Label text="Chat"></Label>
 </ActionBar>
 
-<!-- This fills the remaining space of the current row
-<span class="example-fill-remaining-space"></span> -->
+  <!-- This fills the remaining space of the current row
+  <span class="example-fill-remaining-space"></span> -->
 
 <StackLayout>
   <!-- <label>{{chats}}</label> -->
   <!-- <label ng-repeat="chat in chats">{{chats}}</label> -->
+  <label>Chat History</label>
   <label *ngFor="let chat of chats">{{ chat }}</label>
-  <label>{{msg_to_send}}</label>
+  <!-- <label>{{msg_to_send}}</label> -->
   <!-- No styles applied -->
   <Button text="Button"></Button>
   <!-- Using local CSS class -->
@@ -23,6 +24,8 @@
       </FormattedString>
   </Button>
   <!-- <Button text="Button.-outline" class="-outline"></Button>  
+  <Button text="Button.-outline" class="-outline"></Button>  
+  <Button text="Button.-outline" class="-outline"></Button>  
   <Button text="Button.-primary.-rounded-sm" class="-primary -rounded-sm"></Button>
   <Button text="Button.-primary.-rounded-lg" class="-primary -rounded-lg"></Button>
   <Button text="Button.-outline.-rounded-sm" class="-outline -rounded-sm"></Button>
@@ -30,10 +33,11 @@
   <Button text="Button.-outline[isEnabled=false]" isEnabled="false" class="-outline"></Button>
   <Button text="Button.-primary[isEnabled=false]" isEnabled="false" class="-primary"></Button> -->
   <Label text = "Notifying that you can see chat"></Label> 
-  <TextField id="toSend" class="input" hint="What Message do you want to send"></TextField>
-  <input type="text" class="form-control" id="name"
+  <TextField id="toSend" class="input" returnPress="sendMsg(this.msg_sender)" text="{{ this.msg_sender }}" hint="What Message do you want to send"></TextField>
+  <!-- <input type="text" class="form-control" id="name"
     required
     [(ngModel)]="msg_to_send" name="name">
-  {{msg_to_send}}
-  <Button (tap)="sendMsg('Testing')" text="Send Message" class="-primary"></Button>
+  {{msg_to_send}} -->
+  <Label text = "{{ this.msg_sender }}"></Label>
+  <Button (tap)="sendMsg(this.msg_sender)" text="Send Message" class="-primary"></Button> 
 </StackLayout>

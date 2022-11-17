@@ -1,6 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { databaseAdd, databaseGet, databaseEventListener } from '../../modules/database'
 import { firebase } from "@nativescript/firebase";
+import { fromObject } from '@nativescript/core';
+
+const model = {
+    msg_to_send : "What Message to Send"
+}
+
+const bindingContext = fromObject(model) 
+
+// onLoaded = args => {
+//     const page = args.object
+
+//     page.bindingContext = bindingContext
+// }
 
 @Component({
   selector: 'Chat',
@@ -10,11 +23,9 @@ import { firebase } from "@nativescript/firebase";
 export class ChatComponent implements OnInit {
 
   public chats: Array<any>; //change String to any or Message class later
-  public msg_to_send;
-
+  public msg_sender = "hi"
   constructor() { 
     this.chats = ["testing", "to", "see"];
-    this.msg_to_send = "";
   }
 
   ngOnInit(): void {
@@ -45,8 +56,9 @@ export class ChatComponent implements OnInit {
   sendMsg(data){
     //var data = "Testing"
     console.log("Inside the send Message function")
-    this.chats.push(data);
-    console.log("What is currently the message to send:", this.msg_to_send)
+    //this.chats.push(data);
+    console.log("What is currently the message to send:", data)
+    console.log("What if we use binding context", `${bindingContext.get('msg_to_send')}`)
   }
 
 }
