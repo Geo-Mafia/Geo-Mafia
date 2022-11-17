@@ -10,10 +10,11 @@ import { firebase } from "@nativescript/firebase";
 export class ChatComponent implements OnInit {
 
   public chats: Array<any>; //change String to any or Message class later
-
+  public msg_to_send;
 
   constructor() { 
     this.chats = ["testing", "to", "see"];
+    this.msg_to_send = "";
   }
 
   ngOnInit(): void {
@@ -41,12 +42,12 @@ export class ChatComponent implements OnInit {
     this.chats = list;
   }
 
-  sendMsg(){
-    var data = "Testing"
+  sendMsg(data){
+    //var data = "Testing"
+    console.log("Inside the send Message function")
     this.chats.push(data);
+    console.log("What is currently the message to send:", this.msg_to_send)
   }
-
-  onKey(event) {const inputValue = event.target.value; console.log("Inside the Onkey function")}
 
 }
 

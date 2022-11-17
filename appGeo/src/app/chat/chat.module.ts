@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChatComponent } from './chat.component';
 import { RouterModule } from '@angular/router';
+import { FormsModule }   from '@angular/forms'; // <-- NgModel lives here
 
 
 
@@ -11,9 +12,10 @@ import { RouterModule } from '@angular/router';
   ],
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule.forChild([
       { path: '', component: ChatComponent },
     ])
   ]
 })
-export class ChatModule { }
+export class ChatModule {}
