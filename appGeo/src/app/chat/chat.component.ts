@@ -13,7 +13,7 @@ export class ChatComponent implements OnInit {
 
 
   constructor() { 
-    this.chats = [];
+    this.chats = ["testing", "to", "see"];
   }
 
   ngOnInit(): void {
@@ -40,6 +40,13 @@ export class ChatComponent implements OnInit {
     let list = data["value"];
     this.chats = list;
   }
+
+  sendMsg(){
+    var data = "Testing"
+    this.chats.push(data);
+  }
+
+  onKey(event) {const inputValue = event.target.value; console.log("Inside the Onkey function")}
 
 }
 

@@ -1,6 +1,36 @@
 <ActionBar>
     <Label text="Chat"></Label>
-  </ActionBar>
-<GridLayout>
-    <Label text = "Notifying that you can see chat"></Label>
-</GridLayout>
+</ActionBar>
+
+<!-- This fills the remaining space of the current row
+<span class="example-fill-remaining-space"></span> -->
+
+<StackLayout>
+  <!-- <label>{{chats}}</label> -->
+  <!-- <label ng-repeat="chat in chats">{{chats}}</label> -->
+  <label *ngFor="let chat of chats">{{ chat }}</label>
+  <!-- No styles applied -->
+  <Button text="Button"></Button>
+  <!-- Using local CSS class -->
+  <Button text=".my-button" class="my-button"></Button>
+  <!-- Using @nativescript/theme CSS classes -->
+  <Button text="Button.-primary" class="-primary"></Button>
+  <Button class="-primary">
+      <FormattedString>
+          <Span text="&#xf099;" class="fab"></Span>
+          <Span text=" Button.-primary with icon"></Span>
+      </FormattedString>
+  </Button>
+  <!-- <Button text="Button.-outline" class="-outline"></Button>  
+  <Button text="Button.-primary.-rounded-sm" class="-primary -rounded-sm"></Button>
+  <Button text="Button.-primary.-rounded-lg" class="-primary -rounded-lg"></Button>
+  <Button text="Button.-outline.-rounded-sm" class="-outline -rounded-sm"></Button>
+  <Button text="Button.-outline.-rounded-lg" class="-outline -rounded-lg"></Button>
+  <Button text="Button.-outline[isEnabled=false]" isEnabled="false" class="-outline"></Button>
+  <Button text="Button.-primary[isEnabled=false]" isEnabled="false" class="-primary"></Button> -->
+  <Label text = "Notifying that you can see chat"></Label> 
+  <form (ngSubmit)="onKey($event)">
+    <input name="player" value="Name">
+ </form>
+  <Button (tap)="sendMsg()" text="Button.-primary" class="-primary"></Button>
+</StackLayout>

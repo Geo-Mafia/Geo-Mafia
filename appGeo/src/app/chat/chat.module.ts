@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChatComponent } from './chat.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -9,7 +10,10 @@ import { ChatComponent } from './chat.component';
     ChatComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule.forChild([
+      { path: '', component: ChatComponent },
+    ])
   ]
 })
 export class ChatModule { }
