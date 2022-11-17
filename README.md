@@ -1,6 +1,66 @@
 # Geo-Mafia
 Geo-Mafia is a real-time mafia game played in real life using players' real-time geo-locations
 
+# Milestone 4.A
+
+## 1) A brief description about what you plan to implement in the 2nd iteration.
+### Frontend
+
+We intend to add the game timer and events such that the game start functionality, voting events, and end conditions can be met. 
+We intend to integrate map functionality in the game so that players can receive the map they individually are in. As well as initializing more bubbles into the CampusMap
+
+### Backend
+We plan to implement chatting between players through firebase. When a snapshot is taken, the location will be shared to all players again through firebase. Additionally, the map will be displayed to all involved in the app. In general, most of the backend work is still configuring firebase and making sure it can support player to player communication.
+
+## 2) A brief description about how the work will be divided among all pairs of people in your team.
+### Frontend
+1. Timer/Game Event Scheduling - Noah
+2. Working on certain UI parts(Chat and Location) - Jose + Nanci
+3. Snapshot Declaration and Tests - Annabelle + Fatimah
+   * After finishing Snapshots (ideally won't take too long to finish implementation) Annabelle will help out with the UI 
+4. CampusMap integration with game class - Nanci & Noah
+
+### Backend
+1. Chat firebase interactions - Calvin, Jason, Kyu
+2. Location firebase interactions - Jason, Kyu
+3. Map firebase interactions - Calvin
+
+## 3) Unit test cases 
+### Frontend
+
+Here _new_ tests from iteration 2 will be:
+* tests that handle game voting and killing that occurs in the game (can find this in game.spec.ts)
+   * Extra detail: These unit tests added tests different stages of the game that could and _would_ occur in regular usage of our game such as: when killers win, when civilians win, when people are killed off but the game is still in Progress, how many Civilians and Killers are left.
+* tests about Snapshot functionality (can find this in snapshot.spec.ts)
+   * Extra detail: One of the things that the unit tests really capture is the following scenario. Consider a killing happeens in Bubble A and snapshot _alpha_ captures player1,2,& 3 to be in the bubble when it occurred. We want to make sure that when the bubble gets modified later on (let's say player1 leaves the bubble), that snapshot _alpha_ has a *different* memory location and still retains its information (i.e. that player1,2,&3 were preseent when killing occurred). This is achieved by doing a deep copy of the bubble information to memory.
+* further tests about map reorganization that has been done (mixed/improved with previous unit test in map_tests.spec.ts)
+CampusMap tests that: 
+* Test the display variable and if it changes with the function playerInBubble. 
+  The purpose of the function is to update the bubble to present for the current player 
+  and should be shown to change when the test players are moved around.
+
+* Check if a bubble can be apropriately pushed to the CampusMap by using a displayMap function 
+  created in the test file to check if they are printed out appropriately to the console. 
+  This is only there so there is some sort of visual representation of the additions to the CampusMap 
+  since being hashmap the CampusMap doesn't display neatly in the console
+  
+
+* Tests for testing the new functionality for the game rules.
+
+As mentioned in the brief description of what we plan to implement, UI is one of the items. For this, our description of testing is a working model of the game (not necessarily with pretty graphic as we would like). This can include things like first just listing out the chat content for the player to see rather than having it in a pretty overlay with border, details, etc. An interface where players can check who else is in their bubble, and if they are the killer, kill another player successfully. Geolocation accurately tracking players and mapping that to bubbles (just have to see the bubble, doesn't have to be fine detail of map). And that the game can end when condition is fulfilled (just a message in the chat would be fine for notifying players).
+
+### Backend
+1) Firebase has been configured to work with this repository and communication is confirmed. 
+2) Firebase API has been setup and documented. 
+3) Google logins have been setup and confirmed to be working.
+4) Firebase message sending has been confirmed to be working (For chat, location and map)
+
+## 4) Environment Setup (See Below)
+Github Actions, Workflows are now configured. We automate the app building, testing process using the Github Actions and yaml workflows. If your machine is not configured to build the app or run the tests, you may utilize Github Actions to remotely build and test the app. You can see the workflow runs at  https://github.com/Geo-Mafia/Geo-Mafia/actions. \
+\
+For those interested in configuring the machine environment, see below. 
+
+# From Previous Milestones 
 
 ## 1) How to Compile
 After cloning the repository, run the following commands to install necessary packages:
@@ -76,7 +136,7 @@ Connection should be seen simply by running Unit Tests as mentioned in 3 above. 
 ### Frontend
 1) The Player Class (and the subclasses of Civilian and Killer) have been declared and implemented. This includes the interaction between a Player and Chat Object where the Player wants to send a message to a specific Chat and _every_ player who is currently a part of that Chat will be able to retrive the message
 2) The game class has been declared and implemented. It is able to manage the list of players involved in the game, chats in the game, and all snapshots taken.
-3) The bubble class has been implemented and should have functionality for creating bubbles and adding, removing, and listing players. A specific campus map bubble has been initialized and there should be some UI functionality for seeing bubbles and who is in them.
+3) The bubble class has been implemented and should have functionality for creating bubbles and adding, removing, and listing players. To assist the game class in tracking players a CampusMap component has been added as a hashmap of bubbles. This has it's own functionality to change the bubble that should be displayed for the individual player which the html references to represent the bubble to the player in the UI.
 
 
 ### Backend
@@ -91,6 +151,7 @@ Connection should be seen simply by running Unit Tests as mentioned in 3 above. 
 2) Chat Declaration and tests - Jose.
 3) Game Logic - Annabelle & Noah.
 4) Map and Bubble - Fatimah & Nanci
+5) Campus Map - Nanci
 
 ### Backend
 1) Firebase Configuration - Kyu & Calvin.
@@ -100,7 +161,7 @@ Connection should be seen simply by running Unit Tests as mentioned in 3 above. 
 ## 7) Changes
 ### Frontend
 1) Added Chats into this implementation when previous this was left for for next implementation cycle.
-2) Developed UI features for bubbles.
+2) Developed UI features for bubbles. Added the campus map functions to handle tracking players between bubbles.
 3) Implemented all functions for game logic beyond the start and end game handling, which have been planned out.
 
 

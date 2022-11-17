@@ -1,7 +1,7 @@
 <StackLayout>
   <StackLayout id="container">
     <Label text = "Players currently on {{display.id}}"></Label>
-    <ListView row="0" [items]="display.List"  class="list-group">
+    <ListView row="0" [items] ="playerlist"  class="list-group">
       <ng-template let-player="item" let-i="index">
         <StackLayout>
           <Label text = "{{player.username}}" textWrap="true"></Label>

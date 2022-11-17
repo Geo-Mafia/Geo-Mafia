@@ -2,7 +2,12 @@ import { Component, OnInit } from '@angular/core'
 import {Bubble} from '../map/map.component'
 import {Player} from '../player/player.component'
 import {CampusMap} from '../map/campus-map.component'
+import { Chat } from '../chat/chat.component'
+/*I'm adding the Chat Class here so that it can be represented on the home page
+ *Because I cannot run the app on ios at the moment I cannot see anything *outside of homepage, but recommend adding a button that changes the page to *chat; the goToChat() function added here will do that just make a button for it.
+ */
 
+import { Router } from '@angular/router'
 import { GoogleLogin } from 'nativescript-google-login';
 import * as application from "@nativescript/core/application";
 import { isIOS } from "@nativescript/core/platform";
@@ -15,8 +20,10 @@ import { isIOS } from "@nativescript/core/platform";
 
 export class HomeComponent implements OnInit {
 
-  constructor() {
+  constructor(private router: Router) {
     // Use the component constructor to inject providers.
+
+
   }
 
   ngOnInit(): void {
@@ -38,19 +45,20 @@ export class HomeComponent implements OnInit {
                       });
                   clearTimeout(v)
               },500)
-      } 
-  
+      }
+
   }
 
-  
-  
+
+
   login() {
     //console.log("function");
-    
+
     GoogleLogin.login(result=>{
       console.log(result);
     });
-    
+
   }
+
 
 }
