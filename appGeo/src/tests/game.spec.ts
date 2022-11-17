@@ -50,7 +50,8 @@ QUnit.test("Game Constructors and Basic Getters and Setters", function(assert) {
         }),
       );
 
-    const game1 = new Game(gameRules, test_map, player_map);
+    const game1 = new Game(gameRules, test_map, undefined);
+
     assert.equal(game1.getGameActive(), INACTIVE, "New game is not active");
     assert.equal(game1.getEndTime().getTime(), endTime.getTime(), "endGame date is set time");
 
@@ -80,10 +81,6 @@ QUnit.test("Game Constructors and Basic Getters and Setters", function(assert) {
     assert.equal(game2.getPlayer(1).getUserID(), player1.getUserID());
     assert.equal(game2.getPlayer(2).getUserID(), player2.getUserID());
     assert.equal(game2.getPlayer(3).getUserID(), player3.getUserID());
-
-    game1.startGame();
-
-    assert.equal(game1.getGameActive(), ACTIVE, "Game reads as active after start");
 
 });
 
@@ -203,9 +200,9 @@ QUnit.test("Game Start and endGame", function(assert) {
 
     const test_game = new Game(gameRules, test_map, player_map);
 
-    assert.equal(test_game.startGame(), SUCCESS, "Game starts with players");
-    assert.equal(test_game.getGameActive(), ACTIVE, "Started game is not active");
-    assert.equal(test_game.endGame(),SUCCESS, "Started game cannot endGame");
+    assert.equal(test_game.startGame(), FAILURE, "Game cannot start with too few players");
+    assert.equal(test_game.getGameActive(), INACTIVE, "Started game is not active");
+    assert.equal(test_game.endGame(), FAILURE, "Unstarted game cannot endGame");
     assert.equal(test_game.getGameActive(), INACTIVE, "Unstarted game is not active");
 
     const player4 = new Player()
@@ -223,8 +220,11 @@ QUnit.test("Game Start and endGame", function(assert) {
     assert.equal(test_game.getFractionRole(CIVILIAN), 0, "No role assigned, no civilians");
     assert.equal(test_game.getFractionRole(KILLER), 0, "No role assigned, no killers");
 
+    assert.equal(test_game.startGame(), SUCCESS, "Game can start when meeting minimum players");
+    assert.equal(test_game.getGameActive(), ACTIVE, "Started game is active")
+
     assert.equal(test_game.getPlayerCount(), 5, "Can count players in game");
-    assert.equal(test_game.getRoleCount(CIVILIAN), 4, "Should start game with 3 civilians");
+    assert.equal(test_game.getRoleCount(CIVILIAN), 4, "Should start game with 4 civilians");
     assert.equal(test_game.getRoleCount(KILLER), 1, "Should start game with 1 killer");
 
     assert.equal(test_game.getFractionRole(CIVILIAN), 0.8, "Should be 80% civilians");
@@ -232,9 +232,6 @@ QUnit.test("Game Start and endGame", function(assert) {
 
     assert.equal(test_game.endGame(), SUCCESS, "Can stop a game");
     assert.equal(test_game.getGameActive(), INACTIVE, "Stopped game is not active");
-
-    playerArray.push(player4);
-    playerArray.push(player5);
 
     assert.equal(test_game.startGame(), SUCCESS, "Game can start with five or more players");
 
