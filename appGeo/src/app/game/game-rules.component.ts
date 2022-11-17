@@ -147,9 +147,8 @@ export class GameRules {
         return SUCCESS
     }
 
-    setGameDurations(gameHours: number, cycleMinutes: number, 
+    setGameDurations(gameMinutes: number, cycleMinutes: number, 
                      safeMinutes: number, voteMinutes: number) {
-        var gameMinutes = gameHours * 60
 
         if(((gameMinutes) < MIN_GAME_LENGTH)) {
             return FAILURE
