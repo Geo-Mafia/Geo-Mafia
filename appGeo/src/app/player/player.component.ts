@@ -2,7 +2,7 @@ import { Component, Inject, Injectable, OnInit } from '@angular/core';
 import { InjectableAnimationEngine } from '@nativescript/angular';
 import { ChangeType } from '@nativescript/core';
 import { Bubble } from '../map/map.component';
-import {Chat, Message} from '../chat/chat_class_declaration'
+import {Chat, Message} from '../chat/chat.component'
 //import{Location} from './location_class_declaration';
 
 const DEAD = 0

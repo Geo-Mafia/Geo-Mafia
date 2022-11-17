@@ -36,8 +36,8 @@ chat1.insertPlayer(player2)
 chat1.insertPlayer(killer1)
 
 QUnit.test("a player gets killed", assert => {
-    assert.equal(player1.getKilled(), SUCCESS);
-    assert.equal(player1.alive, DEAD);
+    assert.equal(player1.getKilled(), SUCCESS, "Player is killed");
+    assert.equal(player1.alive, DEAD, "Confirmed kill");
 });
 
 // QUnit.test("takes a snapshot of player locations", assert => {
@@ -54,8 +54,8 @@ var all_players = new Array(player1, player2, killer1);
 QUnit.test("player checks the info of other people in the same bubble", 
 assert => {
     var in_bubble = player2.seePeopleInBubble(all_players);
-    assert.equal(in_bubble.length, 1)
-    assert.equal(in_bubble[0].getUserID(), player2.getUserID());
+    assert.equal(in_bubble.length, 1, "Looking at length of bubble")
+    assert.equal(in_bubble[0].getUserID(), player2.getUserID(), "looking at the first player");
 });
 
 // QUnit.test("player opens a chat message", assert => {
@@ -67,9 +67,9 @@ QUnit.test("player sends out a chat message", assert => {
 });
 
 QUnit.test("player votes for another player", assert => {
-    assert.equal(player1.voteForExecution(2), FAILURE);
-    assert.equal(player2.voteForExecution(3), SUCCESS);
-    assert.equal(killer1.votes, 1);
+    assert.equal(player1.voteForExecution(2), FAILURE, "Voting for execution from dead player shouldn't go through");
+    assert.equal(player2.voteForExecution(3), SUCCESS, "Voting for living player should go through");
+    assert.equal(killer1.getVotes(), 1), "Votes in total after tallied";
 });
 
 // QUnit.test("killer kills a player", assert => {
