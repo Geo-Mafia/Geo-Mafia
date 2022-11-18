@@ -33,14 +33,14 @@ export class Bubble{
     }
 
     // adds player; returns true on success
-    addPlayer(player){
-      this.List = this.List.set(player.getUserID, player); //returns map
+    addPlayer(player: Player){
+      this.List = this.List.set(player.getUserID(), player); //returns map
       return true;
     }
 
     // removes player, returns true on success
-    removePlayer(Player){
-      return this.List.delete(Player.getUserID); //returns bool
+    removePlayer(player: Player){
+      return this.List.delete(player.getUserID()); //returns bool
     }
 
     // returns bubble id
@@ -49,10 +49,10 @@ export class Bubble{
     }
 
     // returns true if player is within bubble boundaries
-    inBubble(Player){
+    inBubble(player: Player){
       //longitude tracks x, latitiude tracks y
-      return Player.location.longitude >= this.xLb && Player.location.longitude <= this.xUb &&
-          Player.location.latitude >= this. yLb && Player.location.latitude <= this.yUb;
+      return player.location.longitude >= this.xLb && player.location.longitude <= this.xUb &&
+          player.location.latitude >= this. yLb && player.location.latitude <= this.yUb;
     }
 
     // returns list of players in bubble
