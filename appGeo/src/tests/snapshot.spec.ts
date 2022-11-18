@@ -51,7 +51,8 @@ QUnit.test("Testing depth of name Array", function(assert){
   const bubb = new Bubble()
   bubb.init_bubble("Bubble", 0, 0, 0, 0)
   bubb.addPlayer(Jack)
-  assert.true(bubb.returnPlayers.has(13), "should come out true that Jack is in the map of Players")
+  //returnPlayers map is struggling to find the key, but the string array is correctly set
+  assert.true(bubb.returnPlayers.has(Jack.getUserID()), "should come out true that Jack is in the map of Players")
   assert.equal(bubb.playerArray.includes(Jack), 1, "should check if Jack is found/contained inside the array of usernames")
 
   const snap = new Snapshot(1, bubb);
