@@ -8,13 +8,18 @@ import { Player } from '../player/player.component';
 export class Snapshot {
     snapshot_id: number;
     snapshot_bubble_id: string
-    snapshot_content: Array<Player>;
+    snapshot_content: Array<string>; //returning array of names for easy display
+    snapshot_time: String
 
     constructor(id: number, content: Bubble){
-        this.snapshot_id = id;
-        const player_copy  = content.playerArray.slice();
-        this.snapshot_bubble_id = content.id
-        this.snapshot_content = player_copy
+      const init_date = new Date();
+      this.snapshot_time = init_date.toLocaleString(); //a string that shows the MM/DD/YYY, HH:MM:SS format
+      this.snapshot_id = id;
+      const player_copy  = content.playerArray.map(toCopy => {
+        return toCopy.username
+      })
+      this.snapshot_bubble_id = content.id
+      this.snapshot_content = player_copy
     }
 
     getSnapshotID(){
