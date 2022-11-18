@@ -1,7 +1,9 @@
 import {Bubble} from '../app/map/map.component'; //imports from map.component.js
-import {Player} from '../app/player/player_class_declaration';
+import {Player} from '../app/player/player.component';
 
 // const Bubble_test = require('../map.component.js');
+const DEAD = 0
+const ALIVE = 1
 
 QUnit.module("Bubble_test");
 
@@ -25,7 +27,8 @@ QUnit.test("Bubble Location Tests", function(assert) {
     testbub.init_bubble("testbubble", 0, 15, 5, 10);
 
     let loc = {x:20, y:20};
-    let testPlayer = new Player(12, "player1", loc, true);
+    let testPlayer = new Player()
+    testPlayer.init(12, "player1", loc, ALIVE);
 
     assert.false(testbub.inBubble(testPlayer), "player should not be in bubble");
     testPlayer.location = {x:10, y:15};
@@ -51,13 +54,15 @@ QUnit.test("Bubble-Player Tests", function(assert) {
     assert.equal(testbub.returnPlayers, null, "player list should be empty");
 
     let loc = {x:20, y:20};
-    let testPlayer = new Player(12, "player1", loc, true);
+    let testPlayer = new Player()
+    testPlayer.init(12, "player1", loc, ALIVE);
     assert.true(testbub.addPlayer(testPlayer), "player1 should be added to bubble");
     assert.equal(testbub.List.size, 1, "player list should have one element");
     assert.equal(testbub.List[0].userID, 12, "player added should be identified by id 12");
     assert.equal(testbub.returnPlayers[0].userID, 12, "player added should be identified by id 12");
 
-    let testPlayer2 = new Player(13, "player2", loc, true);
+    let testPlayer2 = new Player()
+    testPlayer2.init(13, "player2", loc, ALIVE);
     assert.true(testbub.addPlayer(testPlayer2), "player2 should be added to bubble");
     assert.equal(testbub.List.size, 2, "player list should have two elements");
     assert.equal(testbub.List[1].userID, 13, "player added should be identified by id 13");

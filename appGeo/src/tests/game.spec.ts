@@ -1,8 +1,6 @@
-import {Chat} from '../app/chat/chat_class_declaration';
+import {Chat} from '../app/chat/chat.component';
 import {Snapshot} from '../app/snapshot/snapshot_class_declaration';
-import {Player} from '../app/player/player_class_declaration';
-import {Killer} from '../app/player/player_class_declaration';
-import {Civilian} from '../app/player/player_class_declaration';
+import {Player, Killer, Civilian} from '../app/player/player.component';
 import {Game} from '../app/game/game.component';
 import {Bubble} from '../app/map/map.component'
 import {CampusMap} from '../app/map/campus-map.component'
@@ -36,9 +34,12 @@ QUnit.test("Game Constructors and Basic Getters and Setters", function(assert) {
 
     const Location1 = new Location(1);
 
-    const player1 = new Player(1, 'player1', Location1, ALIVE); 
-    const player2 = new Player(2, 'player2', Location1, ALIVE);
-    const player3 = new Player(3, 'player3', Location1, ALIVE);
+    const player1 = new Player()
+    player1.init(1, 'player1', Location1, ALIVE); 
+    const player2 = new Player()
+    player2.init(2, 'player2', Location1, ALIVE);
+    const player3 = new Player()
+    player3.init(3, 'player3', Location1, ALIVE);
     const playerArray = [player1, player2, player3];
 
     const player_map = new Map(
@@ -93,11 +94,16 @@ QUnit.test("Game Hashtable Handling", function(assert) {
 
     const Location1 = new Location(1);
 
-    const player1 = new Player(1, 'player1', Location1, ALIVE); 
-    const player2 = new Player(2, 'player2', Location1, ALIVE);
-    const player3 = new Player(3, 'player3', Location1, ALIVE);
-    const player4 = new Player(4, 'player4', Location1, ALIVE);
-    const player5 = new Player(5, 'player5', Location1, ALIVE);
+    const player1 = new Player()
+    player1.init(1, 'player1', Location1, ALIVE); 
+    const player2 = new Player()
+    player2.init(2, 'player2', Location1, ALIVE);
+    const player3 = new Player()
+    player3.init(3, 'player3', Location1, ALIVE);
+    const player4 = new Player()
+    player4.init(4, 'player4', Location1, ALIVE);
+    const player5 = new Player()
+    player5.init(5, 'player5', Location1, ALIVE);
     const playerArray = [player1, player2, player3];
 
     const player_map = new Map(
@@ -106,9 +112,9 @@ QUnit.test("Game Hashtable Handling", function(assert) {
         }),
       );
     const game1 = new Game(gameRules, test_map, player_map);
-    assert.equal(game1.getPlayer(1).getUserID(), player1.getUserID());
-    assert.equal(game1.getPlayer(2).getUserID(), player2.getUserID());
-    assert.equal(game1.getPlayer(3).getUserID(), player3.getUserID());
+    assert.equal(game1.getPlayer(1).getUserID(), player1.getUserID(), "we can find player1");
+    assert.equal(game1.getPlayer(2).getUserID(), player2.getUserID(), "we can find player2");
+    assert.equal(game1.getPlayer(3).getUserID(), player3.getUserID(), "we can find player3");
     //Have set up all the appropriate players thus far
     
     assert.equal(game1.addPlayer(player4), SUCCESS, "Player added successfully");
@@ -157,8 +163,8 @@ QUnit.test("Game Hashtable Handling", function(assert) {
 
     const chatArray = [chat1];
 
-    assert.equal(game1.addChat(chat1), SUCCESS, "Chat added successfully");
-    assert.equal(game1.getChat(1).getChatID(), chat1.getChatID(), "chat list successfully updated");
+    assert.equal(game1.addChat(chat1), SUCCESS, "Chat added successfully to game");
+    assert.equal(game1.getChat(1).getChatID(), chat1.getChatID(), "chat list successfully updated for Game object");
 
     assert.equal(game1.addChat(chat2), SUCCESS, "Chat added successfully");
     chatArray.push(chat2);
@@ -179,9 +185,12 @@ QUnit.test("Game Start and endGame", function(assert) {
 
     const Location1 = new Location(1);
 
-    const player1 = new Player(1, 'player1', Location1, ALIVE); 
-    const player2 = new Player(2, 'player2', Location1, ALIVE);
-    const player3 = new Player(3, 'player3', Location1, ALIVE);
+    const player1 = new Player()
+    player1.init(1, 'player1', Location1, ALIVE); 
+    const player2 = new Player()
+    player2.init(2, 'player2', Location1, ALIVE);
+    const player3 = new Player()
+    player3.init(3, 'player3', Location1, ALIVE);
 
     const playerArray = [player1, player2, player3];
     const player_map = new Map(
@@ -197,8 +206,10 @@ QUnit.test("Game Start and endGame", function(assert) {
     assert.equal(test_game.endGame(),SUCCESS, "Started game cannot endGame");
     assert.equal(test_game.getGameActive(), INACTIVE, "Unstarted game is not active");
 
-    const player4 = new Player(4, 'player4', Location1, ALIVE);
-    const player5 = new Player(5, 'player5', Location1, ALIVE);
+    const player4 = new Player()
+    player4.init(4, 'player4', Location1, ALIVE);
+    const player5 = new Player()
+    player5.init(5, 'player5', Location1, ALIVE);
 
     test_game.addPlayer(player4);
     test_game.addPlayer(player5);
@@ -241,9 +252,12 @@ QUnit.test("Vote Handler when player is voted off", function(assert) {
 
     const Location1 = new Location(1);
 
-    const player1 = new Player(1, 'player1', Location1, ALIVE); 
-    const player2 = new Player(2, 'player2', Location1, ALIVE);
-    const player3 = new Player(3, 'player3', Location1, ALIVE);
+    const player1 = new Player()
+    player1.init(1, 'player1', Location1, ALIVE); 
+    const player2 = new Player()
+    player2.init(2, 'player2', Location1, ALIVE);
+    const player3 = new Player()
+    player3.init(3, 'player3', Location1, ALIVE);
 
     //Initialize a Common chat so that players can vote for each other
     const chat1 = new Chat(1)
@@ -269,9 +283,9 @@ QUnit.test("Vote Handler when player is voted off", function(assert) {
     //After killing the function a couple things should have occurred:
     // 1) Player 2 should be dead
     // 2) Player 1 and 3 should have their votes reset to 0 again
-    assert.equal(player2.getAliveStatus(), DEAD);
-    assert.equal(player1.getVotes(), 0);
-    assert.equal(player3.getVotes(), 0);
+    assert.equal(player2.getAliveStatus(), DEAD, "player2 was voted off successfully");
+    assert.equal(player1.getVotes(), 0, "Player1 votes should have reset");
+    assert.equal(player3.getVotes(), 0, "Player3 votes should have reset");
 
 });
 
@@ -284,9 +298,12 @@ QUnit.test("Vote Handler when player is NOT voted off", function(assert) {
 
     const Location1 = new Location(1);
 
-    const player1 = new Player(1, 'player1', Location1, ALIVE); 
-    const player2 = new Player(2, 'player2', Location1, ALIVE);
-    const player3 = new Player(3, 'player3', Location1, ALIVE);
+    const player1 = new Player()
+    player1.init(1, 'player1', Location1, ALIVE); 
+    const player2 = new Player()
+    player2.init(2, 'player2', Location1, ALIVE);
+    const player3 = new Player()
+    player3.init(3, 'player3', Location1, ALIVE);
 
     //Initialize a Common chat so that players can vote for each other
     const chat1 = new Chat(1)
@@ -312,12 +329,12 @@ QUnit.test("Vote Handler when player is NOT voted off", function(assert) {
     //After killing the function a couple things should have occurred:
     // 1) All players should still be alive
     // 2) All players should have their vote field reset back to 0
-    assert.equal(player1.getAliveStatus(), ALIVE);
-    assert.equal(player2.getAliveStatus(), ALIVE);
-    assert.equal(player3.getAliveStatus(), ALIVE);
-    assert.equal(player1.getVotes(), 0);
-    assert.equal(player2.getVotes(), 0);
-    assert.equal(player3.getVotes(), 0);
+    assert.equal(player1.getAliveStatus(), ALIVE, "Player1 should still be alive");
+    assert.equal(player2.getAliveStatus(), ALIVE, "Player2 should still be alive");
+    assert.equal(player3.getAliveStatus(), ALIVE, "player 3 should still b e alive");
+    assert.equal(player1.getVotes(), 0, "Votes for player 1 should have reset");
+    assert.equal(player2.getVotes(), 0, "Votes for Player2 should have reset");
+    assert.equal(player3.getVotes(), 0, "Votes for Player 3 should have reset");
 
 });
 
@@ -330,9 +347,12 @@ QUnit.test("Players remaining plus no killers", function(assert) {
 
     const Location1 = new Location(1);
 
-    const player1 = new Civilian(1, 'player1', Location1, ALIVE); 
-    const player2 = new Civilian(2, 'player2', Location1, ALIVE);
-    const player3 = new Civilian(3, 'player3', Location1, ALIVE);
+    const player1 = new Civilian()
+    player1.init(1, 'player1', Location1, ALIVE); 
+    const player2 = new Civilian()
+    player2.init(2, 'player2', Location1, ALIVE);
+    const player3 = new Civilian()
+    player3.init(3, 'player3', Location1, ALIVE);
 
     const playerArray = [player1, player2, player3];
     const player_map = new Map(
@@ -352,15 +372,15 @@ QUnit.test("Players remaining plus no killers", function(assert) {
 
     //Kill off Player 1
     player1.getKilled();
-    assert.equal(player1.getAliveStatus(), DEAD);
-    assert.equal(player2.getAliveStatus(), ALIVE);
-    assert.equal(player3.getAliveStatus(), ALIVE);
+    assert.equal(player1.getAliveStatus(), DEAD, "Player 1 should have been killed");
+    assert.equal(player2.getAliveStatus(), ALIVE, "Player 2 still alive");
+    assert.equal(player3.getAliveStatus(), ALIVE, "Player 3 still alive");
 
     const new_remaining_civilians = test_game.civiliansRemaining();
-    assert.equal(new_remaining_civilians, 2);
+    assert.equal(new_remaining_civilians, 2, "There are now only 2 remaining Civilians");
 
     const winning_con = test_game.winningCondition();
-    assert.equal(winning_con, CIVILIAN);
+    assert.equal(winning_con, CIVILIAN, "No killers, so Civlians win");
 });
 
 QUnit.test("Players remainding + Killers win", function(assert) {
@@ -372,9 +392,12 @@ QUnit.test("Players remainding + Killers win", function(assert) {
 
     const Location1 = new Location(1);
 
-    const player1 = new Civilian(1, 'player1', Location1, ALIVE); 
-    const player2 = new Civilian(2, 'player2', Location1, ALIVE);
-    const player3 = new Killer(3, 'player3', Location1, ALIVE);
+    const player1 = new Civilian()
+    player1.init(1, 'player1', Location1, ALIVE); 
+    const player2 = new Civilian()
+    player2.init(2, 'player2', Location1, ALIVE);
+    const player3 = new Killer()
+    player3.init(3, 'player3', Location1, ALIVE);
 
     const playerArray = [player1, player2, player3];
     const player_map = new Map(
@@ -395,9 +418,9 @@ QUnit.test("Players remainding + Killers win", function(assert) {
     //Kill off Player 1 & 2
     player1.getKilled();
     player2.getKilled();
-    assert.equal(player1.getAliveStatus(), DEAD);
-    assert.equal(player2.getAliveStatus(), DEAD);
-    assert.equal(player3.getAliveStatus(), ALIVE);
+    assert.equal(player1.getAliveStatus(), DEAD, "Player 1 was killed off");
+    assert.equal(player2.getAliveStatus(), DEAD, "Player 2 was killed off");
+    assert.equal(player3.getAliveStatus(), ALIVE, "Killer should still be fine");
 
     const new_remaining_civilians = test_game.civiliansRemaining();
     assert.equal(new_remaining_civilians, 0, "All civilians were killed off");
@@ -415,9 +438,12 @@ QUnit.test("Players remainding + Game in Progress", function(assert) {
 
     const Location1 = new Location(1);
 
-    const player1 = new Civilian(1, 'player1', Location1, ALIVE); 
-    const player2 = new Civilian(2, 'player2', Location1, ALIVE);
-    const player3 = new Killer(3, 'player3', Location1, ALIVE);
+    const player1 = new Civilian()
+    player1.init(1, 'player1', Location1, ALIVE); 
+    const player2 = new Civilian()
+    player2.init(2, 'player2', Location1, ALIVE);
+    const player3 = new Killer()
+    player3.init(3, 'player3', Location1, ALIVE);
 
     const playerArray = [player1, player2, player3];
     const player_map = new Map(
@@ -431,20 +457,20 @@ QUnit.test("Players remainding + Game in Progress", function(assert) {
     const remaining_players = test_game.playersRemaining();
     const remaining_civilians = test_game.civiliansRemaining();
     const remaining_killers = test_game.killersRemaining();
-    assert.equal(remaining_players, 3);
-    assert.equal(remaining_civilians, 2);
-    assert.equal(remaining_killers, 1);
+    assert.equal(remaining_players, 3, "At the start theree are three players still alive");
+    assert.equal(remaining_civilians, 2, "There are two Civlians");
+    assert.equal(remaining_killers, 1, "And there is one killer");
 
     //Kill off Player 1
     player1.getKilled();
-    assert.equal(player1.getAliveStatus(), DEAD);
-    assert.equal(player2.getAliveStatus(), ALIVE);
-    assert.equal(player3.getAliveStatus(), ALIVE);
+    assert.equal(player1.getAliveStatus(), DEAD, "Player 1 was killed off");
+    assert.equal(player2.getAliveStatus(), ALIVE, "Player2 was still healthy");
+    assert.equal(player3.getAliveStatus(), ALIVE, "Player3 was still healthy");
 
     const new_remaining_civilians = test_game.civiliansRemaining();
     const new_remaining_killers = test_game.killersRemaining();
-    assert.equal(new_remaining_civilians, 1);
-    assert.equal(new_remaining_killers, 1);
+    assert.equal(new_remaining_civilians, 1, "There is now only 1 civilians left standing");
+    assert.equal(new_remaining_killers, 1, "there is now only 1 killer left standing");
 
     const winning_con = test_game.winningCondition();
     assert.equal(winning_con, INPROGRESS, "Game not over yet");

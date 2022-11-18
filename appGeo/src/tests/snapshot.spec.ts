@@ -1,5 +1,5 @@
 import {Bubble} from '../app/map/map.component'
-import {Player} from '../app/player/player_class_declaration';
+import {Player} from '../app/player/player.component';
 import {Snapshot} from '../app/snapshot/snapshot_class_declaration'
 
 const ALIVE = 1
@@ -12,8 +12,10 @@ export class Location{
 }
 
 const Location1 = new Location(1);
-const player1 = new Player(1, 'Jack', Location1, ALIVE);
-const Mark = new Player(25, 'Mark', Location1, ALIVE);
+const player1 = new Player()
+player1.init(1, 'Jack', Location1, ALIVE);
+const Mark = new Player()
+Mark.init(25, 'Mark', Location1, ALIVE);
 
 QUnit.module("Snapshot_Testing");
 

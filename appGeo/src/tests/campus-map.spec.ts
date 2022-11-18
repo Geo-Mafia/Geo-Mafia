@@ -22,10 +22,10 @@ class Location{
   var inTB2 = new Location(8, 18)
 
 //Our test Player going through these locations
-  var P1 = new Player();
-  P1.init_Player(1, "Player1", inTB1, 1)
-  var P2 = new Player();
-  P1.init_Player(2, "Player2", inTB1, 1)
+  var P1 = new Player()
+  P1.init(1, "Player1", inTB1, 1)
+  var P2 = new Player()
+  P2.init(2, "Player2", inTB1, 1)
 
   var testMap = new CampusMap(); //should have some bubbles already initialized
 
