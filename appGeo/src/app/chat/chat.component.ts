@@ -56,7 +56,7 @@ export class ChatComponent implements OnInit {
   sendMsg(data){
     //var data = "Testing"
     console.log("Inside the send Message function")
-    //this.chats.push(data);
+    this.chats.push(data);
     console.log("What is currently the message to send:", data)
     console.log("What if we use binding context", `${bindingContext.get('msg_to_send')}`)
   }
