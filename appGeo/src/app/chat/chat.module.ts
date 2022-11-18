@@ -3,19 +3,22 @@ import { CommonModule } from '@angular/common';
 import { ChatComponent } from './chat.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule }   from '@angular/forms'; // <-- NgModel lives here
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
 @NgModule({
-  declarations: [
-    ChatComponent
-  ],
   imports: [
     CommonModule,
     FormsModule,
-    RouterModule.forChild([
-      { path: '', component: ChatComponent },
-    ])
+    ReactiveFormsModule
+    // ReactiveFormsModule,
+    // RouterModule.forChild([
+    //   { path: '', component: ChatComponent },
+    // ])
+  ],
+  declarations: [
+    ChatComponent
   ]
 })
 export class ChatModule {}

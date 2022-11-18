@@ -21,7 +21,7 @@ const bindingContext = fromObject(model)
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
-
+  text: string = ""
   public chats: Array<any>; //change String to any or Message class later
   public msg_sender = "hi"
   constructor() { 
@@ -59,6 +59,7 @@ export class ChatComponent implements OnInit {
     this.chats.push(data);
     console.log("What is currently the message to send:", data)
     console.log("What if we use binding context", `${bindingContext.get('msg_to_send')}`)
+    console.log("Text is currently being set to: ", this.text)
   }
 
   onPressEnter($event){
