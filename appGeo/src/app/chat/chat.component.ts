@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { databaseAdd, databaseGet, databaseEventListener } from '../../modules/database'
 import { firebase } from "@nativescript/firebase";
 import { fromObject } from '@nativescript/core';
@@ -59,6 +59,11 @@ export class ChatComponent implements OnInit {
     this.chats.push(data);
     console.log("What is currently the message to send:", data)
     console.log("What if we use binding context", `${bindingContext.get('msg_to_send')}`)
+  }
+
+  onPressEnter($event){
+    console.log("Inside the onPressEnter case!")
+    console.log("What the user inputted was: ", $event.stringify)
   }
 
 }
