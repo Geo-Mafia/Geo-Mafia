@@ -34,12 +34,17 @@ export class Bubble{
 
     // adds player; returns true on success
     addPlayer(Player){
-      return this.List.set(Player.userID, Player);
+      let i = this.List.size;
+      this.List.set(Player.getUserID, Player); //returns map
+      if (this.List.size == i + 1) {
+        return true;
+      }
+      return false;
     }
 
     // removes player, returns true on success
     removePlayer(Player){
-      return this.List.delete(Player.userID);
+      return this.List.delete(Player.getUserID); //returns bool
     }
 
     // returns bubble id
