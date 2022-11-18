@@ -27,13 +27,14 @@ QUnit.test("Testing receiving data", function(assert) {
     assert.true(bub.addPlayer(Jack), "player should be added to player list");
 
     const snap = new Snapshot(1, bub);
+    assert.deepEqual(snap.snapshot_content, ['Jack'], "player should be added to bubble");
 
     assert.equal(snap.getSnapshotID(), 1, "snapshot id should be 1");
     assert.equal(snap.getSnapshotBubbleID(), "Bubble", "should have id: Bubble");
 
-    assert.true(snap.snapshot_content.includes("Jack"), "Jack should be included in the list of players");
-    assert.notDeepEqual(snap.snapshot_content, ['Jack'], "should show that the property of arrays is same");
-    
+    assert.deepEqual(snap.snapshot_content, ['Jack'], "should show that the property of arrays is same");
+    assert.true(snap.snapshot_content.includes('Jack'), "Jack should be included in the list of players")
+    assert.false(snap.snapshot_content.includes('Mark'), "Mark should not be in the content bubbble");
     //just need to assure that a date object is initialized
     assert.ok(snap.snapshot_time, "should have a string initialized in the class to represent time")
 
@@ -43,7 +44,7 @@ QUnit.test("Testing receiving data", function(assert) {
 
     assert.true(snap.snapshot_content.includes("Jack"), "Jack should be included in the list of players");
     assert.false(snap.snapshot_content.includes("Mark"), "Mark should not be in the content bubbble");
-    assert.notDeepEqual(snap.snapshot_content, ['Jack'], "should show that the property of arrays is same");
+    assert.deepEqual(snap.snapshot_content, ['Jack'], "should show that the property of arrays is same");
 });
 
 QUnit.test("Testing depth of name Array", function(assert){

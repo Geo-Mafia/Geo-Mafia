@@ -16,7 +16,8 @@ export class Snapshot {
       this.snapshot_time = init_date.toLocaleString(); //a string that shows the MM/DD/YYY, HH:MM:SS format
       this.snapshot_id = id;
       const player_copy  = content.playerArray.map(toCopy => {
-        return toCopy.username
+        const copied_name = toCopy.username
+        return copied_name
       })
       this.snapshot_bubble_id = content.id
       this.snapshot_content = player_copy
