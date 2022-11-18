@@ -57,15 +57,16 @@ QUnit.test("Bubble-Player Tests", function(assert) {
     let loc = {longitude:20, latitude:20};
     let testPlayer = new Player()
     testPlayer.init(12, "player1", loc, ALIVE);
-    assert.false(testbub.List.has(12), "player1 should not be in list yet");
+    assert.false(testbub.List.has(testPlayer.getUserID()), "player1 should not be in list yet");
     assert.true(testbub.addPlayer(testPlayer), "player1 should be added to bubble");
     assert.equal(testbub.List.size, 1, "player list should have one element");
-    // player the following two fail
+    //the following two fail
     assert.true(testbub.List.has(testPlayer.getUserID()), "player added should be identified by id 12");
     assert.true(testbub.returnPlayers.has(testPlayer.getUserID()), "player added should be identified by id 12");
 
+    let loc2 = {longitude:10, latitude:10};
     let testPlayer2 = new Player()
-    testPlayer2.init(13, "player2", loc, ALIVE);
+    testPlayer2.init(13, "player2", loc2, ALIVE);
     assert.false(testbub.List.has(13), "player2 should not be in list yet");
     //the following one fails
     assert.true(testbub.addPlayer(testPlayer2), "player2 should be added to bubble");
