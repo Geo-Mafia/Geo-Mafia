@@ -34,12 +34,12 @@ export class Bubble{
 
     // adds player; returns true on success
     addPlayer(Player){
-      let i = this.List.size;
+      //const i = this.List.size + 1;
       this.List.set(Player.getUserID, Player); //returns map
-      if (this.List.size == i + 1) {
+      //if (this.List.size == i) {
         return true;
-      }
-      return false;
+      //}
+      //return false;
     }
 
     // removes player, returns true on success
@@ -63,6 +63,7 @@ export class Bubble{
     get returnPlayers() : Map<number, Player>{
       return this.List;
     }
+
     get playerArray(){
       var displayPlayers = Array.from(this.List.values())
       return displayPlayers
