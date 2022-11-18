@@ -34,12 +34,8 @@ export class Bubble{
 
     // adds player; returns true on success
     addPlayer(player){
-      //const i = this.List.size + 1;
-      this.List.set(player.getUserID, player); //returns map
-      //if (this.List.size == i) {
-        return true;
-      //}
-      //return false;
+      this.List = this.List.set(player.getUserID, player); //returns map
+      return true;
     }
 
     // removes player, returns true on success
