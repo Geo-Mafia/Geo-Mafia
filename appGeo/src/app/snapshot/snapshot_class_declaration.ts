@@ -26,7 +26,7 @@ export class Snapshot {
         return this.snapshot_id;
     }
 
-    getSnapshotBubbleId(){
+    getSnapshotBubbleID(){
       return this.snapshot_bubble_id
     }
 
