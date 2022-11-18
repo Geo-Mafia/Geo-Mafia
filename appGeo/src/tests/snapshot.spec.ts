@@ -44,7 +44,7 @@ QUnit.test("Testing receiving data", function(assert) {
 
     assert.true(snap.snapshot_content.includes("Jack"), "Jack should be included in the list of players");
     assert.false(snap.snapshot_content.includes("Mark"), "Mark should not be in the content bubbble");
-    assert.notDeepEqual(snap.snapshot_content, ['Jack'], "should show that the property of arrays is same");
+    assert.deepEqual(snap.snapshot_content, ['Jack'], "should show that the property of arrays is same");
 });
 
 QUnit.test("Testing depth of name Array", function(assert){
