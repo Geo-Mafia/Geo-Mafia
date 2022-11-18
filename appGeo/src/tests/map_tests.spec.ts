@@ -61,8 +61,8 @@ QUnit.test("Bubble-Player Tests", function(assert) {
     assert.true(testbub.addPlayer(testPlayer), "player1 should be added to bubble");
     assert.equal(testbub.List.size, 1, "player list should have one element");
     // player the following two fail
-    assert.true(testbub.List.has(12), "player added should be identified by id 12");
-    assert.true(testbub.returnPlayers.has(12), "player added should be identified by id 12");
+    assert.true(testbub.List.has(testPlayer.getUserID()), "player added should be identified by id 12");
+    assert.true(testbub.returnPlayers.has(testPlayer.getUserID()), "player added should be identified by id 12");
 
     let testPlayer2 = new Player()
     testPlayer2.init(13, "player2", loc, ALIVE);
