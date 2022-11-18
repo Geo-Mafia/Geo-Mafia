@@ -1,7 +1,6 @@
-import {Bubble} from '../app/map/map.component'; //imports from map.component.js
+import {Bubble} from '../app/map/map.component'; 
 import {Player} from '../app/player/player.component';
 
-// const Bubble_test = require('../map.component.js');
 const DEAD = 0
 const ALIVE = 1
 
@@ -26,6 +25,7 @@ QUnit.test("Bubble Location Tests", function(assert) {
     let testbub = new Bubble();
     testbub.init_bubble("testbubble", 0, 15, 5, 10);
 
+    //must be named longitude and latitude respectively for the tests to pass
     let loc = {longitude:20, latitude:20};
     let testPlayer = new Player()
     testPlayer.init(12, "player1", loc, ALIVE);
@@ -60,12 +60,14 @@ QUnit.test("Bubble-Player Tests", function(assert) {
     assert.false(testbub.List.has(12), "player1 should not be in list yet");
     assert.true(testbub.addPlayer(testPlayer), "player1 should be added to bubble");
     assert.equal(testbub.List.size, 1, "player list should have one element");
+    // player the following two fail
     assert.true(testbub.List.has(12), "player added should be identified by id 12");
     assert.true(testbub.returnPlayers.has(12), "player added should be identified by id 12");
 
     let testPlayer2 = new Player()
     testPlayer2.init(13, "player2", loc, ALIVE);
     assert.false(testbub.List.has(13), "player2 should not be in list yet");
+    //the following one fails
     assert.true(testbub.addPlayer(testPlayer2), "player2 should be added to bubble");
     assert.equal(testbub.List.size, 2, "player list should have two elements");
     assert.true(testbub.List.has(13), "player added should be identified by id 13");

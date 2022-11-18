@@ -12,6 +12,7 @@ export class Location{
 }
 
 const Location1 = new Location(1);
+//player and snapshot ids are different to ensure correct assignments
 const Jack = new Player()
 Jack.init(13, 'Jack', Location1, ALIVE);
 const Mark = new Player()
@@ -36,7 +37,7 @@ QUnit.test("Snapshot Tests", function(assert) {
 
     assert.true(player_map.has(13), "snapshot should have player in bubble with id 13");
 
-    //snapshot should save a copy of the bubble at the time of murder, i.e. it should not update
+    //snapshot should save a copy of the bubble's contents at the time of murder, i.e. it should not update
     assert.true(bub.addPlayer(Mark), "player should be added to original bubble");
     assert.true(bub.removePlayer(Jack), "player should be removed from original bubble");
 
