@@ -36,15 +36,7 @@ QUnit.test("Testing receiving data", function(assert) {
     assert.true(snap.snapshot_content.includes('Jack'), "Jack should be included in the list of players")
     assert.false(snap.snapshot_content.includes('Mark'), "Mark should not be in the content bubbble");
     //just need to assure that a date object is initialized
-    assert.ok(snap.snapshot_time, "should have a string initialized in the class to represent time")
-
-    //snapshot should save a copy of the bubble's contents at the time of murder, i.e. it should not update
-    assert.true(bub.addPlayer(Mark), "player should be added to original bubble");
-    assert.true(bub.removePlayer(Jack), "player should be removed from original bubble");
-
-    assert.true(snap.snapshot_content.includes("Jack"), "Jack should be included in the list of players");
-    assert.false(snap.snapshot_content.includes("Mark"), "Mark should not be in the content bubbble");
-    assert.deepEqual(snap.snapshot_content, ['Jack'], "should show that the property of arrays is same");
+    assert.ok(snap.snapshot_time, "should recognize that there is a string initialized in the class to represent time")
 });
 
 QUnit.test("Testing depth of name Array", function(assert){
@@ -60,7 +52,16 @@ QUnit.test("Testing depth of name Array", function(assert){
   //alogside the snapshot_content array, they both are represented differently
   //now but need to make sure the snapshot_content is not affected by bubble changes
   assert.equal(snap.getSnapshotContent().includes('Jack'),1,"Should show that Jack's username is the content array");
-  bubb.addPlayer(Mark);
-  assert.false(snap.getSnapshotContent().includes('Mark'),"Mark should not be found in this array");
-  assert.true(bubb.playerArray.includes(Mark), "should count Mark present in this array now");
+
+  //removing and adding players to bubble
+  assert.true(bubb.addPlayer(Mark), "player Mark should be added to original bubble");
+  assert.true(bubb.removePlayer(Jack), "player Jack should be removed from original bubble");
+
+  //comparing the Bubble's PlayerArray state to the snapshot_content array state
+  assert.false(snap.getSnapshotContent().includes('Mark'),"Mark should not be found in the snapshot array");
+  assert.true(bubb.playerArray.includes(Mark), "should count Mark present in the bubble's Player array now");
+  assert.true(snap.getSnapshotContent().includes('Jack'),"Jack should still be found in the snapshot array");
+  assert.false(bubb.playerArray.includes(Jack),"Jack should not be found in the bubble's playerArray");
+
+
 })
