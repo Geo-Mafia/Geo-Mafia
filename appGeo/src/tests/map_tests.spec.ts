@@ -51,38 +51,44 @@ QUnit.test("Bubble-Player Tests", function(assert) {
     testbub.init_bubble("testbubble", 0, 15, 5, 10);
 
     assert.equal(testbub.List.size, 0, "player list should be empty");
-    //it is sufficient to assert that the player list has no elements
+    assert.equal(testbub.returnPlayers.size, 0, "player list should be empty");
 
     //switched to map.has instead of userID equal because of issues calling getUserID
     let loc = {longitude:20, latitude:20};
     let testPlayer = new Player()
     testPlayer.init(12, "player1", loc, ALIVE);
-    assert.false(testbub.List.has(testPlayer.getUserID()), "player1 should not be in list yet");
+    assert.false(testbub.List.has(12), "player1 should not be in list yet");
     assert.true(testbub.addPlayer(testPlayer), "player1 should be added to bubble");
     assert.equal(testbub.List.size, 1, "player list should have one element");
-    //the following two fail
-    assert.true(testbub.List.has(testPlayer.getUserID()), "player added should be identified by id 12");
-    assert.true(testbub.returnPlayers.has(testPlayer.getUserID()), "player added should be identified by id 12");
+    assert.equal(testbub.returnPlayers.size, 1, "player list should have one element");
+    assert.true(testbub.List.has(12), "player added should be identified by id 12");
+    assert.true(testbub.returnPlayers.has(12), "player added should be identified by id 12");
 
     let loc2 = {longitude:10, latitude:10};
     let testPlayer2 = new Player()
     testPlayer2.init(13, "player2", loc2, ALIVE);
     assert.false(testbub.List.has(13), "player2 should not be in list yet");
-    //the following one fails
     assert.true(testbub.addPlayer(testPlayer2), "player2 should be added to bubble");
     assert.equal(testbub.List.size, 2, "player list should have two elements");
+    assert.equal(testbub.returnPlayers.size, 2, "player list should have two elements");
     assert.true(testbub.List.has(13), "player added should be identified by id 13");
-    assert.true(testbub.returnPlayers.has(13), "player added should be identified by id 13");    
+    assert.true(testbub.returnPlayers.has(13), "player added should be identified by id 13");
+    assert.true(testbub.List.has(12), "player1 should still be in list");
+    assert.true(testbub.returnPlayers.has(12), "player1 should still be in list");    
 
     assert.true(testbub.removePlayer(testPlayer), "player1 should be removed from bubble");
     assert.equal(testbub.List.size, 1, "player list should have one element");
+    assert.equal(testbub.returnPlayers.size, 1, "player list should have one element");
     assert.false(testbub.List.has(12), "player1 should not be in list anymore");
+    assert.true(testbub.List.has(13), "player2 should still be in list");
+    assert.false(testbub.returnPlayers.has(12), "player1 should not be in list anymore");
     assert.true(testbub.returnPlayers.has(13), "player2 should still be in list");
 
     assert.true(testbub.removePlayer(testPlayer2), "player2 should be removed from bubble");
     assert.false(testbub.List.has(13), "player2 should not be in list anymore");
+    assert.false(testbub.returnPlayers.has(13), "player2 should not be in list anymore");
     assert.equal(testbub.List.size, 0, "player list should be empty");
-    //it is sufficient to assert that the player list has no elements
+    assert.equal(testbub.returnPlayers.size, 0, "player list should be empty");
 
     assert.false(testbub.removePlayer(testPlayer), "player list should already be empty");
 });
