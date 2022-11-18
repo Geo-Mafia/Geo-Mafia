@@ -5,11 +5,13 @@ import { ChatComponent } from '../chat/chat.component'
 //The Chat is added here so that the template can be represented
 import { CampusMap } from '../map/campus-map.component'
 import {Bubble} from '../map/map.component'
+import { LocationComponent } from "../location/location.component"
 
 import { HomeComponent } from './home.component'
 
 const routes: Routes = [
   {path: "Chat", component: ChatComponent},
+  {path: "Location", component: LocationComponent},
   { path: '',
     component: HomeComponent
   },

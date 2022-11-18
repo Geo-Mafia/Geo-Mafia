@@ -19,11 +19,10 @@
   if it doesn't work maybe adjuct the path to the chat.component.html -->
 
 
-  <GridLayout>
-    <GridLayout>
-      <Button text="Go To Chat" [nsRouterLink]="['Chat']" class="btn btn-primary btn-active" col="0"></Button>
-    </GridLayout>
+<StackLayout>
+    <Button text="Go To Chat" [nsRouterLink]="['Chat']" class="btn btn-primary btn-active" col="0"></Button>
+    <Button text="Go To Geolocation" [nsRouterLink]="['Location']" class="btn btn-primary btn-active" col="0"></Button>
     <router-outlet></router-outlet>
-  </GridLayout>
+</StackLayout>
 
 
