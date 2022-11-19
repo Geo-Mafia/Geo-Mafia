@@ -48,11 +48,11 @@ QUnit.test("testing the display variable and playerInBubble", function(assert){
   testMap.addToMap(testbub2.id, testbub2)
   testMap.playerInBubble(P1)
   testMap.playerInBubble(P2)
-  assert.equal(testbub1.playerArray, [P1, P2], "should have P1 and P2 added to the list of players in testbub1");
+  assert.deepEqual(testbub1.playerArray, [P1, P2], "should have P1 and P2 added to the list of players in testbub1");
   P1.location = inTB2
   testMap.playerInBubble(P2)
-  assert.equal(testbub1.playerArray, [P1], "should have P1 as the only player in the list of Players found in testbub1");
-  assert.equal(testbub2.playerArray, [P2], "should have P2 placed inside the List of players for testbub2")
+  assert.deepEqual(testbub1.playerArray, [P1], "should have P1 as the only player in the list of Players found in testbub1");
+  assert.deepEqual(testbub2.playerArray, [P2], "should have P2 placed inside the List of players for testbub2")
   P2.alive = 0
   testMap.playerInBubble(P2)
   assert.false(testbub2.playerArray.includes(P2), "should not have player 2 in the array anymore")
