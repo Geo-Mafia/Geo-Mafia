@@ -56,6 +56,9 @@ QUnit.test("testing the display variable and playerInBubble", function(assert){
   P2.alive = 0
   testMap.playerInBubble(P2)
   assert.false(testbub1.playerArray.includes(P2), "should not have player 2 in the Bubble anymore")
+  P2.location = inTB2
+  testMap.playerInBubble(P2)
+  assert.false(testbub2.playerArray.includes(P2), "should not have P2 in testbubble 2 either")
 
 })
 
