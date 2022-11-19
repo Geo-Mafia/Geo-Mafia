@@ -37,6 +37,7 @@ QUnit.test("Adding Bubbles to CampusMap", function(assert) {
     assert.true(testMap.MapOfCampus.has(testbub1.id), "Should now have testbubble1 added to the MapOfCampus");
 });
 
+QUnit.module("Campus Map tests")
 
 QUnit.test("testing the display variable and playerInBubble", function(assert){
 
