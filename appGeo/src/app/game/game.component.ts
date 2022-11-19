@@ -4,14 +4,20 @@ import{CampusMap} from '../map/campus-map.component'
 import {Chat, Message} from '../chat/chat.component'
 import { GameRules} from './game-rules.component'
 import {Snapshot} from '../snapshot/snapshot_class_declaration'
+import {scheduleJob, Job} from 'node-schedule'
 //A CampusMap is a Map of the Bubbles that exist on campus
 
 const INACTIVE = 0
 const ACTIVE = 1
+const UNSCHEDULED = 5
+const SCHEDULED = 6
 const CIVILIAN = 7
 const KILLER = 8
 const SUCCESS = 10
+const FAILURE = -10
 const INPROGRESS = 5
+
+const START_JOB_KEY = "start"
 
 @Component({
   selector: 'ns-game',
@@ -22,6 +28,7 @@ export class Game implements OnInit {
   gameRules: GameRules //the object containing the game rules
 
   gameActive: number //a boolean number
+  gameScheduled: number //a boolean number
   startTime: Date //a Date object
   endTime: Date //a Date object
 
@@ -31,6 +38,7 @@ export class Game implements OnInit {
   snapshots: Map<number, Snapshot> //a hashmap of mapping snapshotID ints to snapshots
   chats: Map<number, Chat> //a hashmap of mapping chatsID ints to chats
 
+  #scheduledJobs: Map<string, Job> //stores all scheduled Jobs
 
   constructor(gameRules: GameRules, gameMap: CampusMap, players: Map<number, Player>) {
     this.gameRules = gameRules
@@ -60,13 +68,91 @@ export class Game implements OnInit {
   ngOnInit(): void {
   }
 
+  #startProcess() {
+
+      const playerCount = this.getPlayerCount()
+
+      //number of killers should be fraction of players, rounded down
+      const numKillers = Math.floor(playerCount * this.gameRules.getFractionKillers())
+
+      const roledPlayers = new Map()
+
+      const playerArr = Array.from(this.players.values())
+
+      //randomly select killers
+      for(let i = 0; i < numKillers; i++) {
+        let rand = Math.floor(Math.random() * this.getPlayerCount())
+        let player = playerArr[rand]
+        let killer = new Killer()
+        killer.init(player.getUserID(), player.getUsername(), player.getLocation(), player.getAliveStatus())
+
+        roledPlayers.set(killer.getUserID(), killer)
+        playerArr.splice(rand, 1)
+      }
+
+      //set all other players to civilians
+      for(let i = 0; i < playerArr.length; i++) {
+        let player = playerArr[i]
+        let civilian = new Civilian()
+        civilian.init(player.getUserID(), player.getUsername(), player.getLocation(), player.getAliveStatus())
+
+        roledPlayers.set(civilian.getUserID, civilian)
+      }
+
+      //replace unroled players with roles
+      this.#setPlayers(roledPlayers)
+
+      //TODO: setting game timers
+
+      this.#setGameActive(ACTIVE)
+
+      return SUCCESS
+
+  }
+
+  /* All checks to be run before the game starts 
+  */
+  preGameChecks() {
+      if(this.getPlayerCount() < this.gameRules.getMinPlayers()) {
+          return FAILURE
+      } else if (this.getGameActive() == ACTIVE) {
+          return FAILURE
+      } else if(this.getGameScheduled() == SCHEDULED) {
+          return FAILURE
+      }
+
+      return SUCCESS
+  }
+
   startGame() {
-    this.#setGameActive(ACTIVE)
-    return SUCCESS;
+    if(this.preGameChecks() == FAILURE) {
+      return FAILURE
+    }
+
+    return this.#startProcess();
 
     //Randomly generate killer objects for 20% of the players and civilians for the rest
     //Rebuild the players list with these objects
     //TODO
+  }
+
+  scheduleStart(date: Date) {
+
+      if(this.preGameChecks() == FAILURE) {
+          return FAILURE
+      }
+
+      const job = scheduleJob(date, function() {this.#startProcess()});
+      this.#scheduledJobs.set(START_JOB_KEY, job) //adds job to list of jobs running
+
+      this.#setGameScheduled(SCHEDULED)
+      return SUCCESS;
+  }
+
+  cancelScheduledStart() {
+      this.#scheduledJobs.get(START_JOB_KEY).cancel()
+      this.#setGameScheduled(UNSCHEDULED)
+      return SUCCESS;
   }
 
   endGame() {
@@ -80,8 +166,16 @@ export class Game implements OnInit {
       return this.gameActive
   }
 
-  #setGameActive(status) {
+  #setGameActive(status: number) {
       this.gameActive = status
+  }
+
+  getGameScheduled() {
+      return this.gameScheduled
+  }
+
+  #setGameScheduled(status: number) {
+      this.gameScheduled = status
   }
 
   getStartTime() {
@@ -97,12 +191,16 @@ export class Game implements OnInit {
       return SUCCESS
   }
 
-  getPlayer(playerID) {
-      return this.players.get(playerID)
+  getMap(){
+    return this.map;
   }
 
-  getMap(){
-      return this.map;
+  #setPlayers(players: Map<number, Player>) {
+    this.players = players
+  }
+
+  getPlayer(playerID) {
+      return this.players.get(playerID)
   }
 
   addPlayer(player) {
