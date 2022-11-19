@@ -25,6 +25,7 @@ export class ChatComponent implements OnInit {
   curr_built_msg: string = ""
   public chats: Array<any>; //change String to any or Message class later
   public msg_sender = "hi"
+  //#region that contains all alphabet
   a: string = "a"
   b: string = "b"
   c: string = "c"
@@ -52,9 +53,10 @@ export class ChatComponent implements OnInit {
   y: string = "y"
   z: string = "z"
   havePressedShift: boolean = false
+  //#endregion
 
   constructor() { 
-    this.chats = ["testing", "to", "see"];
+    this.chats = [];
   }
 
   ngOnInit(): void {
@@ -93,10 +95,10 @@ export class ChatComponent implements OnInit {
     // console.log("Text is currently being set to: ", this.text)
   }
 
-  onPressEnter(args){
-    console.log("Inside the onPressEnter case!")
-    console.log("What the user inputted was: ", args.target.value)
-  }
+//   onPressEnter(args){
+//     console.log("Inside the onPressEnter case!")
+//     console.log("What the user inputted was: ", args.target.value)
+//   }
 
   onScroll(args: ScrollEventData){
     const scrollView = args.object as ScrollView;
@@ -104,7 +106,7 @@ export class ChatComponent implements OnInit {
     console.log("scrollX: " + args.scrollX);
     console.log("scrollY: " + args.scrollY);
   }
-
+  //#region Below are all functions that make keyboard buttons work
   setNextCapitalized(){
     if (this.havePressedShift == true){
         this.havePressedShift = false;
@@ -146,6 +148,7 @@ export class ChatComponent implements OnInit {
   reset(){
     this.curr_built_msg = ""
   }
+  //#endregion
 
 }
 
