@@ -4,41 +4,86 @@
 
   <!-- This fills the remaining space of the current row
   <span class="example-fill-remaining-space"></span> -->
-
 <StackLayout>
-  <!-- <label>{{chats}}</label> -->
-  <!-- <label ng-repeat="chat in chats">{{chats}}</label> -->
-  <label>Chat History</label>
-  <label *ngFor="let chat of chats">{{ chat }}</label>
-  <!-- <label>{{msg_to_send}}</label> -->
-  <!-- No styles applied -->
-  <Button text="Button"></Button>
-  <!-- Using local CSS class -->
-  <Button text=".my-button" class="my-button"></Button>
-  <!-- Using @nativescript/theme CSS classes -->
-  <Button text="Button.-primary" class="-primary"></Button>
-  <Button class="-primary">
-      <FormattedString>
-          <Span text="&#xf099;" class="fab"></Span>
-          <Span text=" Button.-primary with icon"></Span>
-      </FormattedString>
-  </Button>
-  <!-- <Button text="Button.-outline" class="-outline"></Button>  
-  <Button text="Button.-outline" class="-outline"></Button>  
-  <Button text="Button.-outline" class="-outline"></Button>  
-  <Button text="Button.-primary.-rounded-sm" class="-primary -rounded-sm"></Button>
-  <Button text="Button.-primary.-rounded-lg" class="-primary -rounded-lg"></Button>
-  <Button text="Button.-outline.-rounded-sm" class="-outline -rounded-sm"></Button>
-  <Button text="Button.-outline.-rounded-lg" class="-outline -rounded-lg"></Button>
-  <Button text="Button.-outline[isEnabled=false]" isEnabled="false" class="-outline"></Button>
-  <Button text="Button.-primary[isEnabled=false]" isEnabled="false" class="-primary"></Button> -->
-  <Label text = "Notifying that you can see chat"></Label> 
-  <TextField id="toSend" class="input" autocapitalize="none" ngDefaultControl [value]="text"  [(ngModel)]="text" hint="What Message do you want to send"></TextField>
-  <Label text = "{{ msg_sender }}"></Label>
-  <!-- <input [(ngModel)]="this.msg_sender"/> -->
-  <textarea>
-    <input  type="text" name="trying" id="how">
-    <input  type="button" text="Send Message" class="-primary">
-  </textarea>
-  <Button (tap)="sendMsg(msg_sender)" text="Send Message" class="-primary"></Button> 
+  <ScrollView (scroll)="onScroll($any($event))">
+    <StackLayout orientation="vertical">
+        <!-- <Label row="0" text="Some row content goes here..."></Label>
+        <Label row="1" text="Some row content goes here..."></Label>
+        <Label row="2" text="Some row content goes here..."></Label>
+        <Label row="3" text="Some row content goes here..."></Label>
+        <Label row="4" text="Some row content goes here..."></Label>
+        <Label row="5" text="Some row content goes here..."></Label>
+        <Label row="6" text="Some row content goes here..."></Label>
+        <Label row="7" text="Some row content goes here..."></Label>
+        <Label row="8" text="Some row content goes here..."></Label>
+        <Label row="9" text="Some row content goes here..."></Label> -->
+
+        <!-- <label>{{chats}}</label> -->
+        <!-- <label ng-repeat="chat in chats">{{chats}}</label> -->
+        <label>Chat History</label>
+        <label *ngFor="let chat of chats">{{ chat }}</label>
+        <label>The message you are about to send is: {{ curr_built_msg }}</label>
+        <!-- <label>{{msg_to_send}}</label> -->
+        <!-- No styles applied -->
+        <!-- <Button text="Button"></Button> -->
+        <!-- Using local CSS class -->
+        <!-- <Button text=".my-button" class="my-button"></Button> -->
+        <!-- Using @nativescript/theme CSS classes -->
+        <!-- <Button text="Button.-primary" class="-primary"></Button> -->
+        <!-- <Button class="-primary">
+            <FormattedString>
+                <Span text="&#xf099;" class="fab"></Span>
+                <Span text=" Button.-primary with icon"></Span>
+            </FormattedString>
+        </Button> -->
+        <!-- <div class="btn-group" style="display: inline-block">
+          <button style="width: 33.3%" text="1st" class="d-inline-block" data-inline="true"></button>  
+          <button style="width: 33.3%" text="2nd" class="d-inline-block" data-inline="true"></button>  
+          <button style="width: 33.3%" text="3rd" class="d-inline-block"></button>  
+        </div> -->
+        <!-- <GridLayout class="container">
+          <Button  class="first-container" style="width: 25%" text="tests"></Button>
+          <Button  class= "second-container" style="width: 25%" text="to see"></Button>
+        </GridLayout> -->
+        <!-- <Button text="Button.-outline.-rounded-sm" class="-outline -rounded-sm"></Button>
+        <Button text="Button.-outline.-rounded-lg" class="-outline -rounded-lg"></Button>
+        <Button text="Button.-outline[isEnabled=false]" isEnabled="false" class="-outline"></Button>
+        <Button text="Button.-primary[isEnabled=false]" isEnabled="false" class="-primary"></Button>
+        <Label text = "Notifying that you can see chat"></Label>  -->
+        <!-- <TextField id="toSend" class="input" autocapitalize="none" ngDefaultControl [value]="text"  [(ngModel)]="text" hint="What Message do you want to send"></TextField> -->
+        <!-- <Label text = "{{ msg_sender }}"></Label> -->
+        <!-- <input [(ngModel)]="this.msg_sender"/> -->
+        <Button (tap)="sendMsg()" text="Send Message" class="-primary"></Button>      
+        <Button (tap)="setNextCapitalized()" text="Press 'Shift'" class="-primary"></Button>
+        <Button (tap)="addSpace()" text="Press 'Spacebar'" class="-primary"></Button>     
+        <Button (tap)="backspace()" text="Press 'backspace'" class="-primary"></Button>     
+        <Button (tap)="addToString(a)" text="Add 'a' to message" class="-primary"></Button> 
+        <Button (tap)="addToString(b)") text="Add 'b' to message" class="-primary"></Button> 
+        <Button (tap)="addToString(c)" text="Add 'c' to message" class="-primary"></Button> 
+        <Button (tap)="addToString(d)" text="Add 'd' to message" class="-primary"></Button> 
+        <Button (tap)="addToString(e)" text="Add 'e' to message" class="-primary"></Button> 
+        <Button (tap)="addToString(f)" text="Add 'f' to message" class="-primary"></Button> 
+        <Button (tap)="addToString(g)" text="Add 'g' to message" class="-primary"></Button> 
+        <Button (tap)="addToString(h)" text="Add 'h' to message" class="-primary"></Button> 
+        <Button (tap)="addToString(i)" text="Add 'i' to message" class="-primary"></Button> 
+        <Button (tap)="addToString(j)" text="Add 'j' to message" class="-primary"></Button> 
+        <Button (tap)="addToString(k)" text="Add 'k' to message" class="-primary"></Button> 
+        <Button (tap)="addToString(l)" text="Add 'l' to message" class="-primary"></Button> 
+        <Button (tap)="addToString(m)" text="Add 'm' to message" class="-primary"></Button> 
+        <Button (tap)="addToString(n)" text="Add 'n' to message" class="-primary"></Button> 
+        <Button (tap)="addToString(o)" text="Add 'o' to message" class="-primary"></Button> 
+        <Button (tap)="addToString(p)" text="Add 'p' to message" class="-primary"></Button> 
+        <Button (tap)="addToString(q)" text="Add 'q' to message" class="-primary"></Button> 
+        <Button (tap)="addToString(r)" text="Add 'r' to message" class="-primary"></Button> 
+        <Button (tap)="addToString(s)" text="Add 's' to message" class="-primary"></Button> 
+        <Button (tap)="addToString(t)" text="Add 't' to message" class="-primary"></Button> 
+        <Button (tap)="addToString(u)" text="Add 'u' to message" class="-primary"></Button> 
+        <Button (tap)="addToString(v)" text="Add 'v' to message" class="-primary"></Button> 
+        <Button (tap)="addToString(w)" text="Add 'w' to message" class="-primary"></Button> 
+        <Button (tap)="addToString(x)" text="Add 'x' to message" class="-primary"></Button> 
+        <Button (tap)="addToString(y)" text="Add 'y' to message" class="-primary"></Button> 
+        <Button (tap)="addToString(z)" text="Add 'z' to message" class="-primary"></Button> 
+    </StackLayout>
+  </ScrollView>
 </StackLayout>
+

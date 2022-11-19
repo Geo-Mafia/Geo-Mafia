@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { databaseAdd, databaseGet, databaseEventListener } from '../../modules/database'
 import { firebase } from "@nativescript/firebase";
-import { fromObject } from '@nativescript/core';
+import { fromObject, ScrollView, ScrollEventData} from '@nativescript/core';
 
 const model = {
     msg_to_send : "What Message to Send"
@@ -22,8 +22,37 @@ const bindingContext = fromObject(model)
 })
 export class ChatComponent implements OnInit {
   text: string = ""
+  curr_built_msg: string = ""
   public chats: Array<any>; //change String to any or Message class later
   public msg_sender = "hi"
+  a: string = "a"
+  b: string = "b"
+  c: string = "c"
+  d: string = "d"
+  e: string = "e"
+  f: string = "f"
+  g: string = "g"
+  h: string = "h"
+  i: string = "i"
+  j: string = "j"
+  k: string = "k"
+  l: string = "l"
+  m: string = "m"
+  n: string = "n"
+  o: string = "o"
+  p: string = "p"
+  q: string = "q"
+  r: string = "r"
+  s: string = "s"
+  t: string = "t"
+  u: string = "u"
+  v: string = "v"
+  w: string = "w"
+  x: string = "x"
+  y: string = "y"
+  z: string = "z"
+  havePressedShift: boolean = false
+
   constructor() { 
     this.chats = ["testing", "to", "see"];
   }
@@ -53,18 +82,69 @@ export class ChatComponent implements OnInit {
     this.chats = list;
   }
 
-  sendMsg(data){
+  sendMsg(){
     //var data = "Testing"
     console.log("Inside the send Message function")
-    this.chats.push(data);
-    console.log("What is currently the message to send:", data)
-    console.log("What if we use binding context", `${bindingContext.get('msg_to_send')}`)
-    console.log("Text is currently being set to: ", this.text)
+    this.chats.push(this.curr_built_msg);
+    console.log("What is currently the message to send:", this.curr_built_msg)
+    this.reset()
+    console.log("After having reset, the string is now: ", this.curr_built_msg)
+    // console.log("What if we use binding context", `${bindingContext.get('msg_to_send')}`)
+    // console.log("Text is currently being set to: ", this.text)
   }
 
-  onPressEnter($event){
+  onPressEnter(args){
     console.log("Inside the onPressEnter case!")
-    console.log("What the user inputted was: ", $event.stringify)
+    console.log("What the user inputted was: ", args.target.value)
+  }
+
+  onScroll(args: ScrollEventData){
+    const scrollView = args.object as ScrollView;
+
+    console.log("scrollX: " + args.scrollX);
+    console.log("scrollY: " + args.scrollY);
+  }
+
+  setNextCapitalized(){
+    if (this.havePressedShift == true){
+        this.havePressedShift = false;
+    }
+    else{
+        this.havePressedShift = true;
+    }
+    console.log("We have set the shift parameter over to: ", this.havePressedShift)
+  }
+
+  addToString(str: string){
+    console.log("Before having done the concat: ", this.curr_built_msg)
+    if (this.havePressedShift == true){
+        str = str.toUpperCase();
+    }
+    this.havePressedShift = false;
+
+    console.log("Are we passing the correct string to concat: ", str)
+    this.curr_built_msg = this.curr_built_msg.concat(str);
+    console.log("Having just added letter to the built message:", this.curr_built_msg)
+  }
+
+  backspace(){
+    if (this.curr_built_msg == null || this.curr_built_msg.length == 0){
+        console.log("We can't backspace when it's empty, just return")
+        return
+    }
+    else{
+        this.curr_built_msg = (this.curr_built_msg.substring(0, this.curr_built_msg.length - 1))
+        console.log("We have backspaced in order to get: ", this.curr_built_msg)
+        return;
+    }
+  }
+
+  addSpace(){
+    this.curr_built_msg = this.curr_built_msg.concat(" ")
+  }
+
+  reset(){
+    this.curr_built_msg = ""
   }
 
 }
