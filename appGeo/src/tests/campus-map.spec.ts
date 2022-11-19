@@ -29,7 +29,13 @@ class Location{
 
   var testMap = new CampusMap(); //should have some bubbles already initialized
 
+QUnit.test("Adding Bubbles to CampusMap", function(assert) {
 
+    assert.false(testMap.MapOfCampus.has(testbub1.id),
+     "Should not recognize testbubble1 inside the MapOfCampus");
+    testMap.addToMap(testbub1.id, testbub1)
+    assert.true(testMap.MapOfCampus.has(testbub1.id), "Should now have testbubble1 added to the MapOfCampus");
+});
 
 
 QUnit.test("testing the display variable and playerInBubble", function(assert){
@@ -50,12 +56,6 @@ QUnit.test("testing the display variable and playerInBubble", function(assert){
 })
 
 
-QUnit.test("Adding Bubbles to CampusMap", function(assert) {
 
-    assert.false(testMap.MapOfCampus.has(testbub1.id),
-     "Should not recognize testbubble1 inside the MapOfCampus");
-    testMap.addToMap(testbub1.id, testbub1)
-    assert.true(testMap.MapOfCampus.has(testbub1.id), "Should now have testbubble1 added to the MapOfCampus");
-});
 
 
