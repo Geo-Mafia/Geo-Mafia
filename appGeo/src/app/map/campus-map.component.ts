@@ -104,9 +104,15 @@ export class CampusMap implements OnInit {
           return
         }
       } else if(checkIfIn.inBubble(pToCheck) && !checkIfIn.List.has(pToCheck.userID)){ //should have more logic to remove a player that is in said bubble List but not in the bubble boundary
-        checkIfIn.addPlayer(pToCheck)
-        this.display = checkIfIn;
-        this.playerlist = checkIfIn.playerArray //reassigning our shallow copy of names
+        if (!pToCheck.alive){
+          this.display = new Bubble()
+          this.playerlist = []
+          return
+        }else {
+          checkIfIn.addPlayer(pToCheck)
+          this.display = checkIfIn;
+          this.playerlist = checkIfIn.playerArray //reassigning our shallow copy of names
+        }
       } else if(!checkIfIn.inBubble(pToCheck) && checkIfIn.List.has(pToCheck.userID)){
         checkIfIn.removePlayer(pToCheck)
       }
