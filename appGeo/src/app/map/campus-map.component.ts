@@ -94,15 +94,15 @@ export class CampusMap implements OnInit {
 
 
     checkBubble(checkIfIn : Bubble, pToCheck : Player){
-      if (!pToCheck.alive){
-        this.display = new Bubble()
-        this.playerlist = []
-        return
-      }
       //this is a function that calls on the bubble that is iterated through
       //when this is called on a bubble if true will change the bubble to display to the Player
       if(checkIfIn.inBubble(pToCheck) && checkIfIn.List.has(pToCheck.userID)){
-        //intentionally left blank
+        if (!pToCheck.alive){
+          this.display = new Bubble()
+          this.playerlist = []
+          checkIfIn.removePlayer(pToCheck)
+          return
+        }
       } else if(checkIfIn.inBubble(pToCheck) && !checkIfIn.List.has(pToCheck.userID)){ //should have more logic to remove a player that is in said bubble List but not in the bubble boundary
         checkIfIn.addPlayer(pToCheck)
         this.display = checkIfIn;
