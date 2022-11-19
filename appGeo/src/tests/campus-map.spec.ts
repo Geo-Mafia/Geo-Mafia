@@ -29,11 +29,7 @@ class Location{
 
   var testMap = new CampusMap(); //should have some bubbles already initialized
 
-  function displayMap(gmap){
-    for (let name of this.MapOfCampus.keys()) {
-      console.log(name);
-    }
-  }
+
 
 
 QUnit.test("testing the display variable and playerInBubble", function(assert){
@@ -56,10 +52,10 @@ QUnit.test("testing the display variable and playerInBubble", function(assert){
 
 QUnit.test("Adding Bubbles to CampusMap", function(assert) {
 
-    assert.equal(displayMap(testMap), "Crerar\nBookstore\nHinds Lab\nKovler\nCobb Hall\nGodspeed Hall\nWeiboldt Hall\nHarper",
-     "Should show the names of the immediately initialized list of the MapofCampus");
+    assert.false(testMap.MapOfCampus.has(testbub1.id),
+     "Should not recognize testbubble1 inside the MapOfCampus");
     testMap.addToMap(testbub1.id, testbub1)
-    assert.equal(displayMap(testMap), "Crerar\nBookstore\nHinds Lab\nKovler\nCobb Hall\nGodspeed Hall\nWeiboldt Hall\nHarper\ntestbubble1", "Should show the names of the bubbles + the new added bubble, testbubble1");
+    assert.true(testMap.MapOfCampus.has(testbub1.id), "Should now have testbubble1 added to the MapOfCampus");
 });
 
 
