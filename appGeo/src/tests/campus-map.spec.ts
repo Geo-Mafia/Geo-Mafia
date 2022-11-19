@@ -37,32 +37,20 @@ class Location{
 
 
 QUnit.test("testing the display variable and playerInBubble", function(assert){
-  assert.equal(testMap.display,
-              { List: {},
-                id: 'Crerar',
-                xLb: 41.7901331,
-                xUb: 41.7909298,
-                yLb: -87.6025138,
-                yUb: -87.6031023},
-              "should have the Crerar bubble initially as the display variable")
+
   testMap.addToMap(testbub1.id, testbub1)
   testMap.playerInBubble(P1)
-  assert.equal(testMap.display,
-    { List: {},
-      id: 'testbubble1',
-      xLb: 0,
-      xUb: 10,
-      yLb: 5,
-      yUb: 15},
+
+  assert.equal(testMap.display,testbub1,
     "should now have the testbubble1 as the display variable")
   testMap.addToMap(testbub2.id, testbub2)
   testMap.playerInBubble(P1)
   testMap.playerInBubble(P2)
-  assert.equal(testbub1.playerArray, {P1, P2}, "should have P1 and P2 added to the list of players in testbub1");
+  assert.equal(testbub1.playerArray, [P1, P2], "should have P1 and P2 added to the list of players in testbub1");
   P1.location = inTB2
   testMap.playerInBubble(P2)
-  assert.equal(testbub1.playerArray, {P1}, "should have P1 as the only player in the list of Players found in testbub1");
-  assert.equal(testbub2.playerArray, {P2}, "should have P2 placed inside the List of players for testbub2")
+  assert.equal(testbub1.playerArray, [P1], "should have P1 as the only player in the list of Players found in testbub1");
+  assert.equal(testbub2.playerArray, [P2], "should have P2 placed inside the List of players for testbub2")
 })
 
 

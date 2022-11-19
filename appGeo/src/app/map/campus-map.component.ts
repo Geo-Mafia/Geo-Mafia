@@ -76,8 +76,7 @@ export class CampusMap implements OnInit {
 
 
 
-    //idea: call PlayerInBubble to find the `Bubble` `Player` is in
-    //display is currently set to Crerar-- will implement further logic soon
+
 
   }
 
@@ -100,6 +99,7 @@ export class CampusMap implements OnInit {
       if(checkIfIn.inBubble(pToCheck) && checkIfIn.List.has(pToCheck.userID)){
         //intentionally left blank
       } else if(checkIfIn.inBubble(pToCheck) && !checkIfIn.List.has(pToCheck.userID)){ //should have more logic to remove a player that is in said bubble List but not in the bubble boundary
+        checkIfIn.addPlayer(pToCheck)
         this.display = checkIfIn;
         this.playerlist = checkIfIn.playerArray //reassigning our shallow copy of names
       } else if(!checkIfIn.inBubble(pToCheck) && checkIfIn.List.has(pToCheck.userID)){
