@@ -1,6 +1,7 @@
 import { Component, Inject, Injectable, OnInit} from '@angular/core';
 import {Bubble} from './map.component'
 import {Player} from '../player/player.component'
+import { push } from 'nativescript-plugin-firebase';
 
 
 
@@ -75,8 +76,7 @@ export class CampusMap implements OnInit {
 
 
 
-    //idea: call PlayerInBubble to find the `Bubble` `Player` is in
-    //display is currently set to Crerar-- will implement further logic soon
+
 
   }
 
@@ -97,9 +97,22 @@ export class CampusMap implements OnInit {
       //this is a function that calls on the bubble that is iterated through
       //when this is called on a bubble if true will change the bubble to display to the Player
       if(checkIfIn.inBubble(pToCheck) && checkIfIn.List.has(pToCheck.userID)){
-        //intentionally left blank
+        if (!pToCheck.alive){
+          this.display = new Bubble()
+          this.playerlist = []
+          checkIfIn.removePlayer(pToCheck)
+          return
+        }
       } else if(checkIfIn.inBubble(pToCheck) && !checkIfIn.List.has(pToCheck.userID)){ //should have more logic to remove a player that is in said bubble List but not in the bubble boundary
-        this.display = checkIfIn;
+        if (!pToCheck.alive){
+          this.display = new Bubble()
+          this.playerlist = []
+          return
+        }else {
+          checkIfIn.addPlayer(pToCheck)
+          this.display = checkIfIn;
+          this.playerlist = checkIfIn.playerArray //reassigning our shallow copy of names
+        }
       } else if(!checkIfIn.inBubble(pToCheck) && checkIfIn.List.has(pToCheck.userID)){
         checkIfIn.removePlayer(pToCheck)
       }
