@@ -4,6 +4,7 @@ import { NativeScriptCommonModule } from '@nativescript/angular'
 import { HomeRoutingModule } from './home-routing.module'
 import { HomeComponent } from './home.component'
 import { ChatComponent} from '../chat/chat.component'
+import { KillingComponent } from '../player/killing.component'
 import {Bubble} from '../map/map.component'
 import {CampusMap} from '../map/campus-map.component'
 import { FormsModule }   from '@angular/forms'; // <-- NgModel lives here
@@ -16,7 +17,7 @@ import { NativeScriptModule } from "@nativescript/angular";
 
 @NgModule({
   imports: [NativeScriptCommonModule, HomeRoutingModule, FormsModule, NativeScriptFormsModule, CommonModule, ReactiveFormsModule],
-  declarations: [HomeComponent, Bubble, CampusMap, ChatComponent],
+  declarations: [HomeComponent, Bubble, CampusMap, ChatComponent, KillingComponent],
   schemas: [NO_ERRORS_SCHEMA],
 })
 export class HomeModule {}
