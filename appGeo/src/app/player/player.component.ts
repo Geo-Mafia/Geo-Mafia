@@ -26,6 +26,7 @@ export class Player implements OnInit{
     alive: number // A Boolean
     votes: number // An int
     chat_lists // List of Chat Objects that Player is a part of
+    have_already_voted: boolean = false
 
     constructor(){
       this.votes = 0;
@@ -181,13 +182,16 @@ export class Player implements OnInit{
      *      - A Player ID that will get looked up on the main General Chat 
     */
     voteForExecution(voted_player_ID){
-        if (this.getAliveStatus() == DEAD){
+        //Can't vote if you are dead OR if you have already voted in this round
+        if (this.getAliveStatus() == DEAD || this.have_already_voted == true){
             return FAILURE;
         }
 
         var main_chat = this.getChat(1) //Which a player should always be added to General Chat
         var Voted = main_chat.getPlayer(voted_player_ID) //Which a player would never pick a user ID that isn't present in the chat
         Voted.increaseVoteCount();
+
+        this.have_already_voted = true;
         return SUCCESS;
     }
 
@@ -204,6 +208,7 @@ export class Player implements OnInit{
     */
     resetVotes(){
         this.votes = 0;
+        this.have_already_voted = false;
     }
 
 }

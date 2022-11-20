@@ -11,6 +11,7 @@ import { Router } from '@angular/router'
 import { GoogleLogin } from 'nativescript-google-login';
 import * as application from "@nativescript/core/application";
 import { isIOS } from "@nativescript/core/platform";
+import { toUIString } from '@nativescript/core/utils/types'
 
 @Component({
   selector: 'Home',
@@ -20,7 +21,9 @@ import { isIOS } from "@nativescript/core/platform";
 
 export class HomeComponent implements OnInit {
 
-  public isKiller = true; //This information should be received from Database with Player Info!!!
+  public isKiller: Boolean
+  public votingOpen: Boolean
+
   constructor(private router: Router) {
     // Use the component constructor to inject providers.
 
@@ -28,6 +31,8 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isKiller = true;   //This information should be received from Database with Player Info!!!
+    this.votingOpen = false; //This information should be received from Database with Game Info!!!
     // Init your component properties here.
     // Going to initialize a list of bubbles here;
     var map = new CampusMap;
