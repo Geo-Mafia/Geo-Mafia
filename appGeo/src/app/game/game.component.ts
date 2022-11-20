@@ -159,11 +159,42 @@ export class Game implements OnInit {
       return SUCCESS;
   }
 
-  #endProcess() {
-    this.#setGameActive(INACTIVE)
-      return SUCCESS;
+  winningCondition(){
+    var killers_left = this.killersRemaining();
+    var civilians_left = this.civiliansRemaining();
+
+    var min_civ; //minimum number of civilians required to prevent killer win
+
+    if(this.gameRules.isWipeoutEnd()) {
+      min_civ = 1;
+    } else {
+      min_civ = killers_left;
+    }
+
+    if (killers_left > 0 && !(civilians_left >= min_civ)){
+      //Killers have won!
+      return KILLER;
+    } else if (killers_left == 0 && civilians_left > 0){
+      //Civilians have won!
+      return CIVILIAN;
+    } else if (this.getGameActive() == INACTIVE && civilians_left > 0) {
+      //Civilians have won a time victory or a premature end has occured
+      return CIVILIAN;
+    }
+    //we do not currently handle if both are wiped out
+
+    //Game still hasn't ended, return in progress
+    return INPROGRESS;
   }
 
+  #endProcess() {
+    this.#setGameActive(INACTIVE)
+      return this.winningCondition();
+  }
+
+  /* This method is meant to only be called if the game is ended externally and doesn't count
+     as a finished game
+  */
   endGame() {
       if(this.getGameActive() == INACTIVE) {
         return FAILURE;
@@ -176,6 +207,36 @@ export class Game implements OnInit {
       this.#endProcess()
 
       return SUCCESS
+  }
+
+  //Called by scheduled job only
+  #voting_open() {
+    /*TODO:
+      - disable killing
+      - enable voting
+      - announce voting open(?)
+    */
+  }
+
+  //Called by scheduled job only
+  #voting_close() {
+    /* TODO:
+      - tally votes
+      - eliminate voted out player
+      - check end game conditions
+        - end game and return if game ended
+      - reset votes
+      - announce voting over(?)
+    */
+  }
+
+  //Called by scheduled job only
+  #safetime_end() {
+    /* TODO:
+      - reset kill counts
+      - enable killing again
+      - announce safetime over(?)
+    */
   }
 
   getGameActive() {
@@ -272,24 +333,6 @@ export class Game implements OnInit {
     }
   
     return count;
-  }
-
-  winningCondition(){
-    var killers_left = this.killersRemaining();
-    var civilians_left = this.civiliansRemaining();
-
-    if (killers_left > 0 && civilians_left == 0){
-      //Killers have won!
-      return KILLER;
-    }
-    
-    if (killers_left == 0 && civilians_left > 0){
-      //Civilians have won!
-      return CIVILIAN;
-    }
-
-    //Game still hasn't ended, return in progress
-    return INPROGRESS;
   }
 
   getRoleCount(countKiller) {
