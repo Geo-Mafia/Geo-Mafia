@@ -96,8 +96,13 @@ export class ChatComponent implements OnInit {
   sendMsg(){
     //var data = "Testing"
     console.log("Inside the send Message function")
-    this.chats.push(this.text);
+    //NOTE: HERE WE NEED TO PASS IN THE PLAYER NAME
+    var new_msg = new Message(this.text, 'testing player name')
+    //this.chats.push(this.text);
+    this.chats.push(new_msg)
     console.log("What is currently the message to send:", this.text)
+    console.log("The timestamp that we are printing out is: ", new_msg.getTimestamp())
+    console.log("The name of the player that is sending the message is: ", new_msg.getPlayerName())
 
     //sending to firebase
     databaseAdd('game/chats', this.chats);
@@ -169,35 +174,32 @@ const SUCCESS = 10
 const FAILURE = -10
 const MAXMESSAGECOUNT = 100
 export class Message{
-    //timestamp; //Formatting of "mm/dd/yy hh:mm" 
-    message_id; //Still to determine if unique to within a Chat or not
+    timestamp; //Formatting of "mm/dd/yy hh:mm" 
     message_content;
+    player_name;
 
-    constructor(content){
+    constructor(content, name_of_player){
         //Get the current time right now (in local time) in following format:
         //"MM/DD/YYYY, HH:MM AM/PM"
-        // date = Date();
-        // this.timestamp = date.toLocaleString('en-US', {
-        //                     timeZone: 'CST',
-        //                     dateStyle: 'short',
-        //                     timeStyle: 'short',
-        //                 })
-        this.message_id = -1 //Default value for ID, nothing should happen here
+        var date = new Date();
+        this.timestamp = date.toLocaleString('en-US', {
+                            timeZone: 'CST',
+                            dateStyle: 'short',
+                            timeStyle: 'short',
+                        })
+        //this.message_id = -1 //Default value for ID, nothing should happen here
         this.message_content = content
+        this.player_name = name_of_player
     }
 
-    // getTimestamp(){
-    //     return this.timestamp;
-    // }
-    getMessageID(){
-        return this.message_id;
+    getTimestamp(){
+        return this.timestamp;
     }
     getMessageContent(){
         return this.message_content;
     }
-    setMessageID(id_to_set){
-        this.message_id = id_to_set;
-        return SUCCESS;
+    getPlayerName(){
+        return this.player_name;
     }
 
     printMessage(){
@@ -327,7 +329,7 @@ export class Chat{
     voteCommence(){
         //Function that inserts a Message Letting everyone know that voting has started
         var message_content = "---Voting will now commense---"
-        var vote_message = new Message(message_content);
+        var vote_message = new FullMessage(message_content, "ADMIN");
         var bool = this.insertMessage(vote_message);
         if (bool == SUCCESS){
             return SUCCESS
@@ -343,3 +345,51 @@ export class Chat{
         return SUCCESS
     }
 } 
+
+export class FullMessage{
+    timestamp; //Formatting of "mm/dd/yy hh:mm" 
+    message_id; //Still to determine if unique to within a Chat or not
+    message_content;
+    player_name;
+
+    constructor(content, name_of_player){
+        //Get the current time right now (in local time) in following format:
+        //"MM/DD/YYYY, HH:MM AM/PM"
+        var date = new Date();
+        this.timestamp = date.toLocaleString('en-US', {
+                            timeZone: 'CST',
+                            dateStyle: 'short',
+                            timeStyle: 'short',
+                        })
+        //this.message_id = -1 //Default value for ID, nothing should happen here
+        this.message_content = content
+        this.player_name = name_of_player
+    }
+
+    getTimestamp(){
+        return this.timestamp;
+    }
+    getMessageContent(){
+        return this.message_content;
+    }
+    getMessageID(){
+        return this.message_id;
+    }
+    getPlayerName(){
+        return this.player_name;
+    }
+    setMessageID(id_to_set){
+        this.message_id = id_to_set;
+        return SUCCESS;
+    }
+
+    printMessage(){
+        //Prints out in following format: "MM/DD/YYYY HH:MM AM/PM <Message content>"
+        //let time = this.timestamp;
+        let msg = this.message_content;
+        //console.log(time.concat(" ", msg));
+        console.log(msg)
+        return SUCCESS;
+    }
+
+}

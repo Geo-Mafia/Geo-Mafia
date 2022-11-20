@@ -2,7 +2,7 @@ import { Component, Inject, Injectable, OnInit } from '@angular/core';
 import { InjectableAnimationEngine } from '@nativescript/angular';
 import { ChangeType } from '@nativescript/core';
 import { Bubble } from '../map/map.component';
-import {Chat, Message} from '../chat/chat.component'
+import {Chat, FullMessage} from '../chat/chat.component'
 //import{Location} from './location_class_declaration';
 
 const DEAD = 0
@@ -138,7 +138,7 @@ export class Player implements OnInit{
             return FAILURE;
         } 
 
-        const msg = new Message(message);
+        const msg = new FullMessage(message, this.username);
         const sent = main_chat.insertMessage(msg);
         if (sent == SUCCESS) {
             return SUCCESS;
