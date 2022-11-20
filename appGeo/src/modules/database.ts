@@ -73,7 +73,6 @@ export function databaseUpdate(path: string, data: object): boolean {
 
 /**
  * Update the entry in the database
- * @param path - the exact node where the data is located (ex. users/gypark23)
  * @param data - the new updated JSON  
  * @returns none
  */

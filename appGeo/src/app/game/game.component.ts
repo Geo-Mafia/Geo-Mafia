@@ -4,6 +4,8 @@ import{CampusMap} from '../map/campus-map.component'
 import {Chat, Message} from '../chat/chat.component'
 import { GameRules} from './game-rules.component'
 import {Snapshot} from '../snapshot/snapshot_class_declaration'
+import { databaseAdd, databaseGet, databaseEventListener } from '../../modules/database'
+
 //A CampusMap is a Map of the Bubbles that exist on campus
 
 const INACTIVE = 0
@@ -58,6 +60,21 @@ export class Game implements OnInit {
   }
 
   ngOnInit(): void {
+
+    // add event listener to update each player
+    this.players.forEach((player: Player, key: number) => {
+      databaseEventListener(player.getDatabasePath(), this.updatePlayerDatabase.bind(this));
+    });
+  }
+
+  updatePlayerDatabase(data: object) {
+    // Need to change to hashmap
+    let player = data["value"];
+    console.log("updated player obj: " + JSON.stringify(player));
+    let playerId = player.getUserID();
+    this.players.set(playerId, player);
+    console.log("End updatePlayerDatabase func");
+     
   }
 
   startGame() {

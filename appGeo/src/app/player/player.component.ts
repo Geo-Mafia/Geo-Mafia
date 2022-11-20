@@ -3,6 +3,7 @@ import { InjectableAnimationEngine } from '@nativescript/angular';
 import { ChangeType } from '@nativescript/core';
 import { Bubble } from '../map/map.component';
 import {Chat, FullMessage} from '../chat/chat.component'
+import { databaseAdd, databaseUpdate } from '../../modules/database'
 //import{Location} from './location_class_declaration';
 
 const DEAD = 0
@@ -22,10 +23,11 @@ export class Player implements OnInit{
     userID: number // An int
     username: string // A String
     //geolocation // Object that is retunred from the Nativescript plugin
-    location // A Coordinate Object
+    location // A Coordinate Object TODO: what type is this
     alive: number // A Boolean
     votes: number // An int
     chat_lists // List of Chat Objects that Player is a part of
+    databasePath: string
 
     constructor(){
       this.votes = 0;
@@ -44,15 +46,22 @@ export class Player implements OnInit{
         this.location = location;
         this.alive = alive;
         this.votes = 0;
-        this.chat_lists = new Array()
+        this.chat_lists = new Array();
+        this.databasePath = "game/players/" + username;
     }
     ngOnInit(): void {
+        //initialize storing player in database
+        databaseAdd(this.databasePath, this);
+        console.log("database added for player");
     }
     getUserID(){
         return this.userID;
     }
     getUsername(){
         return this.username;
+    }
+    getDatabasePath(){
+        return this.databasePath;
     }
     // getGeolocation(){
     //     return this.geolocation;
@@ -82,6 +91,9 @@ export class Player implements OnInit{
 
     getKilled(){
         this.alive = DEAD;
+
+        // update in database
+        databaseUpdate(this.databasePath, this);
         return SUCCESS;
     }
 
@@ -151,7 +163,12 @@ export class Player implements OnInit{
 
     /* insertChat(): Inserts a Chat object into the Chat List field within Player Object */
     insertChat(chat){
-        this.chat_lists.push(chat)
+        this.chat_lists.push(chat);
+
+        // update in database
+        databaseUpdate(this.databasePath, this);
+
+
         return SUCCESS;
     }
 
@@ -197,6 +214,9 @@ export class Player implements OnInit{
     */
     increaseVoteCount(){
         this.votes++;
+
+        // update in database
+        databaseUpdate(this.databasePath, this);
     }
 
     /* resetVotes(): Reset current Player's number of votes back down to 0
@@ -204,6 +224,9 @@ export class Player implements OnInit{
     */
     resetVotes(){
         this.votes = 0;
+
+        // update in database
+        databaseUpdate(this.databasePath, this);
     }
 
 }
@@ -272,10 +295,22 @@ export class Killer extends Player{
 
     /* killPlayer: Allows a killer to eliminate a Player from the game
      * Input: 
-     *      -player_id: Player ID of whoever will be eliminated
-     *      -All_players: Hash Table that contains all players
+     *      -player_id: Player Object of whoever is about to be killed
      * 
     */
+    killPlayer(player_to_be_killed){
+        if (this.getRemainingDailyKillCount() > 0 && this.getAliveStatus() == ALIVE){
+            // Killer has kills remaining, victim is in bubble and alive, can kill
+            player_to_be_killed.getKilled();
+            this.total_kill_count++;
+            this.remaining_daily_kill_count--;
+           return SUCCESS;
+        } else {
+            // Notify User in some way that they don't have any kills left for the day
+            return FAILURE;
+        }
+    }
+
     // killPlayer(player_id, All_players){
     //     //Take in from Game Class Players hash table and remove player_id
     //     var people_can_be_killed = this.seePeopleInBubble(All_players)
