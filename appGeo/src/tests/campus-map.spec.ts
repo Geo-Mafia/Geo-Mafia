@@ -67,6 +67,8 @@ QUnit.test("testing the display variable and playerInBubble", function(assert){
   var checking = new Player()
   checking.init(1, "PoT_To", {longitude: 41.78495048653673, latitude: -87.59665817689283}, 1)
   testMap.playerInBubble(checking)
+  testMap.playerInBubble(checking)
+    //when testing html, onit was able to detect bubbles placed inside this may be how these bubbles were made
   assert.deepEqual(testMap.display.id, "Woodlawn Dining Commons", "should recognize that player is in wood")
 
 })
