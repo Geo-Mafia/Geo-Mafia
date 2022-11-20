@@ -25,7 +25,7 @@ export class ChatComponent implements OnInit {
 
     text: string = ""
     save() {
-        if (global.loggedIn) {
+        if (global.loggedIn && global.player.username != "") {
             console.log(this.text);
             // Send values to your DB
             this.sendMsg()
@@ -108,7 +108,7 @@ export class ChatComponent implements OnInit {
     //var data = "Testing"
     console.log("Inside the send Message function")
     //NOTE: HERE WE NEED TO PASS IN THE PLAYER NAME
-    var new_msg = new Message(this.text, 'testing player name')
+    var new_msg = new Message(this.text, global.player.username);
     //this.chats.push(this.text);
     this.chats.push(new_msg)
     console.log("What is currently the message to send:", this.text)

@@ -66,14 +66,14 @@ export class HomeComponent implements OnInit {
     }
     else {
       GoogleLogin.login(result=>{
-        console.log(result);
+        //console.log(result);
         let userID : string = result["id"]; 
-        console.log('/game/users/' + userID)
+        //console.log('/game/users/' + userID)
         firebase.getValue('/game/users/' + userID)
         .then(res =>{
           //new registration
           if(res["value"] == null) {
-            console.log("in new registration");
+            //console.log("in new registration");
             //console.log(res);
             global.player.userIDString = result["id"]
             global.player.username = result["displayName"];
@@ -86,8 +86,8 @@ export class HomeComponent implements OnInit {
           //already exists
           else {
             global.player = res["value"];
-            console.log("already exist");
-            console.log(global.player);
+            console.log("user already exists, will not add new data but will pull from the database");
+            //console.log(global.player);
             global.result = res;
           }
         })
