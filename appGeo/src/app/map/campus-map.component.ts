@@ -298,7 +298,7 @@ export class CampusMap implements OnInit {
       for (let bubb of this.MapOfCampus.values()) {
         this.checkBubble(bubb, pToCheck, check[0])
       }
-      if (!this.display.id){
+      if (!this.display.playerArray.includes(pToCheck)){
         OffCampus.addPlayer(pToCheck)
         this.display = OffCampus
         this.playerlist = OffCampus.playerArray
