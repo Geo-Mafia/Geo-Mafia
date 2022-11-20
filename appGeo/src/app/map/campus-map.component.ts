@@ -294,8 +294,9 @@ export class CampusMap implements OnInit {
 
       var update = 0
       var check = [update]
+      var res
       for (let bubb of this.MapOfCampus.values()) {
-        update = this.checkBubble(bubb, pToCheck, check[0])
+        this.checkBubble(bubb, pToCheck, check[0])
       }
       if (!update){
         OffCampus.addPlayer(pToCheck)
