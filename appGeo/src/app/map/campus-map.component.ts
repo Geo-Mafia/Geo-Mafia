@@ -3,12 +3,16 @@ import {Bubble} from './map.component'
 import {Player} from '../player/player.component'
 import { push } from 'nativescript-plugin-firebase';
 
+/* ============== Off Campus Bubble ================*/
+var OffCampus = new Bubble()
+OffCampus.init_bubble('The Outside of any assigned Campuse Buildings', 0, 0, 0, 0)
 
 
 @Component({
   selector: 'campusMap',
   templateUrl: './campus-map.component.html',
 })
+
 
 export class CampusMap implements OnInit {
   public MapOfCampus: Map<string, Bubble>;
@@ -17,6 +21,7 @@ export class CampusMap implements OnInit {
   constructor() {
   //the MapOfCampus will be fully initialized on call, will need to make getters and setters
     this.MapOfCampus = new Map<string, Bubble>;
+
   }
   ngOnInit() : void {
     /*===================================================
@@ -243,6 +248,22 @@ export class CampusMap implements OnInit {
   /*======================================================
     ============        South of Campus       ============
     =====================================================*/
+    var OneOne = new Bubble()
+    OneOne.init_bubble('1155 Building', 41.78529357540907, 41.785756466852106, -87.59769493232231, -87.59657828430436)
+    // apparently the name of the building
+    this.addToMap(OneOne.id, OneOne)
+    var Wood = new Bubble()
+    Wood.init_bubble('Woodlawn Dining Commons', 41.7843253848919, 41.78499369091889, -87.59694874737818, -87.59655145653353)
+    this.addToMap(Wood.id, Wood)
+    var Cathey = new Bubble()
+    Cathey.init_bubble('Cathey Dining Commons', 41.78503215478304, 41.78516718947996, -87.6006043094919, -87.60001013244997)
+    this.addToMap(Cathey.id, Cathey)
+    var Logan = new Bubble()
+    Logan.init_bubble('Logan Center for the Arts', 41.78492308961849, 41.78572860709568, -87.60414884277488, -87.60337903726452)
+    this.addToMap(Logan.id, Logan)
+    var Taft = new Bubble()
+    Taft.init_bubble('Taft House/ Midway Studios', 41.78529045276358, 41.7856788604663, -87.60330975476859, -87.60298900247261)
+    this.addToMap(Taft.id, Taft)
 
 
 
@@ -270,16 +291,24 @@ export class CampusMap implements OnInit {
 
     playerInBubble(pToCheck: Player){
       //This will be the function to call to check if a player is in a Bubble within our list of Bubbles
+      var check = 0
+      var update
       for (let bubb of this.MapOfCampus.values()) {
-        this.checkBubble(bubb, pToCheck)
+        update = this.checkBubble(bubb, pToCheck, check)
+      }
+      if (!update){
+        OffCampus.addPlayer(pToCheck)
+        this.display = OffCampus
+        this.playerlist = OffCampus.playerArray
       }
     }
 
 
-    checkBubble(checkIfIn : Bubble, pToCheck : Player){
+    checkBubble(checkIfIn : Bubble, pToCheck : Player, check : number){
       //this is a function that calls on the bubble that is iterated through
       //when this is called on a bubble if true will change the bubble to display to the Player
       if(checkIfIn.inBubble(pToCheck) && checkIfIn.List.has(pToCheck.userID)){
+        check++
         if (!pToCheck.alive){
           this.display = new Bubble()
           this.playerlist = []
@@ -287,6 +316,7 @@ export class CampusMap implements OnInit {
           return
         }
       } else if(checkIfIn.inBubble(pToCheck) && !checkIfIn.List.has(pToCheck.userID)){ //should have more logic to remove a player that is in said bubble List but not in the bubble boundary
+        check++
         if (!pToCheck.alive){
           this.display = new Bubble()
           this.playerlist = []
