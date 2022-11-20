@@ -80,6 +80,12 @@ module.exports = function (config) {
       }
     },
 
+    resolve: {
+      fallback: {
+          "fs": false
+      },
+    },
+
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
     singleRun: false
