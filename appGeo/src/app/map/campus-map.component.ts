@@ -291,10 +291,11 @@ export class CampusMap implements OnInit {
 
     playerInBubble(pToCheck: Player){
       //This will be the function to call to check if a player is in a Bubble within our list of Bubbles
-      var check = 0
-      var update
+
+      var update = 0
+      var check = [update]
       for (let bubb of this.MapOfCampus.values()) {
-        update = this.checkBubble(bubb, pToCheck, check)
+        update = this.checkBubble(bubb, pToCheck, check[0])
       }
       if (!update){
         OffCampus.addPlayer(pToCheck)
