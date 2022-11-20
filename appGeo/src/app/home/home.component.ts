@@ -20,6 +20,7 @@ import { isIOS } from "@nativescript/core/platform";
 
 export class HomeComponent implements OnInit {
 
+  public isKiller = true; //This information should be received from Database with Player Info!!!
   constructor(private router: Router) {
     // Use the component constructor to inject providers.
 

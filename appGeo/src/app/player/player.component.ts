@@ -272,10 +272,22 @@ export class Killer extends Player{
 
     /* killPlayer: Allows a killer to eliminate a Player from the game
      * Input: 
-     *      -player_id: Player ID of whoever will be eliminated
-     *      -All_players: Hash Table that contains all players
+     *      -player_id: Player Object of whoever is about to be killed
      * 
     */
+    killPlayer(player_to_be_killed){
+        if (this.getRemainingDailyKillCount() > 0 && this.getAliveStatus() == ALIVE){
+            // Killer has kills remaining, victim is in bubble and alive, can kill
+            player_to_be_killed.getKilled();
+            this.total_kill_count++;
+            this.remaining_daily_kill_count--;
+           return SUCCESS;
+        } else {
+            // Notify User in some way that they don't have any kills left for the day
+            return FAILURE;
+        }
+    }
+
     // killPlayer(player_id, All_players){
     //     //Take in from Game Class Players hash table and remove player_id
     //     var people_can_be_killed = this.seePeopleInBubble(All_players)
