@@ -1,17 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChatComponent } from './chat.component';
-import { RouterModule } from '@angular/router';
-import { FormsModule }   from '@angular/forms'; // <-- NgModel lives here
-import { ReactiveFormsModule } from '@angular/forms';
-
+import { NativeScriptFormsModule } from "@nativescript/angular";
+import { NativeScriptModule } from "@nativescript/angular";
 
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
-    ReactiveFormsModule
+    NativeScriptModule,
+    NativeScriptFormsModule
     // ReactiveFormsModule,
     // RouterModule.forChild([
     //   { path: '', component: ChatComponent },
