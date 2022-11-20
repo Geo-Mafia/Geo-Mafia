@@ -21,38 +21,47 @@ const bindingContext = fromObject(model)
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
-  text: string = ""
-  curr_built_msg: string = ""
+
+    text: string = ""
+    save() {
+        console.log(this.text);
+        // Send values to your DB
+        this.sendMsg()
+        this.text = "";
+    }
+
+
+//   curr_built_msg: string = ""
   public chats: Array<any>; //change String to any or Message class later
   public msg_sender = "hi"
   //#region that contains all alphabet
-  a: string = "a"
-  b: string = "b"
-  c: string = "c"
-  d: string = "d"
-  e: string = "e"
-  f: string = "f"
-  g: string = "g"
-  h: string = "h"
-  i: string = "i"
-  j: string = "j"
-  k: string = "k"
-  l: string = "l"
-  m: string = "m"
-  n: string = "n"
-  o: string = "o"
-  p: string = "p"
-  q: string = "q"
-  r: string = "r"
-  s: string = "s"
-  t: string = "t"
-  u: string = "u"
-  v: string = "v"
-  w: string = "w"
-  x: string = "x"
-  y: string = "y"
-  z: string = "z"
-  havePressedShift: boolean = false
+//   a: string = "a"
+//   b: string = "b"
+//   c: string = "c"
+//   d: string = "d"
+//   e: string = "e"
+//   f: string = "f"
+//   g: string = "g"
+//   h: string = "h"
+//   i: string = "i"
+//   j: string = "j"
+//   k: string = "k"
+//   l: string = "l"
+//   m: string = "m"
+//   n: string = "n"
+//   o: string = "o"
+//   p: string = "p"
+//   q: string = "q"
+//   r: string = "r"
+//   s: string = "s"
+//   t: string = "t"
+//   u: string = "u"
+//   v: string = "v"
+//   w: string = "w"
+//   x: string = "x"
+//   y: string = "y"
+//   z: string = "z"
+//   havePressedShift: boolean = false
   //#endregion
 
   constructor() { 
@@ -87,14 +96,14 @@ export class ChatComponent implements OnInit {
   sendMsg(){
     //var data = "Testing"
     console.log("Inside the send Message function")
-    this.chats.push(this.curr_built_msg);
-    console.log("What is currently the message to send:", this.curr_built_msg)
+    this.chats.push(this.text);
+    console.log("What is currently the message to send:", this.text)
 
     //sending to firebase
     databaseAdd('game/chats', this.chats);
 
-    this.reset()
-    console.log("After having reset, the string is now: ", this.curr_built_msg)
+    // this.reset()
+    // console.log("After having reset, the string is now: ", this.text)
     // console.log("What if we use binding context", `${bindingContext.get('msg_to_send')}`)
     // console.log("Text is currently being set to: ", this.text)
   }
@@ -111,47 +120,47 @@ export class ChatComponent implements OnInit {
     console.log("scrollY: " + args.scrollY);
   }
   //#region Below are all functions that make keyboard buttons work
-  setNextCapitalized(){
-    if (this.havePressedShift == true){
-        this.havePressedShift = false;
-    }
-    else{
-        this.havePressedShift = true;
-    }
-    console.log("We have set the shift parameter over to: ", this.havePressedShift)
-  }
+//   setNextCapitalized(){
+//     if (this.havePressedShift == true){
+//         this.havePressedShift = false;
+//     }
+//     else{
+//         this.havePressedShift = true;
+//     }
+//     console.log("We have set the shift parameter over to: ", this.havePressedShift)
+//   }
 
-  addToString(str: string){
-    console.log("Before having done the concat: ", this.curr_built_msg)
-    if (this.havePressedShift == true){
-        str = str.toUpperCase();
-    }
-    this.havePressedShift = false;
+//   addToString(str: string){
+//     console.log("Before having done the concat: ", this.curr_built_msg)
+//     if (this.havePressedShift == true){
+//         str = str.toUpperCase();
+//     }
+//     this.havePressedShift = false;
 
-    console.log("Are we passing the correct string to concat: ", str)
-    this.curr_built_msg = this.curr_built_msg.concat(str);
-    console.log("Having just added letter to the built message:", this.curr_built_msg)
-  }
+//     console.log("Are we passing the correct string to concat: ", str)
+//     this.curr_built_msg = this.curr_built_msg.concat(str);
+//     console.log("Having just added letter to the built message:", this.curr_built_msg)
+//   }
 
-  backspace(){
-    if (this.curr_built_msg == null || this.curr_built_msg.length == 0){
-        console.log("We can't backspace when it's empty, just return")
-        return
-    }
-    else{
-        this.curr_built_msg = (this.curr_built_msg.substring(0, this.curr_built_msg.length - 1))
-        console.log("We have backspaced in order to get: ", this.curr_built_msg)
-        return;
-    }
-  }
+//   backspace(){
+//     if (this.curr_built_msg == null || this.curr_built_msg.length == 0){
+//         console.log("We can't backspace when it's empty, just return")
+//         return
+//     }
+//     else{
+//         this.curr_built_msg = (this.curr_built_msg.substring(0, this.curr_built_msg.length - 1))
+//         console.log("We have backspaced in order to get: ", this.curr_built_msg)
+//         return;
+//     }
+//   }
 
-  addSpace(){
-    this.curr_built_msg = this.curr_built_msg.concat(" ")
-  }
+//   addSpace(){
+//     this.curr_built_msg = this.curr_built_msg.concat(" ")
+//   }
 
-  reset(){
-    this.curr_built_msg = ""
-  }
+//   reset(){
+//     this.curr_built_msg = ""
+//   }
   //#endregion
 
 }

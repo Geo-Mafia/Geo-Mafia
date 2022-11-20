@@ -9,6 +9,18 @@ import { FormsModule }   from '@angular/forms'; // <-- NgModel lives here
 
 import { HomeComponent } from './home.component'
 
+
+import { CommonModule } from '@angular/common';
+
+import { RouterModule } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NativeScriptFormsModule } from "@nativescript/angular";
+import { NativeScriptModule } from "@nativescript/angular";
+
+
+
+
+
 const routes: Routes = [
   {path: "Chat", component: ChatComponent},
   { path: '',
@@ -20,7 +32,8 @@ const routes: Routes = [
 
 
 @NgModule({
-  imports: [NativeScriptRouterModule.forChild(routes), FormsModule],
-  exports: [NativeScriptRouterModule]
+  imports: [NativeScriptRouterModule.forChild(routes), FormsModule, NativeScriptFormsModule, CommonModule,
+    ReactiveFormsModule,],
+  exports: [NativeScriptRouterModule],
 })
 export class HomeRoutingModule {}

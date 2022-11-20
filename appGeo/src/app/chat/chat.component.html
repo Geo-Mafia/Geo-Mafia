@@ -22,7 +22,7 @@
         <!-- <label ng-repeat="chat in chats">{{chats}}</label> -->
         <label>Chat History</label>
         <label *ngFor="let chat of chats">{{ chat }}</label>
-        <label>The message you are about to send is: {{ curr_built_msg }}</label>
+        <!-- <label>The message you are about to send is: {{ curr_built_msg }}</label> -->
         <!-- <label>{{msg_to_send}}</label> -->
         <!-- No styles applied -->
         <!-- <Button text="Button"></Button> -->
@@ -53,7 +53,7 @@
         <!-- <TextField id="toSend" class="input" autocapitalize="none" ngDefaultControl [value]="text"  [(ngModel)]="text" hint="What Message do you want to send"></TextField> -->
         <!-- <Label text = "{{ msg_sender }}"></Label> -->
         <!-- <input [(ngModel)]="this.msg_sender"/> -->
-        <Button (tap)="sendMsg()" text="Send Message" class="-primary"></Button>      
+        <!-- <Button (tap)="sendMsg()" text="Send Message" class="-primary"></Button>      
         <Button (tap)="setNextCapitalized()" text="Press 'Shift'" class="-primary"></Button>
         <Button (tap)="addSpace()" text="Press 'Spacebar'" class="-primary"></Button>     
         <Button (tap)="backspace()" text="Press 'backspace'" class="-primary"></Button>     
@@ -82,8 +82,21 @@
         <Button (tap)="addToString(w)" text="Add 'w' to message" class="-primary"></Button> 
         <Button (tap)="addToString(x)" text="Add 'x' to message" class="-primary"></Button> 
         <Button (tap)="addToString(y)" text="Add 'y' to message" class="-primary"></Button> 
-        <Button (tap)="addToString(z)" text="Add 'z' to message" class="-primary"></Button> 
-    </StackLayout>
+        <Button (tap)="addToString(z)" text="Add 'z' to message" class="-primary"></Button>  
+        Good bye buttons-->
+    
+    
+
+
+
+
+
+        <TextField hint="Type your message" [(ngModel)]="text">
+
+</TextField>
+
+<button (tap)="save()" class="btn btn-primary active" text="Save"></button>
+      </StackLayout>
   </ScrollView>
 </StackLayout>
 
