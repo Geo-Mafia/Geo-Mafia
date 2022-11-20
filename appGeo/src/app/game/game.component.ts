@@ -17,7 +17,8 @@ const SUCCESS = 10
 const FAILURE = -10
 const INPROGRESS = 5
 
-const START_JOB_KEY = "start"
+const START_JK = "start"
+const END_JK = "end"
 
 @Component({
   selector: 'ns-game',
@@ -44,14 +45,8 @@ export class Game implements OnInit {
     this.gameRules = gameRules
     this.gameActive = INACTIVE;
 
-    this.startTime = new Date();
-
-    if(gameRules.isScheduledEnd) {
-      this.endTime = new Date(this.startTime.getTime() + 
-                              (gameRules.getGameLengthHours() * 60 * 60 * 1800))
-    } else {
-      this.endTime = null
-    }
+    this.startTime = null;
+    this.endTime = null
     
     this.map = gameMap
 
@@ -99,6 +94,15 @@ export class Game implements OnInit {
         roledPlayers.set(civilian.getUserID, civilian)
       }
 
+      this.startTime = new Date();
+
+      if(this.gameRules.isScheduledEnd) {
+        this.endTime = new Date(this.startTime.getTime() + 
+                                (this.gameRules.getGameLengthHours() * 60 * 60 * 1800))
+        const endJob = scheduleJob(this.getEndTime(), function() {this.#endProcess()})
+        this.#scheduledJobs.set(END_JK, endJob)
+      }
+
       //replace unroled players with roles
       this.#setPlayers(roledPlayers)
 
@@ -143,23 +147,35 @@ export class Game implements OnInit {
       }
 
       const job = scheduleJob(date, function() {this.#startProcess()});
-      this.#scheduledJobs.set(START_JOB_KEY, job) //adds job to list of jobs running
+      this.#scheduledJobs.set(START_JK, job) //adds job to list of jobs running
 
       this.#setGameScheduled(SCHEDULED)
       return SUCCESS;
   }
 
   cancelScheduledStart() {
-      this.#scheduledJobs.get(START_JOB_KEY).cancel()
+      this.#scheduledJobs.get(START_JK).cancel()
       this.#setGameScheduled(UNSCHEDULED)
       return SUCCESS;
   }
 
-  endGame() {
-      this.#setGameActive(INACTIVE)
+  #endProcess() {
+    this.#setGameActive(INACTIVE)
       return SUCCESS;
+  }
 
-      //TODO
+  endGame() {
+      if(this.getGameActive() == INACTIVE) {
+        return FAILURE;
+      }
+
+      if(this.gameRules.isScheduledEnd()) {
+        this.#scheduledJobs.get(END_JK).cancel()
+      }
+
+      this.#endProcess()
+
+      return SUCCESS
   }
 
   getGameActive() {
