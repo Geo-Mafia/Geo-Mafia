@@ -1,8 +1,10 @@
-.test{
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-    -webkit-box-orient: vertical;  
+.recommendations {
+    /* display: -webkit-inline-box;
+    /* flex-wrap: wrap;
+    flex-direction: row;
+    width: 1000px; 
+    height: 100px;*/
+    white-space: pre-line;
 }
 
 .my-button {
