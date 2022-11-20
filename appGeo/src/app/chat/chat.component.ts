@@ -20,20 +20,31 @@ const bindingContext = fromObject(model)
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
+
 export class ChatComponent implements OnInit {
 
     text: string = ""
     save() {
-        console.log(this.text);
-        // Send values to your DB
-        this.sendMsg()
-        this.text = "";
+        if (global.loggedIn) {
+            console.log(this.text);
+            // Send values to your DB
+            this.sendMsg()
+            this.text = "";
+        }
+        else {
+            let options = {
+                title: "Error",
+                message: "You must log in first",
+                okButtonText: "OK"
+              }
+              alert(options);
+        }
     }
 
 
 //   curr_built_msg: string = ""
   public chats: Array<any>; //change String to any or Message class later
-  public msg_sender = "hi"
+  public msg_sender = "hi I am in the chat component"
   //#region that contains all alphabet
 //   a: string = "a"
 //   b: string = "b"

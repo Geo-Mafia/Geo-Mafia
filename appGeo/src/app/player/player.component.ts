@@ -26,8 +26,16 @@ export class Player implements OnInit{
     alive: number // A Boolean
     votes: number // An int
     chat_lists // List of Chat Objects that Player is a part of
-
+    
+    
+    //edited by Kyu
+    userToken: string;
+    userIDString: string //String (modified by Kyu)
     constructor(){
+        //edited by Kyu
+        this.userIDString = "";
+        this.username = "";
+        this.userToken = "";
       this.votes = 0;
       this.chat_lists = new Array()
     }
