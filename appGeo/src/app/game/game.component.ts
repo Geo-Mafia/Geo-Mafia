@@ -94,6 +94,9 @@ export class Game implements OnInit {
         roledPlayers.set(civilian.getUserID, civilian)
       }
 
+      //replace unroled players with roles
+      this.#setPlayers(roledPlayers)
+
       this.startTime = new Date();
 
       if(this.gameRules.isScheduledEnd) {
@@ -103,10 +106,7 @@ export class Game implements OnInit {
         this.#scheduledJobs.set(END_JK, endJob)
       }
 
-      //replace unroled players with roles
-      this.#setPlayers(roledPlayers)
-
-      //TODO: setting game timers
+      //TODO: this is where the 3 timers for voting will be set
 
       this.#setGameActive(ACTIVE)
 
@@ -189,7 +189,14 @@ export class Game implements OnInit {
 
   #endProcess() {
     this.#setGameActive(INACTIVE)
-      return this.winningCondition();
+
+    if(this.gameRules.isScheduledEnd()) {
+      this.#scheduledJobs.get(END_JK).cancel()
+    }
+    
+    //TODO: This is where the timers for the voting will be disable
+    
+    return this.winningCondition();
   }
 
   /* This method is meant to only be called if the game is ended externally and doesn't count
@@ -198,10 +205,6 @@ export class Game implements OnInit {
   endGame() {
       if(this.getGameActive() == INACTIVE) {
         return FAILURE;
-      }
-
-      if(this.gameRules.isScheduledEnd()) {
-        this.#scheduledJobs.get(END_JK).cancel()
       }
 
       this.#endProcess()
