@@ -89,6 +89,10 @@ export class ChatComponent implements OnInit {
     console.log("Inside the send Message function")
     this.chats.push(this.curr_built_msg);
     console.log("What is currently the message to send:", this.curr_built_msg)
+
+    //sending to firebase
+    databaseAdd('game/chats', this.chats);
+
     this.reset()
     console.log("After having reset, the string is now: ", this.curr_built_msg)
     // console.log("What if we use binding context", `${bindingContext.get('msg_to_send')}`)
