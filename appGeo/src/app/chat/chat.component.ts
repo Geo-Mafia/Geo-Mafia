@@ -361,7 +361,7 @@ export class FullMessage{
                             dateStyle: 'short',
                             timeStyle: 'short',
                         })
-        //this.message_id = -1 //Default value for ID, nothing should happen here
+        this.message_id = -1 //Default value for ID, nothing should happen here
         this.message_content = content
         this.player_name = name_of_player
     }

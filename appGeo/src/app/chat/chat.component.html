@@ -21,7 +21,7 @@
         <!-- <label>{{chats}}</label> -->
         <!-- <label ng-repeat="chat in chats">{{chats}}</label> -->
         <label>Chat History</label>
-        <label *ngFor="let chat of chats">{{ chat.timestamp }} {{ chat.player_name}}: {{ chat.message_content}}</label>
+        <label class="test" *ngFor="let chat of chats">{{ chat.timestamp }} {{ chat.player_name}}: {{ chat.message_content}}</label>
         <!-- <label>The message you are about to send is: {{ curr_built_msg }}</label> -->
         <!-- <label>{{msg_to_send}}</label> -->
         <!-- No styles applied -->
