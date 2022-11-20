@@ -24,6 +24,7 @@
     <StackLayout>
       <Button text="Go To Chat" [nsRouterLink]="['Chat']" class="btn btn-primary btn-active" col="0"></Button>
       <Button text="Kill a Player" *ngIf="this.isKiller" [nsRouterLink]="['Killing']" class="btn btn-primary btn-active" col="0"></Button>
+      <Button text="Go to Vote Player" [nsRouterLink]="['Voting']" class="btn btn-primary btn-active" col="0"></Button>
     </StackLayout>
     <router-outlet></router-outlet>
   </GridLayout>

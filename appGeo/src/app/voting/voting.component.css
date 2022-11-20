@@ -1,0 +1,105 @@
+.recommendations {
+    /* display: -webkit-inline-box;
+    /* flex-wrap: wrap;
+    flex-direction: row;
+    width: 1000px; 
+    height: 100px;*/
+    white-space: pre-line;
+}
+
+.my-button {
+    android-elevation: 4;
+    background-color: lightseagreen;
+    border-color: darkolivegreen;
+    border-radius: 20;
+    border-width: 1;
+    color: whitesmoke;
+    font-size: 18;
+    font-weight: bold;
+}
+
+.my-button:active {
+    android-elevation: 8;
+    background-color: whitesmoke;
+    border-color: darkolivegreen;
+    border-radius: 20;
+    border-width: 1;
+    color: lightseagreen;
+    font-size: 18;
+    font-weight: bold;
+}
+
+.inboxContainer {
+    width: 40vw;
+    height: 60vh;
+    border: 1px solid black;
+    margin: auto;
+    position: absolute;
+    overflow: auto;
+}
+
+.buttons {
+    margin: 0 auto;
+}
+  
+.action_btn {
+    display: inline-block;
+    margin: 0 auto;
+}
+
+.btn-group button {
+    background-color: #04AA6D; /* Green background */
+    border: 1px solid green; /* Green border */
+    color: white; /* White text */
+    padding: 10px 24px; /* Some padding */
+    cursor: pointer; /* Pointer/hand icon */
+    float: left; /* Float the buttons side by side */
+    justify-content: space-between
+}
+
+.btn-group button:not(:last-child) {
+border-right: none; /* Prevent double borders */
+}
+
+/* Clear floats (clearfix hack) */
+.btn-group:after {
+content: "";
+clear: both;
+display: table;
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+background-color: #3e8e41;
+}
+
+.example-button-row {
+    display: table-cell;
+    max-width: 600px;
+}
+
+.container{
+    height: 10rem;
+    width:50vw;
+    background-color: bisque;
+    display: grid;
+    grid-template-columns: repeat(6,1fr);
+    grid-template-rows: repeat(2,1fr);
+    justify-content: space-between
+    
+}
+
+.first-container{
+    background-color: yellow;
+    width: 50%;
+    grid-column: 1 / 4;
+    grid-row: 1;
+
+}
+
+.second-container{
+    background-color: red;
+    width: 50%;
+    grid-column: 3 / 5;
+    grid-row: 2;
+}
