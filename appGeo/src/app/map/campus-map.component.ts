@@ -298,7 +298,7 @@ export class CampusMap implements OnInit {
       for (let bubb of this.MapOfCampus.values()) {
         this.checkBubble(bubb, pToCheck, check[0])
       }
-      if (!update){
+      if (!this.display){
         OffCampus.addPlayer(pToCheck)
         this.display = OffCampus
         this.playerlist = OffCampus.playerArray
@@ -319,6 +319,9 @@ export class CampusMap implements OnInit {
         }
       } else if(checkIfIn.inBubble(pToCheck) && !checkIfIn.List.has(pToCheck.userID)){ //should have more logic to remove a player that is in said bubble List but not in the bubble boundary
         check++
+        if (OffCampus.List.has(pToCheck.userID)){
+          OffCampus.removePlayer(pToCheck)
+        }
         if (!pToCheck.alive){
           this.display = new Bubble()
           this.playerlist = []
@@ -330,6 +333,8 @@ export class CampusMap implements OnInit {
         }
       } else if(!checkIfIn.inBubble(pToCheck) && checkIfIn.List.has(pToCheck.userID)){
         checkIfIn.removePlayer(pToCheck)
+        this.display = new Bubble()
+        this.playerlist = []
       }
     }
 
