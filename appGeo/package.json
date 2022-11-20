@@ -49,10 +49,5 @@
   },
   "scripts": {
     "test": "qunit"
-  },
-  "browser": {
-    "fs": false,
-    "path": false,
-    "os": false
   }
 }
