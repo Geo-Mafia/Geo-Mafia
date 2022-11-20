@@ -253,7 +253,7 @@ export class CampusMap implements OnInit {
     // apparently the name of the building
     this.addToMap(OneOne.id, OneOne)
     var Wood = new Bubble()
-    Wood.init_bubble('Woodlawn Dining Commons', 41.7843253848919, 41.78499369091889, -87.59694874737818, -87.59655145653353)
+    Wood.init_bubble('Woodlawn Dining Commons', 41.7843253848919, 41.78499369091889, -87.59655145653353, -87.59694874737818)
     this.addToMap(Wood.id, Wood)
     var Cathey = new Bubble()
     Cathey.init_bubble('Cathey Dining Commons', 41.78503215478304, 41.78516718947996, -87.6006043094919, -87.60001013244997)
