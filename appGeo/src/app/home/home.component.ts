@@ -25,9 +25,20 @@ import { toUIString } from '@nativescript/core/utils/types'
 
 export class HomeComponent implements OnInit {
 
+  text : string = "Google Sign-In";
 
   public isKiller: Boolean
   public votingOpen: Boolean
+
+
+  textChange() {
+    if (global.isLoggedIn) {
+      this.text = "You are logged in as: " + global.player.username;
+    }
+    else {
+      this.text = "Google Sign-In";
+    }
+  }
 
   constructor(private router: Router) {
     // Use the component constructor to inject providers.
@@ -57,8 +68,6 @@ export class HomeComponent implements OnInit {
                   clearTimeout(v)
               },500)
       }
-      var asd = new ChatComponent();
-      console.log(global.loggedIn);
   }
 
   login() {
@@ -66,43 +75,53 @@ export class HomeComponent implements OnInit {
 
       let options = {
         title: "Error",
-        message: "You already are logged in",
+        message: "You already are signed in as: " + global.player.username,
         okButtonText: "OK"
       }
       alert(options);
     }
     else {
       GoogleLogin.login(result=>{
-        //console.log(result);
-        let userID : string = result["id"]; 
-        //console.log('/game/users/' + userID)
-        firebase.getValue('/game/users/' + userID)
-        .then(res =>{
-          //new registration
-          if(res["value"] == null) {
-            //console.log("in new registration");
-            //console.log(res);
-            global.player.userIDString = result["id"]
-            global.player.username = result["displayName"];
-            global.player.userToken = result["userToken"];
-            //console.log(global.player);
-
-            databaseAdd('/game/users/' + userID, global.player)
-            global.result = result;
-          }
-          //already exists
-          else {
-            global.player = res["value"];
-            console.log("user already exists, will not add new data but will pull from the database");
-            //console.log(global.player);
-            global.result = res;
-          }
-        })
-        .catch(error => {
-          console.log("error: " + error);
-        });
+        
+        if (result["code"] != -2) {
+          
+          //console.log(result);
+          let userID : string = result["id"]; 
+          //console.log('/game/users/' + userID)
+          firebase.getValue('/game/users/' + userID)
+          .then(res =>{
+            //new registration
+            if(res["value"] == null) {
+              //console.log("in new registration");
+              //console.log(res);
+              global.player.userIDString = result["id"]
+              global.player.username = result["displayName"];
+              global.player.userToken = result["userToken"];
+              //console.log(global.player);
+  
+              databaseAdd('/game/users/' + userID, global.player)
+              global.result = result;
+            }
+            //already exists
+            else {
+              global.player = res["value"];
+              console.log("user already exists, will not add new data but will pull from the database");
+              //console.log(global.player);
+              global.result = res;
+            }
+          }).then(res2 => {
+            if(global.player.username != "") {
+              global.loggedIn = true;
+              console.log(global.loggedIn);
+            }
+          }).then(res3 => {
+            this.textChange();
+          })
+          .catch(error => {
+            console.log("error: " + error);
+          });
+        }
       });
-      global.loggedIn = true;
     }
   }
 
