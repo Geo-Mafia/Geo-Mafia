@@ -360,7 +360,7 @@ QUnit.test("Players remaining plus no killers", function(assert) {
     const player5 = new Player()
     player5.init(5, 'player5', Location1, ALIVE);
 
-    const playerArray = [player1, player2, player3];
+    const playerArray = [player1, player2, player3, player4, player5];
     const player_map = new Map(
         playerArray.map(object => {
           return [object.getUserID(), object];
@@ -368,6 +368,7 @@ QUnit.test("Players remaining plus no killers", function(assert) {
       );
 
     const test_game = new Game(gameRules, test_map, player_map);
+    test_game.startGame()
 
     const killer = test_game.getKillers()[0]
     const civs = test_game.getCivilians()
@@ -428,6 +429,7 @@ QUnit.test("Players remainding + Killers win", function(assert) {
       );
 
     const test_game = new Game(gameRules, test_map, player_map);
+    test_game.startGame()
 
     const remaining_players = test_game.playersRemaining();
     const remaining_civilians = test_game.civiliansRemaining();
@@ -489,6 +491,7 @@ QUnit.test("Players remainding + Game in Progress", function(assert) {
       );
 
     const test_game = new Game(gameRules, test_map, player_map);
+    test_game.startGame()
 
     const remaining_players = test_game.playersRemaining();
     const remaining_civilians = test_game.civiliansRemaining();
