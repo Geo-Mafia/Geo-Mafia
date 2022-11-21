@@ -1,9 +1,4 @@
-// import {Chat} from '../app/chat/chat_class_declaration.js';
-// import {Message} from '../app/chat/chat_class_declaration.js';
-// import {Player} from '../app/player/player_class_declaration.js';
-// import {Killer} from '../app/player/player_class_declaration.js';
-
-import {Chat, Message} from '../app/chat/chat.component';
+import {Chat, FullMessage} from '../app/chat/chat.component';
 import {Player, Killer} from '../app/player/player.component';
 
 QUnit.module("chat_tests");
@@ -15,12 +10,6 @@ const SUCCESS = 10
 const FAILURE = -10
 const DEAD = 0
 const ALIVE = 1
-
-const Message1 = new Message("Testing Message 1");
-const Message2 = new Message("Testing Message 2");
-
-const Chat1 = new Chat(1);
-const Chat2 = new Chat(2);
 
 export class Location{
     location // An int
@@ -40,15 +29,22 @@ Player2.init(2, 'player2', Location1, ALIVE);
 const Killer1 = new Killer()
 Killer1.init(3, 'killer1', Location2, ALIVE); 
 
+const Message1 = new FullMessage("Testing FullMessage 1", Player1.getUsername());
+const Message2 = new FullMessage("Testing FullMessage 2", Player2.getUsername());
+
+const Chat1 = new Chat(1);
+const Chat2 = new Chat(2);
+
+
 QUnit.test("Retrieving message_id when only initialized", assert => {
     assert.equal(Message1.getMessageID(), -1, "When first initialized ID only -1");
 });
 
 QUnit.test("retrieving message content", assert => {
-    assert.equal(Message1.getMessageContent(), "Testing Message 1");
+    assert.equal(Message1.getMessageContent(), "Testing FullMessage 1");
 });
 
-QUnit.test("Printing out a Message", assert => {
+QUnit.test("Printing out a FullMessage", assert => {
     assert.equal(Message1.printMessage(), SUCCESS, "Printing message is SUCCESS");
 });
 
@@ -67,6 +63,10 @@ QUnit.test("Retrieving Chat ID for a Chat", assert => {
 
 QUnit.test("Retrieving Player List for an empty Chat", assert => {
     assert.equal(Chat1.getPlayerList().length, 0, "There is no players yet in the Player List");
+});
+
+QUnit.test("Retrieving Player Name for a message sent", assert => {
+    assert.equal(Message1.getPlayerName(), 'player1', "There is no players yet in the Player List");
 });
 
 //----------------------- Now Test doing actions to the Chat ------------------ 
@@ -90,11 +90,11 @@ QUnit.test("Inserting Player1 into Chat1", assert => {
 });
 
 QUnit.test("Player1 sends a message to Chat1", assert => {
-    assert.equal(Player1.sendChatMessage(1, "First Message Sent"), SUCCESS);
+    assert.equal(Player1.sendChatMessage(1, "First FullMessage Sent"), SUCCESS);
     var msg_list = Chat1.history();
     var msg1 = msg_list[0]
     assert.equal(msg_list.length, 2, "After sending 1st message check length")
-    assert.equal(msg1.getMessageContent(), "First Message Sent")
+    assert.equal(msg1.getMessageContent(), "First FullMessage Sent")
 });
 
 QUnit.test("Add Player2 into Chat 1 and see if can see the message previously sent", assert => {
@@ -106,17 +106,17 @@ QUnit.test("Add Player2 into Chat 1 and see if can see the message previously se
 
     var msg_list_for_Player2 = player2_chat.history();
     assert.equal(msg_list_for_Player2.length, 2);
-    assert.equal(msg_list_for_Player2[0].getMessageContent(), "First Message Sent");
+    assert.equal(msg_list_for_Player2[0].getMessageContent(), "First FullMessage Sent");
 });
 
 QUnit.test("Inserting messages into Chat2", assert => {
     assert.equal(Chat2.insertMessage(Message2), SUCCESS);
     var msg_list = Chat2.history();
     assert.equal(msg_list.length, 2);
-    assert.equal(msg_list[0].getMessageContent(), "Testing Message 2");
-    //Ensure that the Message ID was set when being inserted into the Chat and
+    assert.equal(msg_list[0].getMessageContent(), "Testing FullMessage 2");
+    //Ensure that the FullMessage ID was set when being inserted into the Chat and
     //is no longer the default value
-    assert.equal(msg_list[0].getMessageID(), 0, "Message should no longer have ID of -1");
+    assert.equal(msg_list[0].getMessageID(), 0, "FullMessage should no longer have ID of -1");
 });
 
 /* The followin test would show how the general Game Logic would play out! */

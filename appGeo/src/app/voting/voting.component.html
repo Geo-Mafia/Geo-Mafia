@@ -1,0 +1,22 @@
+<ActionBar>
+    <Label> Voting Screen - {{this.front_message}}</Label>
+</ActionBar>
+<StackLayout>
+    <ScrollView (scroll)="onScroll($any($event))">
+        <StackLayout orientation="vertical">
+            <label>You have currently selected: {{this.selected_player_username}} </label>
+            <button *ngIf="this.have_not_voted" (tap)="votePlayer()" class="btn btn-primary active" text="Vote for selected user!" ></button>
+            <TextField hint="Type username of person you want to vote off" [(ngModel)]="this.typed_username">
+            </TextField>
+            <button (tap)="selectPlayer()" class="btn btn-primary active" text="Select player matching the typed username"></button>
+
+            <label>List of players you can vote for:</label>
+            <label>-------------</label>
+            <label textWrap="True" *ngFor="let player of list_of_all_players">{{ player.username }}</label>
+
+            <label> Select player from buttons instead :) </label>
+            <button *ngFor="let player of list_of_all_players; let i = index" (tap)="selectThroughButton(i)" text="Select player: {{player.username}}" ></button>
+
+        </StackLayout>
+    </ScrollView>
+</StackLayout>

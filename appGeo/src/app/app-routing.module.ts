@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core'
 import { Routes } from '@angular/router'
 import { NativeScriptRouterModule } from '@nativescript/angular'
+import { FormsModule }   from '@angular/forms'; // <-- NgModel lives here
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -11,7 +12,7 @@ const routes: Routes = [
 ]
 
 @NgModule({
-  imports: [NativeScriptRouterModule.forRoot(routes)],
+  imports: [NativeScriptRouterModule.forRoot(routes), FormsModule],
   exports: [NativeScriptRouterModule],
 })
 export class AppRoutingModule {}
