@@ -1,13 +1,5 @@
 import { Component, NgZone, OnInit } from "@angular/core";
-//import * as Geolocation from '@nativescript/angular'
-//import * as Geolocation from 'nativescript-geolocation'
-//import * as Platform from "@angular/common";
-//import * as Geolocation from "nativescript-geolocation";
-
 import * as geolocation from '@nativescript/geolocation';
-//import * as utils from "tns-core-modules/utils/utils";
-import { CoreTypes } from '@nativescript/core'
-CoreTypes.Accuracy
 
 @Component({
     selector: "Location",
