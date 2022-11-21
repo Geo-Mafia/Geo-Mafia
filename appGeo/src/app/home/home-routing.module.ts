@@ -27,10 +27,10 @@ const routes: Routes = [
   {path: "Killing", component: KillingComponent},
   {path: "Voting", component: VotingComponent},
   {path: "Chat", component: ChatComponent},
+  { path: 'campusMap', component: CampusMap},
   { path: '',
     component: HomeComponent
   },
-  { path: 'campusMap', component: CampusMap, pathMatch: 'full'},
 
 ]
 

@@ -4,6 +4,7 @@ import{CampusMap} from '../map/campus-map.component'
 import {Chat, Message} from '../chat/chat.component'
 import { GameRules} from './game-rules.component'
 import {Snapshot} from '../snapshot/snapshot_class_declaration'
+import { databaseAdd, databaseGet, databaseEventListener } from '../../modules/database'
 //A CampusMap is a Map of the Bubbles that exist on campus
 
 const INACTIVE = 0
@@ -39,12 +40,12 @@ export class Game implements OnInit {
     this.startTime = new Date();
 
     if(gameRules.isScheduledEnd) {
-      this.endTime = new Date(this.startTime.getTime() + 
+      this.endTime = new Date(this.startTime.getTime() +
                               (gameRules.getGameLengthHours() * 60 * 60 * 1800))
     } else {
       this.endTime = null
     }
-    
+
     this.map = gameMap
 
     if(players != undefined) {
@@ -58,6 +59,20 @@ export class Game implements OnInit {
   }
 
   ngOnInit(): void {
+
+     // add event listener to update each player
+     this.players.forEach((player: Player, key: number) => {
+      databaseEventListener(player.getDatabasePath(), this.updatePlayerDatabase.bind(this));
+    });
+  }
+
+  updatePlayerDatabase(data: object) {
+    // Need to change to hashmap
+    let player = data["value"];
+    console.log("updated player obj: " + JSON.stringify(player));
+    let playerId = player.getUserID();
+    this.players.set(playerId, player);
+    console.log("End updatePlayerDatabase func");
   }
 
   startGame() {
@@ -118,8 +133,8 @@ export class Game implements OnInit {
     return this.players.size
   }
 
-  /* playersRemaining(): 
-   * Functiont that iterates through the hash map of all Players to see how many are still alive 
+  /* playersRemaining():
+   * Functiont that iterates through the hash map of all Players to see how many are still alive
    */
   playersRemaining(){
     var count = 0;
@@ -156,7 +171,7 @@ export class Game implements OnInit {
         count = count + 1;
       }
     }
-  
+
     return count;
   }
 
@@ -168,7 +183,7 @@ export class Game implements OnInit {
       //Killers have won!
       return KILLER;
     }
-    
+
     if (killers_left == 0 && civilians_left > 0){
       //Civilians have won!
       return CIVILIAN;

@@ -3,6 +3,7 @@ import { InjectableAnimationEngine } from '@nativescript/angular';
 import { ChangeType } from '@nativescript/core';
 import { Bubble } from '../map/map.component';
 import {Chat, FullMessage} from '../chat/chat.component'
+import { databaseAdd, databaseUpdate } from '../../modules/database'
 //import{Location} from './location_class_declaration';
 
 const DEAD = 0
@@ -22,11 +23,12 @@ export class Player implements OnInit{
     userID: number // An int
     username: string // A String
     //geolocation // Object that is retunred from the Nativescript plugin
-    location // A Coordinate Object
+    location // A Coordinate Object TODO: what type is this
     alive: number // A Boolean
     votes: number // An int
     chat_lists // List of Chat Objects that Player is a part of
     have_already_voted: boolean = false
+    databasePath: string
 
     constructor(){
       this.votes = 0;
@@ -46,8 +48,12 @@ export class Player implements OnInit{
         this.alive = alive;
         this.votes = 0;
         this.chat_lists = new Array()
+        this.databasePath = "game/players/" + username;
     }
     ngOnInit(): void {
+      //initialize storing player in database
+      databaseAdd(this.databasePath, this);
+      console.log("database added for player");
     }
     getUserID(){
         return this.userID;
@@ -55,6 +61,9 @@ export class Player implements OnInit{
     getUsername(){
         return this.username;
     }
+    getDatabasePath(){
+      return this.databasePath;
+  }
     // getGeolocation(){
     //     return this.geolocation;
     // }
@@ -83,6 +92,8 @@ export class Player implements OnInit{
 
     getKilled(){
         this.alive = DEAD;
+        // update in database
+        databaseUpdate(this.databasePath, this);
         return SUCCESS;
     }
 
@@ -137,7 +148,7 @@ export class Player implements OnInit{
 
         if (this.getAliveStatus() == DEAD || main_chat == null){
             return FAILURE;
-        } 
+        }
 
         const msg = new FullMessage(message, this.username);
         const sent = main_chat.insertMessage(msg);
@@ -153,6 +164,9 @@ export class Player implements OnInit{
     /* insertChat(): Inserts a Chat object into the Chat List field within Player Object */
     insertChat(chat){
         this.chat_lists.push(chat)
+
+        // update in database
+        databaseUpdate(this.databasePath, this);
         return SUCCESS;
     }
 
@@ -165,7 +179,7 @@ export class Player implements OnInit{
         //First, retrieve the Chat Object interested in
         var main_chat = this.getChat(chatID);
 
-        //Secondly, get list of messages from the Chat 
+        //Secondly, get list of messages from the Chat
         var messages_list = main_chat.history();
 
         //Lastly, loop through list of messages and display
@@ -178,8 +192,8 @@ export class Player implements OnInit{
     }
 
     /* voteForExecution(): Let current player vote for _another_ player to be executed
-     * Input: 
-     *      - A Player ID that will get looked up on the main General Chat 
+     * Input:
+     *      - A Player ID that will get looked up on the main General Chat
     */
     voteForExecution(voted_player_ID){
         //Can't vote if you are dead OR if you have already voted in this round
@@ -201,6 +215,10 @@ export class Player implements OnInit{
     */
     increaseVoteCount(){
         this.votes++;
+        // update in database
+        databaseUpdate(this.databasePath, this);
+        // update in database
+        databaseUpdate(this.databasePath, this);
     }
 
     /* resetVotes(): Reset current Player's number of votes back down to 0
@@ -276,9 +294,9 @@ export class Killer extends Player{
     }
 
     /* killPlayer: Allows a killer to eliminate a Player from the game
-     * Input: 
+     * Input:
      *      -player_id: Player Object of whoever is about to be killed
-     * 
+     *
     */
     killPlayer(player_to_be_killed){
         if (this.getRemainingDailyKillCount() > 0 && this.getAliveStatus() == ALIVE){
@@ -308,7 +326,7 @@ export class Killer extends Player{
     //         remove_from_hash(player_id, All_players);
     //         this.total_kill_count++;
     //         remaining_daily_kill_count--;
-            
+
     //        return SUCCESS;
     //     } else {
     //         // Notify User in some way that they don't have any kills left for the day
