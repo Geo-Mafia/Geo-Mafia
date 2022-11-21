@@ -2,7 +2,7 @@ import { Component, Inject, Injectable, OnInit } from '@angular/core';
 import { InjectableAnimationEngine } from '@nativescript/angular';
 import { ChangeType } from '@nativescript/core';
 import { Bubble } from '../map/map.component';
-import {Chat, Message} from '../chat/chat.component'
+import {Chat, FullMessage} from '../chat/chat.component'
 //import{Location} from './location_class_declaration';
 
 const DEAD = 0
@@ -27,10 +27,28 @@ export class Player implements OnInit{
     votes: number // An int
     chat_lists // List of Chat Objects that Player is a part of
 
+    
+    
+    //edited by Kyu
+    email: string;
+    userIDString: string //String (modified by Kyu)
+
+    have_already_voted: boolean = false
+
+    databasePath: string
+
+
     constructor(){
-      this.votes = 0;
-      this.chat_lists = new Array()
+        //edited by Kyu
+        this.userIDString = "";
+        this.username = "";
+        this.email = "";
+        this.votes = 0;
+        this.chat_lists = new Array();
+        this.databasePath = "";
+        
     }
+    //init(userID: number, userIDString: string, username: string, email:string, location, alive: number){
     init(userID: number, username: string, location, alive: number){
         /* NOTE: we may not even need location anymore. After setting up geolocation
          * we should be able to just use this as well as get functions (getLongitue &
@@ -43,11 +61,16 @@ export class Player implements OnInit{
         this.username = username;
         this.location = location;
         this.alive = alive;
-        this.votes = 0;
-        this.chat_lists = new Array()
+        //this.votes = 0;
+        //this.chat_lists = new Array()
     }
     ngOnInit(): void {
     }
+
+    getDatabasePath(){
+        return this.databasePath;
+    }
+    
     getUserID(){
         return this.userID;
     }
@@ -138,7 +161,7 @@ export class Player implements OnInit{
             return FAILURE;
         } 
 
-        const msg = new Message(message);
+        const msg = new FullMessage(message, this.username);
         const sent = main_chat.insertMessage(msg);
         if (sent == SUCCESS) {
             return SUCCESS;
@@ -181,13 +204,16 @@ export class Player implements OnInit{
      *      - A Player ID that will get looked up on the main General Chat 
     */
     voteForExecution(voted_player_ID){
-        if (this.getAliveStatus() == DEAD){
+        //Can't vote if you are dead OR if you have already voted in this round
+        if (this.getAliveStatus() == DEAD || this.have_already_voted == true){
             return FAILURE;
         }
 
         var main_chat = this.getChat(1) //Which a player should always be added to General Chat
         var Voted = main_chat.getPlayer(voted_player_ID) //Which a player would never pick a user ID that isn't present in the chat
         Voted.increaseVoteCount();
+
+        this.have_already_voted = true;
         return SUCCESS;
     }
 
@@ -204,6 +230,7 @@ export class Player implements OnInit{
     */
     resetVotes(){
         this.votes = 0;
+        this.have_already_voted = false;
     }
 
 }
@@ -272,10 +299,22 @@ export class Killer extends Player{
 
     /* killPlayer: Allows a killer to eliminate a Player from the game
      * Input: 
-     *      -player_id: Player ID of whoever will be eliminated
-     *      -All_players: Hash Table that contains all players
+     *      -player_id: Player Object of whoever is about to be killed
      * 
     */
+    killPlayer(player_to_be_killed){
+        if (this.getRemainingDailyKillCount() > 0 && this.getAliveStatus() == ALIVE){
+            // Killer has kills remaining, victim is in bubble and alive, can kill
+            player_to_be_killed.getKilled();
+            this.total_kill_count++;
+            this.remaining_daily_kill_count--;
+           return SUCCESS;
+        } else {
+            // Notify User in some way that they don't have any kills left for the day
+            return FAILURE;
+        }
+    }
+
     // killPlayer(player_id, All_players){
     //     //Take in from Game Class Players hash table and remove player_id
     //     var people_can_be_killed = this.seePeopleInBubble(All_players)

@@ -1,17 +1,10 @@
-<!-- <ActionBar>
+
+<ActionBar>
   <Label text="Home Page"></Label>
 </ActionBar>
 
 
-<GridLayout>
-  <Button text="Google Sign-in" (tap)="login()" class="btn" style="color:red"></Button>
-</GridLayout> -->
 
-<!-- The template for the chat component should be represented if this is typed:
-<GridLayout>
-  <Chat></Chat>
-</GridLayout>
- -->
 
 
 
@@ -20,10 +13,12 @@
 
 
   <GridLayout>
-    <GridLayout>
+    <StackLayout>
+      <Button [text]="text" (tap)="login()" class="btn" style="color:red"></Button>
       <Button text="Go To Chat" [nsRouterLink]="['Chat']" class="btn btn-primary btn-active" col="0"></Button>
-    </GridLayout>
+      <Button text="Kill a Player" *ngIf="this.isKiller && !this.votingOpen" [nsRouterLink]="['Killing']" class="btn btn-primary btn-active" col="0"></Button>
+      <Button text="Go to Vote Player" *ngIf="this.votingOpen" [nsRouterLink]="['Voting']" class="btn btn-primary btn-active" col="0"></Button>
+    </StackLayout>
     <router-outlet></router-outlet>
   </GridLayout>
-
 

@@ -1,16 +1,79 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { databaseAdd, databaseGet, databaseEventListener } from '../../modules/database'
 import { firebase } from "@nativescript/firebase";
+import { fromObject, ScrollView, ScrollEventData} from '@nativescript/core';
+
+const model = {
+    msg_to_send : "What Message to Send"
+}
+
+const bindingContext = fromObject(model) 
+
+// onLoaded = args => {
+//     const page = args.object
+
+//     page.bindingContext = bindingContext
+// }
 
 @Component({
   selector: 'Chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
+
 export class ChatComponent implements OnInit {
 
-  public chats: Array<any>; //change String to any or Message class later
+    text: string = ""
+    save() {
+        if (global.loggedIn && global.player.username != "") {
+            console.log(this.text);
+            // Send values to your DB
+            this.sendMsg()
+            this.text = "";
+        }
+        else {
+            let options = {
+                title: "Error",
+                message: "You must log in first",
+                okButtonText: "OK"
+              }
+              alert(options);
+        }
+    }
 
+
+//   curr_built_msg: string = ""
+  public chats: Array<any>; //change String to any or Message class later
+  public msg_sender = "hi I am in the chat component"
+  //#region that contains all alphabet
+//   a: string = "a"
+//   b: string = "b"
+//   c: string = "c"
+//   d: string = "d"
+//   e: string = "e"
+//   f: string = "f"
+//   g: string = "g"
+//   h: string = "h"
+//   i: string = "i"
+//   j: string = "j"
+//   k: string = "k"
+//   l: string = "l"
+//   m: string = "m"
+//   n: string = "n"
+//   o: string = "o"
+//   p: string = "p"
+//   q: string = "q"
+//   r: string = "r"
+//   s: string = "s"
+//   t: string = "t"
+//   u: string = "u"
+//   v: string = "v"
+//   w: string = "w"
+//   x: string = "x"
+//   y: string = "y"
+//   z: string = "z"
+//   havePressedShift: boolean = false
+  //#endregion
 
   constructor() { 
     this.chats = [];
@@ -25,10 +88,17 @@ export class ChatComponent implements OnInit {
   getMsgs() {
     let msgs = [];
     databaseGet('game/chats').then(value => {
-      //console.log("val: " + value);
-      msgs = value;
+      console.log("val: " + JSON.stringify(value));
+      if (value == null) {
+        let temp = new Message("initial message", "admin")
+        msgs = [temp];
+        databaseAdd('game/chats', msgs);
+      } else {
+        msgs = value; 
+      }
       //console.log("all msgs: " + msgs);
     });
+    console.log("in get msgs")
     return msgs;
   } 
 
@@ -36,10 +106,89 @@ export class ChatComponent implements OnInit {
     //get current chats
     this.chats = [];
 
-    //console.log("data: " + JSON.stringify(data));
+    console.log("data: " + JSON.stringify(data));
     let list = data["value"];
     this.chats = list;
+    //this.chats.push(list);
   }
+
+  sendMsg(){
+    //var data = "Testing"
+    console.log("Inside the send Message function")
+    //NOTE: HERE WE NEED TO PASS IN THE PLAYER NAME
+    var new_msg = new Message(this.text, global.player.username);
+    // console.log("new msg: " + JSON.stringify(new_msg));
+    // console.log("this.text: " + this.text);
+    // console.log("this.chats: " + JSON.stringify(this.chats));
+    //this.chats.push(this.text);
+    this.chats.push(new_msg);
+    console.log("What is currently the message to send:", this.text)
+    console.log("The timestamp that we are printing out is: ", new_msg.getTimestamp())
+    console.log("The name of the player that is sending the message is: ", new_msg.getPlayerName())
+
+    //sending to firebase
+    databaseAdd('game/chats', this.chats);
+
+    // this.reset()
+    // console.log("After having reset, the string is now: ", this.text)
+    // console.log("What if we use binding context", `${bindingContext.get('msg_to_send')}`)
+    // console.log("Text is currently being set to: ", this.text)
+  }
+
+//   onPressEnter(args){
+//     console.log("Inside the onPressEnter case!")
+//     console.log("What the user inputted was: ", args.target.value)
+//   }
+
+  onScroll(args: ScrollEventData){
+    const scrollView = args.object as ScrollView;
+
+    console.log("scrollX: " + args.scrollX);
+    console.log("scrollY: " + args.scrollY);
+  }
+  //#region Below are all functions that make keyboard buttons work
+//   setNextCapitalized(){
+//     if (this.havePressedShift == true){
+//         this.havePressedShift = false;
+//     }
+//     else{
+//         this.havePressedShift = true;
+//     }
+//     console.log("We have set the shift parameter over to: ", this.havePressedShift)
+//   }
+
+//   addToString(str: string){
+//     console.log("Before having done the concat: ", this.curr_built_msg)
+//     if (this.havePressedShift == true){
+//         str = str.toUpperCase();
+//     }
+//     this.havePressedShift = false;
+
+//     console.log("Are we passing the correct string to concat: ", str)
+//     this.curr_built_msg = this.curr_built_msg.concat(str);
+//     console.log("Having just added letter to the built message:", this.curr_built_msg)
+//   }
+
+//   backspace(){
+//     if (this.curr_built_msg == null || this.curr_built_msg.length == 0){
+//         console.log("We can't backspace when it's empty, just return")
+//         return
+//     }
+//     else{
+//         this.curr_built_msg = (this.curr_built_msg.substring(0, this.curr_built_msg.length - 1))
+//         console.log("We have backspaced in order to get: ", this.curr_built_msg)
+//         return;
+//     }
+//   }
+
+//   addSpace(){
+//     this.curr_built_msg = this.curr_built_msg.concat(" ")
+//   }
+
+//   reset(){
+//     this.curr_built_msg = ""
+//   }
+  //#endregion
 
 }
 
@@ -47,35 +196,32 @@ const SUCCESS = 10
 const FAILURE = -10
 const MAXMESSAGECOUNT = 100
 export class Message{
-    //timestamp; //Formatting of "mm/dd/yy hh:mm" 
-    message_id; //Still to determine if unique to within a Chat or not
+    timestamp; //Formatting of "mm/dd/yy hh:mm" 
     message_content;
+    player_name;
 
-    constructor(content){
+    constructor(content, name_of_player){
         //Get the current time right now (in local time) in following format:
         //"MM/DD/YYYY, HH:MM AM/PM"
-        // date = Date();
-        // this.timestamp = date.toLocaleString('en-US', {
-        //                     timeZone: 'CST',
-        //                     dateStyle: 'short',
-        //                     timeStyle: 'short',
-        //                 })
-        this.message_id = -1 //Default value for ID, nothing should happen here
+        var date = new Date();
+        this.timestamp = date.toLocaleString('en-US', {
+                            timeZone: 'CST',
+                            dateStyle: 'short',
+                            timeStyle: 'short',
+                        })
+        //this.message_id = -1 //Default value for ID, nothing should happen here
         this.message_content = content
+        this.player_name = name_of_player
     }
 
-    // getTimestamp(){
-    //     return this.timestamp;
-    // }
-    getMessageID(){
-        return this.message_id;
+    getTimestamp(){
+        return this.timestamp;
     }
     getMessageContent(){
         return this.message_content;
     }
-    setMessageID(id_to_set){
-        this.message_id = id_to_set;
-        return SUCCESS;
+    getPlayerName(){
+        return this.player_name;
     }
 
     printMessage(){
@@ -205,7 +351,7 @@ export class Chat{
     voteCommence(){
         //Function that inserts a Message Letting everyone know that voting has started
         var message_content = "---Voting will now commense---"
-        var vote_message = new Message(message_content);
+        var vote_message = new FullMessage(message_content, "ADMIN");
         var bool = this.insertMessage(vote_message);
         if (bool == SUCCESS){
             return SUCCESS
@@ -221,3 +367,51 @@ export class Chat{
         return SUCCESS
     }
 } 
+
+export class FullMessage{
+    timestamp; //Formatting of "mm/dd/yy hh:mm" 
+    message_id; //Still to determine if unique to within a Chat or not
+    message_content;
+    player_name;
+
+    constructor(content, name_of_player){
+        //Get the current time right now (in local time) in following format:
+        //"MM/DD/YYYY, HH:MM AM/PM"
+        var date = new Date();
+        this.timestamp = date.toLocaleString('en-US', {
+                            timeZone: 'CST',
+                            dateStyle: 'short',
+                            timeStyle: 'short',
+                        })
+        this.message_id = -1 //Default value for ID, nothing should happen here
+        this.message_content = content
+        this.player_name = name_of_player
+    }
+
+    getTimestamp(){
+        return this.timestamp;
+    }
+    getMessageContent(){
+        return this.message_content;
+    }
+    getMessageID(){
+        return this.message_id;
+    }
+    getPlayerName(){
+        return this.player_name;
+    }
+    setMessageID(id_to_set){
+        this.message_id = id_to_set;
+        return SUCCESS;
+    }
+
+    printMessage(){
+        //Prints out in following format: "MM/DD/YYYY HH:MM AM/PM <Message content>"
+        //let time = this.timestamp;
+        let msg = this.message_content;
+        //console.log(time.concat(" ", msg));
+        console.log(msg)
+        return SUCCESS;
+    }
+
+}

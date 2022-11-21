@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ChatComponent } from './chat.component';
+import { KillingComponent } from './killing.component';
 import { NativeScriptFormsModule } from "@nativescript/angular";
 import { NativeScriptModule } from "@nativescript/angular";
 
@@ -10,13 +10,9 @@ import { NativeScriptModule } from "@nativescript/angular";
     CommonModule,
     NativeScriptModule,
     NativeScriptFormsModule
-    // ReactiveFormsModule,
-    // RouterModule.forChild([
-    //   { path: '', component: ChatComponent },
-    // ])
   ],
   declarations: [
-    ChatComponent
+    KillingComponent
   ]
 })
-export class ChatModule {}
+export class KillingModule {}
