@@ -72,7 +72,7 @@ export class Game implements OnInit {
 
       const roledPlayers = new Map()
 
-      const playerArr = Array.from(this.players.values())
+      const playerArr = this.getPlayers()
 
       //randomly select killers
       for(let i = 0; i < numKillers; i++) {
@@ -278,6 +278,34 @@ export class Game implements OnInit {
 
   getMap(){
     return this.map;
+  }
+
+  getPlayers() {
+    return Array.from(this.players.values())
+  }
+
+  getKillers() {
+    const players = this.getPlayers()
+    const killers = []
+    for(let i = 0; i < players.length; i++) {
+      if(players[i] instanceof Killer) {
+        killers.push(players[i])
+      }
+    }
+
+    return killers
+  }
+
+  getCivilians() {
+    const players = this.getPlayers()
+    const civilians = []
+    for(let i = 0; i < players.length; i++) {
+      if(players[i] instanceof Civilian) {
+        civilians.push(players[i])
+      }
+    }
+
+    return civilians
   }
 
   #setPlayers(players: Map<number, Player>) {

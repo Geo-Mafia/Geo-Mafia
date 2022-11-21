@@ -345,12 +345,16 @@ QUnit.test("Players remaining plus no killers", function(assert) {
 
     const Location1 = new Location(1);
 
-    const player1 = new Civilian()
+    const player1 = new Player()
     player1.init(1, 'player1', Location1, ALIVE); 
-    const player2 = new Civilian()
+    const player2 = new Player()
     player2.init(2, 'player2', Location1, ALIVE);
-    const player3 = new Civilian()
+    const player3 = new Player()
     player3.init(3, 'player3', Location1, ALIVE);
+    const player4 = new Player()
+    player4.init(4, 'player4', Location1, ALIVE);
+    const player5 = new Player()
+    player5.init(5, 'player5', Location1, ALIVE);
 
     const playerArray = [player1, player2, player3];
     const player_map = new Map(
@@ -361,21 +365,31 @@ QUnit.test("Players remaining plus no killers", function(assert) {
 
     const test_game = new Game(gameRules, test_map, player_map);
 
+    const killer = test_game.getKillers()[0]
+    const civs = test_game.getCivilians()
+    const civ1 = civs[0]
+    const civ2 = civs[1]
+    const civ3 = civs[2]
+    const civ4 = civs[3]
+
+    //Kill off killer
+    killer.getKilled();
+
     const remaining_players = test_game.playersRemaining();
     const remaining_civilians = test_game.civiliansRemaining();
     const remaining_killers = test_game.killersRemaining();
-    assert.equal(remaining_players, 3);
-    assert.equal(remaining_civilians, 3);
+    assert.equal(remaining_players, 4);
+    assert.equal(remaining_civilians, 4);
     assert.equal(remaining_killers, 0);
 
-    //Kill off Player 1
-    player1.getKilled();
-    assert.equal(player1.getAliveStatus(), DEAD, "Player 1 should have been killed");
-    assert.equal(player2.getAliveStatus(), ALIVE, "Player 2 still alive");
-    assert.equal(player3.getAliveStatus(), ALIVE, "Player 3 still alive");
+    assert.equal(killer.getAliveStatus(), DEAD, "Killer should have been killed");
+    assert.equal(civ1.getAliveStatus(), ALIVE, "Civilian 1 still alive");
+    assert.equal(civ2.getAliveStatus(), ALIVE, "Civilian 2 still alive");
+    assert.equal(civ3.getAliveStatus(), ALIVE, "Civilian 3 still alive");
+    assert.equal(civ4.getAliveStatus(), ALIVE, "Civilian 4 still alive");
 
     const new_remaining_civilians = test_game.civiliansRemaining();
-    assert.equal(new_remaining_civilians, 2, "There are now only 2 remaining Civilians");
+    assert.equal(new_remaining_civilians, 4, "There are now only 4 remaining Civilians");
 
     const winning_con = test_game.winningCondition();
     assert.equal(winning_con, CIVILIAN, "No killers, so Civlians win");
@@ -390,12 +404,17 @@ QUnit.test("Players remainding + Killers win", function(assert) {
 
     const Location1 = new Location(1);
 
-    const player1 = new Civilian()
+    const player1 = new Player()
     player1.init(1, 'player1', Location1, ALIVE); 
-    const player2 = new Civilian()
+    const player2 = new Player()
     player2.init(2, 'player2', Location1, ALIVE);
-    const player3 = new Killer()
+    const player3 = new Player()
     player3.init(3, 'player3', Location1, ALIVE);
+    const player4 = new Player()
+    player4.init(4, 'player4', Location1, ALIVE);
+    const player5 = new Player()
+    player5.init(5, 'player5', Location1, ALIVE);
+
 
     const playerArray = [player1, player2, player3];
     const player_map = new Map(
@@ -409,16 +428,27 @@ QUnit.test("Players remainding + Killers win", function(assert) {
     const remaining_players = test_game.playersRemaining();
     const remaining_civilians = test_game.civiliansRemaining();
     const remaining_killers = test_game.killersRemaining();
-    assert.equal(remaining_players, 3, "Total players at init game");
-    assert.equal(remaining_civilians, 2, "Total civilians at init game");
+    assert.equal(remaining_players, 5, "Total players at init game");
+    assert.equal(remaining_civilians, 4, "Total civilians at init game");
     assert.equal(remaining_killers, 1, "Total killers at init game");
 
+    const killer = test_game.getKillers()[0]
+    const civs = test_game.getCivilians()
+    const civ1 = civs[0]
+    const civ2 = civs[1]
+    const civ3 = civs[2]
+    const civ4 = civs[3]
+
     //Kill off Player 1 & 2
-    player1.getKilled();
-    player2.getKilled();
-    assert.equal(player1.getAliveStatus(), DEAD, "Player 1 was killed off");
-    assert.equal(player2.getAliveStatus(), DEAD, "Player 2 was killed off");
-    assert.equal(player3.getAliveStatus(), ALIVE, "Killer should still be fine");
+    civ1.getKilled();
+    civ2.getKilled();
+    civ3.getKilled();
+    civ4.getKilled();
+    assert.equal(civ1.getAliveStatus(), DEAD, "Civilian 1 was killed off");
+    assert.equal(civ2.getAliveStatus(), DEAD, "Civilian 2 was killed off");
+    assert.equal(civ3.getAliveStatus(), DEAD, "Civilian 3 was killed off");
+    assert.equal(civ4.getAliveStatus(), DEAD, "Civilian 4 was killed off");
+    assert.equal(killer.getAliveStatus(), ALIVE, "Killer should still be fine");
 
     const new_remaining_civilians = test_game.civiliansRemaining();
     assert.equal(new_remaining_civilians, 0, "All civilians were killed off");
@@ -436,14 +466,18 @@ QUnit.test("Players remainding + Game in Progress", function(assert) {
 
     const Location1 = new Location(1);
 
-    const player1 = new Civilian()
+    const player1 = new Player()
     player1.init(1, 'player1', Location1, ALIVE); 
-    const player2 = new Civilian()
+    const player2 = new Player()
     player2.init(2, 'player2', Location1, ALIVE);
-    const player3 = new Killer()
+    const player3 = new Player()
     player3.init(3, 'player3', Location1, ALIVE);
+    const player4 = new Player()
+    player4.init(4, 'player4', Location1, ALIVE);
+    const player5 = new Player()
+    player5.init(5, 'player5', Location1, ALIVE);
 
-    const playerArray = [player1, player2, player3];
+    const playerArray = [player1, player2, player3, player4, player5];
     const player_map = new Map(
         playerArray.map(object => {
           return [object.getUserID(), object];
@@ -455,19 +489,28 @@ QUnit.test("Players remainding + Game in Progress", function(assert) {
     const remaining_players = test_game.playersRemaining();
     const remaining_civilians = test_game.civiliansRemaining();
     const remaining_killers = test_game.killersRemaining();
-    assert.equal(remaining_players, 3, "At the start theree are three players still alive");
-    assert.equal(remaining_civilians, 2, "There are two Civlians");
+    assert.equal(remaining_players, 5, "At the start there are five players still alive");
+    assert.equal(remaining_civilians, 4, "There are four Civlians");
     assert.equal(remaining_killers, 1, "And there is one killer");
+
+    const killer = test_game.getKillers()[0]
+    const civs = test_game.getCivilians()
+    const civ1 = civs[0]
+    const civ2 = civs[1]
+    const civ3 = civs[2]
+    const civ4 = civs[3]
 
     //Kill off Player 1
     player1.getKilled();
-    assert.equal(player1.getAliveStatus(), DEAD, "Player 1 was killed off");
-    assert.equal(player2.getAliveStatus(), ALIVE, "Player2 was still healthy");
-    assert.equal(player3.getAliveStatus(), ALIVE, "Player3 was still healthy");
+    assert.equal(civ1.getAliveStatus(), DEAD, "Civilian 1 was killed off");
+    assert.equal(civ2.getAliveStatus(), ALIVE, "Civilian 2 was still healthy");
+    assert.equal(civ3.getAliveStatus(), ALIVE, "Civilian 3 was still healthy");
+    assert.equal(civ4.getAliveStatus(), ALIVE, "Civilian 4 was still healthy");
+    assert.equal(killer.getAliveStatus(), ALIVE, "The killer was still healthy");
 
     const new_remaining_civilians = test_game.civiliansRemaining();
     const new_remaining_killers = test_game.killersRemaining();
-    assert.equal(new_remaining_civilians, 1, "There is now only 1 civilians left standing");
+    assert.equal(new_remaining_civilians, 3, "There are now only 3 civilians left standing");
     assert.equal(new_remaining_killers, 1, "there is now only 1 killer left standing");
 
     const winning_con = test_game.winningCondition();
