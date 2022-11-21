@@ -371,18 +371,15 @@ export class Game implements OnInit {
     return count;
   }
 
-  getRoleCount(countKiller) {
+  getRoleCount(countedRole: number) {
 
-      const playersList = this.map.MapOfCampus[Symbol.iterator]();//need to adjust the code for Campus Map for this to work
-
-
-      var count = 0
-      var i = 0
-      if((playersList[i] instanceof Killer) && (countKiller) || !(playersList[i] instanceof Killer) && !(countKiller)){
-        count += 1
+      if(countedRole == KILLER) {
+        return this.getKillers().length
+      } else if (countedRole == CIVILIAN) {
+        return this.getCivilians().length
+      } else {
+        return FAILURE
       }
-
-      return count
 
   }
 

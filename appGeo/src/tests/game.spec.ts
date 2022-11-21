@@ -28,9 +28,9 @@ export class Location{
 QUnit.module("Game tests")
 
 QUnit.test("Game Constructors and Basic Getters and Setters", function(assert) {
-    const now = new Date();
-    const endTime = new Date(now.getTime() + 1800 * 60 * 60 * 24 * 7);
     const gameRules = new GameRules();
+
+    const now = new Date();
 
     const test_map = new CampusMap();
 
@@ -54,21 +54,6 @@ QUnit.test("Game Constructors and Basic Getters and Setters", function(assert) {
 
     assert.equal(game1.getGameActive(), INACTIVE, "New game is not active");
 
-    //Because of lag when running the tests, give a 5 second timeframe to see if end time was set appropriately
-    var bool = false;
-    const actEndTime = game1.getEndTime().getTime()
-    if (actEndTime - endTime.getTime() > -5 || actEndTime - endTime.getTime() < 5){
-        bool = true;
-    }
-    assert.equal(bool, true, "End game time updates over time");
-
-    //Because of lag when running the tests, give a 5 second timeframe to see if start time was set appropriately
-    bool = false;
-    const start_time = game1.getStartTime().getTime()
-    if (start_time - now.getTime() > -5 || start_time - now.getTime() < 5){
-        bool = true;
-    }
-    assert.equal(bool, true, "Start game time updates over time");
     assert.equal(game1.getMap(), test_map, "Map has been set properly");
 
     const three_days_from_now = new Date(now.getTime() + 3 * 24 * 60 * 60 * 1000);
@@ -178,6 +163,7 @@ QUnit.test("Game Start and endGame", function(assert) {
     const gameRules = new GameRules();
 
     const now = new Date();
+    const endTime = new Date(now.getTime() + 1800 * 60 * 60 * 24 * 7);
 
     const test_map = new CampusMap();
 
@@ -222,6 +208,22 @@ QUnit.test("Game Start and endGame", function(assert) {
     assert.equal(test_game.startGame(), SUCCESS, "Game can start when meeting minimum players");
     assert.equal(test_game.getGameActive(), ACTIVE, "Started game is active")
 
+    //Because of lag when running the tests, give a 5 second timeframe to see if end time was set appropriately
+    var bool = false;
+    const actEndTime = test_game.getEndTime().getTime()
+    if (actEndTime - endTime.getTime() > -5 || actEndTime - endTime.getTime() < 5){
+        bool = true;
+    }
+    assert.equal(bool, true, "End game time updates over time");
+
+    //Because of lag when running the tests, give a 5 second timeframe to see if start time was set appropriately
+    bool = false;
+    const start_time = test_game.getStartTime().getTime()
+    if (start_time - now.getTime() > -5 || start_time - now.getTime() < 5){
+        bool = true;
+    }
+    assert.equal(bool, true, "Start game time updates over time");
+
     assert.equal(test_game.getPlayerCount(), 5, "Can count players in game");
     assert.equal(test_game.getRoleCount(CIVILIAN), 4, "Should start game with 4 civilians");
     assert.equal(test_game.getRoleCount(KILLER), 1, "Should start game with 1 killer");
@@ -232,10 +234,12 @@ QUnit.test("Game Start and endGame", function(assert) {
     assert.equal(test_game.endGame(), SUCCESS, "Can stop a game");
     assert.equal(test_game.getGameActive(), INACTIVE, "Stopped game is not active");
 
-    assert.equal(test_game.startGame(), SUCCESS, "Game can start with five or more players");
+    const test_game2 = new Game(gameRules, test_map, player_map);
+
+    assert.equal(test_game2.startGame(), SUCCESS, "Game can start with five or more players");
 
     setTimeout(() => {
-    assert.equal(test_game.getGameActive(), INACTIVE, "Stopped game is not active")
+    assert.equal(test_game2.getGameActive(), INACTIVE, "Stopped game is not active")
     }, 10000)
 
 });
