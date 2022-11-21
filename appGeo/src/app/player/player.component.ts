@@ -3,6 +3,7 @@ import { InjectableAnimationEngine } from '@nativescript/angular';
 import { ChangeType } from '@nativescript/core';
 import { Bubble } from '../map/map.component';
 import {Chat, FullMessage} from '../chat/chat.component'
+import { databaseAdd, databaseUpdate } from '../../modules/database'
 //import{Location} from './location_class_declaration';
 
 const DEAD = 0
@@ -105,6 +106,8 @@ export class Player implements OnInit{
 
     getKilled(){
         this.alive = DEAD;
+        // update in database
+        databaseUpdate(this.databasePath, this);
         return SUCCESS;
     }
 
@@ -175,6 +178,8 @@ export class Player implements OnInit{
     /* insertChat(): Inserts a Chat object into the Chat List field within Player Object */
     insertChat(chat){
         this.chat_lists.push(chat)
+        // update in database
+        databaseUpdate(this.databasePath, this);
         return SUCCESS;
     }
 
@@ -223,6 +228,8 @@ export class Player implements OnInit{
     */
     increaseVoteCount(){
         this.votes++;
+        // update in database
+        databaseUpdate(this.databasePath, this);
     }
 
     /* resetVotes(): Reset current Player's number of votes back down to 0
@@ -231,6 +238,8 @@ export class Player implements OnInit{
     resetVotes(){
         this.votes = 0;
         this.have_already_voted = false;
+        // update in database
+        databaseUpdate(this.databasePath, this);
     }
 
 }
