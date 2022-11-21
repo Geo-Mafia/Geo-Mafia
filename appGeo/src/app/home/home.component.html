@@ -1,6 +1,6 @@
 
 <ActionBar>
-  <Label text="Home Page"></Label>
+  <Label text="Home Page" ></Label>
 </ActionBar>
 
 
@@ -14,11 +14,11 @@
 
   <GridLayout>
     <StackLayout>
-      <Button [text]="text" (tap)="login()" class="btn" style="color:red"></Button>
-      <Button text="Go To Chat" [nsRouterLink]="['Chat']" class="btn btn-primary btn-active" col="0"></Button>
-      <Button text="Kill a Player" *ngIf="this.isKiller && !this.votingOpen" [nsRouterLink]="['Killing']" class="btn btn-primary btn-active" col="0"></Button>
-      <Button text="Go to Vote Player" *ngIf="this.votingOpen" [nsRouterLink]="['Voting']" class="btn btn-primary btn-active" col="0"></Button>
-      <Button text="Players Nearby" [nsRouterLink]="['campusMap']" class="btn btn-primary btn-active" col="0"></Button>
+      <Button [text]="text" (tap)="login()" class="btn home" style="color:red"></Button>
+      <Button text="Go To Chat" [nsRouterLink]="['Chat']" class="btn btn-primary btn-active home" col="0"></Button>
+      <Button text="Kill a Player" *ngIf="this.isKiller && !this.votingOpen" [nsRouterLink]="['Killing']" class="btn btn-primary btn-active home" col="0"></Button>
+      <Button text="Go to Vote Player" *ngIf="this.votingOpen" [nsRouterLink]="['Voting']" class="btn btn-primary btn-active home" col="0"></Button>
+      <Button text="Players Nearby" [nsRouterLink]="['campusMap']" class="btn btn-primary btn-active home" col="0"></Button>
     </StackLayout>
     <router-outlet></router-outlet>
   </GridLayout>

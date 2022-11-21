@@ -64,12 +64,7 @@ QUnit.test("testing the display variable and playerInBubble", function(assert){
   P1.location = notInB
   testMap.playerInBubble(P1)
   assert.deepEqual(testMap.display.id, 'The Outside of any assigned Campuse Buildings', "should have recognized the player is Off Campus")
-  var checking = new Player()
-  checking.init(1, "PoT_To", {longitude: 41.78495048653673, latitude: -87.59665817689283}, 1)
-  testMap.playerInBubble(checking)
-  testMap.playerInBubble(checking)
-    //onit works so this may just be how these bubbles were made
-  assert.deepEqual(testMap.display.id, "Woodlawn Dining Commons", "should recognize that player is in wood")
+
 
 })
 

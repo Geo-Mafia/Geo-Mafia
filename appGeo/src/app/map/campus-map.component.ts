@@ -8,6 +8,7 @@ import { push } from 'nativescript-plugin-firebase';
 @Component({
   selector: 'campusMap',
   templateUrl: './campus-map.component.html',
+  styleUrls: ['./campus-map.component.css']
 })
 
 export class CampusMap implements OnInit {

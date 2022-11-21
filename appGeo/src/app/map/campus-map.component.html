@@ -1,10 +1,14 @@
+<ActionBar>
+  <Label text="Players Nearby"></Label>
+</ActionBar>
+
 <StackLayout *ngIf="display">
   <StackLayout id="container">
-    <Label text = "Players currently in {{display.id}}"></Label>
-    <ListView row="0" [items] ="playerlist"  class="list-group">
-      <ng-template let-player="item" let-i="index">
+    <Label text = "Players currently in {{display.id}}:" ></Label>
+    <ListView row="0" [items] ="playerlist"  class="list-group" separatorColor="transparent">
+      <ng-template let-player="item" let-i="index" >
         <StackLayout>
-          <Label text = "{{player.getUsername()}}" textWrap="true"></Label>
+          <Label text = "{{player.getUsername()}}" textWrap="true" class="player-view"></Label>
         </StackLayout>
       </ng-template>
     </ListView>
