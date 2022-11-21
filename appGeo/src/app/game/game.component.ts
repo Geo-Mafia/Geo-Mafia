@@ -106,7 +106,7 @@ export class Game implements OnInit {
         let civilian = new Civilian()
         civilian.init(player.getUserID(), player.getUsername(), player.getLocation(), player.getAliveStatus())
 
-        roledPlayers.set(civilian.getUserID, civilian)
+        roledPlayers.set(civilian.getUserID(), civilian)
       }
 
       //replace unroled players with roles
