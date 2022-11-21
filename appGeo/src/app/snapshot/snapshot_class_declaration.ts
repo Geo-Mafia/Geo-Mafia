@@ -1,5 +1,15 @@
 import {Bubble} from '../map/map.component';
 import { Player } from '../player/player.component';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { databaseAdd, databaseGet, databaseEventListener } from '../../modules/database'
+import { firebase } from "@nativescript/firebase";
+import { fromObject, ScrollView, ScrollEventData} from '@nativescript/core';
+
+@Component({
+  selector: 'Snapshot',
+  templateUrl: './snapshot.component.html',
+  styleUrls: ['./snapshot.component.css']
+})
 
 /* functionally, snapshot should be identified by an id and save a copy of the state of
    the state of the bubble at the time of a murder, specifically the players in the bubble.
