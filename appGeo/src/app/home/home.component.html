@@ -1,4 +1,3 @@
-
 <!-- <ActionBar>
   <Label text="Home Page"></Label>
 </ActionBar>
@@ -20,15 +19,12 @@
   if it doesn't work maybe adjuct the path to the chat.component.html -->
 
 
-  <GridLayout columns="auto, *" rows="auto, *" width="210" height="210">
-    <GridLayout row="0" col="0">
+  <GridLayout>
+    <StackLayout>
       <Button text="Go To Chat" [nsRouterLink]="['Chat']" class="btn btn-primary btn-active" col="0"></Button>
-    </GridLayout>
-    <GridLayout row="1" col="0">
-      <Button text="Look at Location" [nsRouterLink]="['campusMap']" class="btn btn-primary btn-active" col="0"></Button>
-    </GridLayout>
+      <Button text="Kill a Player" *ngIf="this.isKiller && !this.votingOpen" [nsRouterLink]="['Killing']" class="btn btn-primary btn-active" col="0"></Button>
+      <Button text="Go to Vote Player" *ngIf="this.votingOpen" [nsRouterLink]="['Voting']" class="btn btn-primary btn-active" col="0"></Button>
+    </StackLayout>
     <router-outlet></router-outlet>
-
   </GridLayout>
-
 

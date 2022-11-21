@@ -3,7 +3,6 @@ import { InjectableAnimationEngine } from '@nativescript/angular';
 import { ChangeType } from '@nativescript/core';
 import { Bubble } from '../map/map.component';
 import {Chat, FullMessage} from '../chat/chat.component'
-import { databaseAdd, databaseUpdate } from '../../modules/database'
 //import{Location} from './location_class_declaration';
 
 const DEAD = 0
@@ -23,11 +22,11 @@ export class Player implements OnInit{
     userID: number // An int
     username: string // A String
     //geolocation // Object that is retunred from the Nativescript plugin
-    location // A Coordinate Object TODO: what type is this
+    location // A Coordinate Object
     alive: number // A Boolean
     votes: number // An int
     chat_lists // List of Chat Objects that Player is a part of
-    databasePath: string
+    have_already_voted: boolean = false
 
     constructor(){
       this.votes = 0;
@@ -46,22 +45,15 @@ export class Player implements OnInit{
         this.location = location;
         this.alive = alive;
         this.votes = 0;
-        this.chat_lists = new Array();
-        this.databasePath = "game/players/" + username;
+        this.chat_lists = new Array()
     }
     ngOnInit(): void {
-        //initialize storing player in database
-        databaseAdd(this.databasePath, this);
-        console.log("database added for player");
     }
     getUserID(){
         return this.userID;
     }
     getUsername(){
         return this.username;
-    }
-    getDatabasePath(){
-        return this.databasePath;
     }
     // getGeolocation(){
     //     return this.geolocation;
@@ -91,9 +83,6 @@ export class Player implements OnInit{
 
     getKilled(){
         this.alive = DEAD;
-
-        // update in database
-        databaseUpdate(this.databasePath, this);
         return SUCCESS;
     }
 
@@ -163,12 +152,7 @@ export class Player implements OnInit{
 
     /* insertChat(): Inserts a Chat object into the Chat List field within Player Object */
     insertChat(chat){
-        this.chat_lists.push(chat);
-
-        // update in database
-        databaseUpdate(this.databasePath, this);
-
-
+        this.chat_lists.push(chat)
         return SUCCESS;
     }
 
@@ -198,13 +182,16 @@ export class Player implements OnInit{
      *      - A Player ID that will get looked up on the main General Chat 
     */
     voteForExecution(voted_player_ID){
-        if (this.getAliveStatus() == DEAD){
+        //Can't vote if you are dead OR if you have already voted in this round
+        if (this.getAliveStatus() == DEAD || this.have_already_voted == true){
             return FAILURE;
         }
 
         var main_chat = this.getChat(1) //Which a player should always be added to General Chat
         var Voted = main_chat.getPlayer(voted_player_ID) //Which a player would never pick a user ID that isn't present in the chat
         Voted.increaseVoteCount();
+
+        this.have_already_voted = true;
         return SUCCESS;
     }
 
@@ -214,9 +201,6 @@ export class Player implements OnInit{
     */
     increaseVoteCount(){
         this.votes++;
-
-        // update in database
-        databaseUpdate(this.databasePath, this);
     }
 
     /* resetVotes(): Reset current Player's number of votes back down to 0
@@ -224,9 +208,7 @@ export class Player implements OnInit{
     */
     resetVotes(){
         this.votes = 0;
-
-        // update in database
-        databaseUpdate(this.databasePath, this);
+        this.have_already_voted = false;
     }
 
 }

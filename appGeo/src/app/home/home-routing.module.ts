@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core'
 import { Routes } from '@angular/router'
 import { NativeScriptRouterModule } from '@nativescript/angular'
 import { ChatComponent } from '../chat/chat.component'
+import { KillingComponent } from '../player/killing.component'
+import { VotingComponent } from '../voting/voting.component'
 //The Chat is added here so that the template can be represented
 import { CampusMap } from '../map/campus-map.component'
 import {Bubble} from '../map/map.component'
@@ -22,12 +24,13 @@ import { NativeScriptModule } from "@nativescript/angular";
 
 
 const routes: Routes = [
+  {path: "Killing", component: KillingComponent},
+  {path: "Voting", component: VotingComponent},
   {path: "Chat", component: ChatComponent},
-  { path: "campusMap", component: CampusMap},
   { path: '',
     component: HomeComponent
   },
-
+  { path: 'campusMap', component: CampusMap, pathMatch: 'full'},
 
 ]
 
