@@ -22,6 +22,7 @@
     "nativescript-geolocation": "^5.1.0",
     "nativescript-google-login": "^1.4.0",
     "nativescript-plugin-firebase": "^10.6.3",
+    "node-schedule": "^2.1.0",
     "rxjs": "~7.5.0",
     "shelljs": "^0.8.5",
     "zone.js": "~0.11.5"
