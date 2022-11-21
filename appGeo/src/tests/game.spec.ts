@@ -508,7 +508,7 @@ QUnit.test("Players remainding + Game in Progress", function(assert) {
     const civ4 = civs[3]
 
     //Kill off Player 1
-    player1.getKilled();
+    civ1.getKilled();
     assert.equal(civ1.getAliveStatus(), DEAD, "Civilian 1 was killed off");
     assert.equal(civ2.getAliveStatus(), ALIVE, "Civilian 2 was still healthy");
     assert.equal(civ3.getAliveStatus(), ALIVE, "Civilian 3 was still healthy");
