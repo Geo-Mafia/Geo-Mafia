@@ -3,13 +3,17 @@ import {Bubble} from './map.component'
 import {Player} from '../player/player.component'
 import { push } from 'nativescript-plugin-firebase';
 
-
+/* ============== Off Campus Bubble ================*/
+var OffCampus = new Bubble()
+OffCampus.init_bubble('The Outside of any assigned Campuse Buildings', 0, 0, 0, 0)
 
 @Component({
   selector: 'campusMap',
   templateUrl: './campus-map.component.html',
   styleUrls: ['./campus-map.component.css']
 })
+
+
 
 export class CampusMap implements OnInit {
   public MapOfCampus: Map<string, Bubble>;
@@ -272,6 +276,11 @@ export class CampusMap implements OnInit {
       for (let bubb of this.MapOfCampus.values()) {
         this.checkBubble(bubb, pToCheck)
       }
+      if (!this.display.playerArray.includes(pToCheck)){
+        OffCampus.addPlayer(pToCheck)
+        this.display = OffCampus
+        this.playerlist = OffCampus.playerArray
+      }
     }
 
 
@@ -286,6 +295,9 @@ export class CampusMap implements OnInit {
           return
         }
       } else if(checkIfIn.inBubble(pToCheck) && !checkIfIn.List.has(pToCheck.userID)){ //should have more logic to remove a player that is in said bubble List but not in the bubble boundary
+        if (OffCampus.List.has(pToCheck.userID)){
+          OffCampus.removePlayer(pToCheck)
+        }
         if (!pToCheck.alive){
           this.display = new Bubble()
           this.playerlist = []
