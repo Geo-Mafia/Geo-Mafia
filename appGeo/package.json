@@ -36,6 +36,7 @@
     "@nativescript/types": "~8.3.0",
     "@nativescript/webpack": "^5.0.9",
     "@ngtools/webpack": "~14.2.0",
+    "@types/node-schedule": "^2.1.0",
     "@types/qunit": "2.19.2",
     "karma": "6.4.1",
     "karma-coverage": "2.2.0",
