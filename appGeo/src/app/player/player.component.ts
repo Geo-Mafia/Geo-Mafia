@@ -27,13 +27,28 @@ export class Player implements OnInit{
     alive: number // A Boolean
     votes: number // An int
     chat_lists // List of Chat Objects that Player is a part of
+
+
+
+    //edited by Kyu
+    email: string;
+    userIDString: string //String (modified by Kyu)
+
     have_already_voted: boolean = false
     databasePath: string
 
+
     constructor(){
-      this.votes = 0;
-      this.chat_lists = new Array()
+        //edited by Kyu
+        this.userIDString = "";
+        this.username = "";
+        this.email = "";
+        this.votes = 0;
+        this.chat_lists = new Array();
+        this.databasePath = "";
+
     }
+    //init(userID: number, userIDString: string, username: string, email:string, location, alive: number){
     init(userID: number, username: string, location, alive: number){
         /* NOTE: we may not even need location anymore. After setting up geolocation
          * we should be able to just use this as well as get functions (getLongitue &
@@ -48,22 +63,24 @@ export class Player implements OnInit{
         this.alive = alive;
         this.votes = 0;
         this.chat_lists = new Array()
-        this.databasePath = "game/players/" + username;
+        this.databasePath = "";
     }
     ngOnInit(): void {
       //initialize storing player in database
       databaseAdd(this.databasePath, this);
       console.log("database added for player");
     }
+
+    getDatabasePath(){
+        return this.databasePath;
+    }
+
     getUserID(){
         return this.userID;
     }
     getUsername(){
         return this.username;
     }
-    getDatabasePath(){
-      return this.databasePath;
-  }
     // getGeolocation(){
     //     return this.geolocation;
     // }

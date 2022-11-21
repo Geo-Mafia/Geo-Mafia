@@ -59,11 +59,10 @@ export class Game implements OnInit {
   }
 
   ngOnInit(): void {
-
-     // add event listener to update each player
-     this.players.forEach((player: Player, key: number) => {
-      databaseEventListener(player.getDatabasePath(), this.updatePlayerDatabase.bind(this));
-    });
+        // add event listener to update each player
+        this.players.forEach((player: Player, key: number) => {
+          databaseEventListener(player.getDatabasePath(), this.updatePlayerDatabase.bind(this));
+        });
   }
 
   updatePlayerDatabase(data: object) {
@@ -73,6 +72,7 @@ export class Game implements OnInit {
     let playerId = player.getUserID();
     this.players.set(playerId, player);
     console.log("End updatePlayerDatabase func");
+
   }
 
   startGame() {
