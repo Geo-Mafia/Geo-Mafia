@@ -88,10 +88,17 @@ export class ChatComponent implements OnInit {
   getMsgs() {
     let msgs = [];
     databaseGet('game/chats').then(value => {
-      //console.log("val: " + value);
-      msgs = value;
+      console.log("val: " + JSON.stringify(value));
+      if (value == null) {
+        let temp = new Message("initial message", "admin")
+        msgs = [temp];
+        databaseAdd('game/chats', msgs);
+      } else {
+        msgs = value; 
+      }
       //console.log("all msgs: " + msgs);
     });
+    console.log("in get msgs")
     return msgs;
   } 
 
@@ -99,9 +106,10 @@ export class ChatComponent implements OnInit {
     //get current chats
     this.chats = [];
 
-    //console.log("data: " + JSON.stringify(data));
+    console.log("data: " + JSON.stringify(data));
     let list = data["value"];
     this.chats = list;
+    //this.chats.push(list);
   }
 
   sendMsg(){
@@ -109,8 +117,11 @@ export class ChatComponent implements OnInit {
     console.log("Inside the send Message function")
     //NOTE: HERE WE NEED TO PASS IN THE PLAYER NAME
     var new_msg = new Message(this.text, global.player.username);
+    // console.log("new msg: " + JSON.stringify(new_msg));
+    // console.log("this.text: " + this.text);
+    // console.log("this.chats: " + JSON.stringify(this.chats));
     //this.chats.push(this.text);
-    this.chats.push(new_msg)
+    this.chats.push(new_msg);
     console.log("What is currently the message to send:", this.text)
     console.log("The timestamp that we are printing out is: ", new_msg.getTimestamp())
     console.log("The name of the player that is sending the message is: ", new_msg.getPlayerName())
