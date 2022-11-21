@@ -20,10 +20,15 @@
   if it doesn't work maybe adjuct the path to the chat.component.html -->
 
 
-  <GridLayout>
-    <GridLayout>
+  <GridLayout columns="auto, *" rows="auto, *" width="210" height="210">
+    <GridLayout row="0" col="0">
       <Button text="Go To Chat" [nsRouterLink]="['Chat']" class="btn btn-primary btn-active" col="0"></Button>
     </GridLayout>
+    <GridLayout row="1" col="0">
+      <Button text="Look at Location" [nsRouterLink]="['campusMap']" class="btn btn-primary btn-active" col="0"></Button>
+    </GridLayout>
     <router-outlet></router-outlet>
+
   </GridLayout>
+
 

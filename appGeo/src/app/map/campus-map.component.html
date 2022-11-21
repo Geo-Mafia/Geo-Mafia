@@ -1,10 +1,10 @@
-<StackLayout>
-  <StackLayout >
-    <Label text = "Players currently on {{display.id}}"></Label>
+<StackLayout *ngIf="display">
+  <StackLayout>
+    <Label text = "Players currently in {{display.id}}"></Label>
     <ListView row="0" [items] ="playerlist"  class="list-group">
       <ng-template let-player="item" let-i="index">
         <StackLayout>
-          <Label text = "{{player.username}}" textWrap="true"></Label>
+          <Label text = "{{player.getUsername()}}" textWrap="true"></Label>
         </StackLayout>
       </ng-template>
     </ListView>

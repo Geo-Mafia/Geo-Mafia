@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     // Init your component properties here.
     // Going to initialize a list of bubbles here;
-    var map = new CampusMap;
+
     console.log("init");
     if(isIOS) {
       console.log("ios");
@@ -57,6 +57,9 @@ export class HomeComponent implements OnInit {
     GoogleLogin.login(result=>{
       console.log(result);
     });
+
+
+
 
   }
 

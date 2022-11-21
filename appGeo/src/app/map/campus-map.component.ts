@@ -19,7 +19,10 @@ export class CampusMap implements OnInit {
     this.MapOfCampus = new Map<string, Bubble>;
   }
   ngOnInit() : void {
-    //===== Initializing Crerar ====
+
+    /*===================================================
+    ===============  Left edge Of Campus  ===============
+    =====================================================*/
     var Crerar =  new Bubble()
     Crerar.init_bubble('Crerar', 41.7901331, 41.7909298, -87.6025138, -87.6031023)
   //==== Initializing Bookstore ====
@@ -222,19 +225,20 @@ export class CampusMap implements OnInit {
     var OneOne = new Bubble()
     OneOne.init_bubble('1155 Building', 41.78529357540907, 41.785756466852106, -87.59769493232231, -87.59657828430436)
     // apparently the name of the building
-    this.addToMap(OneOne.id, OneOne)
+    //hmm there is an issue unsure if this solves
+    this.addToMap(OneOne.NameOfBubble, OneOne)
     var Wood = new Bubble()
     Wood.init_bubble('Woodlawn Dining Commons', 41.7843253848919, 41.78499369091889, -87.59655145653353, -87.59694874737818)
-    this.addToMap(Wood.id, Wood)
+    this.addToMap(Wood.NameOfBubble, Wood)
     var Cathey = new Bubble()
     Cathey.init_bubble('Cathey Dining Commons', 41.78503215478304, 41.78516718947996, -87.6006043094919, -87.60001013244997)
-    this.addToMap(Cathey.id, Cathey)
+    this.addToMap(Cathey.NameOfBubble, Cathey)
     var Logan = new Bubble()
     Logan.init_bubble('Logan Center for the Arts', 41.78492308961849, 41.78572860709568, -87.60414884277488, -87.60337903726452)
-    this.addToMap(Logan.id, Logan)
+    this.addToMap(Logan.NameOfBubble, Logan)
     var Taft = new Bubble()
     Taft.init_bubble('Taft House/ Midway Studios', 41.78529045276358, 41.7856788604663, -87.60330975476859, -87.60298900247261)
-    this.addToMap(Taft.id, Taft)
+    this.addToMap(Taft.NameOfBubble, Taft)
 
   //====
 
@@ -253,18 +257,8 @@ export class CampusMap implements OnInit {
     Crerar.addPlayer(Player2)
     Crerar.addPlayer(Player3)
 
-
-    //==== Adding our Bubbles to the CampusMap
-    this.addToMap(Crerar.id, Crerar)
-    this.addToMap(Bookstore.id, Bookstore)
-    this.addToMap(GeoLab.id, GeoLab)
-    this.addToMap(Kovler.id, Kovler)
-    this.addToMap(Cobb.id, Cobb)
-    this.addToMap(Godspeed.id, Godspeed)
-    this.addToMap(Weiboldt.id, Weiboldt)
-    this.addToMap(Harper.id, Harper)
-
-
+    this.display = Crerar
+    this.playerlist = Crerar.playerArray
   }
 
     addToMap(name: string, toAdd: Bubble){
@@ -303,6 +297,12 @@ export class CampusMap implements OnInit {
       } else if(!checkIfIn.inBubble(pToCheck) && checkIfIn.List.has(pToCheck.userID)){
         checkIfIn.removePlayer(pToCheck)
       }
+    }
+    get Display(){
+      return this.display
+    }
+    get PList(){
+      return this.playerlist
     }
 
 }

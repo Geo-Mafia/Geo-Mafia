@@ -23,10 +23,11 @@ import { NativeScriptModule } from "@nativescript/angular";
 
 const routes: Routes = [
   {path: "Chat", component: ChatComponent},
+  { path: "campusMap", component: CampusMap},
   { path: '',
     component: HomeComponent
   },
-  { path: 'campusMap', component: CampusMap, pathMatch: 'full'},
+
 
 ]
 
