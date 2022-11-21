@@ -19,7 +19,7 @@ import { NativeScriptModule } from "@nativescript/angular";
 
 @NgModule({
   imports: [NativeScriptCommonModule, HomeRoutingModule, FormsModule, NativeScriptFormsModule, CommonModule, ReactiveFormsModule],
-  declarations: [HomeComponent, Bubble, CampusMap, ChatComponent, KillingComponent, VotingComponent],
+  declarations: [HomeComponent, Bubble, CampusMap, ChatComponent, KillingComponent, VotingComponent, LocationComponent],
   schemas: [NO_ERRORS_SCHEMA],
 })
 export class HomeModule {}
