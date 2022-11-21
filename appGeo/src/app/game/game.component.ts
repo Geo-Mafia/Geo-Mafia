@@ -4,7 +4,7 @@ import{CampusMap} from '../map/campus-map.component'
 import {Chat, Message} from '../chat/chat.component'
 import { GameRules} from './game-rules.component'
 import {Snapshot} from '../snapshot/snapshot_class_declaration'
-//import {scheduleJob, Job} from 'node-schedule'
+import {scheduleJob, Job} from 'node-schedule'
 import { databaseAdd, databaseGet, databaseEventListener } from '../../modules/database'
 //A CampusMap is a Map of the Bubbles that exist on campus
 
@@ -40,7 +40,7 @@ export class Game implements OnInit {
   snapshots: Map<number, Snapshot> //a hashmap of mapping snapshotID ints to snapshots
   chats: Map<number, Chat> //a hashmap of mapping chatsID ints to chats
 
-  //#scheduledJobs: Map<string, Job> //stores all scheduled Jobs
+  #scheduledJobs: Map<string, Job> //stores all scheduled Jobs
 
   constructor(gameRules: GameRules, gameMap: CampusMap, players: Map<number, Player>) {
     this.gameRules = gameRules
@@ -117,9 +117,9 @@ export class Game implements OnInit {
       if(this.gameRules.isScheduledEnd) {
         this.endTime = new Date(this.startTime.getTime() + 
                                 (this.gameRules.getGameLengthHours() * 60 * 60 * 1800))
-        /*const endJob = scheduleJob(this.getEndTime(), function() {this.#endProcess()})
+        const endJob = scheduleJob(this.getEndTime(), function() {this.#endProcess()})
         this.#scheduledJobs.set(END_JK, endJob)
-        */
+        
       }
 
       //TODO: this is where the 3 timers for voting will be set
@@ -162,20 +162,18 @@ export class Game implements OnInit {
           return FAILURE
       }
 
-      /*const job = scheduleJob(date, function() {this.#startProcess()});
-      this.#scheduledJobs.set(START_JK, job) //adds job to list of jobs running*/
+      const job = scheduleJob(date, function() {this.#startProcess()});
+      this.#scheduledJobs.set(START_JK, job) //adds job to list of jobs running
 
       this.#setGameScheduled(SCHEDULED)
       return SUCCESS;
   }
 
-  /*
   cancelScheduledStart() {
       this.#scheduledJobs.get(START_JK).cancel()
       this.#setGameScheduled(UNSCHEDULED)
       return SUCCESS;
   }
-  */
 
   winningCondition(){
     var killers_left = this.killersRemaining();
@@ -208,11 +206,9 @@ export class Game implements OnInit {
   #endProcess() {
     this.#setGameActive(INACTIVE)
 
-    /*
     if(this.gameRules.isScheduledEnd()) {
       this.#scheduledJobs.get(END_JK).cancel()
     }
-    */
     
     //TODO: This is where the timers for the voting will be disable
     
