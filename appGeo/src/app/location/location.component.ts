@@ -62,6 +62,7 @@ export class LocationComponent implements OnInit {
                 this.zone.run(() => {
                     this.latitude = location.latitude;
                     this.longitude = location.longitude;
+                    console.log("We are currently watching location")
                 });
             }
         }, error => {
