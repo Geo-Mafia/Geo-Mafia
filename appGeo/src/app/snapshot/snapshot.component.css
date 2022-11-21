@@ -1,3 +1,7 @@
+.recommendations {
+    white-space: pre-line;
+}
+
 .my-button {
     android-elevation: 4;
     background-color: lightseagreen;
