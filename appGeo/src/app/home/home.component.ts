@@ -11,7 +11,11 @@ import { Router } from '@angular/router'
 import { GoogleLogin } from 'nativescript-google-login';
 import * as application from "@nativescript/core/application";
 import { isIOS } from "@nativescript/core/platform";
+import { ChatComponent } from "../chat/chat.component";
+import { firebase } from "@nativescript/firebase"
+import { databaseAdd } from "../../modules/database"
 import { toUIString } from '@nativescript/core/utils/types'
+
 
 @Component({
   selector: 'Home',
@@ -21,8 +25,20 @@ import { toUIString } from '@nativescript/core/utils/types'
 
 export class HomeComponent implements OnInit {
 
+  text : string = "Google Sign-In";
+
   public isKiller: Boolean
   public votingOpen: Boolean
+
+
+  textChange() {
+    if (global.isLoggedIn) {
+      this.text = "You are logged in as: " + global.player.username;
+    }
+    else {
+      this.text = "Google Sign-In";
+    }
+  }
 
   constructor(private router: Router) {
     // Use the component constructor to inject providers.
@@ -52,18 +68,66 @@ export class HomeComponent implements OnInit {
                   clearTimeout(v)
               },500)
       }
-
   }
 
-
-
   login() {
-    //console.log("function");
+    if (global.loggedIn) {
 
-    GoogleLogin.login(result=>{
-      console.log(result);
-    });
-
+      let options = {
+        title: "Error",
+        message: "You already are signed in as: " + global.player.username,
+        okButtonText: "OK"
+      }
+      alert(options);
+    }
+    else {
+      GoogleLogin.login(result=>{
+        
+        if (result["code"] != -2) {
+          
+          //console.log(result);
+          let userID : string = result["id"]; 
+          //console.log('/game/users/' + userID)
+          firebase.getValue('/game/users/' + userID)
+          .then(res =>{
+            //new registration
+            if(res["value"] == null) {
+              //console.log("in new registration");
+              //console.log(res);
+              global.player.userIDString = result["id"];
+              //global.player.username = result["displayName"];
+              global.player.email = result["userToken"];
+              let location = 0; //TODO: change location to be actual later
+              
+              //TODO UPDATE USERID NUMBER
+              global.player.init(0, result["displayName"], location, 1);
+              global.player.databasePath = "/game/users/" + global.player.userIDString;
+              //console.log(global.player);
+  
+              databaseAdd('/game/users/' + userID, global.player)
+              global.result = result;
+            }
+            //already exists
+            else {
+              global.player = res["value"];
+              console.log("user already exists, will not add new data but will pull from the database");
+              //console.log(global.player);
+              global.result = res;
+            }
+          }).then(res2 => {
+            if(global.player.username != "") {
+              global.loggedIn = true;
+              console.log(global.loggedIn);
+            }
+          }).then(res3 => {
+            this.textChange();
+          })
+          .catch(error => {
+            console.log("error: " + error);
+          });
+        }
+      });
+    }
   }
 
 
