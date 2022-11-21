@@ -1,10 +1,9 @@
 <ActionBar title="{N} Geolocation Example"></ActionBar>
-<!-- <GridLayout>
-    <StackLayout>
-        <label text="Latitude: "{{ latitude }}></label>
-        <label text="Longitude: "{{ longitude }}></label>
-        <Button class="btn btn-primary btn-active" text="Update" (tap)="updateLocation()"></Button>
-        <Button class="btn btn-primary btn-active" text="Watch Location" (tap)="startWatchingLocation()"></Button>
-        <Button class="btn btn-primary btn-active" text="Stop Watching" (tap)="stopWatchingLocation()"></Button>
-    </StackLayout>
-</GridLayout> -->
+
+<StackLayout>
+    <Label text="Latitude: {{ latitude }}"></Label>
+    <Label text="Longitude: {{ longitude }}"></Label>
+    <Button class="btn btn-primary btn-active" text="Update" (tap)="updateLocation()"></Button>
+    <Button class="btn btn-primary btn-active" text="Watch Location" (tap)="startWatchingLocation()"></Button>
+    <Button class="btn btn-primary btn-active" text="Stop Watching" (tap)="stopWatchingLocation()"></Button>
+</StackLayout>

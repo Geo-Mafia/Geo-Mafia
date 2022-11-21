@@ -1,17 +1,19 @@
 import { Component, NgZone, OnInit } from "@angular/core";
-import * as Geolocation from '@nativescript/angular'
+//import * as Geolocation from '@nativescript/angular'
 //import * as Geolocation from 'nativescript-geolocation'
-import * as Platform from "@angular/common";
+//import * as Platform from "@angular/common";
 //import * as Geolocation from "nativescript-geolocation";
+
+import * as geolocation from '@nativescript/geolocation';
+//import * as utils from "tns-core-modules/utils/utils";
+import { CoreTypes } from '@nativescript/core'
+CoreTypes.Accuracy
 
 @Component({
     selector: "Location",
     templateUrl: './location.component.html'
 })
 export class LocationComponent implements OnInit {
-    // ngOnInit(): void {
-        
-    // }
 
     public latitude: number;
     public longitude: number;
@@ -22,28 +24,28 @@ export class LocationComponent implements OnInit {
         this.longitude = 0;
     }
     ngOnInit(): void {
-        //this.getDeviceLocation()
-        // Geolocation.enableLocationRequest()
+        geolocation.enableLocationRequest();
+        geolocation.getCurrentLocation({maximumAge: 5000, timeout: 20000 });
     }
-    // getUserLocation() {
-    //     // get Users current position
+    getUserLocation() {
+        // get Users current position
     
-    //     if (navigator.geolocation) {
-    //       navigator.geolocation.getCurrentPosition(position => {
-    //         this.latitude = position.coords.latitude;
-    //         this.longitude = position.coords.longitude;
-    //         console.log("position latitude: ", this.latitude, "and position longitude: ", this.longitude)
-    //       });
-    //     }else{
-    //       console.log("User not allowed")
-    //     }
-    //   }
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition((position: GeolocationPosition) => {
+            this.latitude = position.coords.latitude;
+            this.longitude = position.coords.longitude;
+            console.log("position latitude: ", this.latitude, "and position longitude: ", this.longitude)
+          });
+        }else{
+          console.log("User not allowed")
+        }
+      }
 
 
     private getDeviceLocation(): Promise<any> {
         return new Promise((resolve, reject) => {
-            Geolocation.enableLocationRequest().then(() => {
-                Geolocation.getCurrentLocation({timeout: 10000}).then(location => {
+            geolocation.enableLocationRequest().then(() => {
+                geolocation.getCurrentLocation({timeout: 10000}).then(location => {
                     resolve(location);
                 }).catch(error => {
                     reject(error);
@@ -63,7 +65,7 @@ export class LocationComponent implements OnInit {
     }
 
     public startWatchingLocation() {
-        this.watchId = Geolocation.watchLocation(location => {
+        this.watchId = geolocation.watchLocation(location => {
             if(location) {
                 this.zone.run(() => {
                     this.latitude = location.latitude;
@@ -77,7 +79,7 @@ export class LocationComponent implements OnInit {
 
     public stopWatchingLocation() {
         if(this.watchId) {
-            Geolocation.clearWatch(this.watchId);
+            geolocation.clearWatch(this.watchId);
             this.watchId = null;
         }
     }

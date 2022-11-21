@@ -1,20 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {LocationComponent } from './location.component';
-import { RouterModule } from '@angular/router';
-import { FormsModule }   from '@angular/forms'; // <-- NgModel lives here
+import { LocationComponent } from './location.component';
+import { NativeScriptFormsModule } from "@nativescript/angular";
+import { NativeScriptModule } from "@nativescript/angular";
 
 
 @NgModule({
-  declarations: [
-    LocationComponent,
-  ],
   imports: [
     CommonModule,
-    FormsModule,
-    RouterModule.forChild([
-        {path: '', component: LocationComponent},
-    ])
+    NativeScriptModule,
+    NativeScriptFormsModule
+  ],
+  declarations: [
+    LocationComponent
   ]
 })
-export class LocationModule { }
+export class LocationModule {}

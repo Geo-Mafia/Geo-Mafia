@@ -20,7 +20,7 @@
   if it doesn't work maybe adjuct the path to the chat.component.html -->
 
 
-  <GridLayout>
+<StackLayout>
     <StackLayout>
       <Button text="Go To Chat" [nsRouterLink]="['Chat']" class="btn btn-primary btn-active" col="0"></Button>
       <Button text="Kill a Player" *ngIf="this.isKiller && !this.votingOpen" [nsRouterLink]="['Killing']" class="btn btn-primary btn-active" col="0"></Button>
