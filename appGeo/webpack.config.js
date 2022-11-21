@@ -1,6 +1,19 @@
 const webpack = require("@nativescript/webpack");
+const Dotenv = require("dotenv-webpack")
 
-module.exports = (env) => {
+module.exports = {
+	plugins: [
+		new Dotenv({systemvars: true}),
+	],
+	resolve: {
+        fallback: {
+            "fs": false
+        },
+    },
+}
+
+/*
+(env) => {
 	webpack.init(env);
 
 	// Learn how to customize:
@@ -8,5 +21,4 @@ module.exports = (env) => {
 
 	return webpack.resolveConfig();
 };
-
-
+*/
