@@ -94,9 +94,11 @@ export class HomeComponent implements OnInit {
             if(res["value"] == null) {
               //console.log("in new registration");
               //console.log(res);
-              global.player.userIDString = result["id"]
-              global.player.username = result["displayName"];
-              global.player.userToken = result["userToken"];
+              //global.player.userIDString = result["id"];
+              /global.player.username = result["displayName"];
+              //global.player.userToken = result["userToken"];
+              let location = 0; //TODO: change location to be actual later
+              global.player.init(0, result["id"], result["displayName"], result["userToken"], location, 1);
               //console.log(global.player);
   
               databaseAdd('/game/users/' + userID, global.player)

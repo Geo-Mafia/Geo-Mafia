@@ -30,21 +30,23 @@ export class Player implements OnInit{
     
     
     //edited by Kyu
-    userToken: string;
+    email: string;
     userIDString: string //String (modified by Kyu)
 
     have_already_voted: boolean = false
+
+    databasePath: string
 
 
     constructor(){
         //edited by Kyu
         this.userIDString = "";
         this.username = "";
-        this.userToken = "";
-      this.votes = 0;
-      this.chat_lists = new Array()
+        this.email = "";
+        this.votes = 0;
+        this.chat_lists = new Array();
     }
-    init(userID: number, username: string, location, alive: number){
+    init(userID: number, userIDString: string, username: string, email:string, location, alive: number){
         /* NOTE: we may not even need location anymore. After setting up geolocation
          * we should be able to just use this as well as get functions (getLongitue &
          * getLatitue) throughout rest of code. May need to refactor this part
@@ -56,11 +58,17 @@ export class Player implements OnInit{
         this.username = username;
         this.location = location;
         this.alive = alive;
-        this.votes = 0;
-        this.chat_lists = new Array()
+        this.databasePath = "game/users/" + this.userIDString;
+        //this.votes = 0;
+        //this.chat_lists = new Array()
     }
     ngOnInit(): void {
     }
+
+    getDatabasePath(){
+        return this.databasePath;
+    }
+    
     getUserID(){
         return this.userID;
     }
