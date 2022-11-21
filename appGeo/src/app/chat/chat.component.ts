@@ -83,6 +83,7 @@ export class ChatComponent implements OnInit {
     this.chats = this.getMsgs();
     databaseEventListener("game/chats", this.updateMsg.bind(this));
     console.log("got to chat");
+    console.log("Can we see the player location in chat? Here it is: ", global.player.getLocation())
   }
 
   getMsgs() {

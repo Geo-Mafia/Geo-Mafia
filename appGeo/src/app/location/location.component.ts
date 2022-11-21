@@ -26,7 +26,9 @@ export class LocationComponent implements OnInit {
           navigator.geolocation.getCurrentPosition((position: GeolocationPosition) => {
             this.latitude = position.coords.latitude;
             this.longitude = position.coords.longitude;
-            console.log("position latitude: ", this.latitude, "and position longitude: ", this.longitude)
+            global.player.setLocation(this.longitude, this.latitude)
+            console.log("position longtidue: ", this.longitude, "and position latitude: ", this.latitude)
+            console.log("If we grab from the global player object (longitude, latitude): ", global.player.getLocation)
           });
         }else{
           console.log("User not allowed")
@@ -51,6 +53,8 @@ export class LocationComponent implements OnInit {
             this.latitude = result.latitude;
             this.longitude = result.longitude;
             console.log("Current position information; Latitude: ", this.latitude, "and Longitude: ", this.longitude)
+            global.player.setLocation(this.longitude, this.latitude)
+            console.log("If we grab from the global player object (longitude, latitude): ", global.player.getLocation())
         }, error => {
             console.error(error);
         });
@@ -62,6 +66,7 @@ export class LocationComponent implements OnInit {
                 this.zone.run(() => {
                     this.latitude = location.latitude;
                     this.longitude = location.longitude;
+                    global.player.setLocation(this.longitude, this.latitude)
                     console.log("We are currently watching location")
                 });
             }

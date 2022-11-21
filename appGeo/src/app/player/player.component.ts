@@ -77,9 +77,9 @@ export class Player implements OnInit{
     getUsername(){
         return this.username;
     }
-    // getGeolocation(){
-    //     return this.geolocation;
-    // }
+    setLocation(latitude, longitude){
+        this.location = new Location(latitude, longitude)
+    }
     getAliveStatus(){
         return this.alive;
     }
@@ -337,4 +337,14 @@ export class Killer extends Player{
     //         return FAILURE;
     //     }
     // }
+}
+
+export class Location{
+    longitude;
+    latitude;
+
+    constructor(lontitude_to_set, latitude_to_set){
+        this.longitude = lontitude_to_set;
+        this.latitude = latitude_to_set;
+    }
 }
