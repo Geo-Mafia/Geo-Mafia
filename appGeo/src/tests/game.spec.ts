@@ -420,7 +420,7 @@ QUnit.test("Players remainding + Killers win", function(assert) {
     player5.init(5, 'player5', Location1, ALIVE);
 
 
-    const playerArray = [player1, player2, player3];
+    const playerArray = [player1, player2, player3, player4, player5];
     const player_map = new Map(
         playerArray.map(object => {
           return [object.getUserID(), object];
