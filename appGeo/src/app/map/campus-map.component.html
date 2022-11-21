@@ -1,5 +1,5 @@
 <StackLayout *ngIf="display">
-  <StackLayout>
+  <StackLayout id="container">
     <Label text = "Players currently in {{display.id}}"></Label>
     <ListView row="0" [items] ="playerlist"  class="list-group">
       <ng-template let-player="item" let-i="index">
