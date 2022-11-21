@@ -45,8 +45,11 @@ export class Player implements OnInit{
         this.email = "";
         this.votes = 0;
         this.chat_lists = new Array();
+        this.databasePath = "";
+        
     }
-    init(userID: number, userIDString: string, username: string, email:string, location, alive: number){
+    //init(userID: number, userIDString: string, username: string, email:string, location, alive: number){
+    init(userID: number, username: string, location, alive: number){
         /* NOTE: we may not even need location anymore. After setting up geolocation
          * we should be able to just use this as well as get functions (getLongitue &
          * getLatitue) throughout rest of code. May need to refactor this part
@@ -58,7 +61,6 @@ export class Player implements OnInit{
         this.username = username;
         this.location = location;
         this.alive = alive;
-        this.databasePath = "game/users/" + this.userIDString;
         //this.votes = 0;
         //this.chat_lists = new Array()
     }
