@@ -20,6 +20,8 @@ class Location{
 //Locations corresponding to being present in these Bubbles
   var inTB1 = new Location(6, 8)
   var inTB2 = new Location(8, 18)
+  var notInB = new Location(20, 40)
+
 
 //Our test Player going through these locations
   var P1 = new Player()
@@ -60,6 +62,10 @@ QUnit.test("testing the display variable and playerInBubble", function(assert){
   P2.location = inTB2
   testMap.playerInBubble(P2)
   assert.false(testbub2.playerArray.includes(P2), "should not have P2 in testbubble 2 either")
+  P1.location = notInB
+  testMap.playerInBubble(P1)
+  assert.deepEqual(testMap.display.id, 'The Outside of any assigned Campuse Buildings', "should have recognized the player is Off Campus")
+
 
 })
 
