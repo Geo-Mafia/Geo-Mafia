@@ -6,9 +6,5 @@ module.exports = (env) => {
 	// Learn how to customize:
 	// https://docs.nativescript.org/webpack
 
-	return webpack.resolveConfig({
-		resolve: {
-			fallback: { "fs": false }
-	  }
-	});
+	return webpack.resolveConfig();
 };
