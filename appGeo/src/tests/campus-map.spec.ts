@@ -86,8 +86,8 @@ QUnit.test("testing playersBubble", function(assert){
 
   assert.true(bub1.inBubble(py1), "py1 should be in bub1")
   assert.equal(bub1.NameOfBubble, testMap.playersBubble(py1).NameOfBubble, "returned bubble 1 should have the same id as original")
-  //assert.true(bub2.inBubble(py2), "py2 should be in bub2")
-  //assert.equal(bub2.NameOfBubble, testMap.playersBubble(py2).NameOfBubble, "returned bubble 2 should have the same id as original")
+  assert.true(bub2.inBubble(py2), "py2 should be in bub2")
+  assert.equal(bub2.NameOfBubble, testMap.playersBubble(py2).NameOfBubble, "returned bubble 2 should have the same id as original")
 })
 
 
