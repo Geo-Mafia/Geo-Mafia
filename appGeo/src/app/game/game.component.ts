@@ -5,6 +5,7 @@ import {Chat, Message} from '../chat/chat.component'
 import { GameRules} from './game-rules.component'
 import {Snapshot} from '../snapshot/snapshot.component'
 import { databaseAdd, databaseGet, databaseEventListener } from '../../modules/database'
+import { borderTopRightRadiusProperty } from '@nativescript/core';
 //A CampusMap is a Map of the Bubbles that exist on campus
 
 const INACTIVE = 0
@@ -63,6 +64,7 @@ export class Game implements OnInit {
 
     this.snapshots = new Map()
     this.chats = new Map()
+    this.#scheduledJobs = new Map()
   }
 
   ngOnInit(): void {
