@@ -5,8 +5,10 @@ import { databaseAdd, databaseGet, databaseEventListener } from '../../modules/d
 import { firebase } from "@nativescript/firebase";
 import { fromObject, ScrollView, ScrollEventData} from '@nativescript/core';
 
+const ALIVE = 1
+
 @Component({
-  selector: 'Snapshot',
+  selector: 'SnapshotComponent',
   templateUrl: './snapshot.component.html',
   styleUrls: ['./snapshot.component.css']
 })
@@ -32,7 +34,11 @@ export class SnapshotComponent implements OnInit {
       if (value == null) {
         const bub0 = new Bubble();
         bub0.init_bubble("Bubble0", 0, 0, 0, 0);
-        let temp = new Snapshot(0, bub0)
+        let testPlayer = new Player();
+        let loc = {longitude:20, latitude:20};
+        testPlayer.init(12, "player1", loc, ALIVE);
+        bub0.addPlayer(testPlayer);
+        let temp = new Snapshot(0, bub0);
         snaps = [temp];
         databaseAdd('game/snapshots', snaps);
       } 
@@ -49,6 +55,13 @@ export class SnapshotComponent implements OnInit {
     console.log("data: " + JSON.stringify(data));
     let list = data["value"];
     this.snapshots = list;
+  }
+
+  onScroll(args: ScrollEventData){
+    const scrollView = args.object as ScrollView;
+
+    console.log("scrollX: " + args.scrollX);
+    console.log("scrollY: " + args.scrollY);
   }
 }
 
@@ -68,10 +81,10 @@ export class Snapshot {
       this.snapshot_time = init_date.toLocaleString(); //a string that shows the MM/DD/YYY, HH:MM:SS format
       this.snapshot_id = id;
       const player_copy  = content.playerArray.map(toCopy => {
-        return toCopy.username
+        return toCopy.username;
       })
-      this.snapshot_bubble_id = content.id
-      this.snapshot_content = player_copy
+      this.snapshot_bubble_id = content.id;
+      this.snapshot_content = player_copy;
     }
 
     getSnapshotID(){
