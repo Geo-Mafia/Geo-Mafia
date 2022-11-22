@@ -321,6 +321,12 @@ export class CampusMap implements OnInit {
     get PList(){
       return this.playerlist
     }
+
+    //for use in snapshot; returns the bubble a player is in
+    playersBubble(player : Player) {
+      this.playerInBubble(player)
+      return this.Display
+    }
 }
 
 export default CampusMap;
