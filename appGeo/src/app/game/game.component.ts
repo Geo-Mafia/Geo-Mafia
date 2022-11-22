@@ -3,7 +3,7 @@ import {Player, Killer, Civilian} from '../player/player.component';
 import{CampusMap} from '../map/campus-map.component'
 import {Chat, Message} from '../chat/chat.component'
 import { GameRules} from './game-rules.component'
-import {Snapshot} from '../snapshot/snapshot_class_declaration'
+import {Snapshot} from '../snapshot/snapshot.component'
 //import {scheduleJob, Job} from 'node-schedule'
 import { databaseAdd, databaseGet, databaseEventListener } from '../../modules/database'
 //A CampusMap is a Map of the Bubbles that exist on campus
