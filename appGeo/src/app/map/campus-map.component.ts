@@ -320,12 +320,8 @@ export class CampusMap implements OnInit {
 
     //for use in snapshot; returns the bubble a player is in
     playersBubble(player : Player) {
-      for (var x of this.MapOfCampus.entries()) {
-        if (x[1].inBubble(player)) {
-          return x[1]
-          //return this.MapOfCampus.get(x[0])
-        }
-      }
+      this.playerInBubble(player)
+      return this.Display
     }
 
 }
