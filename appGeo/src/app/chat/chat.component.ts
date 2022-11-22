@@ -7,7 +7,7 @@ const model = {
     msg_to_send : "What Message to Send"
 }
 
-const bindingContext = fromObject(model) 
+const bindingContext = fromObject(model)
 
 // onLoaded = args => {
 //     const page = args.object
@@ -75,7 +75,7 @@ export class ChatComponent implements OnInit {
 //   havePressedShift: boolean = false
   //#endregion
 
-  constructor() { 
+  constructor() {
     this.chats = [];
   }
 
@@ -83,6 +83,7 @@ export class ChatComponent implements OnInit {
     this.chats = this.getMsgs();
     databaseEventListener("game/chats", this.updateMsg.bind(this));
     console.log("got to chat");
+    console.log("Can we see the player location in chat? Here it is: ", global.player.location)
   }
 
   getMsgs() {
@@ -94,13 +95,13 @@ export class ChatComponent implements OnInit {
         msgs = [temp];
         databaseAdd('game/chats', msgs);
       } else {
-        msgs = value; 
+        msgs = value;
       }
       //console.log("all msgs: " + msgs);
     });
     console.log("in get msgs")
     return msgs;
-  } 
+  }
 
   updateMsg(data: object) {
     //get current chats
@@ -196,7 +197,7 @@ const SUCCESS = 10
 const FAILURE = -10
 const MAXMESSAGECOUNT = 100
 export class Message{
-    timestamp; //Formatting of "mm/dd/yy hh:mm" 
+    timestamp; //Formatting of "mm/dd/yy hh:mm"
     message_content;
     player_name;
 
@@ -265,7 +266,7 @@ export class Chat{
     getPlayerList(){
         return this.player_list;
     }
-    
+
     // Function that returns Player object that corresponds to the ID given as input
     getPlayer(id_to_find){
         for(var i = 0; i < this.player_list.length; i++){
@@ -366,10 +367,10 @@ export class Chat{
         //Will need to be taken care of by the UI
         return SUCCESS
     }
-} 
+}
 
 export class FullMessage{
-    timestamp; //Formatting of "mm/dd/yy hh:mm" 
+    timestamp; //Formatting of "mm/dd/yy hh:mm"
     message_id; //Still to determine if unique to within a Chat or not
     message_content;
     player_name;

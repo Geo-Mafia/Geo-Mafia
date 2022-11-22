@@ -3,7 +3,7 @@ import {Player, Killer, Civilian} from '../player/player.component';
 import{CampusMap} from '../map/campus-map.component'
 import {Chat, Message} from '../chat/chat.component'
 import { GameRules} from './game-rules.component'
-import {Snapshot} from '../snapshot/snapshot_class_declaration'
+import {Snapshot} from '../snapshot/snapshot.component'
 import {scheduleJob, Job} from 'node-schedule'
 import { databaseAdd, databaseGet, databaseEventListener } from '../../modules/database'
 //A CampusMap is a Map of the Bubbles that exist on campus
@@ -46,6 +46,7 @@ export class Game implements OnInit {
     this.gameRules = gameRules
     this.gameActive = INACTIVE;
 
+
     this.startTime = null;
     this.endTime = null
     
@@ -75,7 +76,7 @@ export class Game implements OnInit {
     let playerId = player.getUserID();
     this.players.set(playerId, player);
     console.log("End updatePlayerDatabase func");
-     
+
   }
 
   #startProcess() {
@@ -340,8 +341,8 @@ export class Game implements OnInit {
     return this.players.size
   }
 
-  /* playersRemaining(): 
-   * Functiont that iterates through the hash map of all Players to see how many are still alive 
+  /* playersRemaining():
+   * Functiont that iterates through the hash map of all Players to see how many are still alive
    */
   playersRemaining(){
     var count = 0;
@@ -378,7 +379,7 @@ export class Game implements OnInit {
         count = count + 1;
       }
     }
-  
+
     return count;
   }
 
