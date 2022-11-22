@@ -74,8 +74,8 @@ QUnit.test("testing playersBubble", function(assert){
   let bub1 = new Bubble(), bub2 = new Bubble
   bub1.init_bubble("id1", 1000, 1010, 1000, 1010)
   bub2.init_bubble("id2", 1020, 1030, 1020, 1030)
-  t_map.addToMap(bub1.id, bub1)
-  t_map.addToMap(bub2.id, bub2)
+  t_map.addToMap(bub1.NameOfBubble, bub1)
+  t_map.addToMap(bub2.NameOfBubble, bub2)
 
   let loc1 = {longitude:1009, latitude:1009}, loc2 = {longitude:1025, latitude:1025}
   let py1 = new Player(), py2 = new Player()
@@ -85,9 +85,9 @@ QUnit.test("testing playersBubble", function(assert){
   t_map.playerInBubble(py2)
 
   assert.true(bub1.inBubble(py1), "py1 should be in bub1")
-  assert.equal(bub1.id, testMap.playersBubble(py1).id, "returned bubble 1 should have the same id as original")
+  assert.equal(bub1.NameOfBubble, testMap.playersBubble(py1).NameOfBubble, "returned bubble 1 should have the same id as original")
   assert.true(bub2.inBubble(py2), "py2 should be in bub2")
-  assert.equal(bub2.id, testMap.playersBubble(py2).id, "returned bubble 2 should have the same id as original")
+  assert.equal(bub2.NameOfBubble, testMap.playersBubble(py2).NameOfBubble, "returned bubble 2 should have the same id as original")
 })
 
 
