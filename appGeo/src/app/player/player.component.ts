@@ -80,6 +80,7 @@ export class Player implements OnInit{
     }
     setLocation(latitude, longitude){
         this.location = new Location(latitude, longitude)
+        databaseUpdate(this.databasePath, this);
     }
     getAliveStatus(){
         return this.alive;
