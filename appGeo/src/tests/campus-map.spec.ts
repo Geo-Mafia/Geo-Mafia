@@ -70,12 +70,12 @@ QUnit.test("testing the display variable and playerInBubble", function(assert){
 })
 
 QUnit.test("testing playersBubble", function(assert){
-  assert.false(testbub1.inBubble(P1), "p1 should be in off bubble, not bub1")
-  assert.false(testbub2.inBubble(P1), "p1 should be in off bubble, not bub2")
-  assert.equal('The Outside of any assigned Campuse Buildings', testMap.playersBubble(P1).NameOfBubble, "returned bubble should be off campus")
-  
+  testMap.addToMap(testbub1.id, testbub1)
+  testMap.addToMap(testbub2.id, testbub2)
   P1.location = inTB1
   P2.location = inTB2
+  testMap.playerInBubble(P1)
+  testMap.playerInBubble(P2)
 
   //inBubble passes but not playersBubble
   assert.true(testbub1.inBubble(P1), "p1 should be in bub1")
