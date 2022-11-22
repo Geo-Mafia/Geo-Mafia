@@ -70,25 +70,18 @@ QUnit.test("testing the display variable and playerInBubble", function(assert){
 })
 
 QUnit.test("testing playersBubble", function(assert){
-  let t_map = new CampusMap()
-  let bub1 = new Bubble(), bub2 = new Bubble
-  bub1.init_bubble("id1", 1000, 1010, 1000, 1010)
-  bub2.init_bubble("id2", 1020, 1030, 1020, 1030)
-  t_map.addToMap(bub1.NameOfBubble, bub1)
-  t_map.addToMap(bub2.NameOfBubble, bub2)
-
-  let loc1 = {longitude:1009, latitude:1009}, loc2 = {longitude:1025, latitude:1025}
-  let py1 = new Player(), py2 = new Player()
-  py1.init(1, "py1", loc1, 1)
-  py2.init(2, "py2", loc2, 1)
-  t_map.playerInBubble(py1)
-  t_map.playerInBubble(py2)
+  assert.false(testbub1.inBubble(P1), "p1 should be in off bubble, not bub1")
+  assert.false(testbub2.inBubble(P1), "p1 should be in off bubble, not bub2")
+  assert.equal('The Outside of any assigned Campuse Buildings', testMap.playersBubble(P1).NameOfBubble, "returned bubble should be off campus")
+  
+  P1.location = inTB1
+  P2.location = inTB2
 
   //inBubble passes but not playersBubble
-  assert.true(bub1.inBubble(py1), "py1 should be in bub1")
-  assert.equal(bub1.NameOfBubble, testMap.playersBubble(py1).NameOfBubble, "returned bubble 1 should have the same id as original")
-  assert.true(bub2.inBubble(py2), "py2 should be in bub2")
-  assert.equal(bub2.NameOfBubble, testMap.playersBubble(py2).NameOfBubble, "returned bubble 2 should have the same id as original")
+  assert.true(testbub1.inBubble(P1), "p1 should be in bub1")
+  assert.equal(testbub1.NameOfBubble, testMap.playersBubble(P1).NameOfBubble, "returned bubble 1 should have the same id as original")
+  assert.true(testbub2.inBubble(P2), "p2 should be in bub2")
+  assert.equal(testbub2.NameOfBubble, testMap.playersBubble(P2).NameOfBubble, "returned bubble 2 should have the same id as original")
 })
 
 
