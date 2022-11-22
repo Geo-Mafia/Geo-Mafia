@@ -12,5 +12,23 @@
           "prefix": "ns"
       }
   },
+  "architect": {
+    "build": {
+      "builder": "@angular-builders/custom-webpack:browser",
+      "options": {
+        "customWebpackConfig": {
+          "path": "./webpack.config.js"
+        }
+      },
+      "serve": {
+        "builder": "@angular-builders/custom-webpack:dev-server",
+        "options": {
+          "customWebpackConfig": {
+            "path": "./webpack.config.js"
+          }
+        }
+      }
+    },
   "defaultProject": "appGeo"
+  }
 }
