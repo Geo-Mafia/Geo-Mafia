@@ -504,5 +504,3 @@ export class Game implements OnInit {
   }
 
 }
-
-
