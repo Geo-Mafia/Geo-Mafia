@@ -76,10 +76,8 @@ QUnit.test("testing playersBubble", function(assert){
   P2.location = inTB2
   testMap.playerInBubble(P2)
 
-  const retbub1 = testMap.playersBubble(P1)
-  const retbub2 = testMap.playersBubble(P2)
-  assert.equal(testbub1.id, retbub1.id, "returned bubble 1 should have the same id as original")
-  assert.equal(testbub2.id, retbub2.id, "returned bubble 2 should have the same id as original")
+  assert.equal(testbub1.id, testMap.playersBubble(P1).id, "returned bubble 1 should have the same id as original")
+  assert.equal(testbub2.id, testMap.playersBubble(P2).id, "returned bubble 2 should have the same id as original")
 })
 
 
