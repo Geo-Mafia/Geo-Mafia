@@ -322,7 +322,8 @@ export class CampusMap implements OnInit {
     playersBubble(player : Player) {
       for (var x of this.MapOfCampus.entries()) {
         if (x[1].inBubble(player)) {
-          return this.MapOfCampus.get(x[0])
+          return x[1]
+          //return this.MapOfCampus.get(x[0])
         }
       }
     }
