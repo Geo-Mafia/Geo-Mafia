@@ -22,6 +22,7 @@ class Location{
   var inTB2 = new Location(8, 18)
   var notInB = new Location(20, 40)
 
+
 //Our test Player going through these locations
   var P1 = new Player()
   P1.init(1, "Player1", inTB1, 1)
