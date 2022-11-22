@@ -3,9 +3,7 @@ import {Bubble} from './map.component'
 import {Player} from '../player/player.component'
 import { push } from 'nativescript-plugin-firebase';
 
-/* ============== Off Campus Bubble ================*/
-var OffCampus = new Bubble()
-OffCampus.init_bubble('The Outside of any assigned Campuse Buildings', 0, 0, 0, 0)
+
 
 @Component({
   selector: 'campusMap',
@@ -19,9 +17,15 @@ export class CampusMap implements OnInit {
   public MapOfCampus: Map<string, Bubble>;
   public display: Bubble; //the CampusMap has a function inside to choose which Bubble the player will see to make things simpler
   public playerlist: Array<Player>;
+  public offcampus : Bubble // moved over the offcampus Bubble here
+
   constructor() {
-  //the MapOfCampus will be fully initialized on call, will need to make getters and setters
+  //the MapOfCampus will be fully initialized on when called in game class OnInit will need to use getters and setters
     this.MapOfCampus = new Map<string, Bubble>;
+    /* ============== Off Campus Bubble ================*/
+    var OffCampus = new Bubble()
+    OffCampus.init_bubble('The Outside of any assigned Campuse Buildings', 0, 0, 0, 0)
+    this.offcampus = OffCampus
   }
   ngOnInit() : void {
 
@@ -277,9 +281,9 @@ export class CampusMap implements OnInit {
         this.checkBubble(bubb, pToCheck)
       }
       if (!this.display.playerArray.includes(pToCheck) && pToCheck.getAliveStatus()){
-        OffCampus.addPlayer(pToCheck)
-        this.display = OffCampus
-        this.playerlist = OffCampus.playerArray
+        this.offcampus.addPlayer(pToCheck)
+        this.display = this.offcampus
+        this.playerlist = this.offcampus.playerArray
       }
     }
 
@@ -289,18 +293,18 @@ export class CampusMap implements OnInit {
       //when this is called on a bubble if true will change the bubble to display to the Player
       if(checkIfIn.inBubble(pToCheck) && checkIfIn.List.has(pToCheck.userID)){
         if (!pToCheck.alive){
-          this.display = new Bubble()
-          this.playerlist = []
           checkIfIn.removePlayer(pToCheck)
+          this.display = checkIfIn
+          this.playerlist = checkIfIn.playerArray
           return
         }
       } else if(checkIfIn.inBubble(pToCheck) && !checkIfIn.List.has(pToCheck.userID)){ //should have more logic to remove a player that is in said bubble List but not in the bubble boundary
-        if (OffCampus.List.has(pToCheck.userID)){
-          OffCampus.removePlayer(pToCheck)
+        if (this.offcampus.List.has(pToCheck.userID)){
+          this.offcampus.removePlayer(pToCheck)
         }
         if (!pToCheck.alive){
-          this.display = new Bubble()
-          this.playerlist = []
+          this.display = checkIfIn
+          this.playerlist = checkIfIn.playerArray
           return
         }else {
           checkIfIn.addPlayer(pToCheck)
@@ -323,7 +327,6 @@ export class CampusMap implements OnInit {
       this.playerInBubble(player)
       return this.Display
     }
-
 }
 
 export default CampusMap;
