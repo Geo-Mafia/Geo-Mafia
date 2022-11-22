@@ -321,7 +321,15 @@ export class CampusMap implements OnInit {
     //for use in snapshot
     playersBubble(player : Player) {
       let b_name: string
-      this.MapOfCampus.forEach((value: Bubble)=>{if (value.inBubble(player)) {b_name = value.NameOfBubble.slice(0)}})
+      const result = Array.from(this.MapOfCampus.values())
+      const res_len = result.length
+      for (var i = 0; i < res_len; i++) {
+        if (result[i].inBubble(player)) {
+          b_name = result[i].NameOfBubble.slice(0)
+          break
+        }
+      }
+      //this.MapOfCampus.forEach((value: Bubble)=>{if (value.inBubble(player)) {b_name = value.NameOfBubble.slice(0)}})
       return this.MapOfCampus.get(b_name)
     }
 
