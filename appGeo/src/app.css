@@ -3,3 +3,56 @@
 
 /* Place any CSS rules you want to apply on both iOS and Android here.
 This is where the vast majority of your CSS code goes. */
+
+.ns-dark Page {
+  background-color: rgb(17, 9, 9);
+
+}
+.ns-dark ActionBar {
+  background-color: #0c0003;
+}
+.ns-dark StackLayout Button{
+  background-color: rgb(19, 10, 18);
+  border-color: rgb(211, 198, 201);
+  border-radius: 10;
+  border-width: 0.2;
+  color: whitesmoke;
+  font-size: large;
+  font-weight: bold;
+}
+.ns-dark StackLayout Button.home{
+  background-color: rgb(19, 10, 18);
+  border-color: rgb(211, 198, 201);
+  border-radius: 10;
+  border-width: 0.2;
+  color: whitesmoke;
+  font-size: 20;
+  font-weight: bold;
+}
+.ns-dark StackLayout Button:active {
+  background-color: whitesmoke;
+  border-color: darkolivegreen;
+  border-radius: 20;
+  border-width: 1;
+  color: lightseagreen;
+  font-size: 18;
+  font-weight: bold;
+}
+
+/* .ns-dark .btn {
+  margin: 0 auto;
+} */
+
+.ns-dark StackLayout Button:hover {
+  background-color: #3e8e41;
+}
+
+.ns-light #container {
+  background-color: rgb(246, 255, 250);
+}
+
+.ns-light #container ListView {
+  background-color: rgb(245, 250, 244);
+}
+
+

@@ -46,6 +46,7 @@ export class Game implements OnInit {
     this.gameRules = gameRules
     this.gameActive = INACTIVE;
 
+
     this.startTime = null;
     this.endTime = null
     
@@ -75,7 +76,7 @@ export class Game implements OnInit {
     let playerId = player.getUserID();
     this.players.set(playerId, player);
     console.log("End updatePlayerDatabase func");
-     
+
   }
 
   #startProcess() {
@@ -344,8 +345,8 @@ export class Game implements OnInit {
     return this.players.size
   }
 
-  /* playersRemaining(): 
-   * Functiont that iterates through the hash map of all Players to see how many are still alive 
+  /* playersRemaining():
+   * Functiont that iterates through the hash map of all Players to see how many are still alive
    */
   playersRemaining(){
     var count = 0;
@@ -382,7 +383,7 @@ export class Game implements OnInit {
         count = count + 1;
       }
     }
-  
+
     return count;
   }
 
