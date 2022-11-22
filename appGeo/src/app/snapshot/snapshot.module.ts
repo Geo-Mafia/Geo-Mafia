@@ -4,7 +4,6 @@ import { SnapshotComponent } from './snapshot.component';
 import { NativeScriptFormsModule } from "@nativescript/angular";
 import { NativeScriptModule } from "@nativescript/angular";
 
-
 @NgModule({
   imports: [
     CommonModule,
