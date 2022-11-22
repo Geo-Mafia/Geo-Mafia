@@ -4,8 +4,8 @@ import{CampusMap} from '../map/campus-map.component'
 import {Chat, Message} from '../chat/chat.component'
 import { GameRules} from './game-rules.component'
 import {Snapshot} from '../snapshot/snapshot.component'
-//import {scheduleJob, Job} from 'node-schedule'
 import { databaseAdd, databaseGet, databaseEventListener } from '../../modules/database'
+import { borderTopRightRadiusProperty } from '@nativescript/core';
 //A CampusMap is a Map of the Bubbles that exist on campus
 
 const INACTIVE = 0
@@ -20,6 +20,10 @@ const INPROGRESS = 5
 
 const START_JK = "start"
 const END_JK = "end"
+const VOTE_OPEN_JK = "vote"
+const VOTE_CLOSE_JK = "close"
+const SAFE_OVER_JK = "unsafe"
+const TICK_JK = "tick"
 
 @Component({
   selector: 'ns-game',
@@ -40,7 +44,7 @@ export class Game implements OnInit {
   snapshots: Map<number, Snapshot> //a hashmap of mapping snapshotID ints to snapshots
   chats: Map<number, Chat> //a hashmap of mapping chatsID ints to chats
 
-  //#scheduledJobs: Map<string, Job> //stores all scheduled Jobs
+  #scheduledJobs: Map<string, any> //stores all scheduled timers with the id of the timer stored
 
   constructor(gameRules: GameRules, gameMap: CampusMap, players: Map<number, Player>) {
     this.gameRules = gameRules
@@ -60,6 +64,7 @@ export class Game implements OnInit {
 
     this.snapshots = new Map()
     this.chats = new Map()
+    this.#scheduledJobs = new Map()
   }
 
   ngOnInit(): void {
@@ -77,6 +82,47 @@ export class Game implements OnInit {
     this.players.set(playerId, player);
     console.log("End updatePlayerDatabase func");
 
+  }
+
+  //schedules an event for a time in the future. Will run recursively if that time in the future is greater than setTimeout can support
+  scheduleEvent(date: Date, func: Function, key: string) {
+    var now = (new Date()).getTime()
+    var eventTime = date.getTime()
+    var diff = Math.max((eventTime - now), 0)
+
+    var timer;
+    if(diff > 0x7FFFFFFF) {
+      timer = setTimeout(function() {this.scheduleEvent(date, func, key)}, 0x7FFFFFFF);
+    } else {
+      timer = setTimeout(func, diff);
+    }
+    this.#scheduledJobs.set(key, timer);
+
+    return timer;
+  }
+
+  scheduleRecuring(firstDate: Date, loopTime: number, func: Function, key: string) {
+
+    const recFunc = function() {
+      func();
+      this.scheduleRecuring(new Date(firstDate.getTime() + loopTime), loopTime, func, key)
+    }
+
+    this.scheduleEvent(firstDate, recFunc, key)
+  }
+
+  //Cancels an event scheduled
+  cancelEvent(key: string) {
+    clearTimeout(this.#scheduledJobs.get(key))
+  }
+
+  gameTick() {
+    //All events that must run every tick
+
+    if(this.getGameActive() == ACTIVE) {
+      var now = (new Date()).getTime()
+      this.scheduleRecuring(new Date(now + 60000), 60000, function() {this.gameTick()}, TICK_JK)
+    }
   }
 
   #startProcess() {
@@ -116,14 +162,22 @@ export class Game implements OnInit {
       this.startTime = new Date();
 
       if(this.gameRules.isScheduledEnd) {
-        this.endTime = new Date(this.startTime.getTime() + 
-                                (this.gameRules.getGameLengthHours() * 60 * 60 * 1800))
-        /*const endJob = scheduleJob(this.getEndTime(), function() {this.#endProcess()})
-        this.#scheduledJobs.set(END_JK, endJob)
-        */
+        this.setEndTime(new Date(this.getStartTime().getTime() + 
+                                (this.gameRules.getGameLengthHours() * 60 * 60 * 1800)))
+        const endJob = this.scheduleEvent(this.getEndTime(), function() {this.#endProcess()}, END_JK)
+
       }
 
-      //TODO: this is where the 3 timers for voting will be set
+      //The three other game timers set
+      const voteTime = new Date(this.getStartTime().getTime() + this.gameRules.getVoteTime())
+      const voteCloseTime = new Date(voteTime.getTime() + this.gameRules.getVoteLength())
+      const safeOverTime = new Date(voteTime.getTime() + this.gameRules.getSafeLength())
+
+      const voteTimer = this.scheduleRecuring(voteTime, this.gameRules.getDayCycleLength(), function() {this.#voting_open()}, VOTE_OPEN_JK)
+      const voteCloseTimer = this.scheduleRecuring(voteCloseTime, this.gameRules.getDayCycleLength(), function() {this.#voting_close()}, VOTE_CLOSE_JK)
+      const safeOverTimer = this.scheduleRecuring(safeOverTime, this.gameRules.getDayCycleLength(), function() {this.#safetime_end()}, SAFE_OVER_JK)
+
+      this.#scheduledJobs.set(VOTE_OPEN_JK, voteTimer)
 
       this.#setGameActive(ACTIVE)
 
@@ -152,9 +206,6 @@ export class Game implements OnInit {
 
     return this.#startProcess();
 
-    //Randomly generate killer objects for 20% of the players and civilians for the rest
-    //Rebuild the players list with these objects
-    //TODO
   }
 
   scheduleStart(date: Date) {
@@ -163,20 +214,18 @@ export class Game implements OnInit {
           return FAILURE
       }
 
-      /*const job = scheduleJob(date, function() {this.#startProcess()});
-      this.#scheduledJobs.set(START_JK, job) //adds job to list of jobs running*/
+      const job = this.scheduleEvent(date, function() {this.#startProcess()}, START_JK);
+      this.#scheduledJobs.set(START_JK, job) //adds start job to list of jobs running
 
       this.#setGameScheduled(SCHEDULED)
       return SUCCESS;
   }
 
-  /*
   cancelScheduledStart() {
-      this.#scheduledJobs.get(START_JK).cancel()
+      this.cancelEvent(START_JK)
       this.#setGameScheduled(UNSCHEDULED)
       return SUCCESS;
   }
-  */
 
   winningCondition(){
     var killers_left = this.killersRemaining();
@@ -209,13 +258,15 @@ export class Game implements OnInit {
   #endProcess() {
     this.#setGameActive(INACTIVE)
 
-    /*
     if(this.gameRules.isScheduledEnd()) {
-      this.#scheduledJobs.get(END_JK).cancel()
+      this.cancelEvent(END_JK)
     }
-    */
     
-    //TODO: This is where the timers for the voting will be disable
+    //disable all game timers
+    this.cancelEvent(VOTE_OPEN_JK)
+    this.cancelEvent(VOTE_CLOSE_JK)
+    this.cancelEvent(SAFE_OVER_JK)
+    this.cancelEvent(TICK_JK)
     
     return this.winningCondition();
   }
@@ -453,5 +504,3 @@ export class Game implements OnInit {
   }
 
 }
-
-
