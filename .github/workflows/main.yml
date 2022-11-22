@@ -9,8 +9,8 @@ on:
       - main
 
 jobs:
-  ios_build_test:
-    name: build test on macos
+  run_test:
+    name: running test functions on macos
     runs-on: macos-12
     steps:
       - uses: maxim-lobanov/setup-xcode@v1
@@ -39,19 +39,57 @@ jobs:
       
       - name: install nativescript
         run: npm install -g nativescript
-      
+
       - name: tns build
         run: tns build ios
         working-directory: appGeo/
-        
-      - name: tns run ios
-        run: tns run ios --justlaunch
-        working-directory: appGeo/
-      
+
       - name: tns test build
         run: tns test init --framework qunit
         working-directory: appGeo/
       
-      - name: tns test run
+      - name: tns test run  
         run: tns test ios --justlaunch
+        working-directory: appGeo/
+
+  build_app:
+    name: building app and launching on macos
+    runs-on: macos-12
+    steps:
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      - uses: actions/setup-node@v3
+        with:
+          node-version: latest
+      - name: Checkout
+        uses: actions/checkout@v1
+    
+      - name: install cocoapods
+        run: sudo gem install cocoapods
+        
+      - name: install xcodeproj
+        run: sudo gem install xcodeproj
+        
+      - name: pip upgrade
+        run: sudo pip install --upgrade pip
+        
+      - name: install matplotlib
+        run: pip install --user --upgrade matplotlib
+        
+      - name: install six
+        run: pip install six
+      
+      - name: install nativescript
+        run: npm install -g nativescript
+
+      - name: tns build ios
+        run: tns build ios
+        working-directory: appGeo/
+        
+      - name: view devices
+        run: xcrun simctl list devices
+        
+      - name: tns run ios
+        run: tns run ios --justlaunch
         working-directory: appGeo/
