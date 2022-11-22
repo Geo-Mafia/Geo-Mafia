@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { VotingComponent } from './voting.component';
+import { LocationComponent } from './location.component';
 import { NativeScriptFormsModule } from "@nativescript/angular";
 import { NativeScriptModule } from "@nativescript/angular";
 
@@ -12,7 +12,7 @@ import { NativeScriptModule } from "@nativescript/angular";
     NativeScriptFormsModule
   ],
   declarations: [
-    VotingComponent
+    LocationComponent
   ]
 })
-export class VotingModule {}
+export class LocationModule {}
