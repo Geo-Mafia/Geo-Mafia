@@ -16,15 +16,11 @@ jobs:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: latest-stable
-
+      - uses: actions/setup-node@v3
+        with:
+          node-version: latest
       - name: Checkout
         uses: actions/checkout@v1
-      
-      - name: brew update
-        run: brew update
-      
-      - name: Install node
-        run: brew install node
     
       - name: install cocoapods
         run: sudo gem install cocoapods
