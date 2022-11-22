@@ -27,7 +27,7 @@ export class Player implements OnInit{
     alive: number // A Boolean
     votes: number // An int
     chat_lists // List of Chat Objects that Player is a part of
-
+    isAdmin : boolean // boolean whether this player is an admin (as in responsible for running the game start function)
     
     
     //edited by Kyu
@@ -47,6 +47,7 @@ export class Player implements OnInit{
         this.votes = 0;
         this.chat_lists = new Array();
         this.databasePath = "";
+        this.isAdmin = false;
         
     }
     //init(userID: number, userIDString: string, username: string, email:string, location, alive: number){
@@ -220,6 +221,7 @@ export class Player implements OnInit{
         Voted.increaseVoteCount();
 
         this.have_already_voted = true;
+        databaseUpdate(this.databasePath, this)
         return SUCCESS;
     }
 

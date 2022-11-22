@@ -97,6 +97,11 @@ export class HomeComponent implements OnInit {
               global.player.userIDString = result["id"];
               //global.player.username = result["displayName"];
               global.player.email = result["userToken"];
+              
+
+              //admin if the player is the first one registered
+              global.player.isAdmin = global.playerlist.size == 0 ? true : false;
+
               let location = 0; //TODO: change location to be actual later
               
               //TODO UPDATE USERID NUMBER

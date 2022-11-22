@@ -61,6 +61,7 @@ export class Game implements OnInit {
     this.chats = new Map()
   }
 
+  
   ngOnInit(): void {
         // add event listener to update each player
         this.players.forEach((player: Player, key: number) => {
@@ -69,11 +70,15 @@ export class Game implements OnInit {
   }
 
   updatePlayerDatabase(data: object) {
+    // Update global player field
+    global.player = data["value"];
     // Need to change to hashmap
     let player = data["value"];
     console.log("updated player obj: " + JSON.stringify(player));
     let playerId = player.getUserID();
     this.players.set(playerId, player);
+    // Update global playerlist
+    global.playerlist.set(playerId, player);
     console.log("End updatePlayerDatabase func");
      
   }
@@ -325,6 +330,7 @@ export class Game implements OnInit {
 
   #setPlayers(players: Map<number, Player>) {
     this.players = players
+    global.playerlist = players;
   }
 
   getPlayer(playerID) {
@@ -333,6 +339,7 @@ export class Game implements OnInit {
 
   addPlayer(player) {
       this.players.set(player.getUserID(), player)
+      global.playerlist.set(player.getUserID(), player);
       return SUCCESS;
   }
 

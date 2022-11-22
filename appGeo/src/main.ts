@@ -3,9 +3,12 @@ import { firebase } from "@nativescript/firebase";
 import { AppModule } from './app/app.module';
 import { databaseInit, databaseGet } from './modules/database';
 import { Player } from './app/player/player.component';
+import { Game } from './app/game/game.component';
 
 global.loggedIn = false;
 global.player = new Player();
+let players = new Map<number, Player>();
+global.playerlist = players;
 
 
 console.log('runnnnnnnnnnnnnnnnnnnnning');
