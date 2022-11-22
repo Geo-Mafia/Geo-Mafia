@@ -79,6 +79,13 @@ jobs:
       - name: install nativescript
         run: npm install -g nativescript
 
+      - name: tns build ios
+        run: tns build ios
+        working-directory: appGeo/
+        
+      - name: view devices
+        run: xcrun simctl list devices
+        
       - name: tns run ios
         run: tns run ios --justlaunch
         working-directory: appGeo/
