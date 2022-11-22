@@ -318,7 +318,7 @@ export class CampusMap implements OnInit {
       return this.playerlist
     }
 
-    //for use in snapshot
+    //for use in snapshot; returns the bubble a player is in
     playersBubble(player : Player) {
       let b_name: string
       const result = Array.from(this.MapOfCampus.values())
@@ -329,7 +329,6 @@ export class CampusMap implements OnInit {
           break
         }
       }
-      //this.MapOfCampus.forEach((value: Bubble)=>{if (value.inBubble(player)) {b_name = value.NameOfBubble.slice(0)}})
       return this.MapOfCampus.get(b_name)
     }
 

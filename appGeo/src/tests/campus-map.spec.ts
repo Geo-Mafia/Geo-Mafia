@@ -72,12 +72,12 @@ QUnit.test("testing the display variable and playerInBubble", function(assert){
 QUnit.test("testing playersBubble", function(assert){
   let t_map = new CampusMap()
   let bub1 = new Bubble(), bub2 = new Bubble
-  bub1.init_bubble("id1", 0, 10, 0, 10)
-  bub2.init_bubble("id2", 20, 30, 20, 30)
+  bub1.init_bubble("id1", 1000, 1010, 1000, 1010)
+  bub2.init_bubble("id2", 1020, 1030, 1020, 1030)
   t_map.addToMap(bub1.id, bub1)
   t_map.addToMap(bub2.id, bub2)
 
-  let loc1 = {longitude:9, latitude:9}, loc2 = {longitude:25, latitude:25}
+  let loc1 = {longitude:1009, latitude:1009}, loc2 = {longitude:1025, latitude:1025}
   let py1 = new Player(), py2 = new Player()
   py1.init(1, "py1", loc1, 1)
   py2.init(2, "py2", loc2, 1)
