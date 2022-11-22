@@ -1,5 +1,6 @@
+"use strict"
+
 const webpack = require("@nativescript/webpack");
-const resolve = require("./webpack.resolve")
 
 const mode = process.env.NODE_ENV === "production" ? "production" : "development";
 
