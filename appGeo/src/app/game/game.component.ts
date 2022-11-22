@@ -99,6 +99,16 @@ export class Game implements OnInit {
     return timer;
   }
 
+  scheduleRecuring(firstDate: Date, loopTime: number, func: Function, key: string) {
+
+    const recFunc = function() {
+      func();
+      this.scheduleRecuring(new Date(firstDate.getTime() + loopTime), loopTime, func, key)
+    }
+
+    this.scheduleEvent(firstDate, recFunc, key)
+  }
+
   //Cancels an event scheduled
   cancelEvent(key: string) {
     clearTimeout(this.#scheduledJobs.get(key))
@@ -109,7 +119,7 @@ export class Game implements OnInit {
 
     if(this.getGameActive() == ACTIVE) {
       var now = (new Date()).getTime()
-      this.scheduleEvent(new Date(now + 60000), function() {this.gameTick()}, TICK_JK)
+      this.scheduleRecuring(new Date(now + 60000), 60000, function() {this.gameTick()}, TICK_JK)
     }
   }
 
@@ -161,9 +171,9 @@ export class Game implements OnInit {
       const voteCloseTime = new Date(voteTime.getTime() + this.gameRules.getVoteLength())
       const safeOverTime = new Date(voteTime.getTime() + this.gameRules.getSafeLength())
 
-      const voteTimer = this.scheduleEvent(voteTime, function() {this.#voting_open()}, VOTE_OPEN_JK)
-      const voteCloseTimer = this.scheduleEvent(voteCloseTime, function() {this.#voting_close()}, VOTE_CLOSE_JK)
-      const safeOverTimer = this.scheduleEvent(safeOverTime, function() {this.#safetime_end()}, SAFE_OVER_JK)
+      const voteTimer = this.scheduleRecuring(voteTime, this.gameRules.getDayCycleLength(), function() {this.#voting_open()}, VOTE_OPEN_JK)
+      const voteCloseTimer = this.scheduleRecuring(voteCloseTime, this.gameRules.getDayCycleLength(), function() {this.#voting_close()}, VOTE_CLOSE_JK)
+      const safeOverTimer = this.scheduleRecuring(safeOverTime, this.gameRules.getDayCycleLength(), function() {this.#safetime_end()}, SAFE_OVER_JK)
 
       this.#scheduledJobs.set(VOTE_OPEN_JK, voteTimer)
 
