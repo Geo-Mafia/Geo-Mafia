@@ -1,5 +1,4 @@
 const webpack = require("@nativescript/webpack");
-const Dotenv = require("dotenv-webpack")
 
 module.exports = (env) => {
 	webpack.init(env);
@@ -7,5 +6,9 @@ module.exports = (env) => {
 	// Learn how to customize:
 	// https://docs.nativescript.org/webpack
 
-	return webpack.resolveConfig();
+	return webpack.resolveConfig({
+		resolve: {
+			fallback: { "fs": false }
+	  }
+	});
 };
