@@ -29,11 +29,10 @@ const routes: Routes = [
   {path: "Voting", component: VotingComponent},
   {path: "Chat", component: ChatComponent},
   {path: "Location", component: LocationComponent},
+  { path: 'campusMap', component: CampusMap, pathMatch: 'full'},
   { path: '',
     component: HomeComponent
   },
-  { path: 'campusMap', component: CampusMap, pathMatch: 'full'},
-
 ]
 
 

@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - main
-      - fixing_map_and_snapshot_issues
+      - map_location_additions
   pull_request:
     branches:
       - main
