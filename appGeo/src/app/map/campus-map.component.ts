@@ -276,7 +276,7 @@ export class CampusMap implements OnInit {
       for (let bubb of this.MapOfCampus.values()) {
         this.checkBubble(bubb, pToCheck)
       }
-      if (!this.display.playerArray.includes(pToCheck)){
+      if (!this.display.playerArray.includes(pToCheck) && pToCheck.getAliveStatus()){
         OffCampus.addPlayer(pToCheck)
         this.display = OffCampus
         this.playerlist = OffCampus.playerArray
