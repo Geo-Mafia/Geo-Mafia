@@ -4,6 +4,7 @@ on:
     branches:
       - main
       - map_location_additions
+      - add-map-method
   pull_request:
     branches:
       - main
