@@ -40,6 +40,10 @@ jobs:
       - name: install nativescript
         run: npm install -g nativescript
 
+      - name: tns build
+        run: tns build ios
+        working-directory: appGeo/
+
       - name: tns test build
         run: tns test init --framework qunit
         working-directory: appGeo/
