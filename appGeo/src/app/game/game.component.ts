@@ -455,7 +455,7 @@ export class Game implements OnInit {
 
   addPlayer(player) {
       this.players.set(player.getUserID(), player)
-      global.playerlist.set(player.getUserID(), player);
+      //global.playerlist.set(player.getUserID(), player);
       return SUCCESS;
   }
 
