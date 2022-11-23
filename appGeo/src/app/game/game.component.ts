@@ -4,7 +4,7 @@ import{CampusMap} from '../map/campus-map.component'
 import {Chat, Message} from '../chat/chat.component'
 import { GameRules} from './game-rules.component'
 import {Snapshot} from '../snapshot/snapshot.component'
-import { databaseAdd, databaseGet, databaseEventListener } from '../../modules/database'
+import { databaseAdd, databaseGet, databaseEventListener, databaseUpdate } from '../../modules/database'
 import { borderTopRightRadiusProperty } from '@nativescript/core';
 //A CampusMap is a Map of the Bubbles that exist on campus
 
@@ -142,6 +142,10 @@ export class Game implements OnInit {
         let player = playerArr[rand]
         let killer = new Killer()
         killer.init(player.getUserID(), player.getUsername(), player.getLocation(), player.getAliveStatus())
+        killer.databasePath = player.getDatabasePath()
+
+        roledPlayers.set(killer.getUserID(), killer)
+        databaseUpdate(killer.getDatabasePath(), killer)
 
         roledPlayers.set(killer.getUserID(), killer)
         playerArr.splice(rand, 1)
@@ -152,8 +156,10 @@ export class Game implements OnInit {
         let player = playerArr[i]
         let civilian = new Civilian()
         civilian.init(player.getUserID(), player.getUsername(), player.getLocation(), player.getAliveStatus())
+        civilian.databasePath = player.getDatabasePath()
 
         roledPlayers.set(civilian.getUserID(), civilian)
+        databaseUpdate(civilian.getDatabasePath(), civilian)
       }
 
       //replace unroled players with roles
@@ -178,6 +184,8 @@ export class Game implements OnInit {
       const safeOverTimer = this.scheduleRecuring(safeOverTime, this.gameRules.getDayCycleLength(), function() {this.#safetime_end()}, SAFE_OVER_JK)
 
       this.#scheduledJobs.set(VOTE_OPEN_JK, voteTimer)
+      this.#scheduledJobs.set(VOTE_CLOSE_JK, voteCloseTimer)
+      this.#scheduledJobs.set(SAFE_OVER_JK, safeOverTimer)
 
       this.#setGameActive(ACTIVE)
 
