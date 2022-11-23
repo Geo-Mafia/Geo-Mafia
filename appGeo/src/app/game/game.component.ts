@@ -8,7 +8,7 @@ import { databaseAdd, databaseGet, databaseEventListener, databaseUpdate } from 
 import { borderTopRightRadiusProperty } from '@nativescript/core';
 //A CampusMap is a Map of the Bubbles that exist on campus
 
-const MAP_PATH = "src/game/map"
+const MAP_PATH = "/game/map"
 const SETTINGS_PATH = "src/settings/"
 const START_TIME_PATH = "src/settings/startTime"
 const END_TIME_PATH = "src/settings/endTime"
