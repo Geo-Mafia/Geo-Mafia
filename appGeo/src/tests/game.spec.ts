@@ -1,5 +1,5 @@
 import {Chat} from '../app/chat/chat.component';
-import {Snapshot} from '../app/snapshot/snapshot_class_declaration';
+import {Snapshot} from '../app/snapshot/snapshot.component';
 import {Player, Killer, Civilian} from '../app/player/player.component';
 import {Game} from '../app/game/game.component';
 import {Bubble} from '../app/map/map.component'

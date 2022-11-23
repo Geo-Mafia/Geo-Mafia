@@ -1,7 +1,7 @@
 import { assert } from 'qunit';
 import {Bubble} from '../app/map/map.component'
 import {Player} from '../app/player/player.component';
-import {Snapshot} from '../app/snapshot/snapshot_class_declaration'
+import {Snapshot} from '../app/snapshot/snapshot.component'
 
 const ALIVE = 1
 

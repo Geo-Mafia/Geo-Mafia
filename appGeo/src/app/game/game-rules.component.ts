@@ -43,7 +43,7 @@ export class GameRules {
     safeLength: number //the number of minutes kills aren't allowed each cycle
     voteLength: number //the number of minutes at the begining of safe time voting is allowed
     
-    //number of minutes after midnight
+    //number of minutes after game start
     voteTime: number //number of minutes 
 
     maxSoloKills: number //number of kills a single killer can do a day

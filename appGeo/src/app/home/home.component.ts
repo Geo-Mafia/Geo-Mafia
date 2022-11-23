@@ -3,9 +3,6 @@ import {Bubble} from '../map/map.component'
 import {Player} from '../player/player.component'
 import {CampusMap} from '../map/campus-map.component'
 import { Chat } from '../chat/chat.component'
-/*I'm adding the Chat Class here so that it can be represented on the home page
- *Because I cannot run the app on ios at the moment I cannot see anything *outside of homepage, but recommend adding a button that changes the page to *chat; the goToChat() function added here will do that just make a button for it.
- */
 
 import { Router } from '@angular/router'
 import { GoogleLogin } from 'nativescript-google-login';
@@ -82,11 +79,11 @@ export class HomeComponent implements OnInit {
     }
     else {
       GoogleLogin.login(result=>{
-        
+
         if (result["code"] != -2) {
-          
+
           //console.log(result);
-          let userID : string = result["id"]; 
+          let userID : string = result["id"];
           //console.log('/game/users/' + userID)
           firebase.getValue('/game/users/' + userID)
           .then(res =>{
