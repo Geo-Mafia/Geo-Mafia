@@ -11,9 +11,10 @@ import * as application from "@nativescript/core/application";
 import { isIOS } from "@nativescript/core/platform";
 import { ChatComponent } from "../chat/chat.component";
 import { firebase } from "@nativescript/firebase"
-import { databaseAdd, databaseGet } from "../../modules/database"
+import { databaseAdd, databaseEventListener, databaseGet } from "../../modules/database"
 import { toUIString } from '@nativescript/core/utils/types'
 
+const VOTE_OPEN_PATH = "src/settings/voteOpen"
 
 @Component({
   selector: 'Home',
@@ -76,6 +77,8 @@ export class HomeComponent implements OnInit {
                   clearTimeout(v)
               },500)
       }
+
+    databaseEventListener(VOTE_OPEN_PATH, this.updateVoteOpenDatabase.bind(this))
   }
 
   login() {
@@ -165,6 +168,10 @@ export class HomeComponent implements OnInit {
         }
       });
     }
+  }
+
+  updateVoteOpenDatabase(data: object) {
+    this.votingOpen = data["value"]
   }
 
 
