@@ -83,20 +83,9 @@ export class SnapshotComponent implements OnInit {
         databaseAdd('game/snapshots', this.snapshots);
       } 
       else {
-        //cm = value;
-        //let new_bub = new Bubble();
-        //new_bub = cm.playersBubble(global.player);
-        //var new_snap = new Snapshot(this.snapshots.length, new_bub);
-        //this.snapshots.push(new_snap);
-
-        const test_bub0 = new Bubble();
-        test_bub0.init_bubble("test_Bubble_without_map_in_db", 0, 0, 0, 0);
-        let testPlayer = new Player();
-        let loc = {longitude:20, latitude:20};
-        testPlayer.init(12, "player1", loc, ALIVE);
-        test_bub0.addPlayer(testPlayer);
-
-        var new_snap = new Snapshot(this.snapshots.length, test_bub0);
+        cm = value;
+        var new_bub = cm.playersBubble(global.player);
+        var new_snap = new Snapshot(this.snapshots.length, new_bub);
         this.snapshots.push(new_snap);
 
         console.log("new snapshot ID:", new_snap.snapshot_id)
