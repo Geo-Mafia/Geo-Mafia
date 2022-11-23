@@ -52,7 +52,7 @@ export class Bubble{
     inBubble(player: Player){
       //longitude tracks x, latitiude tracks y
       return player.location.longitude >= this.xLb && player.location.longitude <= this.xUb &&
-          player.location.latitude >= this. yLb && player.location.latitude <= this.yUb;
+          player.location.latitude >= this.yLb && player.location.latitude <= this.yUb;
     }
 
     // returns list of players in bubble
