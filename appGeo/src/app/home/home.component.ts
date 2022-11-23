@@ -26,14 +26,17 @@ export class HomeComponent implements OnInit {
 
   public isKiller: Boolean
   public votingOpen: Boolean
+  public component_isLoggedIn: Boolean
 
 
   textChange() {
     if (global.isLoggedIn) {
       this.text = "You are logged in as: " + global.player.username;
+      this.component_isLoggedIn = true;
     }
     else {
       this.text = "Google Sign-In";
+      this.component_isLoggedIn = false;
     }
   }
 
@@ -69,6 +72,7 @@ export class HomeComponent implements OnInit {
 
   login() {
     if (global.loggedIn) {
+      this.component_isLoggedIn = true;
 
       let options = {
         title: "Error",
@@ -113,6 +117,7 @@ export class HomeComponent implements OnInit {
                 //TODO UPDATE USERID NUMBER
                 global.player.init(0, result["displayName"], location, 1);
                 global.player.databasePath = "/game/users/" + global.player.userIDString;
+                this.component_isLoggedIn = true;
                 //console.log(global.player);
     
                 databaseAdd('/game/users/' + userID, global.player)
@@ -127,10 +132,12 @@ export class HomeComponent implements OnInit {
               console.log("user already exists, will not add new data but will pull from the database");
               //console.log(global.player);
               global.result = res;
+              this.component_isLoggedIn = true;
             }
           }).then(res2 => {
             if(global.player.username != "") {
               global.loggedIn = true;
+              this.component_isLoggedIn = true;
               console.log(global.loggedIn);
             }
           }).then(res3 => {
