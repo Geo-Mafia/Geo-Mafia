@@ -1,4 +1,5 @@
 import {Bubble} from '../map/map.component';
+import {CampusMap} from '../map/campus-map.component';
 import { Player } from '../player/player.component';
 import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core';
 import { databaseAdd, databaseGet, databaseEventListener } from '../../modules/database'
@@ -46,7 +47,7 @@ export class SnapshotComponent implements OnInit {
         snaps = value; 
       }
     });
-    console.log("in get msgs")
+    console.log("in get snapshots")
     return snaps;
   } 
 
@@ -55,6 +56,46 @@ export class SnapshotComponent implements OnInit {
     console.log("data: " + JSON.stringify(data));
     let list = data["value"];
     this.snapshots = list;
+  }
+
+  createSnapshot(){
+    console.log("Inside the create snapshot function")
+    let cm = new CampusMap();
+    databaseGet('game/map').then(value => {
+      console.log("val: " + JSON.stringify(value));
+    
+      if (value == null) {
+        const test_bub0 = new Bubble();
+        test_bub0.init_bubble("test_Bubble_without_map_in_db", 0, 0, 0, 0);
+        let testPlayer = new Player();
+        let loc = {longitude:20, latitude:20};
+        testPlayer.init(12, "player1", loc, ALIVE);
+        test_bub0.addPlayer(testPlayer);
+
+        var new_snap = new Snapshot(this.snapshots.length, test_bub0);
+        this.snapshots.push(new_snap);
+
+        console.log("new snapshot ID:", new_snap.snapshot_id)
+        console.log("new snapshot Bubble ID:", new_snap.snapshot_bubble_id)
+        console.log("new snapshot time:", new_snap.snapshot_time)
+        console.log("new snapshot content:", new_snap.snapshot_content)
+
+        databaseAdd('game/snapshots', this.snapshots);
+      } 
+      else {
+        cm = value;
+        var new_bub = cm.playersBubble(global.player);
+        var new_snap = new Snapshot(this.snapshots.length, new_bub);
+        this.snapshots.push(new_snap);
+
+        console.log("new snapshot ID:", new_snap.snapshot_id)
+        console.log("new snapshot Bubble ID:", new_snap.snapshot_bubble_id)
+        console.log("new snapshot time:", new_snap.snapshot_time)
+        console.log("new snapshot content:", new_snap.snapshot_content)
+
+        databaseAdd('game/snapshots', this.snapshots);
+      }
+    });
   }
 
   onScroll(args: ScrollEventData){
