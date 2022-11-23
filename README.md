@@ -17,7 +17,7 @@ firebase. With these components integrated in firebase, we were able to fully im
 1. Killing Players UI - Jose
 2. Voting for Player to kick off at the end of the day UI - Jose
 3. Chat Functionality UI - Kyu & Jose
-4. Snapshot availability UI - Annabelle & Fatimah
+4. Snapshot availability UI - Annabelle
 5. Map Location UI - Nanci & Fatimah
 6. Geolocation getter UI/Code - Jose
 7. Ensure user logged in before being able to take action UI - Kyu & Jose
