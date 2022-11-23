@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, NgZone } from '@angular/core'
 import {Bubble} from '../map/map.component'
 import {Player} from '../player/player.component'
 import {CampusMap} from '../map/campus-map.component'
 import { Chat } from '../chat/chat.component'
+import { Observable } from 'rxjs'
 
 import { Router } from '@angular/router'
 import { GoogleLogin } from 'nativescript-google-login';
@@ -27,28 +28,45 @@ export class HomeComponent implements OnInit {
   public isKiller: Boolean
   public votingOpen: Boolean
   public component_isLoggedIn: Boolean
+  public is_component_loggedIn: Observable<Boolean>
+  public is_component_not_loggedIn: Observable<Boolean>
 
 
   textChange() {
     if (global.isLoggedIn) {
       this.text = "You are logged in as: " + global.player.username;
-      this.component_isLoggedIn = true;
+      console.log("Calling the Home Component")
+      // this.zone.run(() => {this.component_isLoggedIn = true})
+      // this.is_component_loggedIn = new Observable(observer=>observer.next(true));
+      // this.is_component_not_loggedIn = new Observable(observer=>observer.next(false));
     }
     else {
       this.text = "Google Sign-In";
-      this.component_isLoggedIn = false;
+      console.log("Calling the Home Component")
+      // this.zone.run(() => this.component_isLoggedIn = false)
+      // this.is_component_loggedIn = new Observable(observer=>observer.next(false));
+      // this.is_component_not_loggedIn = new Observable(observer=>observer.next(true));
     }
   }
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private zone: NgZone) {
     // Use the component constructor to inject providers.
-
-
+    if(global.loggedIn){
+      console.log("Inside the globabl is logged in case")
+      this.is_component_loggedIn = new Observable(observer=>observer.next(true));
+      this.is_component_not_loggedIn = new Observable(observer=>observer.next(false));
+    }
+    else{
+      console.log("Insde the globabl is not logged in case")
+      this.is_component_loggedIn = new Observable(observer=>observer.next(false));
+      this.is_component_not_loggedIn = new Observable(observer=>observer.next(true));
+    }
   }
 
   ngOnInit(): void {
     this.isKiller = true;   //This information should be received from Database with Player Info!!!
     this.votingOpen = false; //This information should be received from Database with Game Info!!!
+    console.log("Can we see this when we exit the page and then come back inside the page")
     // Init your component properties here.
     // Going to initialize a list of bubbles here;
     var map = new CampusMap;
@@ -72,7 +90,9 @@ export class HomeComponent implements OnInit {
 
   login() {
     if (global.loggedIn) {
-      this.component_isLoggedIn = true;
+      this.zone.run(() => this.component_isLoggedIn = true)
+      this.is_component_loggedIn = new Observable(observer=>observer.next(true));
+      this.is_component_not_loggedIn = new Observable(observer=>observer.next(false));
 
       let options = {
         title: "Error",
@@ -117,7 +137,9 @@ export class HomeComponent implements OnInit {
                 //TODO UPDATE USERID NUMBER
                 global.player.init(0, result["displayName"], location, 1);
                 global.player.databasePath = "/game/users/" + global.player.userIDString;
-                this.component_isLoggedIn = true;
+                this.zone.run(() => this.component_isLoggedIn = true)
+                this.is_component_loggedIn = new Observable(observer=>observer.next(true));
+                this.is_component_not_loggedIn = new Observable(observer=>observer.next(false));
                 //console.log(global.player);
     
                 databaseAdd('/game/users/' + userID, global.player)
@@ -132,16 +154,21 @@ export class HomeComponent implements OnInit {
               console.log("user already exists, will not add new data but will pull from the database");
               //console.log(global.player);
               global.result = res;
-              this.component_isLoggedIn = true;
+              this.zone.run(() => this.component_isLoggedIn = true)
+              this.is_component_loggedIn = new Observable(observer=>observer.next(true));
+              this.is_component_not_loggedIn = new Observable(observer=>observer.next(false));
             }
           }).then(res2 => {
             if(global.player.username != "") {
               global.loggedIn = true;
-              this.component_isLoggedIn = true;
+              this.zone.run(() => this.component_isLoggedIn = true)
+              this.is_component_loggedIn = new Observable(observer=>observer.next(true));
+              this.is_component_not_loggedIn = new Observable(observer=>observer.next(false));
               console.log(global.loggedIn);
             }
           }).then(res3 => {
             this.textChange();
+            console.log("Does this get called when swap pages?")
           })
           .catch(error => {
             console.log("error: " + error);
