@@ -48,7 +48,9 @@ One thing we did want to mention about the Initial proposal is that it wasn't cl
  3. We tested the snapshot system, where we took snapshots ourselves, push them to the database while also pulling other users' snapshots. We collectively took snapshots, and we confirmed that we could view each others' snapshots.
 
 ## 5) Extra Small Tasks for Milestone 5
-  1. We noticed that the app behaves differently in the xCode simulator vs. physical devices. We plan to adjust the different behaviors so that we can build/deploy the app to physical devices.
+  1. We noticed that the app behaves differently in the xCode simulator vs. physical devices. We plan to adjust the different behaviors so that we can build/deploy the app to physical devices. This is attributed to the fact that running "tns preview" (which should allow us to run the app on physical mobile devices) is built to run with it's own build settings and not ours.
+  2. Go through and check that there are no dead players sending chats, voting, nor killing (this would prove to be a bothersome bugs for all users if that was allowed).
+  3. Get Geolocation to be up and running at the time of login rather than have users click on it themselves. While we doubt that users would want to explot this, afterall, if you don't have a location then you can't kill either and takes the entire point of playing the game, we'd rather have it automatized.
 
 # Milestone 4.A
 
