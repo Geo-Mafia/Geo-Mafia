@@ -300,6 +300,19 @@ export class Killer extends Player{
         this.total_kill_count = 0;
     }
 
+    resetKilling() {
+        this.remaining_daily_kill_count = 0
+    }
+
+    disableKilling() {
+        this.remaining_daily_kill_count = this.max_daily_kill_count;
+    }
+
+    setMaxKills(solo: Number, global: Number) {
+        this.max_daily_kill_count = solo;
+        this.remaining_daily_kill_count = this.max_daily_kill_count
+    }
+
     getTotalKillCount(){
         return this.total_kill_count;
     }

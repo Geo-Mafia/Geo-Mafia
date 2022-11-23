@@ -5,18 +5,54 @@ Geo-Mafia is a real-time mafia game played in real life using players' real-time
 
 ## 1) Changes from earlier milestones
 ### Frontend
+The major changes from frontend side is that we got UI working for the following features: Killing Players (only available if user is a Killer), Voting for Player to kick off at the end of the day (available to all users at a determined time [end of day]), Chat functionality (everyone should be able to chat with each other), Snapshot Functionality (available to all users to take snapshots themselves and check on status of all taken Snapshots), Map Location (see what others players are in your area), and also getting the location of users in the app in terms of longitude and latitude (available to all users and updates/tracks user location real time). Adding these functions to the UI made us change some things in the class declarations from what we had originally, but fundamentally the class structure works the same (the changes were more so _adding_ fields that would be helpful in storing mid-point data that we use in Angular to display data in a nice way). We added the game's ability to start and run on timers and loops for game logic and allowing in game events to occur.
 
+One extra change that we added which required teamwork between Backend and Frontend was making sure that users wouldn't be able to see nor take any action in the game _until_ they were signed in. This ensures that we don't get some mysterious third-party that can either kill other players, troll chat by sending lots of messages where no one can read the history, etc.
 ### Backend
 The major changes from the backend side have been integrating the components implemented from the front-end side like the chat, player, map, and game components with
 firebase. With these components integrated in firebase, we were able to fully implement the real-time chatting component between players in the app. We also linked the google logins implemented from the 1st iteration to the player class and storing the player's info in firebase too. 
 
 ## 2) Who did what
 ### Frontend
+1. Killing Players UI - Jose
+2. Voting for Player to kick off at the end of the day UI - Jose
+3. Chat Functionality UI - Kyu & Jose
+4. Snapshot Functionality UI - Annabelle
+5. Snapshot Class Declaration & Tests - Annabelle & Nanci & Fatimah
+6. Map Location UI - Nanci & Fatimah
+7. Geolocation getter UI/Code - Jose
+8. Ensure user logged in before being able to take action UI - Kyu & Jose
+9. Game Logic & Timers/Ticks Code- Noah
+10. Game start handling and set up - Noah
+11. Tests passing Code - Everyone
+
 
 ### Backend
 1. Integration of chat component with firebase into app - Kyu, Jose
 2. Incorporating google login with player and storing in firebase - Kyu, Jason, Calvin
-3. Integrating game, map, and player components with firebase - Calvin, Jason
+3. Linking Google Log-In credentials to in-game modules, pulling/pushing user information & Player object along - Kyu, Jason, Calvin
+4. Integrating game, map, and player components with firebase - Calvin, Jason, Noah
+5. Integrating snapshot with firebase - Calvin, Annabelle
+6. Workflow/Repository & compilation environment setting - Kyu
+
+## 3) Comparison with Initial Proposal
+One of the things with the Initial Proposal is that it was too ambitious having three different types of users (Civilians who don't have any "unique" role, Medics who can potentially save someone who was the target of assisanation, and Killers who could kill other users). We simplified this down to just Civilians and Killers where the game logic would be easier to implement and easier for users to understand - you either win by voting off all the Killers, or by killing all the Civilians. 
+
+We also introduced a Chat feature where everyone would be able to chat with each in-game in real time. This chat information would have a timestamp information, who sent the messsage, and then the content of the message displayed. 
+
+Another thing that was changed was how Snapshots was conceived about. Initially there was the question of whether or not we wanted Snapshots to be taken automatically or whether each user would be able to take snapshots at _any_ time that they wanted. Instead, we have implemented it so that Snapshots are only taken whenever a murder happens in _your_ vicinity (aka, in your bubble). The players are also required to take the snapshots themselves instead of the system taking it automatically. This encourages players to be more active in the game in order to get that information available to everyone else in the game and increase chances of winning.
+
+One thing we did want to mention about the Initial proposal is that it wasn't clear whether or not users would have a specific login for the game or whether they would link an account with an email. We have implemented it so that users have to log-in through Google Sign in Services in order to have access to features in the game (if they are not signed in, then they cannot see nor do anything in the game).
+
+## 4) Acceptance Tests
+ 1. We have tested the Google Sign-in functionalities using our personal and school G-mail accounts. We were able to successfully log-in to the app, fetch our personal information (full name, unique ID, and email address) from the log in and push them to the database. The Google Sign-in worked as we expected.
+ 2. We have tested the UIs, interacting with HTML elements including but not limited to buttons, redirections, textfields and pages. We as users were able to input their intentions through buttons, textfields and other HTML input elements, and the app was able to print and output necessary information to users. The redirection system was able to take users to necessary pages, and users could freely explore the pages we created.
+ 3. We tested the snapshot system, where we took snapshots ourselves, push them to the database while also pulling other users' snapshots. We collectively took snapshots, and we confirmed that we could view each others' snapshots.
+
+## 5) Extra Small Tasks for Milestone 5
+  1. We noticed that the app behaves differently in the xCode simulator vs. physical devices. We plan to adjust the different behaviors so that we can build/deploy the app to physical devices. This is attributed to the fact that running "tns preview" (which should allow us to run the app on physical mobile devices) is built to run with it's own build settings and not ours.
+  2. Go through and check that there are no dead players sending chats, voting, nor killing (this would prove to be a bothersome bugs for all users if that was allowed).
+  3. Get Geolocation to be up and running at the time of login rather than have users click on it themselves. While we doubt that users would want to explot this, afterall, if you don't have a location then you can't kill either and takes the entire point of playing the game, we'd rather have it automatized.
 
 # Milestone 4.A
 

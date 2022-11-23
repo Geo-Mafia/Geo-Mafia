@@ -1,6 +1,8 @@
 name: MacOS Workflow
 on:
   push:
+    paths-ignore:
+      - '**/**.md'
     branches:
       - main
       - map_location_additions
