@@ -16,8 +16,9 @@ firebase. With these components integrated in firebase, we were able to fully im
 ### Backend
 1. Integration of chat component with firebase into app - Kyu, Jose
 2. Incorporating google login with player and storing in firebase - Kyu, Jason, Calvin
-3. Integrating game, map, and player components with firebase - Calvin, Jason
-
+3. Linking Google Log-In credentials to in-game modules, sharing user information along - Kyu, Jason, Calvin
+4. Integrating game, map, and player components with firebase - Calvin, Jason
+5. Workflow/Repository & compilation environment setting - Kyu
 # Milestone 4.A
 
 ## 1) A brief description about what you plan to implement in the 2nd iteration.
