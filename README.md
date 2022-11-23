@@ -29,7 +29,7 @@ firebase. With these components integrated in firebase, we were able to fully im
 ### Backend
 1. Integration of chat component with firebase into app - Kyu, Jose
 2. Incorporating google login with player and storing in firebase - Kyu, Jason, Calvin
-3. Linking Google Log-In credentials to in-game modules, pulling/pushing user information % Player object along - Kyu, Jason, Calvin
+3. Linking Google Log-In credentials to in-game modules, pulling/pushing user information & Player object along - Kyu, Jason, Calvin
 4. Integrating game, map, and player components with firebase - Calvin, Jason, Noah
 5. Workflow/Repository & compilation environment setting - Kyu
 
@@ -43,14 +43,12 @@ Another thing that was changed was how Snapshots was conceived about. Initially 
 One thing we did want to mention about the Initial proposal is that it wasn't clear whether or not users would have a specific login for the game or whether they would link an account with an email. We have implemented it so that users have to log-in through Google Sign in Services in order to have access to features in the game (if they are not signed in, then they cannot see nor do anything in the game).
 
 ## 4) Acceptance Tests
- 1. The "Google Sign-In" button on the home page should take users to use their Google accounts to Login
- 2. The "Go to chat" button on the home page should take users to the chat history of this game and allow users to send chat messages.
- 3. The "Go to snapshot" button on the home page should take users to the snapshot history of this game and allow users to take snapshots themselves.
+ 1. We have tested the Google Sign-in functionalities using our personal and school G-mail accounts. We were able to successfully log-in to the app, fetch our personal information (full name, unique ID, and email address) from the log in and push them to the database. The Google Sign-in worked as we expected.
+ 2. We have tested the UIs, interacting with HTML elements including but not limited to buttons, redirections, textfields and pages. We as users were able to input their intentions through buttons, textfields and other HTML input elements, and the app was able to print and output necessary information to users. The redirection system was able to take users to necessary pages, and users could freely explore the pages we created.
+ 3. We tested the snapshot system, where we took snapshots ourselves, push them to the database while also pulling other users' snapshots. We collectively took snapshots, and we confirmed that we could view each others' snapshots.
 
 ## 5) Extra Small Tasks for Milestone 5
-  1. We noticed that the app behaves differently in the xCode simulator vs. physical devices. We plan to adjust the different behaviors so that we can build/deploy the app to physical devices. This is attributed to the fact that running "tns preview" (which should allow us to run the app on physical mobile devices) is built to run with it's own build settings and not ours.
-  2. Go through and check that there are no dead players sending chats, voting, nor killing (this would prove to be a bothersome bugs for all users if that was allowed).
-  3. Get Geolocation to be up and running at the time of login rather than have users click on it themselves. While we doubt that users would want to explot this, afterall, if you don't have a location then you can't kill either and takes the entire point of playing the game, we'd rather have it automatized.
+  1. We noticed that the app behaves differently in the xCode simulator vs. physical devices. We plan to adjust the different behaviors so that we can build/deploy the app to physical devices.
 
 # Milestone 4.A
 
