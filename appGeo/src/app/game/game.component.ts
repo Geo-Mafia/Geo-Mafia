@@ -148,6 +148,7 @@ export class Game implements OnInit {
         let killer = new Killer()
         killer.init(player.getUserID(), player.getUsername(), player.getLocation(), player.getAliveStatus())
         killer.databasePath = player.getDatabasePath()
+        killer.setMaxKills(this.gameRules.getMaxSoloKill(), this.gameRules.getMaxGlobalKill())
 
         roledPlayers.set(killer.getUserID(), killer)
         databaseUpdate(killer.getDatabasePath(), killer)
@@ -299,6 +300,13 @@ export class Game implements OnInit {
 
   //Called by scheduled job only
   #voting_open() {
+    this.players.forEach((player: Player, key: number) => {
+      if(player instanceof Killer) {
+        player.disableKilling()
+        databaseUpdate(player.getDatabasePath(), player)
+      }
+    });
+
     /*TODO:
       - disable killing
       - enable voting
@@ -308,23 +316,22 @@ export class Game implements OnInit {
 
   //Called by scheduled job only
   #voting_close() {
-    /* TODO:
-      - tally votes
-      - eliminate voted out player
-      - check end game conditions
-        - end game and return if game ended
-      - reset votes
-      - announce voting over(?)
-    */
+    this.countVoteProcess()
+    if(this.winningCondition() != INPROGRESS) {
+      this.#endProcess()
+    }
+    console.log("Voting over")
   }
 
   //Called by scheduled job only
   #safetime_end() {
-    /* TODO:
-      - reset kill counts
-      - enable killing again
-      - announce safetime over(?)
-    */
+    this.players.forEach((player: Player, key: number) => {
+      if(player instanceof Killer) {
+        player.resetKilling()
+        databaseUpdate(player.getDatabasePath(), player)
+      }
+    });
+    console.log("The safe period is over")
   }
 
   getGameActive() {
