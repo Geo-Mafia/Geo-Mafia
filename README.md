@@ -14,15 +14,15 @@ firebase. With these components integrated in firebase, we were able to fully im
 
 ## 2) Who did what
 ### Frontend
-1. Killing Players - Jose
-2. Voting for Player to kick off at the end of the day - Jose
-3. Chat Functionality - Kyu & Jose
-4. Snapshot availability - Annabelle & Fatimah
-5. Map Location - Nanci & Fatimah
-6. Geolocation getter - Jose
-7. Ensure user logged in before being able to take action - Kyu & Jose
-8. Game Logic & Timers/Ticks - Noah
-9. Tests passing - Everyone
+1. Killing Players UI - Jose
+2. Voting for Player to kick off at the end of the day UI - Jose
+3. Chat Functionality UI - Kyu & Jose
+4. Snapshot availability UI - Annabelle & Fatimah
+5. Map Location UI - Nanci & Fatimah
+6. Geolocation getter UI/Code - Jose
+7. Ensure user logged in before being able to take action UI - Kyu & Jose
+8. Game Logic & Timers/Ticks Code- Noah
+9. Tests passing Code - Everyone
 
 
 ### Backend
