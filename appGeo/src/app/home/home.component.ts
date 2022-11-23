@@ -17,6 +17,8 @@ import { databaseAdd, databaseEventListener, databaseGet } from "../../modules/d
 import { toUIString } from '@nativescript/core/utils/types'
 
 const VOTE_OPEN_PATH = "src/settings/voteOpen"
+const MAP_PATH = "/game/map"
+const GAMERULE_PATH = "src/settings/gameRules"
 
 @Component({
   selector: 'Home',
@@ -283,7 +285,9 @@ export class HomeComponent implements OnInit {
     var Taft = new Bubble()
     Taft.init_bubble('Taft House/ Midway Studios', 41.78529045276358, 41.7856788604663, -87.60330975476859, -87.60298900247261)
     map.addToMap(Taft.NameOfBubble, Taft)
+    databaseAdd(MAP_PATH, map)
     var gameRules = new GameRules();
+    databaseAdd(GAMERULE_PATH, gameRules)
     this.game = new Game(gameRules, map, null)
 
     console.log("init");
