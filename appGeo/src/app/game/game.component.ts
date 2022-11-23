@@ -60,7 +60,7 @@ export class Game implements OnInit {
 
     this.startTime = null;
     this.endTime = null
-    
+
     this.map = gameMap
 
     if(players != undefined) {
@@ -74,7 +74,7 @@ export class Game implements OnInit {
     this.#scheduledJobs = new Map()
   }
 
-  
+
   ngOnInit(): void {
         // add event listener to update each player
         this.players.forEach((player: Player, key: number) => {
@@ -214,7 +214,7 @@ export class Game implements OnInit {
       databaseAdd(START_TIME_PATH, this.getStartTime())
 
       if(this.gameRules.isScheduledEnd) {
-        this.setEndTime(new Date(this.getStartTime().getTime() + 
+        this.setEndTime(new Date(this.getStartTime().getTime() +
                                 (this.gameRules.getGameLengthHours() * 60 * 60 * 1800)))
         const endJob = this.scheduleEvent(this.getEndTime(), function() {this.#endProcess()}, END_JK)
         databaseAdd(END_TIME_PATH, this.getEndTime())
@@ -244,7 +244,7 @@ export class Game implements OnInit {
 
   }
 
-  /* All checks to be run before the game starts 
+  /* All checks to be run before the game starts
   */
   preGameChecks() {
       if(this.getPlayerCount() < this.gameRules.getMinPlayers()) {
@@ -320,13 +320,13 @@ export class Game implements OnInit {
     if(this.gameRules.isScheduledEnd()) {
       this.cancelEvent(END_JK)
     }
-    
+
     //disable all game timers
     this.cancelEvent(VOTE_OPEN_JK)
     this.cancelEvent(VOTE_CLOSE_JK)
     this.cancelEvent(SAFE_OVER_JK)
     this.cancelEvent(TICK_JK)
-    
+
     return this.winningCondition();
   }
 
@@ -367,7 +367,7 @@ export class Game implements OnInit {
 
     var vote_open: Boolean = false
     databaseUpdate(VOTE_OPEN_PATH, vote_open)
-    
+
     console.log("Voting closed")
   }
 
