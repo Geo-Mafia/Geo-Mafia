@@ -5,7 +5,7 @@ Geo-Mafia is a real-time mafia game played in real life using players' real-time
 
 ## 1) Changes from earlier milestones
 ### Frontend
-
+The major changes from frontend side is that we got UI working for the following features: Killing Players (only available if user is a Killer), Voting for Player to kick off at the end of the day (available to all users at a determined time [end of day]), Chat functionality (everyone should be able to chat with each other), Snapshot availability (available to all users to check on status of all taken Snapshots), Map Location (see what others players are in your area). Adding these functions to the UI made us change some things in the class declarations from what we had originally, but fundamentally the class structure works the same (the changes were more so _adding_ fields that would be helpful in storing mid-point data that we use in Angular to display data in a nice way).
 ### Backend
 The major changes from the backend side have been integrating the components implemented from the front-end side like the chat, player, map, and game components with
 firebase. With these components integrated in firebase, we were able to fully implement the real-time chatting component between players in the app. We also linked the google logins implemented from the 1st iteration to the player class and storing the player's info in firebase too. 
