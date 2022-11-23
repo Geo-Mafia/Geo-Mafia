@@ -3,6 +3,8 @@ import {Bubble} from '../map/map.component'
 import {Player} from '../player/player.component'
 import {CampusMap} from '../map/campus-map.component'
 import { Chat } from '../chat/chat.component'
+import { Game } from '../game/game.component'
+import { GameRules } from '../game/game-rules.component'
 import { Observable } from 'rxjs'
 
 import { Router } from '@angular/router'
@@ -11,9 +13,10 @@ import * as application from "@nativescript/core/application";
 import { isIOS } from "@nativescript/core/platform";
 import { ChatComponent } from "../chat/chat.component";
 import { firebase } from "@nativescript/firebase"
-import { databaseAdd, databaseGet } from "../../modules/database"
+import { databaseAdd, databaseEventListener, databaseGet } from "../../modules/database"
 import { toUIString } from '@nativescript/core/utils/types'
 
+const VOTE_OPEN_PATH = "src/settings/voteOpen"
 
 @Component({
   selector: 'Home',
@@ -30,6 +33,8 @@ export class HomeComponent implements OnInit {
   public component_isLoggedIn: Boolean
   public is_component_loggedIn: Observable<Boolean>
   public is_component_not_loggedIn: Observable<Boolean>
+
+  public game: Game
 
 
   textChange() {
@@ -59,7 +64,10 @@ export class HomeComponent implements OnInit {
     console.log("Can we see this when we exit the page and then come back inside the page")
     // Init your component properties here.
     // Going to initialize a list of bubbles here;
-    var map = new CampusMap;
+    var map = new CampusMap();
+    var gameRules = new GameRules();
+    this.game = new Game(gameRules, map, null)
+
     console.log("init");
     if(isIOS) {
       console.log("ios");
@@ -76,6 +84,8 @@ export class HomeComponent implements OnInit {
                   clearTimeout(v)
               },500)
       }
+
+    databaseEventListener(VOTE_OPEN_PATH, this.updateVoteOpenDatabase.bind(this))
   }
 
   login() {
@@ -164,6 +174,22 @@ export class HomeComponent implements OnInit {
           });
         }
       });
+    }
+
+    if(global.player.isadmin == true) {
+      databaseEventListener("src/game/gameStarted", this.startGameDatabase.bind(this))
+    }
+  }
+
+  updateVoteOpenDatabase(data: object) {
+    this.votingOpen = data["value"]
+  }
+
+  startGameDatabase(data: object) {
+    const hasStarted = data["value"]
+
+    if(hasStarted) {
+      this.game.startGame()
     }
   }
 

@@ -4,9 +4,17 @@ import{CampusMap} from '../map/campus-map.component'
 import {Chat, Message} from '../chat/chat.component'
 import { GameRules} from './game-rules.component'
 import {Snapshot} from '../snapshot/snapshot.component'
-import { databaseAdd, databaseGet, databaseEventListener } from '../../modules/database'
+import { databaseAdd, databaseGet, databaseEventListener, databaseUpdate } from '../../modules/database'
 import { borderTopRightRadiusProperty } from '@nativescript/core';
 //A CampusMap is a Map of the Bubbles that exist on campus
+
+const MAP_PATH = "src/game/map"
+const SETTINGS_PATH = "src/settings/"
+const START_TIME_PATH = "src/settings/startTime"
+const END_TIME_PATH = "src/settings/endTime"
+const STATUS_PATH = "src/settings/status"
+const GAMERULE_PATH = "src/settings/gameRules"
+const VOTE_OPEN_PATH = "src/settings/voteOpen"
 
 const INACTIVE = 0
 const ACTIVE = 1
@@ -33,8 +41,8 @@ const TICK_JK = "tick"
 export class Game implements OnInit {
   gameRules: GameRules //the object containing the game rules
 
-  gameActive: number //a boolean number
-  gameScheduled: number //a boolean number
+  gameActive: Number //a boolean number
+  gameScheduled: Number //a boolean number
   startTime: Date //a Date object
   endTime: Date //a Date object
 
@@ -49,7 +57,6 @@ export class Game implements OnInit {
   constructor(gameRules: GameRules, gameMap: CampusMap, players: Map<number, Player>) {
     this.gameRules = gameRules
     this.gameActive = INACTIVE;
-
 
     this.startTime = null;
     this.endTime = null
@@ -73,6 +80,12 @@ export class Game implements OnInit {
         this.players.forEach((player: Player, key: number) => {
           databaseEventListener(player.getDatabasePath(), this.updatePlayerDatabase.bind(this));
         });
+        databaseEventListener(GAMERULE_PATH, this.updateGameRulesDatabase.bind(this));
+        databaseEventListener(MAP_PATH, this.updateMapDatabase.bind(this));
+        databaseEventListener(START_TIME_PATH, this.updateStartTime.bind(this));
+        databaseEventListener(END_TIME_PATH, this.updateEndTime.bind(this));
+        databaseEventListener(STATUS_PATH, this.updateStatus.bind(this));
+
   }
 
   updatePlayerDatabase(data: object) {
@@ -87,6 +100,31 @@ export class Game implements OnInit {
     global.playerlist.set(playerId, player);
     console.log("End updatePlayerDatabase func");
 
+  }
+
+  updateGameRulesDatabase(data: object) {
+    this.gameRules = data["value"]
+    console.log("updated game rules: " + JSON.stringify(this.gameRules));
+  }
+
+  updateMapDatabase(data: object) {
+    this.map = data["value"]
+    console.log("updated map: " + JSON.stringify(this.map));
+  }
+
+  updateStartTime(data: object) {
+    this.startTime = data["value"]
+    console.log("updated start time" + JSON.stringify(this.startTime))
+  }
+
+  updateEndTime(data: object) {
+    this.endTime = data["value"]
+    console.log("updated end time" + JSON.stringify(this.endTime))
+  }
+
+  updateStatus(data: object) {
+    this.gameActive = data["value"]
+    console.log("updated status" + JSON.stringify(this.gameActive))
   }
 
   //schedules an event for a time in the future. Will run recursively if that time in the future is greater than setTimeout can support
@@ -147,6 +185,11 @@ export class Game implements OnInit {
         let player = playerArr[rand]
         let killer = new Killer()
         killer.init(player.getUserID(), player.getUsername(), player.getLocation(), player.getAliveStatus())
+        killer.databasePath = player.getDatabasePath()
+        killer.setMaxKills(this.gameRules.getMaxSoloKill(), this.gameRules.getMaxGlobalKill())
+
+        roledPlayers.set(killer.getUserID(), killer)
+        databaseUpdate(killer.getDatabasePath(), killer)
 
         roledPlayers.set(killer.getUserID(), killer)
         playerArr.splice(rand, 1)
@@ -157,19 +200,23 @@ export class Game implements OnInit {
         let player = playerArr[i]
         let civilian = new Civilian()
         civilian.init(player.getUserID(), player.getUsername(), player.getLocation(), player.getAliveStatus())
+        civilian.databasePath = player.getDatabasePath()
 
         roledPlayers.set(civilian.getUserID(), civilian)
+        databaseUpdate(civilian.getDatabasePath(), civilian)
       }
 
       //replace unroled players with roles
       this.#setPlayers(roledPlayers)
 
       this.startTime = new Date();
+      databaseAdd(START_TIME_PATH, this.getStartTime())
 
       if(this.gameRules.isScheduledEnd) {
         this.setEndTime(new Date(this.getStartTime().getTime() + 
                                 (this.gameRules.getGameLengthHours() * 60 * 60 * 1800)))
         const endJob = this.scheduleEvent(this.getEndTime(), function() {this.#endProcess()}, END_JK)
+        databaseAdd(END_TIME_PATH, this.getEndTime())
 
       }
 
@@ -183,8 +230,15 @@ export class Game implements OnInit {
       const safeOverTimer = this.scheduleRecuring(safeOverTime, this.gameRules.getDayCycleLength(), function() {this.#safetime_end()}, SAFE_OVER_JK)
 
       this.#scheduledJobs.set(VOTE_OPEN_JK, voteTimer)
+      this.#scheduledJobs.set(VOTE_CLOSE_JK, voteCloseTimer)
+      this.#scheduledJobs.set(SAFE_OVER_JK, safeOverTimer)
 
       this.#setGameActive(ACTIVE)
+      databaseUpdate(STATUS_PATH, this.gameActive)
+
+      var vote_open: Boolean = false
+
+      databaseAdd(VOTE_OPEN_PATH, vote_open)
 
       return SUCCESS
 
@@ -262,6 +316,7 @@ export class Game implements OnInit {
 
   #endProcess() {
     this.#setGameActive(INACTIVE)
+    databaseUpdate(STATUS_PATH, this.getGameActive())
 
     if(this.gameRules.isScheduledEnd()) {
       this.cancelEvent(END_JK)
@@ -291,39 +346,48 @@ export class Game implements OnInit {
 
   //Called by scheduled job only
   #voting_open() {
-    /*TODO:
-      - disable killing
-      - enable voting
-      - announce voting open(?)
-    */
+    this.players.forEach((player: Player, key: number) => {
+      if(player instanceof Killer) {
+        player.disableKilling()
+        databaseUpdate(player.getDatabasePath(), player)
+      }
+    });
+
+    var vote_open: Boolean = true
+    databaseUpdate(VOTE_OPEN_PATH, vote_open)
+
+    console.log("Voting open")
   }
 
   //Called by scheduled job only
   #voting_close() {
-    /* TODO:
-      - tally votes
-      - eliminate voted out player
-      - check end game conditions
-        - end game and return if game ended
-      - reset votes
-      - announce voting over(?)
-    */
+    this.countVoteProcess()
+    if(this.winningCondition() != INPROGRESS) {
+      this.#endProcess()
+    }
+
+    var vote_open: Boolean = false
+    databaseUpdate(VOTE_OPEN_PATH, vote_open)
+    
+    console.log("Voting closed")
   }
 
   //Called by scheduled job only
   #safetime_end() {
-    /* TODO:
-      - reset kill counts
-      - enable killing again
-      - announce safetime over(?)
-    */
+    this.players.forEach((player: Player, key: number) => {
+      if(player instanceof Killer) {
+        player.resetKilling()
+        databaseUpdate(player.getDatabasePath(), player)
+      }
+    });
+    console.log("The safe period is over")
   }
 
   getGameActive() {
       return this.gameActive
   }
 
-  #setGameActive(status: number) {
+  #setGameActive(status: Number) {
       this.gameActive = status
   }
 
@@ -331,7 +395,7 @@ export class Game implements OnInit {
       return this.gameScheduled
   }
 
-  #setGameScheduled(status: number) {
+  #setGameScheduled(status: Number) {
       this.gameScheduled = status
   }
 
@@ -445,7 +509,7 @@ export class Game implements OnInit {
     return count;
   }
 
-  getRoleCount(countedRole: number) {
+  getRoleCount(countedRole: Number) {
 
       if(countedRole == KILLER) {
         return this.getKillers().length
