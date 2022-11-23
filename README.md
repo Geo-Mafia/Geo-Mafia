@@ -1,6 +1,23 @@
 # Geo-Mafia
 Geo-Mafia is a real-time mafia game played in real life using players' real-time geo-locations
 
+# Milestone 4.B
+
+## 1) Changes from earlier milestones
+### Frontend
+
+### Backend
+The major changes from the backend side have been integrating the components implemented from the front-end side like the chat, player, map, and game components with
+firebase. With these components integrated in firebase, we were able to fully implement the real-time chatting component between players in the app. We also linked the google logins implemented from the 1st iteration to the player class and storing the player's info in firebase too. 
+
+## 2) Who did what
+### Frontend
+
+### Backend
+1. Integration of chat component with firebase into app - Kyu, Jose
+2. Incorporating google login with player and storing in firebase - Kyu, Jason, Calvin
+3. Integrating game, map, and player components with firebase - Calvin, Jason
+
 # Milestone 4.A
 
 ## 1) A brief description about what you plan to implement in the 2nd iteration.
