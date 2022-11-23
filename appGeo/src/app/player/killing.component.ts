@@ -3,6 +3,8 @@ import { databaseAdd, databaseGet, databaseEventListener } from '../../modules/d
 import { firebase } from "@nativescript/firebase";
 import { fromObject, ScrollView, ScrollEventData} from '@nativescript/core';
 import { Player, Killer, Civilian } from './player.component'
+import {CampusMap} from '../map/campus-map.component';
+import {Bubble} from '../map/map.component';
 
 @Component({
   selector: 'Killing',
@@ -53,26 +55,42 @@ export class KillingComponent implements OnInit {
 
         //We also want to get the Object that represents the killer:
         //yourself = <some way from databases to get back Killer Object matching to the user>
+        this.yourself = global.player
 
         this.list_of_all_available_to_kill = new Array();
         this.list_of_all_nearby_players = new Array();
         this.selected_player = null;
 
-        //Hard code some examples::
-        var player1 = new Civilian()
-        player1.init(1, "Testing 1", 1, this.ALIVE)
-        var player2 = new Civilian()
-        player2.init(2, "Testing 2", 1, this.ALIVE)
-        var player3 = new Civilian()
-        player3.init(3, "Testing 3", 1, this.ALIVE)
-        this.yourself = new Killer()
-        this.yourself.init(4, "This is you, you killer", 1, this.ALIVE)
-        var killer2 = new Killer()
-        killer2.init(5, "Killer that should never show up", 1, this.ALIVE)
-        this.list_of_all_nearby_players.push(player1)
-        this.list_of_all_nearby_players.push(player2)
-        this.list_of_all_nearby_players.push(player3)
-        this.list_of_all_nearby_players.push(killer2)
+        let cm = new CampusMap();
+        databaseGet('game/map').then(value => {
+          console.log("val: " + JSON.stringify(value));
+    
+          if (value == null) {
+            console.log("Found error where I can't draw from the map")
+          } 
+          else {
+            cm = value;
+            var curr_bub = cm.playersBubble(global.player);
+            this.list_of_all_nearby_players = Array.from(curr_bub.List.values());
+          }
+        });
+
+
+        // //Hard code some examples::
+        // var player1 = new Civilian()
+        // player1.init(1, "Testing 1", 1, this.ALIVE)
+        // var player2 = new Civilian()
+        // player2.init(2, "Testing 2", 1, this.ALIVE)
+        // var player3 = new Civilian()
+        // player3.init(3, "Testing 3", 1, this.ALIVE)
+        // this.yourself = new Killer()
+        // this.yourself.init(4, "This is you, you killer", 1, this.ALIVE)
+        // var killer2 = new Killer()
+        // killer2.init(5, "Killer that should never show up", 1, this.ALIVE)
+        // this.list_of_all_nearby_players.push(player1)
+        // this.list_of_all_nearby_players.push(player2)
+        // this.list_of_all_nearby_players.push(player3)
+        // this.list_of_all_nearby_players.push(killer2)
 
     //The following lines would work whenevever have an appropriate 'yourself' object
         this.kills_remaining = this.yourself.getRemainingDailyKillCount()
