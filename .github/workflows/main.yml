@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - main
-      - map_location_additions
+      - adding_bubbles
       - add-map-method
       - method_to_return_bubble_for_snapshot
   pull_request:
