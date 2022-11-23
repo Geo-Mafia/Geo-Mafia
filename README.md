@@ -1,4 +1,5 @@
 # Geo-Mafia
+
 Geo-Mafia is a real-time mafia game played in real life using players' real-time geo-locations
 
 # Milestone 4.B
