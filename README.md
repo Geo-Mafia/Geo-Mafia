@@ -32,7 +32,8 @@ firebase. With these components integrated in firebase, we were able to fully im
 2. Incorporating google login with player and storing in firebase - Kyu, Jason, Calvin
 3. Linking Google Log-In credentials to in-game modules, pulling/pushing user information & Player object along - Kyu, Jason, Calvin
 4. Integrating game, map, and player components with firebase - Calvin, Jason, Noah
-5. Workflow/Repository & compilation environment setting - Kyu
+5. Integrating snapshot with firebase - Calvin, Annabelle
+6. Workflow/Repository & compilation environment setting - Kyu
 
 ## 3) Comparison with Initial Proposal
 One of the things with the Initial Proposal is that it was too ambitious having three different types of users (Civilians who don't have any "unique" role, Medics who can potentially save someone who was the target of assisanation, and Killers who could kill other users). We simplified this down to just Civilians and Killers where the game logic would be easier to implement and easier for users to understand - you either win by voting off all the Killers, or by killing all the Civilians. 
