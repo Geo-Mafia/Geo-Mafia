@@ -35,29 +35,19 @@ export class HomeComponent implements OnInit {
   textChange() {
     if (global.isLoggedIn) {
       this.text = "You are logged in as: " + global.player.username;
-      console.log("Calling the Home Component")
-      // this.zone.run(() => {this.component_isLoggedIn = true})
-      // this.is_component_loggedIn = new Observable(observer=>observer.next(true));
-      // this.is_component_not_loggedIn = new Observable(observer=>observer.next(false));
     }
     else {
       this.text = "Google Sign-In";
-      console.log("Calling the Home Component")
-      // this.zone.run(() => this.component_isLoggedIn = false)
-      // this.is_component_loggedIn = new Observable(observer=>observer.next(false));
-      // this.is_component_not_loggedIn = new Observable(observer=>observer.next(true));
     }
   }
 
   constructor(private router: Router, private zone: NgZone) {
     // Use the component constructor to inject providers.
     if(global.loggedIn){
-      console.log("Inside the globabl is logged in case")
       this.is_component_loggedIn = new Observable(observer=>observer.next(true));
       this.is_component_not_loggedIn = new Observable(observer=>observer.next(false));
     }
     else{
-      console.log("Insde the globabl is not logged in case")
       this.is_component_loggedIn = new Observable(observer=>observer.next(false));
       this.is_component_not_loggedIn = new Observable(observer=>observer.next(true));
     }
@@ -168,7 +158,6 @@ export class HomeComponent implements OnInit {
             }
           }).then(res3 => {
             this.textChange();
-            console.log("Does this get called when swap pages?")
           })
           .catch(error => {
             console.log("error: " + error);
