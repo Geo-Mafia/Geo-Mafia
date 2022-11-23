@@ -31,8 +31,11 @@ firebase. With these components integrated in firebase, we were able to fully im
 
 ## 3) Comparison with Initial Proposal
 One of the things with the Initial Proposal is that it was too ambitious having three different types of users (Civilians who don't have any "unique" role, Medics who can potentially save someone who was the target of assisanation, and Killers who could kill other users). We simplified this down to just Civilians and Killers where the game logic would be easier to implement and easier for users to understand - you either win by voting off all the Killers, or by killing all the Civilians. 
+
 We also introduced a Chat feature where everyone would be able to chat with each in-game in real time. This chat information would have a timestamp information, who sent the messsage, and then the content of the message displayed. 
+
 Another thing that was changed was how Snapshots was conceived about. Initially there was the question of whether or not we wanted Snapshots to be taken automatically or whether each user would be able to take snapshots at _any_ time that they wanted. Instead, we have no implemented it so that Snapshots are only taken whenever a murder happens in _your_ vicinity (aka, in your bubble). This encourages players to be more active in the game in order to get that information available to everyone else in the game and increase chances of winning.
+
 One thing we did want to mention about the Initial proposal is that it wasn't clear whether or not users would have a specific login for the game or whether they would link an account with an email. We have implemented it so that users have to log-in through Google Sign in Services in order to have access to features in the game (if they are not signed in, then they cannot see nor do anything in the game).
 # Milestone 4.A
 
