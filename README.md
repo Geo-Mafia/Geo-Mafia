@@ -41,6 +41,15 @@ We also introduced a Chat feature where everyone would be able to chat with each
 Another thing that was changed was how Snapshots was conceived about. Initially there was the question of whether or not we wanted Snapshots to be taken automatically or whether each user would be able to take snapshots at _any_ time that they wanted. Instead, we have implemented it so that Snapshots are only taken whenever a murder happens in _your_ vicinity (aka, in your bubble). This encourages players to be more active in the game in order to get that information available to everyone else in the game and increase chances of winning.
 
 One thing we did want to mention about the Initial proposal is that it wasn't clear whether or not users would have a specific login for the game or whether they would link an account with an email. We have implemented it so that users have to log-in through Google Sign in Services in order to have access to features in the game (if they are not signed in, then they cannot see nor do anything in the game).
+
+## 4) Acceptance Tests
+ 1. The "Google Sign-In" button on the home page should take users to use their Google accounts to Login
+ 2. The "Go to chat" button on the home page should take users to the chat history of this game and allow users to send chat messages.
+ 3. The "Go to snapshot" button on the home page should take users to the snapshot history of this game and allow users to take snapshots themselves.
+
+## 5) Extra Small Tasks for Milestone 5
+  1. We noticed that the app behaves differently in the xCode simulator vs. physical devices. We plan to adjust the different behaviors so that we can build/deploy the app to physical devices.
+
 # Milestone 4.A
 
 ## 1) A brief description about what you plan to implement in the 2nd iteration.
