@@ -65,6 +65,7 @@ export class Player implements OnInit{
         this.votes = 0;
         this.chat_lists = new Array()
         this.databasePath = "";
+        this.isAdmin = false;
     }
     ngOnInit(): void {
     }
