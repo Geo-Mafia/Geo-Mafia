@@ -23,6 +23,7 @@ export class KillingComponent implements OnInit {
     public kills_remaining: number
     public commited_kills: number
     public can_kill: Boolean
+    public is_alive: Boolean
 
     public selected_player: Player
     public selected_player_username: string = ""
@@ -93,8 +94,16 @@ export class KillingComponent implements OnInit {
         // this.list_of_all_nearby_players.push(killer2)
 
     //The following lines would work whenevever have an appropriate 'yourself' object
-        this.kills_remaining = this.yourself.getRemainingDailyKillCount()
-        this.commited_kills = this.yourself.getTotalKillCount()
+        this.kills_remaining = this.yourself.remaining_daily_kill_count;
+        this.commited_kills = this.yourself.total_kill_count;
+        if (this.yourself.alive == this.ALIVE){
+            this.is_alive = true;
+        }
+        else{
+            this.is_alive = false;
+        }
+        // this.kills_remaining = this.yourself.getRemainingDailyKillCount()
+        // this.commited_kills = this.yourself.getTotalKillCount()
         // this.kills_remaining = 3
         // this.commited_kills = 2
         if (this.kills_remaining > 0){

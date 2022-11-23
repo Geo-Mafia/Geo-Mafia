@@ -34,7 +34,7 @@ export class VotingComponent implements OnInit{
     public selected_player_username: string = ""
     public typed_username: string = ""
     public selected_player: Player = null
-
+    public is_alive: Boolean
     constructor(){
 
     }
@@ -71,6 +71,16 @@ export class VotingComponent implements OnInit{
         else{
             //Otherwise, we can still vote!
             this.have_not_voted = true;
+        }
+
+        if (global.player.alive == this.ALIVE){
+            //testing
+            this.is_alive = true;
+            console.log("We are in the case of having an alive player")
+        }
+        else{
+            this.is_alive = false;
+            console.log("We are in the case of having a dead player")
         }
 
         this.filterPlayers();
