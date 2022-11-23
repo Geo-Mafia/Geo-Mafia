@@ -10,7 +10,7 @@ import * as application from "@nativescript/core/application";
 import { isIOS } from "@nativescript/core/platform";
 import { ChatComponent } from "../chat/chat.component";
 import { firebase } from "@nativescript/firebase"
-import { databaseAdd } from "../../modules/database"
+import { databaseAdd, databaseGet } from "../../modules/database"
 import { toUIString } from '@nativescript/core/utils/types'
 
 
@@ -94,15 +94,32 @@ export class HomeComponent implements OnInit {
               global.player.userIDString = result["id"];
               //global.player.username = result["displayName"];
               global.player.email = result["userToken"];
-              let location = 0; //TODO: change location to be actual later
+              
 
-              //TODO UPDATE USERID NUMBER
-              global.player.init(0, result["displayName"], location, 1);
-              global.player.databasePath = "/game/users/" + global.player.userIDString;
-              //console.log(global.player);
+              //admin if the player is the first one registered
+              databaseGet("game/users").then(res0 => {
+      
+                //no player in the game
+                if (res0 == null) {
+                  global.player.isAdmin = true;
+                }
+                //double checking there IS a player thus not admin
+                else if ((Object.keys(res0).length) != 0) {
+                  global.player.isAdmin = false;
+                }
+              
+                let location = 0; //TODO: change location to be actual later
+                
+                //TODO UPDATE USERID NUMBER
+                global.player.init(0, result["displayName"], location, 1);
+                global.player.databasePath = "/game/users/" + global.player.userIDString;
+                //console.log(global.player);
+    
+                databaseAdd('/game/users/' + userID, global.player)
+                global.result = result;
 
-              databaseAdd('/game/users/' + userID, global.player)
-              global.result = result;
+              })
+
             }
             //already exists
             else {

@@ -27,9 +27,9 @@ export class Player implements OnInit{
     alive: number // A Boolean
     votes: number // An int
     chat_lists // List of Chat Objects that Player is a part of
-
-
-
+    isAdmin : boolean // boolean whether this player is an admin (as in responsible for running the game start function)
+    
+    
     //edited by Kyu
     email: string;
     userIDString: string //String (modified by Kyu)
@@ -46,7 +46,8 @@ export class Player implements OnInit{
         this.votes = 0;
         this.chat_lists = new Array();
         this.databasePath = "";
-
+        this.isAdmin = false;
+        
     }
     //init(userID: number, userIDString: string, username: string, email:string, location, alive: number){
     init(userID: number, username: string, location, alive: number){
@@ -66,9 +67,6 @@ export class Player implements OnInit{
         this.databasePath = "";
     }
     ngOnInit(): void {
-      //initialize storing player in database
-      databaseAdd(this.databasePath, this);
-      console.log("database added for player");
     }
 
     getDatabasePath(){
@@ -83,6 +81,7 @@ export class Player implements OnInit{
     }
     setLocation(latitude, longitude){
         this.location = new Location(latitude, longitude)
+        databaseUpdate(this.databasePath, this);
     }
     getAliveStatus(){
         return this.alive;
@@ -181,7 +180,6 @@ export class Player implements OnInit{
     /* insertChat(): Inserts a Chat object into the Chat List field within Player Object */
     insertChat(chat){
         this.chat_lists.push(chat)
-
         // update in database
         databaseUpdate(this.databasePath, this);
         return SUCCESS;
@@ -223,6 +221,7 @@ export class Player implements OnInit{
         Voted.increaseVoteCount();
 
         this.have_already_voted = true;
+        databaseUpdate(this.databasePath, this)
         return SUCCESS;
     }
 
@@ -234,8 +233,6 @@ export class Player implements OnInit{
         this.votes++;
         // update in database
         databaseUpdate(this.databasePath, this);
-        // update in database
-        databaseUpdate(this.databasePath, this);
     }
 
     /* resetVotes(): Reset current Player's number of votes back down to 0
@@ -244,6 +241,8 @@ export class Player implements OnInit{
     resetVotes(){
         this.votes = 0;
         this.have_already_voted = false;
+        // update in database
+        databaseUpdate(this.databasePath, this);
     }
 
 }
