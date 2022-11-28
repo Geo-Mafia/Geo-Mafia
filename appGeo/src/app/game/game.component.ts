@@ -88,6 +88,7 @@ export class Game implements OnInit {
 
   }
 
+
   updatePlayerDatabase(data: object) {
     // Update global player field
     global.player = data["value"];
@@ -455,7 +456,7 @@ export class Game implements OnInit {
 
   addPlayer(player) {
       this.players.set(player.getUserID(), player)
-      global.playerlist.set(player.getUserID(), player);
+      //global.playerlist.set(player.getUserID(), player);
       return SUCCESS;
   }
 
