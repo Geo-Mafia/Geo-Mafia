@@ -19,7 +19,7 @@
       <Button text="Go To Snapshot" *ngIf="is_component_loggedIn | async" [nsRouterLink]="['Snapshot']" class="btn btn-primary btn-active" col="0"></Button>
       <Button text="Kill a Player" *ngIf="this.isKiller && !this.votingOpen && is_component_loggedIn | async" [nsRouterLink]="['Killing']" class="btn btn-primary btn-active home" col="0"></Button>
       <Button text="Go to Vote Player" *ngIf="this.votingOpen && is_component_loggedIn | async" [nsRouterLink]="['Voting']" class="btn btn-primary btn-active home" col="0"></Button>
-      <Button text="Go to Geolocation" *ngIf="is_component_loggedIn | async" [nsRouterLink]="['Location']" class="btn btn-primary btn-active" col="0"></Button>
+      <!-- <Button text="Go to Geolocation" *ngIf="is_component_loggedIn | async" [nsRouterLink]="['Location']" class="btn btn-primary btn-active" col="0"></Button> -->
       <Button text="Players Nearby" *ngIf="is_component_loggedIn | async" [nsRouterLink]="['campusMap']" class="btn btn-primary btn-active home" col="0"></Button>
     </StackLayout>
     <router-outlet></router-outlet>

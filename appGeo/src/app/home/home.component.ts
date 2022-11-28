@@ -16,6 +16,11 @@ import { firebase } from "@nativescript/firebase"
 import { databaseAdd, databaseEventListener, databaseGet } from "../../modules/database"
 import { toUIString } from '@nativescript/core/utils/types'
 
+/* Imports required for Location Aspect Code */
+import * as geolocation from '@nativescript/geolocation';
+import { Location } from '../player/player.component'
+/* End of imports required for Location Aspect Code */
+
 const VOTE_OPEN_PATH = "src/settings/voteOpen"
 
 @Component({
@@ -35,6 +40,10 @@ export class HomeComponent implements OnInit {
   public is_component_not_loggedIn: Observable<Boolean>
 
   public game: Game
+
+  public latitude: number;
+  public longitude: number;
+  private watchId: number;
 
 
   textChange() {
@@ -68,6 +77,8 @@ export class HomeComponent implements OnInit {
     var gameRules = new GameRules();
     this.game = new Game(gameRules, map, null)
 
+    geolocation.enableLocationRequest();
+
     console.log("init");
     if(isIOS) {
       console.log("ios");
@@ -100,6 +111,7 @@ export class HomeComponent implements OnInit {
         okButtonText: "OK"
       }
       alert(options);
+      this.startWatchingLocation()
     }
     else {
       GoogleLogin.login(result=>{
@@ -157,6 +169,7 @@ export class HomeComponent implements OnInit {
               this.zone.run(() => this.component_isLoggedIn = true)
               this.is_component_loggedIn = new Observable(observer=>observer.next(true));
               this.is_component_not_loggedIn = new Observable(observer=>observer.next(false));
+              this.startWatchingLocation();
             }
           }).then(res2 => {
             if(global.player.username != "") {
@@ -164,6 +177,7 @@ export class HomeComponent implements OnInit {
               this.zone.run(() => this.component_isLoggedIn = true)
               this.is_component_loggedIn = new Observable(observer=>observer.next(true));
               this.is_component_not_loggedIn = new Observable(observer=>observer.next(false));
+              this.startWatchingLocation();
               console.log(global.loggedIn);
             }
           }).then(res3 => {
@@ -196,7 +210,6 @@ export class HomeComponent implements OnInit {
           });
         }
       });
-        
     
     
     
@@ -219,6 +232,69 @@ export class HomeComponent implements OnInit {
       this.game.startGame()
     }
   }
+  /*-------------------------Location Code!!!---------------------------------*/
 
+  getUserLocation() {
+      // get Users current position
+  
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position: GeolocationPosition) => {
+          this.latitude = position.coords.latitude;
+          this.longitude = position.coords.longitude;
+          global.player.location = new Location(this.longitude, this.latitude)
+          console.log("position longtidue: ", this.longitude, "and position latitude: ", this.latitude)
+          console.log("If we grab from the global player object (longitude, latitude): ", global.player.getLocation)
+        });
+      }else{
+        console.log("User not allowed")
+      }
+    }
+
+
+  private getDeviceLocation(): Promise<any> {
+      return new Promise((resolve, reject) => {
+          geolocation.enableLocationRequest().then(() => {
+              geolocation.getCurrentLocation({timeout: 10000}).then(location => {
+                  resolve(location);
+              }).catch(error => {
+                  reject(error);
+              });
+          });
+      });
+  }
+
+  public updateLocation() {
+      this.getDeviceLocation().then(result => {
+          this.latitude = result.latitude;
+          this.longitude = result.longitude;
+          console.log("Current position information; Latitude: ", this.latitude, "and Longitude: ", this.longitude)
+          global.player.location = new Location(this.longitude, this.latitude)
+          console.log("If we grab from the global player object (longitude, latitude): ", global.player.getLocation())
+      }, error => {
+          console.error(error);
+      });
+  }
+
+  public startWatchingLocation() {
+      this.watchId = geolocation.watchLocation(location => {
+          if(location) {
+              this.zone.run(() => {
+                  this.latitude = location.latitude;
+                  this.longitude = location.longitude;
+                  global.player.location = new Location(this.longitude, this.latitude)
+                  console.log("We are currently watching location")
+              });
+          }
+      }, error => {
+          console.error(error);
+      }, { updateDistance: 1, minimumUpdateTime: 1000 });
+  }
+
+  public stopWatchingLocation() {
+      if(this.watchId) {
+          geolocation.clearWatch(this.watchId);
+          this.watchId = null;
+      }
+  }
 
 }
