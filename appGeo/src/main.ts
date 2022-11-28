@@ -5,6 +5,7 @@ import { databaseInit, databaseGet } from './modules/database';
 import { Player } from './app/player/player.component';
 import { Game } from './app/game/game.component';
 
+
 global.loggedIn = false;
 global.player = new Player();
 global.playerlist = new Map<number, Player>();

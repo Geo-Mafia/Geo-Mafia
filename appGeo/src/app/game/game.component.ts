@@ -88,6 +88,7 @@ export class Game implements OnInit {
 
   }
 
+
   updatePlayerDatabase(data: object) {
     // Update global player field
     global.player = data["value"];
