@@ -162,9 +162,11 @@ export class Game implements OnInit {
   gameTick() {
     //All events that must run every tick
 
+    /*
     this.players.forEach((player: Player, key: number) => {
       this.map.playerInBubble(player);
     });
+    */
 
     databaseUpdate(MAP_PATH, this.map);
   }
