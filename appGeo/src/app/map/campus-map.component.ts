@@ -320,12 +320,10 @@ export class CampusMap implements OnInit {
       Taft.init_bubble('Taft House/ Midway Studios', 41.78529045276358, 41.7856788604663, -87.60330975476859, -87.60298900247261)
       this.addToMap(Taft.NameOfBubble, Taft)
 
-      databaseGet("game/users").then(user => {
-        this.playerInBubble(user) //should find bubble of each user and add them in
-      }).catch(error => {
-        console.log("error with CampusMap: " + error)  //throw exception or error
-      });
-
+      for (let user of global.playerlist.values()) {
+        //takes in the global playerlist to set up the values in the map
+        this.playerInBubble(user)
+      }
 
       this.playerInBubble(player)
       return this.Display
