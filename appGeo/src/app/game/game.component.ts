@@ -162,11 +162,9 @@ export class Game implements OnInit {
   gameTick() {
     //All events that must run every tick
 
-    /*
     this.players.forEach((player: Player, key: number) => {
       this.map.playerInBubble(player);
     });
-    */
 
     databaseUpdate(MAP_PATH, this.map);
   }
@@ -228,8 +226,8 @@ export class Game implements OnInit {
       const voteCloseTime = new Date(voteTime.getTime() + this.gameRules.getVoteLength())
       const safeOverTime = new Date(voteTime.getTime() + this.gameRules.getSafeLength())
 
-      const voteTimer = this.scheduleRecuring(voteTime, this.gameRules.getDayCycleLength(), function() {this.#voting_open()}, VOTE_OPEN_JK)
-      const voteCloseTimer = this.scheduleRecuring(voteCloseTime, this.gameRules.getDayCycleLength(), function() {this.#voting_close()}, VOTE_CLOSE_JK)
+      const voteTimer = this.scheduleRecuring(voteTime, this.gameRules.getDayCycleLength(), function() {this.votingOpen()}, VOTE_OPEN_JK)
+      const voteCloseTimer = this.scheduleRecuring(voteCloseTime, this.gameRules.getDayCycleLength(), function() {this.votingClose()}, VOTE_CLOSE_JK)
       const safeOverTimer = this.scheduleRecuring(safeOverTime, this.gameRules.getDayCycleLength(), function() {this.#safetime_end()}, SAFE_OVER_JK)
 
       var now = (new Date()).getTime()
@@ -346,7 +344,7 @@ export class Game implements OnInit {
   }
 
   //Called by scheduled job only
-  #voting_open() {
+  votingOpen() {
     this.players.forEach((player: Player, key: number) => {
       if(player instanceof Killer) {
         player.disableKilling()
@@ -361,7 +359,7 @@ export class Game implements OnInit {
   }
 
   //Called by scheduled job only
-  #voting_close() {
+  votingClose() {
     this.countVoteProcess()
     if(this.winningCondition() != INPROGRESS) {
       this.#endProcess()
