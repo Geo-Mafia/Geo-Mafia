@@ -70,8 +70,14 @@ export class KillingComponent implements OnInit {
             console.log("Found error where I can't draw from the map")
           } 
           else {
-            cm = value;
+            cm.MapOfCampus = value.MapOfCampus
+            cm.display = value.display
+            cm.playerlist = value.player_list
+            cm.offcampus = value.offcampus
+            console.log("cm variable is now: ", cm)
+            console.log("The lcoation of the player is currently: ", global.player.location)
             var curr_bub = cm.playersBubble(global.player);
+            
             this.list_of_all_nearby_players = Array.from(curr_bub.List.values());
           }
         });
