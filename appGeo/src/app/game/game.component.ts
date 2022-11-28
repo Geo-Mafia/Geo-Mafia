@@ -228,7 +228,7 @@ export class Game implements OnInit {
 
       const voteTimer = this.scheduleRecuring(voteTime, this.gameRules.getDayCycleLength(), function() {this.votingOpen()}, VOTE_OPEN_JK)
       const voteCloseTimer = this.scheduleRecuring(voteCloseTime, this.gameRules.getDayCycleLength(), function() {this.votingClose()}, VOTE_CLOSE_JK)
-      const safeOverTimer = this.scheduleRecuring(safeOverTime, this.gameRules.getDayCycleLength(), function() {this.#safetime_end()}, SAFE_OVER_JK)
+      const safeOverTimer = this.scheduleRecuring(safeOverTime, this.gameRules.getDayCycleLength(), function() {this.safetimeEnd()}, SAFE_OVER_JK)
 
       var now = (new Date()).getTime()
       this.scheduleRecuring(new Date(now + 60000), 60000, function() {this.gameTick()}, TICK_JK)
@@ -372,7 +372,7 @@ export class Game implements OnInit {
   }
 
   //Called by scheduled job only
-  #safetime_end() {
+  safetimeEnd() {
     this.players.forEach((player: Player, key: number) => {
       if(player instanceof Killer) {
         player.resetKilling()
