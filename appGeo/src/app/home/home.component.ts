@@ -151,7 +151,8 @@ export class HomeComponent implements OnInit {
             //already exists
             else {
               global.player = res["value"];
-              console.log("user already exists, will not add new data but will pull from the database");
+              // console.log("user already exists, will not add new data but will pull from the database");
+              console.log("Calvin are you sure u are building it right?");
               //console.log(global.player);
               global.result = res;
               this.zone.run(() => this.component_isLoggedIn = true)
@@ -168,12 +169,44 @@ export class HomeComponent implements OnInit {
             }
           }).then(res3 => {
             this.textChange();
+            console.log("before ")
+            //at this point, global.player should be intitialized
+            databaseGet("game/users").then(res => {
+              for (const [key, value] of Object.entries(res)) {
+                let person = new Player();
+                console.log(JSON.stringify(value));
+                person.alive = value["alive"]
+                person.databasePath = value["databasePath"]
+                person.userID = value["userID"]
+                person.username = value["username"]
+                //TODO: let location = new Location();
+                person.location = value["location"]
+                person.votes = value["votes"]
+                person.chat_lists = value["chat_lists"]
+                person.isAdmin = value["isAdmin"]
+                person.have_already_voted = value["have_already_voted"]
+                person.email = value["email"]
+                person.userIDString = value["userIDString"]
+
+                global.playerlist.set(Number(key), person);
+              }
+              //console.log("Playerlist is : " + [...global.playerlist.entries()]);
+              console.log("Person 1 is : " + JSON.stringify(global.playerlist.get(Number("101066060680979007193"))))
+              console.log("Person 1 is : " + (global.playerlist.get(Number("101066060680979007193")) instanceof Player))
+            })
+            console.log("Past playerlist")
+            // global.playerlist.set(global.player.getUserID(), global.player);
           })
           .catch(error => {
             console.log("error: " + error);
           });
         }
       });
+        
+    
+    
+    
+    
     }
 
     if(global.player.isadmin == true) {
