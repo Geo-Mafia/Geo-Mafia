@@ -20,9 +20,7 @@ export class Bubble{
 
     constructor() {
       this.List = new Map<number, Player>(); //map<userID, Player>; initialized empty
-      var testuser = new Player()
-      testuser.init(1, 'Hi_:)', {longitude:  0, latitude: 0,}, 1)
-      this.List.set(testuser.userID, testuser)
+
     }
 
     init_bubble(id, xLb, xUb, yLb, yUb){

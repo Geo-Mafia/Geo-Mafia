@@ -326,7 +326,7 @@ export class CampusMap implements OnInit {
         console.log("error with CampusMap: " + error)  //throw exception or error
       });
 
-      //Here is a dummy player you can test UI with (change coords to bubble you):
+
       this.playerInBubble(player)
       return this.Display
     }
