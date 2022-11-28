@@ -250,7 +250,7 @@ export class CampusMap implements OnInit {
     this.addToMap(Taft.NameOfBubble, Taft)
 
     databaseGet("game/users").then(user => {
-      this.playerInBubble(user)
+      this.playerInBubble(user) //should find bubble of each user and add them in
     })
     this.playerInBubble(global.player)
 

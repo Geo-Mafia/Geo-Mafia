@@ -1,4 +1,5 @@
 # Geo-Mafia
+
 Geo-Mafia is a real-time mafia game played in real life using players' real-time geo-locations
 
 # Milestone 4.B
@@ -46,7 +47,7 @@ One thing we did want to mention about the Initial proposal is that it wasn't cl
 
 ## 4) Acceptance Tests
  1. We have tested the Google Sign-in functionalities using our personal and school G-mail accounts. We were able to successfully log-in to the app, fetch our personal information (full name, unique ID, and email address) from the log in and push them to the database. The Google Sign-in worked as we expected.
- 2. We have tested the UIs, interacting with HTML elements including but not limited to buttons, redirections, textfields and pages. We as users were able to input their intentions through buttons, textfields and other HTML input elements, and the app was able to print and output necessary information to users. The redirection system was able to take users to necessary pages, and users could freely explore the pages we created.
+ 2. We have tested the UIs, interacting with HTML elements including but not limited to buttons, redirections, textfields and pages. We as users were able to input their intentions through buttons, textfields and other HTML input elements, and the app was able to print and output necessary information to users. The redirection system was able to take users to necessary pages, and users could freely explore the pages we created. Specifically, users will need to first log in to the app by clicking on the "Google Sign in" botton, and then users can click on the button they want depends the action they are looking to achieve. For example, the "Go to chat" button will take users to the game chat history and then users can type and send chat messages, the "Go to snapshot" button takes users to the game snapshot history, etc.
 
 ## 5) Extra Small Tasks for Milestone 5
   1. We noticed that the app behaves differently in the xCode simulator vs. physical devices. We plan to adjust the different behaviors so that we can build/deploy the app to physical devices. This is attributed to the fact that running "tns preview" (which should allow us to run the app on physical mobile devices) is built to run with it's own build settings and not ours.

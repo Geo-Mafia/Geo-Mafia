@@ -17,8 +17,6 @@ import { databaseAdd, databaseEventListener, databaseGet } from "../../modules/d
 import { toUIString } from '@nativescript/core/utils/types'
 
 const VOTE_OPEN_PATH = "src/settings/voteOpen"
-const MAP_PATH = "/game/map"
-const GAMERULE_PATH = "src/settings/gameRules"
 
 @Component({
   selector: 'Home',
@@ -67,11 +65,7 @@ export class HomeComponent implements OnInit {
     // Init your component properties here.
     // Going to initialize a list of bubbles here;
     var map = new CampusMap();
-    map.MapOfCampus = new Map<string, Bubble>()
-    map.playerlist = []
-    databaseAdd(MAP_PATH, map)
     var gameRules = new GameRules();
-    databaseAdd(GAMERULE_PATH, gameRules)
     this.game = new Game(gameRules, map, null)
 
     console.log("init");

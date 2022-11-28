@@ -8,7 +8,7 @@ import { databaseAdd, databaseGet, databaseEventListener, databaseUpdate } from 
 import { borderTopRightRadiusProperty } from '@nativescript/core';
 //A CampusMap is a Map of the Bubbles that exist on campus
 
-const MAP_PATH = "/game/map"
+const MAP_PATH = "src/game/map"
 const SETTINGS_PATH = "src/settings/"
 const START_TIME_PATH = "src/settings/startTime"
 const END_TIME_PATH = "src/settings/endTime"
@@ -162,11 +162,10 @@ export class Game implements OnInit {
   gameTick() {
     //All events that must run every tick
 
-    this.players.forEach((player: Player, key: number) => {
-      this.map.playerInBubble(player);
-    });
-
-    databaseUpdate(MAP_PATH, this.map)
+    if(this.getGameActive() == ACTIVE) {
+      var now = (new Date()).getTime()
+      this.scheduleRecuring(new Date(now + 60000), 60000, function() {this.gameTick()}, TICK_JK)
+    }
   }
 
   #startProcess() {
@@ -230,8 +229,9 @@ export class Game implements OnInit {
       const voteCloseTimer = this.scheduleRecuring(voteCloseTime, this.gameRules.getDayCycleLength(), function() {this.#voting_close()}, VOTE_CLOSE_JK)
       const safeOverTimer = this.scheduleRecuring(safeOverTime, this.gameRules.getDayCycleLength(), function() {this.#safetime_end()}, SAFE_OVER_JK)
 
-      var now = (new Date()).getTime()
-      this.scheduleRecuring(new Date(now + 60000), 60000, function() {this.gameTick()}, TICK_JK)
+      this.#scheduledJobs.set(VOTE_OPEN_JK, voteTimer)
+      this.#scheduledJobs.set(VOTE_CLOSE_JK, voteCloseTimer)
+      this.#scheduledJobs.set(SAFE_OVER_JK, safeOverTimer)
 
       this.#setGameActive(ACTIVE)
       databaseUpdate(STATUS_PATH, this.gameActive)
@@ -274,6 +274,7 @@ export class Game implements OnInit {
       }
 
       const job = this.scheduleEvent(date, function() {this.#startProcess()}, START_JK);
+      this.#scheduledJobs.set(START_JK, job) //adds start job to list of jobs running
 
       this.#setGameScheduled(SCHEDULED)
       return SUCCESS;
@@ -454,6 +455,7 @@ export class Game implements OnInit {
 
   addPlayer(player) {
       this.players.set(player.getUserID(), player)
+      //global.playerlist.set(player.getUserID(), player);
       return SUCCESS;
   }
 
