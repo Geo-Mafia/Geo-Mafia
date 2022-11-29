@@ -99,7 +99,7 @@ jobs:
         working-directory: appGeo/
 
   release_app:
-    name: building app and launching on macos
+    name: building and releasing
     runs-on: macos-12
     steps:
       - uses: maxim-lobanov/setup-xcode@v1
@@ -135,3 +135,4 @@ jobs:
         
       - name: view file
         run: ls
+        working-directory: appGeo/
