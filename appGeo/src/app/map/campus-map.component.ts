@@ -1,6 +1,6 @@
 import { Component, Inject, Injectable, OnInit} from '@angular/core';
 import {Bubble} from './map.component'
-import {Player} from '../player/player.component'
+import {Player, Killer, Civilian} from '../player/player.component'
 import { push } from 'nativescript-plugin-firebase';
 import { databaseAdd, databaseGet, databaseEventListener, databaseUpdate } from '../../modules/database' //copied over so I can access player variable
 

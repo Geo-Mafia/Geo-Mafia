@@ -1,5 +1,5 @@
 //file added for simplicity reasons so that it can work with the files added by player dev
-import{Player} from '../player/player.component';
+import{Player, Killer, Civilian} from '../player/player.component';
 
 import { Component, Inject, Injectable} from '@angular/core';
 
