@@ -129,8 +129,8 @@ jobs:
       - name: install nativescript
         run: npm install -g nativescript
 
-      - name: tns build ios --release
-        run: tns build ios
+      - name: build ipa file
+        run: tns build ios --release --for-device
         working-directory: appGeo/
         
       - name: view file
@@ -142,7 +142,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: appGeo/platforms/ios/build/Debug-iphonesimulator/appGeo.app
-          asset_name: Most Recent Built .app Release for GeoMafia App
+          asset_name: Most Recent Built .ipa Release for GeoMafia App
           tag: ${{ github.ref }}
           overwrite: true
-          body: "This is the most recent built .app release for GeoMafia app. To check how to import the app and run it on your iOS device, please check README"
+          body: "This is the most recent built .ipa release for GeoMafia app. To check how to import the app and run it on your iOS device, please check README"
