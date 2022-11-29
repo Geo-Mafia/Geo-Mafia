@@ -35,13 +35,13 @@ export class Bubble{
 
     // adds player; returns true on success
     addPlayer(player: Player){
-      this.List = this.List.set(player.getUserID(), player); //returns map
+      this.List = this.List.set(player.userID, player); //returns map
       return true;
     }
 
     // removes player, returns true on success
     removePlayer(player: Player){
-      return this.List.delete(player.getUserID()); //returns bool
+      return this.List.delete(player.userID); //returns bool
     }
 
     // returns bubble id
