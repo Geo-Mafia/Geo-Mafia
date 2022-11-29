@@ -54,7 +54,7 @@ export class CampusMap implements OnInit {
         this.offcampus.addPlayer(pToCheck)
         this.display = this.offcampus
         this.playerlist = this.offcampus.playerArray
-      }else if(!this.display.playerArray.includes(pToCheck) && pToCheck.getAliveStatus()){
+      }else if(!this.display.playerArray.includes(pToCheck) && pToCheck.alive){
         //for when display has changed constantly and this player is offcampus
         this.offcampus.addPlayer(pToCheck)
         this.display = this.offcampus
