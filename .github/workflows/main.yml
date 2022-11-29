@@ -5,7 +5,7 @@ on:
       - '**/**.md'
     branches:
       - main
-      - adding_bubbles
+      - display_map
       - add-map-method
       - method_to_return_bubble_for_snapshot
   pull_request:

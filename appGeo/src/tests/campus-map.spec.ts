@@ -64,7 +64,7 @@ QUnit.test("testing the display variable and playerInBubble", function(assert){
   assert.false(testbub2.playerArray.includes(P2), "should not have P2 in testbubble 2 either")
   P1.location = notInB
   testMap.playerInBubble(P1)
-  assert.deepEqual(testMap.display.id, 'The Outside of any assigned Campuse Buildings', "should have recognized the player is Off Campus")
+  assert.deepEqual(testMap.display.id, 'The Outside of any assigned Campus Buildings', "should have recognized the player is Off Campus")
 
 
 })
@@ -76,9 +76,9 @@ QUnit.test("testing playersBubble", function(assert){
   testMap.playerInBubble(P1)
   assert.true(testbub1.inBubble(P1), "p1 should be in bub1")
   assert.equal(testbub1.NameOfBubble, testMap.playersBubble(P1).NameOfBubble, "returned bubble 1 should have the same id as original")
-  
+
   testMap.addToMap(testbub2.id, testbub2)
-  P2.alive = 1 
+  P2.alive = 1
   P2.location = inTB2
   testMap.playerInBubble(P2)
   assert.true(testbub2.inBubble(P2), "p2 should be in bub2")

@@ -134,11 +134,11 @@ export class HomeComponent implements OnInit {
               global.player.userIDString = result["id"];
               //global.player.username = result["displayName"];
               global.player.email = result["userToken"];
-              
+
 
               //admin if the player is the first one registered
               databaseGet("game/users").then(res0 => {
-      
+
                 //no player in the game
                 if (res0 == null) {
                   global.player.isAdmin = true;
@@ -147,9 +147,9 @@ export class HomeComponent implements OnInit {
                 else if ((Object.keys(res0).length) != 0) {
                   global.player.isAdmin = false;
                 }
-              
+
                 let location = 0; //TODO: change location to be actual later
-                
+
                 //TODO UPDATE USERID NUMBER
                 global.player.init(0, result["displayName"], location, 1);
                 global.player.databasePath = "/game/users/" + global.player.userIDString;
@@ -157,7 +157,7 @@ export class HomeComponent implements OnInit {
                 this.is_component_loggedIn = new Observable(observer=>observer.next(true));
                 this.is_component_not_loggedIn = new Observable(observer=>observer.next(false));
                 //console.log(global.player);
-    
+
                 databaseAdd('/game/users/' + userID, global.player)
                 global.result = result;
 
