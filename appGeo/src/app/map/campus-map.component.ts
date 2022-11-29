@@ -321,11 +321,11 @@ export class CampusMap implements OnInit {
       this.addToMap(Taft.NameOfBubble, Taft)
 
       if(global.playerlist){
-        /*if a global playerlist extists
+        /*if a global playerlist exists
         takes in the global playerlists values to set up the map*/
-        global.playerlist.forEach(function(value, key) {
-          this.playerInBubble(value)
-        })
+        for (let user of global.playerlist.values()) {
+          this.playerInBubble(user)
+        }
       }
 
       this.playerInBubble(player)
