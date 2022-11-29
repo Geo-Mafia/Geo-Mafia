@@ -9,12 +9,12 @@ import { borderTopRightRadiusProperty } from '@nativescript/core';
 //A CampusMap is a Map of the Bubbles that exist on campus
 
 const MAP_PATH = "/game/map"
-const SETTINGS_PATH = "src/settings/"
-const START_TIME_PATH = "src/settings/startTime"
-const END_TIME_PATH = "src/settings/endTime"
-const STATUS_PATH = "src/settings/status"
-const GAMERULE_PATH = "src/settings/gameRules"
-const VOTE_OPEN_PATH = "src/settings/voteOpen"
+const SETTINGS_PATH = "settings/"
+const START_TIME_PATH = "settings/startTime"
+const END_TIME_PATH = "settings/endTime"
+const STATUS_PATH = "settings/status"
+const GAMERULE_PATH = "settings/gameRules"
+const VOTE_OPEN_PATH = "settings/voteOpen"
 
 const INACTIVE = 0
 const ACTIVE = 1
