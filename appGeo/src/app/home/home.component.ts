@@ -21,7 +21,9 @@ import * as geolocation from '@nativescript/geolocation';
 import { Location } from '../player/player.component'
 /* End of imports required for Location Aspect Code */
 
-const VOTE_OPEN_PATH = "src/settings/voteOpen"
+const VOTE_OPEN_PATH = "settings/voteOpen"
+const MAP_PATH = "/game/map"
+const GAMERULE_PATH = "settings/gameRules"
 
 @Component({
   selector: 'Home',
@@ -74,7 +76,9 @@ export class HomeComponent implements OnInit {
     // Init your component properties here.
     // Going to initialize a list of bubbles here;
     var map = new CampusMap();
+    databaseAdd(MAP_PATH, map)
     var gameRules = new GameRules();
+    databaseAdd(GAMERULE_PATH, gameRules)
     this.game = new Game(gameRules, map, null)
 
     geolocation.enableLocationRequest();
