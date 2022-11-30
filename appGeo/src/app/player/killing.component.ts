@@ -62,25 +62,31 @@ export class KillingComponent implements OnInit {
         this.list_of_all_nearby_players = new Array();
         this.selected_player = null;
 
+        /* Create a new campus map object and then call playersBubble() to load 
+         * depending on the user's location */
         let cm = new CampusMap();
-        databaseGet('game/map').then(value => {
-          console.log("val: " + JSON.stringify(value));
+        cm.playersBubble(global.player);
+
+        //After getting map object, just extract the playerlist and reassign value
+        this.list_of_all_nearby_players = cm.playerlist; 
+        // databaseGet('game/map').then(value => {
+        //   console.log("val: " + JSON.stringify(value));
     
-          if (value == null) {
-            console.log("Found error where I can't draw from the map")
-          } 
-          else {
-            cm.MapOfCampus = value.MapOfCampus
-            cm.display = value.display
-            cm.playerlist = value.player_list
-            cm.offcampus = value.offcampus
-            console.log("cm variable is now: ", cm)
-            console.log("The lcoation of the player is currently: ", global.player.location)
-            var curr_bub = cm.playersBubble(global.player);
+        //   if (value == null) {
+        //     console.log("Found error where I can't draw from the map")
+        //   } 
+        //   else {
+        //     cm.MapOfCampus = value.MapOfCampus
+        //     cm.display = value.display
+        //     cm.playerlist = value.player_list
+        //     cm.offcampus = value.offcampus
+        //     console.log("cm variable is now: ", cm)
+        //     console.log("The lcoation of the player is currently: ", global.player.location)
+        //     var curr_bub = cm.playersBubble(global.player);
             
-            this.list_of_all_nearby_players = Array.from(curr_bub.List.values());
-          }
-        });
+        //     this.list_of_all_nearby_players = Array.from(curr_bub.List.values());
+        //   }
+        // });
 
 
         // //Hard code some examples::
@@ -108,10 +114,7 @@ export class KillingComponent implements OnInit {
         else{
             this.is_alive = false;
         }
-        // this.kills_remaining = this.yourself.getRemainingDailyKillCount()
-        // this.commited_kills = this.yourself.getTotalKillCount()
-        // this.kills_remaining = 3
-        // this.commited_kills = 2
+
         if (this.kills_remaining > 0){
             this.can_kill = true;
         }
@@ -130,10 +133,13 @@ export class KillingComponent implements OnInit {
         for(var i = 0; i < this.list_of_all_nearby_players.length; i++){
             var curr_player = this.list_of_all_nearby_players[i];
             //We cannot kill an already dead player, and we also cannot kill another killer
-            if (curr_player.getAliveStatus() != this.ALIVE || curr_player instanceof Killer){
+            if (curr_player.alive != this.ALIVE || curr_player instanceof Killer || curr_player.username == this.yourself.username){
                 //Do nothing
             }
             else{
+                if (curr_player.username == this.yourself.username){
+                    console.log("We have added the current user to the list of killable targets, OOOPS!")
+                }
                 this.list_of_all_available_to_kill.push(curr_player);
                 //console.log("We have just now added the following to available: ", curr_player.getUserID())
             }
@@ -146,9 +152,9 @@ export class KillingComponent implements OnInit {
         for(var i = 0; i < this.list_of_all_nearby_players.length; i++){
             var curr_player = this.list_of_all_nearby_players[i];
             //Check if this is the player of who you want to kill
-            if (curr_player.getUsername() == this.typed_username){
+            if (curr_player.username == this.typed_username){
                 this.selected_player = curr_player;
-                this.selected_player_username = curr_player.getUsername();
+                this.selected_player_username = curr_player.username;
                 found = true;
                 break;
             }
@@ -171,12 +177,12 @@ export class KillingComponent implements OnInit {
 
         //Do the selection process
         this.selected_player = player_passed_in;
-        this.selected_player_username = player_passed_in.getUsername();
+        this.selected_player_username = player_passed_in.username;
     }
 
     removePlayer(){
         const index_we_found = this.list_of_all_available_to_kill.findIndex((object) => {
-            return object.getUsername() === this.selected_player.getUsername();
+            return object.username === this.selected_player.username;
         });
 
         if (index_we_found !== -1) {
