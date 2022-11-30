@@ -1,5 +1,6 @@
 import { Component, Inject, Injectable, OnInit } from '@angular/core';
 import { InjectableAnimationEngine } from '@nativescript/angular';
+import { databaseAdd, databaseGet, databaseEventListener, databaseUpdate } from '../../modules/database'
 import { ChangeType } from '@nativescript/core';
 import { Bubble } from '../map/map.component';
 import {Player, Civilian, Killer} from '../player/player.component'
@@ -159,5 +160,9 @@ export class VotingComponent implements OnInit{
         this.front_message = this.msg_if_voted;
         this.yourself.have_already_voted = true; //Field inside the object gets set so it can go across pages
         this.have_not_voted = false; //Field that we use for the HTML in this page
+
+        //Update things in terms of the database
+        databaseUpdate(this.selected_player.databasePath, this.selected_player)
+        databaseUpdate(this.yourself.databasePath, this.yourself)
     }
 }

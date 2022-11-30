@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { databaseAdd, databaseGet, databaseEventListener } from '../../modules/database'
+import { databaseAdd, databaseGet, databaseEventListener, databaseUpdate } from '../../modules/database'
 import { firebase } from "@nativescript/firebase";
 import { fromObject, ScrollView, ScrollEventData} from '@nativescript/core';
 import { Player, Killer, Civilian } from './player.component'
@@ -171,6 +171,10 @@ export class KillingComponent implements OnInit {
 
         //Display satisfactory message for killing ;)
         this.selected_player_username = this.selected_player_username + " is now dead... Congrats ^_^"
+
+        //Update things in terms of the database
+        databaseUpdate(this.selected_player.databasePath, this.selected_player)
+        databaseUpdate(this.yourself.databasePath, this.yourself)
     }
 
 }
