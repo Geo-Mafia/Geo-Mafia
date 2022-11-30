@@ -70,7 +70,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isKiller = true;   //This information should be received from Database with Player Info!!!
+    //this.isKiller = true;   //This information should be received from Database with Player Info!!!
     this.votingOpen = true; //This information should be received from Database with Game Info!!!
     console.log("Can we see this when we exit the page and then come back inside the page")
     // Init your component properties here.
@@ -223,6 +223,7 @@ export class HomeComponent implements OnInit {
     if(global.player.isadmin == true) {
       databaseEventListener("src/game/gameStarted", this.startGameDatabase.bind(this))
     }
+    this.isKiller = global.player.isKiller;
   }
 
   updateVoteOpenDatabase(data: object) {
