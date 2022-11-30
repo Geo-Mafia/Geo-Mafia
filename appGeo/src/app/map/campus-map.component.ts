@@ -49,7 +49,9 @@ export class CampusMap implements OnInit {
         this.checkBubble(bubb, pToCheck)
       }
 
-      if(!this.display){
+      //console.log("player location is: " + pToCheck.location)
+
+      if(this.display == undefined){
         //for when the first player is found to not be on campus
         this.offcampus.addPlayer(pToCheck)
         this.display = this.offcampus
@@ -324,10 +326,12 @@ export class CampusMap implements OnInit {
         /*if a global playerlist exists
         takes in the global playerlists values to set up the map*/
         for (let user of global.playerlist.values()) {
+          console.log("User location is: " + user.location)
           this.playerInBubble(user)
         }
       }
 
+      console.log("player location is: ", player.location)
       this.playerInBubble(player)
       return this.Display
     }
