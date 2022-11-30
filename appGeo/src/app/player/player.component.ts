@@ -47,6 +47,7 @@ export class Player implements OnInit{
         this.chat_lists = new Array();
         this.databasePath = "";
         this.isAdmin = false;
+        this.isKiller = false;
         
     }
     //init(userID: number, userIDString: string, username: string, email:string, location, alive: number){
@@ -66,6 +67,7 @@ export class Player implements OnInit{
         this.chat_lists = new Array()
         this.databasePath = "";
         this.isAdmin = false;
+        this.isKiller = false;
     }
     ngOnInit(): void {
     }

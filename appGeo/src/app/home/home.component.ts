@@ -224,6 +224,12 @@ export class HomeComponent implements OnInit {
       databaseEventListener("src/game/gameStarted", this.startGameDatabase.bind(this))
     }
     this.isKiller = global.player.isKiller;
+    if (this.isKiller = true){
+      console.log("The current user is a killer")
+    }
+    else{
+      console.log("The current user is a civilian")
+    }
   }
 
   updateVoteOpenDatabase(data: object) {
