@@ -51,11 +51,8 @@ export class KillingComponent implements OnInit {
 
     ngOnInit(): void {
         console.log("Got to Killing Screen")
-        //Here we want to get from database the list of players that are in bubble
-        //list_of_all_nearby_players = <some way from database to return a list of Player Objects that are all in same bubble as user>
 
-        //We also want to get the Object that represents the killer:
-        //yourself = <some way from databases to get back Killer Object matching to the user>
+        //Setting yourself from the global object
         this.yourself = global.player
 
         this.list_of_all_available_to_kill = new Array();
@@ -69,41 +66,6 @@ export class KillingComponent implements OnInit {
 
         //After getting map object, just extract the playerlist and reassign value
         this.list_of_all_nearby_players = cm.playerlist; 
-        // databaseGet('game/map').then(value => {
-        //   console.log("val: " + JSON.stringify(value));
-    
-        //   if (value == null) {
-        //     console.log("Found error where I can't draw from the map")
-        //   } 
-        //   else {
-        //     cm.MapOfCampus = value.MapOfCampus
-        //     cm.display = value.display
-        //     cm.playerlist = value.player_list
-        //     cm.offcampus = value.offcampus
-        //     console.log("cm variable is now: ", cm)
-        //     console.log("The lcoation of the player is currently: ", global.player.location)
-        //     var curr_bub = cm.playersBubble(global.player);
-            
-        //     this.list_of_all_nearby_players = Array.from(curr_bub.List.values());
-        //   }
-        // });
-
-
-        // //Hard code some examples::
-        // var player1 = new Civilian()
-        // player1.init(1, "Testing 1", 1, this.ALIVE)
-        // var player2 = new Civilian()
-        // player2.init(2, "Testing 2", 1, this.ALIVE)
-        // var player3 = new Civilian()
-        // player3.init(3, "Testing 3", 1, this.ALIVE)
-        // this.yourself = new Killer()
-        // this.yourself.init(4, "This is you, you killer", 1, this.ALIVE)
-        // var killer2 = new Killer()
-        // killer2.init(5, "Killer that should never show up", 1, this.ALIVE)
-        // this.list_of_all_nearby_players.push(player1)
-        // this.list_of_all_nearby_players.push(player2)
-        // this.list_of_all_nearby_players.push(player3)
-        // this.list_of_all_nearby_players.push(killer2)
 
     //The following lines would work whenevever have an appropriate 'yourself' object
         this.kills_remaining = this.yourself.remaining_daily_kill_count;
@@ -128,8 +90,6 @@ export class KillingComponent implements OnInit {
     }
 
     filterPlayers(){
-        //console.log("Inside the filter Killer function")
-        //console.log("The length of list of all nearby players is: ", this.list_of_all_nearby_players.length)
         for(var i = 0; i < this.list_of_all_nearby_players.length; i++){
             var curr_player = this.list_of_all_nearby_players[i];
             //We cannot kill an already dead player, and we also cannot kill another killer
@@ -141,7 +101,6 @@ export class KillingComponent implements OnInit {
                     console.log("We have added the current user to the list of killable targets, OOOPS!")
                 }
                 this.list_of_all_available_to_kill.push(curr_player);
-                //console.log("We have just now added the following to available: ", curr_player.getUserID())
             }
         }
     }
