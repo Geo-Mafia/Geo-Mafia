@@ -4,11 +4,11 @@
 
 <StackLayout *ngIf="display">
   <StackLayout id="container">
-    <Label text = "Players currently in {{display.id}}:" ></Label>
+    <Label text = "Players currently in {{display.id}}:" textWrap="true" ></Label>
     <ListView row="0" [items] ="playerlist"  class="list-group" separatorColor="transparent">
       <ng-template let-player="item" let-i="index" >
         <StackLayout>
-          <Label text = "{{player.getUsername()}}" textWrap="true" class="player-view"></Label>
+          <Label text = "{{player.username}}" textWrap="true" class="player-view"></Label>
         </StackLayout>
       </ng-template>
     </ListView>

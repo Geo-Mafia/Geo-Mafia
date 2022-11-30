@@ -17,7 +17,7 @@ QUnit.test("Constructor and Setting", function(assert) {
     assert.equal(gameRule.getVoteLength(), 60, "Default vote period is 1 hour")
     assert.equal(gameRule.getVoteTime(), 960, "Default vote time is 16 hours into game")
     assert.equal(gameRule.getMaxSoloKill(), 1, "Default maximum kills per day by a killer is 1")
-    assert.equal(gameRule.getMaxGlobalKill(), Infinity, "Default maximum kills per day overall is infinity")
+    assert.equal(gameRule.getMaxGlobalKill(), Number.MAX_SAFE_INTEGER, "Default maximum kills per day overall is the max number")
 
     assert.equal(gameRule.setGameDurations(1500, 250, 125, 125), SUCCESS, "Can set game durations to minimum relations")
     assert.equal(gameRule.setGameDurations(600, 100, 50, 50), FAILURE, "Cannot set too small a game length")

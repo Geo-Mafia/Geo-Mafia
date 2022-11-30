@@ -1,5 +1,5 @@
 //file added for simplicity reasons so that it can work with the files added by player dev
-import{Player} from '../player/player.component.js';
+import{Player, Killer, Civilian} from '../player/player.component';
 
 import { Component, Inject, Injectable} from '@angular/core';
 
@@ -20,6 +20,7 @@ export class Bubble{
 
     constructor() {
       this.List = new Map<number, Player>(); //map<userID, Player>; initialized empty
+
     }
 
     init_bubble(id, xLb, xUb, yLb, yUb){
@@ -34,13 +35,13 @@ export class Bubble{
 
     // adds player; returns true on success
     addPlayer(player: Player){
-      this.List = this.List.set(player.getUserID(), player); //returns map
+      this.List = this.List.set(player.userID, player); //returns map
       return true;
     }
 
     // removes player, returns true on success
     removePlayer(player: Player){
-      return this.List.delete(player.getUserID()); //returns bool
+      return this.List.delete(player.userID); //returns bool
     }
 
     // returns bubble id
@@ -60,7 +61,7 @@ export class Bubble{
       return this.List;
     }
 
-    get playerArray(){
+    public get playerArray(){
       var displayPlayers = Array.from(this.List.values())
       return displayPlayers
     }

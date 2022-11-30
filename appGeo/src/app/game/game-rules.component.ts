@@ -21,7 +21,7 @@ const MIN_VOTE_LENGTH = 60
 const DEF_VOTE_TIME = 960
 
 const MIN_MAX_KILL = 1
-const DEF_MAX_GLOBAL_KILL = Infinity
+const DEF_MAX_GLOBAL_KILL = Number.MAX_SAFE_INTEGER
 
 @Component({
     selector: 'game-rules',

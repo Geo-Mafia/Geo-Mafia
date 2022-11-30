@@ -8,13 +8,13 @@ import { databaseAdd, databaseGet, databaseEventListener, databaseUpdate } from 
 import { borderTopRightRadiusProperty } from '@nativescript/core';
 //A CampusMap is a Map of the Bubbles that exist on campus
 
-const MAP_PATH = "src/game/map"
-const SETTINGS_PATH = "src/settings/"
-const START_TIME_PATH = "src/settings/startTime"
-const END_TIME_PATH = "src/settings/endTime"
-const STATUS_PATH = "src/settings/status"
-const GAMERULE_PATH = "src/settings/gameRules"
-const VOTE_OPEN_PATH = "src/settings/voteOpen"
+const MAP_PATH = "/game/map"
+const SETTINGS_PATH = "settings/"
+const START_TIME_PATH = "settings/startTime"
+const END_TIME_PATH = "settings/endTime"
+const STATUS_PATH = "settings/status"
+const GAMERULE_PATH = "settings/gameRules"
+const VOTE_OPEN_PATH = "settings/voteOpen"
 
 const INACTIVE = 0
 const ACTIVE = 1
@@ -60,7 +60,7 @@ export class Game implements OnInit {
 
     this.startTime = null;
     this.endTime = null
-    
+
     this.map = gameMap
 
     if(players != undefined) {
@@ -74,7 +74,7 @@ export class Game implements OnInit {
     this.#scheduledJobs = new Map()
   }
 
-  
+
   ngOnInit(): void {
         // add event listener to update each player
         this.players.forEach((player: Player, key: number) => {
@@ -163,10 +163,11 @@ export class Game implements OnInit {
   gameTick() {
     //All events that must run every tick
 
-    if(this.getGameActive() == ACTIVE) {
-      var now = (new Date()).getTime()
-      this.scheduleRecuring(new Date(now + 60000), 60000, function() {this.gameTick()}, TICK_JK)
-    }
+    this.players.forEach((player: Player, key: number) => {
+      this.map.playerInBubble(player);
+    });
+
+    databaseUpdate(MAP_PATH, this.map);
   }
 
   #startProcess() {
@@ -214,7 +215,7 @@ export class Game implements OnInit {
       databaseAdd(START_TIME_PATH, this.getStartTime())
 
       if(this.gameRules.isScheduledEnd) {
-        this.setEndTime(new Date(this.getStartTime().getTime() + 
+        this.setEndTime(new Date(this.getStartTime().getTime() +
                                 (this.gameRules.getGameLengthHours() * 60 * 60 * 1800)))
         const endJob = this.scheduleEvent(this.getEndTime(), function() {this.#endProcess()}, END_JK)
         databaseAdd(END_TIME_PATH, this.getEndTime())
@@ -226,13 +227,12 @@ export class Game implements OnInit {
       const voteCloseTime = new Date(voteTime.getTime() + this.gameRules.getVoteLength())
       const safeOverTime = new Date(voteTime.getTime() + this.gameRules.getSafeLength())
 
-      const voteTimer = this.scheduleRecuring(voteTime, this.gameRules.getDayCycleLength(), function() {this.#voting_open()}, VOTE_OPEN_JK)
-      const voteCloseTimer = this.scheduleRecuring(voteCloseTime, this.gameRules.getDayCycleLength(), function() {this.#voting_close()}, VOTE_CLOSE_JK)
-      const safeOverTimer = this.scheduleRecuring(safeOverTime, this.gameRules.getDayCycleLength(), function() {this.#safetime_end()}, SAFE_OVER_JK)
+      const voteTimer = this.scheduleRecuring(voteTime, this.gameRules.getDayCycleLength(), function() {this.votingOpen()}, VOTE_OPEN_JK)
+      const voteCloseTimer = this.scheduleRecuring(voteCloseTime, this.gameRules.getDayCycleLength(), function() {this.votingClose()}, VOTE_CLOSE_JK)
+      const safeOverTimer = this.scheduleRecuring(safeOverTime, this.gameRules.getDayCycleLength(), function() {this.safetimeEnd()}, SAFE_OVER_JK)
 
-      this.#scheduledJobs.set(VOTE_OPEN_JK, voteTimer)
-      this.#scheduledJobs.set(VOTE_CLOSE_JK, voteCloseTimer)
-      this.#scheduledJobs.set(SAFE_OVER_JK, safeOverTimer)
+      var now = (new Date()).getTime()
+      this.scheduleRecuring(new Date(now + 60000), 60000, function() {this.gameTick()}, TICK_JK)
 
       this.#setGameActive(ACTIVE)
       databaseUpdate(STATUS_PATH, this.gameActive)
@@ -245,7 +245,7 @@ export class Game implements OnInit {
 
   }
 
-  /* All checks to be run before the game starts 
+  /* All checks to be run before the game starts
   */
   preGameChecks() {
       if(this.getPlayerCount() < this.gameRules.getMinPlayers()) {
@@ -275,7 +275,6 @@ export class Game implements OnInit {
       }
 
       const job = this.scheduleEvent(date, function() {this.#startProcess()}, START_JK);
-      this.#scheduledJobs.set(START_JK, job) //adds start job to list of jobs running
 
       this.#setGameScheduled(SCHEDULED)
       return SUCCESS;
@@ -322,13 +321,13 @@ export class Game implements OnInit {
     if(this.gameRules.isScheduledEnd()) {
       this.cancelEvent(END_JK)
     }
-    
+
     //disable all game timers
     this.cancelEvent(VOTE_OPEN_JK)
     this.cancelEvent(VOTE_CLOSE_JK)
     this.cancelEvent(SAFE_OVER_JK)
     this.cancelEvent(TICK_JK)
-    
+
     return this.winningCondition();
   }
 
@@ -346,7 +345,7 @@ export class Game implements OnInit {
   }
 
   //Called by scheduled job only
-  #voting_open() {
+  votingOpen() {
     this.players.forEach((player: Player, key: number) => {
       if(player instanceof Killer) {
         player.disableKilling()
@@ -361,7 +360,7 @@ export class Game implements OnInit {
   }
 
   //Called by scheduled job only
-  #voting_close() {
+  votingClose() {
     this.countVoteProcess()
     if(this.winningCondition() != INPROGRESS) {
       this.#endProcess()
@@ -369,12 +368,12 @@ export class Game implements OnInit {
 
     var vote_open: Boolean = false
     databaseUpdate(VOTE_OPEN_PATH, vote_open)
-    
+
     console.log("Voting closed")
   }
 
   //Called by scheduled job only
-  #safetime_end() {
+  safetimeEnd() {
     this.players.forEach((player: Player, key: number) => {
       if(player instanceof Killer) {
         player.resetKilling()
