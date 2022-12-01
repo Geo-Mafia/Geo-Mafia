@@ -186,10 +186,9 @@ export class HomeComponent implements OnInit {
             //already exists
             else {
               console.log("GP:", global.player);
-              global.player = this.constructPlayer(res)
-              console.log("GP:", global.player);
-              global.player = new Player()
-              global.player.username = "Steve"
+              let player = this.constructPlayer(res)
+              console.log("Returned player:", player);
+              global.player = player
               console.log("user already exists, will not add new data but will pull from the database");
               console.log("GP:", global.player);
               console.log("At this point in time the isKiller flag for globabl is: ", global.player.isKiller)
@@ -250,9 +249,9 @@ export class HomeComponent implements OnInit {
 
   }
 
-  constructPlayer(value) {
+  constructPlayer(value): Player {
 
-    var player
+    let player
 
     if(this.game.getGameActive() == ACTIVE) {
       if(value["isKiller"] == "true") {
@@ -265,6 +264,8 @@ export class HomeComponent implements OnInit {
     } else {
       player = new Player()
     }
+
+    player.init(value["userID"], value["username"])
 
     player.isKiller = value["isKiller"]
     player.alive = value["alive"]
@@ -280,7 +281,7 @@ export class HomeComponent implements OnInit {
     player.email = value["email"]
     player.userIDString = value["userIDString"]
 
-    console.log(player)
+    //console.log(player)
 
     return player
   }
