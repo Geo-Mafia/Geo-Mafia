@@ -1,6 +1,11 @@
 
 <ActionBar>
-  <Label text="Home Page" ></Label>
+  <Label *ngIf="(is_component_not_loggedIn | async)" text="Home Page - You have not signed in"></Label>
+  <Label *ngIf="(isKiller | async) && (is_component_loggedIn | async) && (isAlive | async)" text="Home Page - You are a Killer and ALIVE"></Label>
+  <Label *ngIf="(isKiller | async) && (is_component_loggedIn | async) && (isDead | async)" text="Home Page - You are a Killer and DEAD"></Label>
+  <Label *ngIf="(isCivilian | async) && (is_component_loggedIn | async) && (isAlive | async)" text="Home Page - You are a Civilian and ALIVE"></Label>
+  <Label *ngIf="(isCivilian | async) && (is_component_loggedIn | async) && (isDead | async)" text="Home Page - You are a Civilian and DEAD"></Label>
+  
 </ActionBar>
 
 
@@ -14,13 +19,13 @@
 
   <GridLayout>
     <StackLayout>
-      <Button [text]="text" *ngIf="is_component_not_loggedIn | async" (tap)="login()" class="btn home" style="color:red"></Button>
-      <Button text="Go To Chat" *ngIf="is_component_loggedIn | async" [nsRouterLink]="['Chat']" class="btn btn-primary btn-active home" col="0"></Button>
-      <Button text="Go To Snapshot" *ngIf="is_component_loggedIn | async" [nsRouterLink]="['Snapshot']" class="btn btn-primary btn-active" col="0"></Button>
-      <Button text="Kill a Player" *ngIf="(isKiller | async) && !this.votingOpen && is_component_loggedIn" [nsRouterLink]="['Killing']" class="btn btn-primary btn-active home" col="0"></Button>
-      <Button text="Go to Vote Player" *ngIf="this.votingOpen && is_component_loggedIn | async" [nsRouterLink]="['Voting']" class="btn btn-primary btn-active home" col="0"></Button>
+      <Button [text]="text" *ngIf="(is_component_not_loggedIn | async)" (tap)="login()" class="btn home" style="color:red"></Button>
+      <Button text="Go To Chat" *ngIf="(is_component_loggedIn | async)" [nsRouterLink]="['Chat']" class="btn btn-primary btn-active home" col="0"></Button>
+      <Button text="Go To Snapshot" *ngIf="(is_component_loggedIn | async)" [nsRouterLink]="['Snapshot']" class="btn btn-primary btn-active" col="0"></Button>
+      <Button text="Kill a Player" *ngIf="(isKiller | async) && !this.votingOpen && (is_component_loggedIn | async)" [nsRouterLink]="['Killing']" class="btn btn-primary btn-active home" col="0"></Button>
+      <Button text="Go to Vote Player" *ngIf="this.votingOpen && (is_component_loggedIn | async)" [nsRouterLink]="['Voting']" class="btn btn-primary btn-active home" col="0"></Button>
       <!-- <Button text="Go to Geolocation" *ngIf="is_component_loggedIn | async" [nsRouterLink]="['Location']" class="btn btn-primary btn-active" col="0"></Button> -->
-      <Button text="Players Nearby" *ngIf="is_component_loggedIn | async" [nsRouterLink]="['campusMap']" class="btn btn-primary btn-active home" col="0"></Button>
+      <Button text="Players Nearby" *ngIf="(is_component_loggedIn | async)" [nsRouterLink]="['campusMap']" class="btn btn-primary btn-active home" col="0"></Button>
     </StackLayout>
     <router-outlet></router-outlet>
   </GridLayout>
