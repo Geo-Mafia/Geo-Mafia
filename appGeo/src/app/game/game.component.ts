@@ -255,7 +255,7 @@ export class Game implements OnInit {
   */
   preGameChecks() {
       if(this.getPlayerCount() < this.gameRules.getMinPlayers()) {
-          console.log("Game had too few players")
+          console.log("Game had too few players ", this.getPlayerCount())
           return FAILURE
       } else if (this.getGameActive() == ACTIVE) {
           console.log("Game is already active")
@@ -465,6 +465,7 @@ export class Game implements OnInit {
   addPlayer(player) {
       this.players.set(player.getUserID(), player)
       //global.playerlist.set(player.getUserID(), player);
+      console.log("Playerlist is ", this.getPlayers())
       return SUCCESS;
   }
 

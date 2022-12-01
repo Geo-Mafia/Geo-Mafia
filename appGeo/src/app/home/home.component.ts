@@ -24,6 +24,7 @@ import { Location } from '../player/player.component'
 const VOTE_OPEN_PATH = "settings/voteOpen"
 const MAP_PATH = "/game/map"
 const GAMERULE_PATH = "settings/gameRules"
+const GAME_STARTED_PATH = "game/gameStarted"
 
 @Component({
   selector: 'Home',
@@ -83,8 +84,8 @@ export class HomeComponent implements OnInit {
     // Going to initialize a list of bubbles here;
     var map = new CampusMap();
     databaseAdd(MAP_PATH, map)
-    var gameRules = new GameRules();
-    databaseAdd(GAMERULE_PATH, gameRules)
+    
+    var gameRules = this.getDatabaseGamerules()
     this.game = new Game(gameRules, map, null)
 
     geolocation.enableLocationRequest();
@@ -235,6 +236,12 @@ export class HomeComponent implements OnInit {
                 person.userIDString = value["userIDString"]
 
                 global.playerlist.set(Number(key), person);
+                this.game.addPlayer(person)
+              }
+
+              console.log("Global player admin status", global.player.isAdmin)
+              if(global.player.isAdmin == true) {
+                databaseEventListener(GAME_STARTED_PATH, this.startGameDatabase.bind(this))
               }
               //console.log("Person 1 is : " + (global.playerlist.get(Number("101066060680979007193")) instanceof Player))
             })
@@ -243,17 +250,37 @@ export class HomeComponent implements OnInit {
           .catch(error => {
             console.log("error: " + error);
           });
+
         }
       });
-    
-    
-    
-    
+        
     }
 
-    if(global.player.isadmin == true) {
-      databaseEventListener("src/game/gameStarted", this.startGameDatabase.bind(this))
-    }
+  }
+
+  getDatabaseGamerules() {
+
+    const gameRules = new GameRules()
+
+    databaseGet(GAMERULE_PATH).then(res => {
+      if(res == null) {
+        return
+      }
+
+      gameRules.setTestingOverrule(res["testing_overrule"])
+      gameRules.setScheduledEnd(res["scheduledEnd"])
+      gameRules.setWipeoutEnd(res["wipeOutEnd"])
+      gameRules.setMinPlayers(res["minPlayers"])
+      gameRules.setFractionKillers(res["fractionKillers"])
+      gameRules.setGameDurations(res["gameLength"], res["dayCycleLength"],
+                                 res["safeLength"], res["voteLength"])
+      gameRules.voteTime = res["voteTime"]
+      gameRules.setMaxSoloKill(res["maxSoloKills"])
+      gameRules.setMaxGlobalKill(res["maxGlobalKills"])
+
+    })
+
+    return gameRules
   }
 
   updateVoteOpenDatabase(data: object) {
