@@ -186,9 +186,7 @@ export class HomeComponent implements OnInit {
             //already exists
             else {
               console.log("GP:", global.player);
-              let player = this.constructPlayer(res)
-              console.log("Returned player:", player);
-              global.player = player
+              this.constructGlobalPlayer(res)
               console.log("user already exists, will not add new data but will pull from the database");
               console.log("GP:", global.player);
               console.log("At this point in time the isKiller flag for globabl is: ", global.player.isKiller)
@@ -247,6 +245,39 @@ export class HomeComponent implements OnInit {
         
     }
 
+  }
+
+  constructGlobalPlayer(value) {
+    if(this.game.getGameActive() == ACTIVE) {
+      if(value["isKiller"] == "true") {
+        global.player = new Killer()
+        global.player.setMaxKills(value["max_daily_kill_count"], value["remaining_daily_kill_count"])
+        global.player.total_kill_count = value["total_kill_count"]
+      } else {
+        global.player = new Civilian()
+      }
+    } else {
+      global.player = new Player()
+    }
+    console.log("Global player: ", JSON.stringify(global.player))
+
+    global.player.init(value["userID"], value["username"], value["location"], value["alive"])
+
+    console.log("Global player: ", JSON.stringify(global.player))
+
+    global.player.isKiller = value["isKiller"]
+    global.player.databasePath = value["databasePath"]
+    global.player.userID = value["userID"]
+    global.player.username = value["username"]
+    //TODO: let location = new Location();
+    global.player.votes = value["votes"]
+    global.player.chat_lists = value["chat_lists"]
+    global.player.isAdmin = value["isAdmin"]
+    global.player.have_already_voted = value["have_already_voted"]
+    global.player.email = value["email"]
+    global.player.userIDString = value["userIDString"]
+
+    console.log("Global player: ", JSON.stringify(global.player))
   }
 
   constructPlayer(value): Player {
