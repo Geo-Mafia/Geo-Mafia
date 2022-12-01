@@ -173,6 +173,8 @@ export class Game implements OnInit {
 
   #startProcess() {
 
+    console.log("Starting game")
+
       const playerCount = this.getPlayerCount()
 
       //number of killers should be fraction of players, rounded down
@@ -251,10 +253,13 @@ export class Game implements OnInit {
   */
   preGameChecks() {
       if(this.getPlayerCount() < this.gameRules.getMinPlayers()) {
+          console.log("Game had too few players")
           return FAILURE
       } else if (this.getGameActive() == ACTIVE) {
+          console.log("Game is already active")
           return FAILURE
       } else if(this.getGameScheduled() == SCHEDULED) {
+          console.log("Game is already scheduled")
           return FAILURE
       }
 
