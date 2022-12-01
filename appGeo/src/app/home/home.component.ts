@@ -13,7 +13,7 @@ import * as application from "@nativescript/core/application";
 import { isIOS } from "@nativescript/core/platform";
 import { ChatComponent } from "../chat/chat.component";
 import { firebase } from "@nativescript/firebase"
-import { databaseAdd, databaseEventListener, databaseGet } from "../../modules/database"
+import { databaseAdd, databaseEventListener, databaseGet, databaseUpdate } from "../../modules/database"
 import { toUIString } from '@nativescript/core/utils/types'
 
 /* Imports required for Location Aspect Code */
@@ -148,7 +148,7 @@ export class HomeComponent implements OnInit {
                   global.player.isAdmin = false;
                 }
 
-                let location = 0; //TODO: change location to be actual later
+                let location = new Location(0, 0); //TODO: change location to be actual later
 
                 //TODO UPDATE USERID NUMBER
                 global.player.init(0, result["displayName"], location, 1);
@@ -277,6 +277,8 @@ export class HomeComponent implements OnInit {
       }, error => {
           console.error(error);
       });
+
+      databaseUpdate(global.player.databasePath, global.player)
   }
 
   public startWatchingLocation() {
@@ -292,6 +294,7 @@ export class HomeComponent implements OnInit {
       }, error => {
           console.error(error);
       }, { updateDistance: 1, minimumUpdateTime: 1000 });
+      databaseUpdate(global.player.databasePath, global.player)
   }
 
   public stopWatchingLocation() {
