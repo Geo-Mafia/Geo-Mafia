@@ -188,6 +188,7 @@ export class Game implements OnInit {
         let killer = new Killer()
         killer.init(player.getUserID(), player.getUsername(), player.getLocation(), player.getAliveStatus())
         killer.databasePath = player.getDatabasePath()
+        killer.location = player.location
         killer.setMaxKills(this.gameRules.getMaxSoloKill(), this.gameRules.getMaxGlobalKill())
 
         roledPlayers.set(killer.getUserID(), killer)
@@ -203,6 +204,7 @@ export class Game implements OnInit {
         let civilian = new Civilian()
         civilian.init(player.getUserID(), player.getUsername(), player.getLocation(), player.getAliveStatus())
         civilian.databasePath = player.getDatabasePath()
+        civilian.location = player.location
 
         roledPlayers.set(civilian.getUserID(), civilian)
         databaseUpdate(civilian.getDatabasePath(), civilian)

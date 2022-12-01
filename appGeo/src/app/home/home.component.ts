@@ -13,7 +13,7 @@ import * as application from "@nativescript/core/application";
 import { isIOS } from "@nativescript/core/platform";
 import { ChatComponent } from "../chat/chat.component";
 import { firebase } from "@nativescript/firebase"
-import { databaseAdd, databaseEventListener, databaseGet } from "../../modules/database"
+import { databaseAdd, databaseEventListener, databaseGet, databaseUpdate } from "../../modules/database"
 import { toUIString } from '@nativescript/core/utils/types'
 
 /* Imports required for Location Aspect Code */
@@ -160,7 +160,7 @@ export class HomeComponent implements OnInit {
                   global.player.isAdmin = false;
                 }
 
-                let location = 0; //TODO: change location to be actual later
+                let location = new Location(0, 0); //TODO: change location to be actual later
 
                 //TODO UPDATE USERID NUMBER
                 global.player.init(0, result["displayName"], location, 1);
@@ -305,9 +305,11 @@ export class HomeComponent implements OnInit {
           console.log("Current position information; Latitude: ", this.latitude, "and Longitude: ", this.longitude)
           global.player.location = new Location(this.longitude, this.latitude)
           console.log("If we grab from the global player object (longitude, latitude): ", global.player.getLocation())
+          databaseUpdate(global.player.databasePath, global.player)
       }, error => {
           console.error(error);
       });
+
   }
 
   public startWatchingLocation() {
@@ -318,6 +320,7 @@ export class HomeComponent implements OnInit {
                   this.longitude = location.longitude;
                   global.player.location = new Location(this.longitude, this.latitude)
                   console.log("We are currently watching location")
+                  databaseUpdate(global.player.databasePath, global.player)
               });
           }
       }, error => {
