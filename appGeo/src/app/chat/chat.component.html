@@ -96,7 +96,7 @@
 
 </TextField>
 
-<button (tap)="save()" class="btn btn-primary active" text="Save"></button>
+<button (tap)="save()" *ngIf="this.is_alive" class="btn btn-primary active" text="Save"></button>
       </StackLayout>
   </ScrollView>
 </StackLayout>

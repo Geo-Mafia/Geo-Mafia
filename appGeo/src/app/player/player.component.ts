@@ -28,7 +28,7 @@ export class Player implements OnInit{
     votes: number // An int
     chat_lists // List of Chat Objects that Player is a part of
     isAdmin : boolean // boolean whether this player is an admin (as in responsible for running the game start function)
-    
+    isKiller: boolean // boolean whether this player is a killer
     
     //edited by Kyu
     email: string;
@@ -47,6 +47,7 @@ export class Player implements OnInit{
         this.chat_lists = new Array();
         this.databasePath = "";
         this.isAdmin = false;
+        this.isKiller = false;
         
     }
     //init(userID: number, userIDString: string, username: string, email:string, location, alive: number){
@@ -66,6 +67,7 @@ export class Player implements OnInit{
         this.chat_lists = new Array()
         this.databasePath = "";
         this.isAdmin = false;
+        this.isKiller = false;
     }
     ngOnInit(): void {
     }
@@ -252,7 +254,8 @@ export class Civilian extends Player{
     /* Currently will be just the same as Player Superclass, however this info
     may change when implementing chat feature or in the future */
     constructor(){
-      super()
+      super();
+      this.isKiller = false;
     }
     init(userID: number, username: string, location, alive: number){
         /* NOTE: we may not even need location anymore. After setting up geolocation
@@ -268,6 +271,7 @@ export class Civilian extends Player{
         this.alive = alive;
         this.votes = 0;
         this.chat_lists = new Array()
+        this.isKiller = false;
     }
 }
 
@@ -279,6 +283,7 @@ export class Killer extends Player{
 
     constructor(){
       super();
+      this.isKiller = true;
     }
 
     init(userID, username, location, alive){
@@ -298,6 +303,7 @@ export class Killer extends Player{
         this.max_daily_kill_count = DAILYMAXKILLCOUNT;
         this.remaining_daily_kill_count = DAILYMAXKILLCOUNT;
         this.total_kill_count = 0;
+        this.isKiller = true;
     }
 
     resetKilling() {
