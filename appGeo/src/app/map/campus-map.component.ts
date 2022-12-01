@@ -326,12 +326,12 @@ export class CampusMap implements OnInit {
         /*if a global playerlist exists
         takes in the global playerlists values to set up the map*/
         for (let user of global.playerlist.values()) {
-          console.log("User location is: " + user.location)
+          //console.log("User location is: " + user.location)
           this.playerInBubble(user)
         }
       }
 
-      console.log("player location is: ", player.location)
+      //console.log("player location is: ", player.location)
       this.playerInBubble(player)
       return this.Display
     }
