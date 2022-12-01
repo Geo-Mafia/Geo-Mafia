@@ -5,7 +5,7 @@
     <ScrollView (scroll)="onScroll($any($event))">
         <StackLayout orientation="vertical">
             <label>You have currently selected: {{this.selected_player_username}} </label>
-            <button *ngIf="this.can_kill" (tap)="killPlayer()" class="btn btn-primary active" text="Kill the selected user!" ></button>
+            <button *ngIf="this.can_kill && this.is_alive" (tap)="killPlayer()" class="btn btn-primary active" text="Kill the selected user!" ></button>
             <TextField hint="Type username of person you want to kill" [(ngModel)]="this.typed_username">
             </TextField>
             <button (tap)="selectPlayer()" class="btn btn-primary active" text="Select player matching the typed username"></button>

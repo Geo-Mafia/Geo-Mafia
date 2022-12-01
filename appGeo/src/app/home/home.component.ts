@@ -1,6 +1,6 @@
 import { Component, OnInit, NgZone } from '@angular/core'
 import {Bubble} from '../map/map.component'
-import {Player} from '../player/player.component'
+import {Killer, Player} from '../player/player.component'
 import {CampusMap} from '../map/campus-map.component'
 import { Chat } from '../chat/chat.component'
 import { Game } from '../game/game.component'
@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
 
   text : string = "Google Sign-In";
 
-  public isKiller: Boolean
+  public isKiller: Observable<Boolean>
   public votingOpen: Boolean
   public component_isLoggedIn: Boolean
   public is_component_loggedIn: Observable<Boolean>
@@ -62,15 +62,21 @@ export class HomeComponent implements OnInit {
     if(global.loggedIn){
       this.is_component_loggedIn = new Observable(observer=>observer.next(true));
       this.is_component_not_loggedIn = new Observable(observer=>observer.next(false));
+      if (global.player instanceof Killer || global.player.isKiller == true){
+        this.isKiller = new Observable(observer=>observer.next(true));
+      }
+      else{
+        this.isKiller = new Observable(observer=>observer.next(false));
+      }
     }
     else{
       this.is_component_loggedIn = new Observable(observer=>observer.next(false));
       this.is_component_not_loggedIn = new Observable(observer=>observer.next(true));
+      this.isKiller = new Observable(observer=>observer.next(false));
     }
   }
 
   ngOnInit(): void {
-    this.isKiller = true;   //This information should be received from Database with Player Info!!!
     this.votingOpen = false; //This information should be received from Database with Game Info!!!
     console.log("Can we see this when we exit the page and then come back inside the page")
     // Init your component properties here.
@@ -108,6 +114,12 @@ export class HomeComponent implements OnInit {
       this.zone.run(() => this.component_isLoggedIn = true)
       this.is_component_loggedIn = new Observable(observer=>observer.next(true));
       this.is_component_not_loggedIn = new Observable(observer=>observer.next(false));
+      if (global.player instanceof Killer || global.player.isKiller == true){
+        this.isKiller = new Observable(observer=>observer.next(true));
+      }
+      else{
+        this.isKiller = new Observable(observer=>observer.next(false));
+      }
 
       let options = {
         title: "Error",
@@ -156,6 +168,12 @@ export class HomeComponent implements OnInit {
                 this.zone.run(() => this.component_isLoggedIn = true)
                 this.is_component_loggedIn = new Observable(observer=>observer.next(true));
                 this.is_component_not_loggedIn = new Observable(observer=>observer.next(false));
+                if (global.player instanceof Killer || global.player.isKiller == true){
+                  this.isKiller = new Observable(observer=>observer.next(true));
+                }
+                else{
+                  this.isKiller = new Observable(observer=>observer.next(false));
+                }
                 //console.log(global.player);
 
                 databaseAdd('/game/users/' + userID, global.player)
@@ -165,14 +183,21 @@ export class HomeComponent implements OnInit {
 
             }
             //already exists
-            else {
+            else { 
               global.player = res["value"];
               console.log("user already exists, will not add new data but will pull from the database");
-              //console.log(global.player);
+              console.log(global.player);
+              console.log("At this point in time the isKiller flag for globabl is: ", global.player.isKiller)
               global.result = res;
               this.zone.run(() => this.component_isLoggedIn = true)
               this.is_component_loggedIn = new Observable(observer=>observer.next(true));
               this.is_component_not_loggedIn = new Observable(observer=>observer.next(false));
+              if (global.player instanceof Killer || global.player.isKiller == true){
+                this.isKiller = new Observable(observer=>observer.next(true));
+              }
+              else{
+                this.isKiller = new Observable(observer=>observer.next(false));
+              }
               this.startWatchingLocation();
             }
           }).then(res2 => {
@@ -181,6 +206,12 @@ export class HomeComponent implements OnInit {
               this.zone.run(() => this.component_isLoggedIn = true)
               this.is_component_loggedIn = new Observable(observer=>observer.next(true));
               this.is_component_not_loggedIn = new Observable(observer=>observer.next(false));
+              if (global.player instanceof Killer || global.player.isKiller == true){
+                this.isKiller = new Observable(observer=>observer.next(true));
+              }
+              else{
+                this.isKiller = new Observable(observer=>observer.next(false));
+              }
               this.startWatchingLocation();
               console.log(global.loggedIn);
             }

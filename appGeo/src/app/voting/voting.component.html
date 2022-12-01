@@ -5,7 +5,7 @@
     <ScrollView (scroll)="onScroll($any($event))">
         <StackLayout orientation="vertical">
             <label>You have currently selected: {{this.selected_player_username}} </label>
-            <button *ngIf="this.have_not_voted" (tap)="votePlayer()" class="btn btn-primary active" text="Vote for selected user!" ></button>
+            <button *ngIf="this.have_not_voted && this.is_alive" (tap)="votePlayer()" class="btn btn-primary active" text="Vote for selected user!" ></button>
             <TextField hint="Type username of person you want to vote off" [(ngModel)]="this.typed_username">
             </TextField>
             <button (tap)="selectPlayer()" class="btn btn-primary active" text="Select player matching the typed username"></button>

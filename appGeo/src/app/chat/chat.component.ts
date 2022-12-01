@@ -22,7 +22,9 @@ const bindingContext = fromObject(model)
 })
 
 export class ChatComponent implements OnInit {
-
+    public DEAD = 0
+    public ALIVE = 1
+    public is_alive: Boolean
     text: string = ""
     save() {
         if (global.loggedIn && global.player.username != "") {
@@ -84,6 +86,15 @@ export class ChatComponent implements OnInit {
     databaseEventListener("game/chats", this.updateMsg.bind(this));
     console.log("got to chat");
     console.log("Can we see the player location in chat? Here it is: ", global.player.location)
+    if (global.player.alive == this.ALIVE){
+        //testing
+        this.is_alive = true;
+        console.log("We are in the case of having an alive player")
+    }
+    else{
+        this.is_alive = false;
+        console.log("We are in the case of having a dead player")
+    }
   }
 
   getMsgs() {
