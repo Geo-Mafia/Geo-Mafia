@@ -147,9 +147,10 @@ export class Game implements OnInit {
 
   scheduleRecuring(firstDate: Date, loopTime: number, func: Function, key: string) {
 
+    var gameObj = this
     const recFunc = function() {
       func();
-      this.scheduleRecuring(new Date(firstDate.getTime() + loopTime), loopTime, func, key)
+      gameObj.scheduleRecuring(new Date(firstDate.getTime() + loopTime), loopTime, func, key)
     }
 
     this.scheduleEvent(firstDate, recFunc, key)
@@ -227,12 +228,13 @@ export class Game implements OnInit {
       const voteCloseTime = new Date(voteTime.getTime() + this.gameRules.getVoteLength())
       const safeOverTime = new Date(voteTime.getTime() + this.gameRules.getSafeLength())
 
-      const voteTimer = this.scheduleRecuring(voteTime, this.gameRules.getDayCycleLength(), function() {this.votingOpen()}, VOTE_OPEN_JK)
-      const voteCloseTimer = this.scheduleRecuring(voteCloseTime, this.gameRules.getDayCycleLength(), function() {this.votingClose()}, VOTE_CLOSE_JK)
-      const safeOverTimer = this.scheduleRecuring(safeOverTime, this.gameRules.getDayCycleLength(), function() {this.safetimeEnd()}, SAFE_OVER_JK)
+      var gameobj = this
+      const voteTimer = this.scheduleRecuring(voteTime, this.gameRules.getDayCycleLength(), function() {gameobj.votingOpen()}, VOTE_OPEN_JK)
+      const voteCloseTimer = this.scheduleRecuring(voteCloseTime, this.gameRules.getDayCycleLength(), function() {gameobj.votingClose()}, VOTE_CLOSE_JK)
+      const safeOverTimer = this.scheduleRecuring(safeOverTime, this.gameRules.getDayCycleLength(), function() {gameobj.safetimeEnd()}, SAFE_OVER_JK)
 
       var now = (new Date()).getTime()
-      this.scheduleRecuring(new Date(now + 60000), 60000, function() {this.gameTick()}, TICK_JK)
+      this.scheduleRecuring(new Date(now + 60000), 60000, function() {gameobj.gameTick()}, TICK_JK)
 
       this.#setGameActive(ACTIVE)
       databaseUpdate(STATUS_PATH, this.gameActive)
