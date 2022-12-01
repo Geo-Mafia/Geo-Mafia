@@ -10,8 +10,7 @@ import { borderTopRightRadiusProperty } from '@nativescript/core';
 
 const MAP_PATH = "/game/map"
 const SETTINGS_PATH = "settings/"
-const START_TIME_PATH = "settings/startTime"
-const END_TIME_PATH = "settings/endTime"
+const START_END_TIME_PATH = "settings/StartEndTimes"
 const STATUS_PATH = "settings/status"
 const GAMERULE_PATH = "settings/gameRules"
 const VOTE_OPEN_PATH = "settings/voteOpen"
@@ -82,8 +81,7 @@ export class Game implements OnInit {
         });
         databaseEventListener(GAMERULE_PATH, this.updateGameRulesDatabase.bind(this));
         databaseEventListener(MAP_PATH, this.updateMapDatabase.bind(this));
-        databaseEventListener(START_TIME_PATH, this.updateStartTime.bind(this));
-        databaseEventListener(END_TIME_PATH, this.updateEndTime.bind(this));
+        databaseEventListener(START_END_TIME_PATH, this.updateTimes.bind(this));
         databaseEventListener(STATUS_PATH, this.updateStatus.bind(this));
 
   }
@@ -113,13 +111,11 @@ export class Game implements OnInit {
     console.log("updated map: " + JSON.stringify(this.map));
   }
 
-  updateStartTime(data: object) {
-    this.startTime = data["value"]
+  updateTimes(data: object) {
+    const times: GameTimeStrings = data["value"]
+    this.startTime = times.getStart()
+    this.endTime = times.getEnd()
     console.log("updated start time" + JSON.stringify(this.startTime))
-  }
-
-  updateEndTime(data: object) {
-    this.endTime = data["value"]
     console.log("updated end time" + JSON.stringify(this.endTime))
   }
 
@@ -146,13 +142,18 @@ export class Game implements OnInit {
   }
 
   scheduleRecuring(firstDate: Date, loopTime: number, func: Function, key: string) {
+    var now = (new Date()).getTime()
+    var recuringStart = firstDate.getTime()
+    var diff = Math.max((recuringStart - now), 0)
 
-    const recFunc = function() {
-      func();
-      this.scheduleRecuring(new Date(firstDate.getTime() + loopTime), loopTime, func, key)
-    }
+    var gameObj = this
+    const timer = setTimeout(() => {
+      setInterval(func, loopTime)
+      gameObj.#scheduledJobs.set(key, timer)
+    }, diff)
 
-    this.scheduleEvent(firstDate, recFunc, key)
+    this.#scheduledJobs.set(key, timer)
+
   }
 
   //Cancels an event scheduled
@@ -214,27 +215,28 @@ export class Game implements OnInit {
       this.#setPlayers(roledPlayers)
 
       this.startTime = new Date();
-      databaseAdd(START_TIME_PATH, this.getStartTime())
 
       if(this.gameRules.isScheduledEnd) {
         this.setEndTime(new Date(this.getStartTime().getTime() +
                                 (this.gameRules.getGameLengthHours() * 60 * 60 * 1800)))
         const endJob = this.scheduleEvent(this.getEndTime(), function() {this.#endProcess()}, END_JK)
-        databaseAdd(END_TIME_PATH, this.getEndTime())
 
       }
+
+      databaseAdd(START_END_TIME_PATH, new GameTimeStrings(this.getStartTime(), this.getEndTime()))
 
       //The three other game timers set
       const voteTime = new Date(this.getStartTime().getTime() + this.gameRules.getVoteTime())
       const voteCloseTime = new Date(voteTime.getTime() + this.gameRules.getVoteLength())
       const safeOverTime = new Date(voteTime.getTime() + this.gameRules.getSafeLength())
 
-      const voteTimer = this.scheduleRecuring(voteTime, this.gameRules.getDayCycleLength(), function() {this.votingOpen()}, VOTE_OPEN_JK)
-      const voteCloseTimer = this.scheduleRecuring(voteCloseTime, this.gameRules.getDayCycleLength(), function() {this.votingClose()}, VOTE_CLOSE_JK)
-      const safeOverTimer = this.scheduleRecuring(safeOverTime, this.gameRules.getDayCycleLength(), function() {this.safetimeEnd()}, SAFE_OVER_JK)
+      var gameobj = this
+      const voteTimer = this.scheduleRecuring(voteTime, this.gameRules.getDayCycleLength(), function() {gameobj.votingOpen()}, VOTE_OPEN_JK)
+      const voteCloseTimer = this.scheduleRecuring(voteCloseTime, this.gameRules.getDayCycleLength(), function() {gameobj.votingClose()}, VOTE_CLOSE_JK)
+      const safeOverTimer = this.scheduleRecuring(safeOverTime, this.gameRules.getDayCycleLength(), function() {gameobj.safetimeEnd()}, SAFE_OVER_JK)
 
       var now = (new Date()).getTime()
-      this.scheduleRecuring(new Date(now + 60000), 60000, function() {this.gameTick()}, TICK_JK)
+      this.scheduleRecuring(new Date(now + 60000), 60000, function() {gameobj.gameTick()}, TICK_JK)
 
       this.#setGameActive(ACTIVE)
       databaseUpdate(STATUS_PATH, this.gameActive)
@@ -576,4 +578,27 @@ export class Game implements OnInit {
     return this.chats.delete(chatID)
   }
 
+}
+
+class GameTimeStrings {
+  startTimeStr: string
+  endTimeStr: string
+
+  constructor(startTime: Date, endTime: Date) {
+    this.startTimeStr = startTime.toString()
+
+    if(endTime != null) {
+      this.endTimeStr = endTime.toString()
+    } else {
+      this.endTimeStr = null
+    }
+  }
+
+  getStart() {
+    return new Date(this.startTimeStr)
+  }
+
+  getEnd() {
+    return new Date(this.endTimeStr)
+  }
 }
