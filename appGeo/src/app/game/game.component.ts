@@ -15,8 +15,8 @@ const STATUS_PATH = "settings/status"
 const GAMERULE_PATH = "settings/gameRules"
 const VOTE_OPEN_PATH = "settings/voteOpen"
 
-const INACTIVE = 0
-const ACTIVE = 1
+export const INACTIVE = 0
+export const ACTIVE = 1
 const UNSCHEDULED = 5
 const SCHEDULED = 6
 const CIVILIAN = 7
@@ -89,7 +89,7 @@ export class Game implements OnInit {
 
   updatePlayerDatabase(data: object) {
     // Update global player field
-    global.player = data["value"];
+    //global.player = data["value"];
     // Need to change to hashmap
     let player = data["value"];
     console.log("updated player obj: " + JSON.stringify(player));
@@ -465,7 +465,6 @@ export class Game implements OnInit {
   addPlayer(player) {
       this.players.set(player.getUserID(), player)
       //global.playerlist.set(player.getUserID(), player);
-      console.log("Playerlist is ", this.getPlayers())
       return SUCCESS;
   }
 
