@@ -1,8 +1,11 @@
 
 <ActionBar>
   <Label *ngIf="(is_component_not_loggedIn | async)" text="Home Page - You have not signed in"></Label>
-  <Label *ngIf="(isKiller | async) && (is_component_loggedIn | async)" text="Home Page - You are a Killer"></Label>
-  <Label *ngIf="(isCivilian | async) && (is_component_loggedIn | async)" text="Home Page - You are a Civilian"></Label>
+  <Label *ngIf="(isKiller | async) && (is_component_loggedIn | async) && (isAlive | async)" text="Home Page - You are a Killer and ALIVE"></Label>
+  <Label *ngIf="(isKiller | async) && (is_component_loggedIn | async) && (isDead | async)" text="Home Page - You are a Killer and DEAD"></Label>
+  <Label *ngIf="(isCivilian | async) && (is_component_loggedIn | async) && (isAlive | async)" text="Home Page - You are a Civilian and ALIVE"></Label>
+  <Label *ngIf="(isCivilian | async) && (is_component_loggedIn | async) && (isDead | async)" text="Home Page - You are a Civilian and DEAD"></Label>
+  
 </ActionBar>
 
 
