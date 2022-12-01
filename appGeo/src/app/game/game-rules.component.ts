@@ -10,9 +10,10 @@ const MIN_FRACTION_KILLERS = 0.2
 const MIN_GAME_LENGTH = 1440
 const DEF_GAME_LENGTH = 10080
 
-//safe length default is 1/3 of game length. Minimum is 1/2 of game length
-
 const DEF_CYCLE_LEN = 1440
+const MAX_CYCLE_LEN = 30240
+
+//safe length default is 1/3 of cycle length. Minimum is 1/2 of cycle length
 
 //cannot be longer than safe length
 const MIN_VOTE_LENGTH = 60
@@ -150,13 +151,13 @@ export class GameRules {
     setGameDurations(gameMinutes: number, cycleMinutes: number, 
                      safeMinutes: number, voteMinutes: number) {
 
-        if(((gameMinutes) < MIN_GAME_LENGTH)) {
+        if(((gameMinutes) < MIN_GAME_LENGTH) && !this.testing_overrule) {
             return FAILURE
-        } else if((cycleMinutes > (gameMinutes / 6)) || (cycleMinutes < 0)) {
+        } else if((cycleMinutes > (gameMinutes / 6)) || (cycleMinutes < 0) || cycleMinutes > MAX_CYCLE_LEN) {
             return FAILURE
-        } else if((safeMinutes > (cycleMinutes / 2)) || (safeMinutes < MIN_VOTE_LENGTH)) {
+        } else if((safeMinutes > (cycleMinutes / 2)) || (safeMinutes < MIN_VOTE_LENGTH && !this.testing_overrule)) {
             return FAILURE
-        } else if((voteMinutes > safeMinutes) || (voteMinutes < MIN_VOTE_LENGTH)) {
+        } else if((voteMinutes > safeMinutes) || (voteMinutes < MIN_VOTE_LENGTH && !this.testing_overrule)) {
             return FAILURE
         }
 
