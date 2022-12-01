@@ -274,11 +274,11 @@ export class HomeComponent implements OnInit {
           console.log("Current position information; Latitude: ", this.latitude, "and Longitude: ", this.longitude)
           global.player.location = new Location(this.longitude, this.latitude)
           console.log("If we grab from the global player object (longitude, latitude): ", global.player.getLocation())
+          databaseUpdate(global.player.databasePath, global.player)
       }, error => {
           console.error(error);
       });
 
-      databaseUpdate(global.player.databasePath, global.player)
   }
 
   public startWatchingLocation() {
@@ -289,12 +289,12 @@ export class HomeComponent implements OnInit {
                   this.longitude = location.longitude;
                   global.player.location = new Location(this.longitude, this.latitude)
                   console.log("We are currently watching location")
+                  databaseUpdate(global.player.databasePath, global.player)
               });
           }
       }, error => {
           console.error(error);
       }, { updateDistance: 1, minimumUpdateTime: 1000 });
-      databaseUpdate(global.player.databasePath, global.player)
   }
 
   public stopWatchingLocation() {
