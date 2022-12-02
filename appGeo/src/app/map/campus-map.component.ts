@@ -58,6 +58,7 @@ export class CampusMap implements OnInit {
         this.playerlist = this.offcampus.playerArray
       }else if(!this.display.playerArray.includes(pToCheck) && pToCheck.alive){
         //for when display has changed constantly and this player is offcampus
+        console.log("Set to out of campus")
         this.offcampus.addPlayer(pToCheck)
         this.display = this.offcampus
         this.playerlist = this.offcampus.playerArray
@@ -83,12 +84,13 @@ export class CampusMap implements OnInit {
           this.display = checkIfIn
           this.playerlist = checkIfIn.playerArray
           return
-        }else {
+        } else {
+          console.log("pToCheck" + JSON.stringify(pToCheck))
           checkIfIn.addPlayer(pToCheck)
           this.display = checkIfIn;
-          console.log("this is the display: " + this.Display)
+          console.log("this is the display: " + JSON.stringify(this.Display))
           this.playerlist = checkIfIn.playerArray //reassigning our shallow copy of names
-          console.log("this is the playerlist: " + this.playerlist)
+          console.log("this is the playerlist: " + JSON.stringify(this.playerlist))
         }
       } else if(!checkIfIn.inBubble(pToCheck) && checkIfIn.List.has(pToCheck.userID)){
         checkIfIn.removePlayer(pToCheck)
@@ -327,13 +329,15 @@ export class CampusMap implements OnInit {
         takes in the global playerlists values to set up the map*/
         for (let user of global.playerlist.values()) {
           //console.log("User location is: " + user.location)
-          this.playerInBubble(user)
+          for (let bubb of this.MapOfCampus.values()) {
+            this.checkBubble(bubb, user)
+          }
         }
       }
 
       //console.log("player location is: ", player.location)
       this.playerInBubble(player)
-      return this.Display
+      return this.display
     }
 }
 
