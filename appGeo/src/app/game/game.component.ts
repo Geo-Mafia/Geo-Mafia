@@ -161,6 +161,10 @@ export class Game implements OnInit {
   updateStatus(data: object) {
     this.gameActive = data["value"]
     console.log("updated status" + JSON.stringify(this.gameActive))
+
+    if(global.player.isAdmin && (this.getGameActive() == ACTIVE)) {
+      //this.scheduleEvent() TODO SCHEDULE GAME TICK
+    }
   }
 
   //schedules an event for a time in the future. Will run recursively if that time in the future is greater than setTimeout can support
@@ -276,8 +280,8 @@ export class Game implements OnInit {
       const voteCloseTimer = this.scheduleRecuring(voteCloseTime, this.gameRules.dayCycleLength, function() {gameobj.votingClose()}, VOTE_CLOSE_JK)
       const safeOverTimer = this.scheduleRecuring(safeOverTime, this.gameRules.dayCycleLength, function() {gameobj.safetimeEnd()}, SAFE_OVER_JK)
 
-      var now = (new Date()).getTime()
-      this.scheduleRecuring(new Date(now + 60000), 60000, function() {gameobj.gameTick()}, TICK_JK)
+      var now = this.startTime.getTime()
+      this.scheduleRecuring(new Date(now + 60000), 60000, function() {this.gameTick()}, TICK_JK)
 
       this.#setGameActive(ACTIVE)
       databaseUpdate(STATUS_PATH, this.gameActive)

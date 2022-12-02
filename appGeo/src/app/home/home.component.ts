@@ -98,11 +98,13 @@ export class HomeComponent implements OnInit {
     console.log("Can we see this when we exit the page and then come back inside the page")
     // Init your component properties here.
     // Going to initialize a list of bubbles here;
+
     var map = new CampusMap();
     databaseAdd(MAP_PATH, map)
     
     var gameRules = this.getDatabaseGamerules()
     this.game = new Game(gameRules, map, null)
+
 
     geolocation.enableLocationRequest();
 
@@ -349,7 +351,7 @@ export class HomeComponent implements OnInit {
 
     databaseGet(GAMERULE_PATH).then(res => {
       if(res == null) {
-        return
+        return gameRules
       }
 
       gameRules.setTestingOverrule(res["testing_overrule"])
