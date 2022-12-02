@@ -122,7 +122,7 @@ export class Game implements OnInit {
     player.email = data["email"]
     player.userIDString = data["userIDString"]
     
-    console.log("updated player obj: " + JSON.stringify(player));
+    //console.log("updated player obj: " + JSON.stringify(player));
     let playerId = player.getUserID();
     this.players.set(playerId, player);
     // Update global playerlist
@@ -132,7 +132,16 @@ export class Game implements OnInit {
   }
 
   updateGameRulesDatabase(data: object) {
-    this.gameRules = data["value"]
+    this.gameRules.setTestingOverrule(data["testing_overrule"])
+    this.gameRules.setScheduledEnd(data["scheduledEnd"])
+    this.gameRules.setWipeoutEnd(data["wipeOutEnd"])
+    this.gameRules.setMinPlayers(data["minPlayers"])
+    this.gameRules.setFractionKillers(data["fractionKillers"])
+    this.gameRules.setGameDurations(data["gameLength"], data["dayCycleLength"],
+                                    data["safeLength"], data["voteLength"])
+    this.gameRules.voteTime = data["voteTime"]
+    this.gameRules.setMaxSoloKill(data["maxSoloKills"])
+    this.gameRules.setMaxGlobalKill(data["maxGlobalKills"])
     console.log("updated game rules: " + JSON.stringify(this.gameRules));
   }
 
