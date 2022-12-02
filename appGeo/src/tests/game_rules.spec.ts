@@ -25,10 +25,10 @@ QUnit.test("Constructor and Setting", function(assert) {
     assert.equal(gameRule.setGameDurations(1600, 100, 75, 50), FAILURE, "Cannot set safe time longer than 1/2 of day cycle")
     assert.equal(gameRule.setGameDurations(1600, 100, 50, 51), FAILURE, "Cannot set vote time longer than safe time")
 
-    assert.equal(gameRule.getGameLength(), 1500, "game length sets correctly")
-    assert.equal(gameRule.getDayCycleLength(), 250, "game cycle sets correctly")
-    assert.equal(gameRule.getSafeLength(), 125, "safe period sets correctly")
-    assert.equal(gameRule.getVoteLength(), 125, "vote period sets correctly")
+    assert.equal(gameRule.getGameLength(), 9000000, "game length sets correctly")
+    assert.equal(gameRule.getDayCycleLength(), 1500000, "game cycle sets correctly")
+    assert.equal(gameRule.getSafeLength(), 750000, "safe period sets correctly")
+    assert.equal(gameRule.getVoteLength(), 750000, "vote period sets correctly")
 
     assert.equal(gameRule.setMinPlayers(10), SUCCESS, "Can set larger min players")
     assert.equal(gameRule.setMinPlayers(4), FAILURE, "Cannot set min players smaller than 5")

@@ -99,9 +99,9 @@ export class GameRules {
         return this.fractionKillers
     }
 
-    //game length in minutes
+    //game length in ms
     getGameLength() {
-        return this.gameLength / MS_SCALE
+        return this.gameLength
     }
 
     getGameLengthHours() {
@@ -109,19 +109,19 @@ export class GameRules {
     }
 
     getDayCycleLength() {
-        return this.dayCycleLength / MS_SCALE
+        return this.dayCycleLength
     }
 
     getSafeLength() {
-        return this.safeLength / MS_SCALE
+        return this.safeLength
     }
 
     getVoteLength() {
-        return this.voteLength / MS_SCALE
+        return this.voteLength
     }
 
     getVoteTime() {
-        return this.voteTime / MS_SCALE
+        return this.voteTime
     }
 
     getMaxSoloKill() {
