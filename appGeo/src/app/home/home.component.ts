@@ -337,6 +337,9 @@ export class HomeComponent implements OnInit {
     console.log("Global player: ", JSON.stringify(global.player))
 
     global.player.isKiller = value["isKiller"]
+
+    console.log("Global player: ", JSON.stringify(global.player))
+    
     global.player.databasePath = value["databasePath"]
     global.player.userID = value["userID"]
     global.player.username = value["username"]
