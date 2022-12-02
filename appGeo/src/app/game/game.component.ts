@@ -89,9 +89,39 @@ export class Game implements OnInit {
 
   updatePlayerDatabase(data: object) {
     // Update global player field
+    if(global.player.databasePath == data["databasePath"]) {
+      global.player = data["value"]
+    }
     global.player = data["value"];
-    // Need to change to hashmap
-    let player = data["value"];
+    let player
+
+    if(this.getGameActive()) {
+      if(data["isKiller"]) {
+        player = new Killer()
+        player.isKiller = data["isKiller"]
+        player.max_daily_kill_count = data["max_daily_kill_count"]
+        player.remaining_daily_kill_count = data["remaining_daily_kill_count"]
+        player.total_kill_count = data["total_kill_count"]
+      } else {
+        player = new Civilian()
+      }
+    } else {
+      player = new Player();
+    }
+    
+    player.alive = data["alive"]
+    player.databasePath = data["databasePath"]
+    player.userID = data["userID"]
+    player.username = data["username"]
+    //TODO: let location = new Location();
+    player.location = data["location"]
+    player.votes = data["votes"]
+    player.chat_lists = data["chat_lists"]
+    player.isAdmin = data["isAdmin"]
+    player.have_already_voted = data["have_already_voted"]
+    player.email = data["email"]
+    player.userIDString = data["userIDString"]
+    
     console.log("updated player obj: " + JSON.stringify(player));
     let playerId = player.getUserID();
     this.players.set(playerId, player);

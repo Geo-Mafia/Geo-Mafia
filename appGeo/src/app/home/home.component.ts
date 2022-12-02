@@ -1,6 +1,6 @@
 import { Component, OnInit, NgZone } from '@angular/core'
 import {Bubble} from '../map/map.component'
-import {Killer, Player} from '../player/player.component'
+import {Civilian, Killer, Player} from '../player/player.component'
 import {CampusMap} from '../map/campus-map.component'
 import { Chat } from '../chat/chat.component'
 import { Game } from '../game/game.component'
@@ -292,7 +292,21 @@ export class HomeComponent implements OnInit {
             //at this point, global.player should be intitialized
             databaseGet("game/users").then(res => {
               for (const [key, value] of Object.entries(res)) {
-                let person = new Player();
+                let person
+                if(this.game.getGameActive()) {
+                  if(value["isKiller"]) {
+                    person = new Killer()
+                    person.isKiller = value["isKiller"]
+                    person.max_daily_kill_count = value["max_daily_kill_count"]
+                    person.remaining_daily_kill_count = value["remaining_daily_kill_count"]
+                    person.total_kill_count = value["total_kill_count"]
+                  } else {
+                    person = new Civilian()
+                  }
+                } else {
+                  person = new Player();
+                }
+                
                 person.alive = value["alive"]
                 person.databasePath = value["databasePath"]
                 person.userID = value["userID"]
