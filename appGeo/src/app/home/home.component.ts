@@ -1,9 +1,9 @@
 import { Component, OnInit, NgZone } from '@angular/core'
 import {Bubble} from '../map/map.component'
-import {Civilian, Killer, Player} from '../player/player.component'
+import {Killer, Player} from '../player/player.component'
 import {CampusMap} from '../map/campus-map.component'
 import { Chat } from '../chat/chat.component'
-import { Game, ACTIVE, INACTIVE } from '../game/game.component'
+import { Game } from '../game/game.component'
 import { GameRules } from '../game/game-rules.component'
 import { Observable } from 'rxjs'
 
@@ -124,7 +124,7 @@ export class HomeComponent implements OnInit {
 
       let options = {
         title: "Error",
-        message: "You already are signed in as: " + global.player.getUsername(),
+        message: "You already are signed in as: " + global.player.username,
         okButtonText: "OK"
       }
       alert(options);
@@ -184,14 +184,10 @@ export class HomeComponent implements OnInit {
 
             }
             //already exists
-            else {
-              console.log("GP:", global.player);
-              global.player = this.constructPlayer(res)
-              console.log("GP:", global.player);
-              global.player = new Player()
-              global.player.username = "Steve"
+            else { 
+              global.player = res["value"];
               console.log("user already exists, will not add new data but will pull from the database");
-              console.log("GP:", global.player);
+              console.log(global.player);
               console.log("At this point in time the isKiller flag for globabl is: ", global.player.isKiller)
               global.result = res;
               this.zone.run(() => this.component_isLoggedIn = true)
@@ -225,13 +221,25 @@ export class HomeComponent implements OnInit {
             //at this point, global.player should be intitialized
             databaseGet("game/users").then(res => {
               for (const [key, value] of Object.entries(res)) {
-                let person = this.constructPlayer(value)
+                let person = new Player();
+                person.alive = value["alive"]
+                person.databasePath = value["databasePath"]
+                person.userID = value["userID"]
+                person.username = value["username"]
+                //TODO: let location = new Location();
+                person.location = value["location"]
+                person.votes = value["votes"]
+                person.chat_lists = value["chat_lists"]
+                person.isAdmin = value["isAdmin"]
+                person.have_already_voted = value["have_already_voted"]
+                person.email = value["email"]
+                person.userIDString = value["userIDString"]
 
                 global.playerlist.set(Number(key), person);
                 this.game.addPlayer(person)
               }
 
-              console.log("Global player admin status is ", global.player.IsAdmin)
+              console.log("Global player admin status", global.player.isAdmin)
               if(global.player.isAdmin == true) {
                 databaseEventListener(GAME_STARTED_PATH, this.startGameDatabase.bind(this))
               }
@@ -248,41 +256,6 @@ export class HomeComponent implements OnInit {
         
     }
 
-  }
-
-  constructPlayer(value) {
-
-    var player
-
-    if(this.game.getGameActive() == ACTIVE) {
-      if(value["isKiller"] == "true") {
-        player = new Killer()
-        player.setMaxKills(value["max_daily_kill_count"], value["remaining_daily_kill_count"])
-        player.total_kill_count = value["total_kill_count"]
-      } else {
-        player = new Civilian()
-      }
-    } else {
-      player = new Player()
-    }
-
-    player.isKiller = value["isKiller"]
-    player.alive = value["alive"]
-    player.databasePath = value["databasePath"]
-    player.userID = value["userID"]
-    player.username = value["username"]
-    //TODO: let location = new Location();
-    player.location = value["location"]
-    player.votes = value["votes"]
-    player.chat_lists = value["chat_lists"]
-    player.isAdmin = value["isAdmin"]
-    player.have_already_voted = value["have_already_voted"]
-    player.email = value["email"]
-    player.userIDString = value["userIDString"]
-
-    console.log(player)
-
-    return player
   }
 
   getDatabaseGamerules() {
