@@ -158,10 +158,18 @@ export class KillingComponent implements OnInit {
         //Following line where all logic will be set appropriately including:
             // Selected player's alive status will be DEAD
             // The killer will have a decrease of remaining kills and an INCREASE of kills commited today
-        this.yourself.killPlayer(this.selected_player) //Sets both selected player's and yourself fields
+        //this.yourself.killPlayer(this.selected_player) //Sets both selected player's and yourself fields
+        if (this.yourself.remaining_daily_kill_count > 0 &&  this.yourself.alive == this.ALIVE){
+            // Killer has kills remaining, victim is in bubble and alive, can kill
+            this.selected_player.alive = this.DEAD;
+
+            this.yourself.total_kill_count++;
+            this.yourself.remaining_daily_kill_count--;
+        }
+
         this.removePlayer() //Removes dead player from available targets
-        this.kills_remaining = this.yourself.getRemainingDailyKillCount(); //Get new kills remaining
-        this.commited_kills = this.yourself.getTotalKillCount(); //Get new amount of total kills committed
+        this.kills_remaining = this.yourself.remaining_daily_kill_count; //Get new kills remaining
+        this.commited_kills = this.yourself.total_kill_count; //Get new amount of total kills committed
         if (this.kills_remaining > 0){ //Check if we can still kill or not
             this.can_kill = true;
         }

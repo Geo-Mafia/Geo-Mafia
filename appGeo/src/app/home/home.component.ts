@@ -37,6 +37,9 @@ export class HomeComponent implements OnInit {
   text : string = "Google Sign-In";
 
   public isKiller: Observable<Boolean>
+  public isCivilian: Observable<Boolean>
+  public isAlive: Observable<Boolean>
+  public isDead: Observable<Boolean>
   public votingOpen: Boolean
   public component_isLoggedIn: Boolean
   public is_component_loggedIn: Observable<Boolean>
@@ -65,15 +68,28 @@ export class HomeComponent implements OnInit {
       this.is_component_not_loggedIn = new Observable(observer=>observer.next(false));
       if (global.player instanceof Killer || global.player.isKiller == true){
         this.isKiller = new Observable(observer=>observer.next(true));
+        this.isCivilian = new Observable(observer=>observer.next(false));
       }
       else{
         this.isKiller = new Observable(observer=>observer.next(false));
+        this.isCivilian = new Observable(observer=>observer.next(true));
+      }
+      if (global.player.alive == 1){
+        this.isAlive = new Observable(observer=>observer.next(true));
+        this.isDead = new Observable(observer=>observer.next(false));
+      }
+      else{
+        this.isAlive = new Observable(observer=>observer.next(false));
+        this.isDead = new Observable(observer=>observer.next(true));
       }
     }
     else{
       this.is_component_loggedIn = new Observable(observer=>observer.next(false));
       this.is_component_not_loggedIn = new Observable(observer=>observer.next(true));
       this.isKiller = new Observable(observer=>observer.next(false));
+      this.isCivilian = new Observable(observer=>observer.next(true));
+      this.isAlive = new Observable(observer=>observer.next(false))
+      this.isDead = new Observable(observer=>observer.next(true));
     }
   }
 
@@ -117,9 +133,19 @@ export class HomeComponent implements OnInit {
       this.is_component_not_loggedIn = new Observable(observer=>observer.next(false));
       if (global.player instanceof Killer || global.player.isKiller == true){
         this.isKiller = new Observable(observer=>observer.next(true));
+        this.isCivilian = new Observable(observer=>observer.next(false));
       }
       else{
         this.isKiller = new Observable(observer=>observer.next(false));
+        this.isCivilian = new Observable(observer=>observer.next(true));
+      }
+      if (global.player.alive == 1){
+        this.isAlive = new Observable(observer=>observer.next(true));
+        this.isDead = new Observable(observer=>observer.next(false));
+      }
+      else{
+        this.isAlive = new Observable(observer=>observer.next(false));
+        this.isDead = new Observable(observer=>observer.next(true));
       }
 
       let options = {
@@ -142,16 +168,28 @@ export class HomeComponent implements OnInit {
           .then(res =>{
             //new registration
             if(res["value"] == null) {
-              //console.log("in new registration");
-              //console.log(res);
+              console.log("-----------------------in new registration----------------");
+              console.log(res);
               global.player.userIDString = result["id"];
               //global.player.username = result["displayName"];
               global.player.email = result["userToken"];
-
+              this.zone.run(() => this.component_isLoggedIn = true)
+              this.is_component_loggedIn = new Observable(observer=>observer.next(true));
+              this.is_component_not_loggedIn = new Observable(observer=>observer.next(false));
+              if (global.player instanceof Killer || global.player.isKiller == true){
+                this.isKiller = new Observable(observer=>observer.next(true));
+                this.isCivilian = new Observable(observer=>observer.next(false));
+              }
+              else{
+                this.isKiller = new Observable(observer=>observer.next(false));
+                this.isCivilian = new Observable(observer=>observer.next(true));
+              }
+              this.isAlive = new Observable(observer=>observer.next(true));
+              this.isDead = new Observable(observer=>observer.next(false));
 
               //admin if the player is the first one registered
               databaseGet("game/users").then(res0 => {
-
+                console.log("Still in the case where we register a new player")
                 //no player in the game
                 if (res0 == null) {
                   global.player.isAdmin = true;
@@ -162,7 +200,7 @@ export class HomeComponent implements OnInit {
                 }
 
                 let location = new Location(0, 0); //TODO: change location to be actual later
-
+                console.log("Case where new player is supposed to be initialized and all flags would get updated")
                 //TODO UPDATE USERID NUMBER
                 global.player.init(0, result["displayName"], location, 1);
                 global.player.databasePath = "/game/users/" + global.player.userIDString;
@@ -171,15 +209,26 @@ export class HomeComponent implements OnInit {
                 this.is_component_not_loggedIn = new Observable(observer=>observer.next(false));
                 if (global.player instanceof Killer || global.player.isKiller == true){
                   this.isKiller = new Observable(observer=>observer.next(true));
+                  this.isCivilian = new Observable(observer=>observer.next(false));
                 }
                 else{
                   this.isKiller = new Observable(observer=>observer.next(false));
+                  this.isCivilian = new Observable(observer=>observer.next(true));
                 }
-                //console.log(global.player);
+                if (global.player.alive == 1){
+                  this.isAlive = new Observable(observer=>observer.next(true));
+                  this.isDead = new Observable(observer=>observer.next(false));
+                }
+                else{
+                  this.isAlive = new Observable(observer=>observer.next(false));
+                  this.isDead = new Observable(observer=>observer.next(true));
+                }
+                console.log(global.player);
 
                 databaseAdd('/game/users/' + userID, global.player)
                 global.result = result;
-
+                console.log("What is currently the component_isLoggedIn: ", this.component_isLoggedIn)
+                global.loggedIn = true;
               })
 
             }
@@ -196,11 +245,22 @@ export class HomeComponent implements OnInit {
               this.is_component_not_loggedIn = new Observable(observer=>observer.next(false));
               if (global.player instanceof Killer || global.player.isKiller == true){
                 this.isKiller = new Observable(observer=>observer.next(true));
+                this.isCivilian = new Observable(observer=>observer.next(false));
               }
               else{
                 this.isKiller = new Observable(observer=>observer.next(false));
+                this.isCivilian = new Observable(observer=>observer.next(true));
+              }
+              if (global.player.alive == 1){
+                this.isAlive = new Observable(observer=>observer.next(true));
+                this.isDead = new Observable(observer=>observer.next(false));
+              }
+              else{
+                this.isAlive = new Observable(observer=>observer.next(false));
+                this.isDead = new Observable(observer=>observer.next(true));
               }
               this.startWatchingLocation();
+              global.loggedIn = true;
             }
           }).then(res2 => {
             if(global.player.username != "") {
@@ -210,14 +270,25 @@ export class HomeComponent implements OnInit {
               this.is_component_not_loggedIn = new Observable(observer=>observer.next(false));
               if (global.player instanceof Killer || global.player.isKiller == true){
                 this.isKiller = new Observable(observer=>observer.next(true));
+                this.isCivilian = new Observable(observer=>observer.next(false));
               }
               else{
                 this.isKiller = new Observable(observer=>observer.next(false));
+                this.isCivilian = new Observable(observer=>observer.next(true));
+              }
+              if (global.player.alive == 1){
+                this.isAlive = new Observable(observer=>observer.next(true));
+                this.isDead = new Observable(observer=>observer.next(false));
+              }
+              else{
+                this.isAlive = new Observable(observer=>observer.next(false));
+                this.isDead = new Observable(observer=>observer.next(true));
               }
               this.startWatchingLocation();
               console.log(global.loggedIn);
             }
           }).then(res3 => {
+            global.loggedIn = true;
             this.textChange();
             //at this point, global.player should be intitialized
             databaseGet("game/users").then(res => {
