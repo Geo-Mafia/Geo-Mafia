@@ -212,7 +212,7 @@ export class Game implements OnInit {
 
   #startProcess() {
 
-    console.log("Starting game")
+    console.log("Starting game with " + JSON.stringify(this.gameRules))
 
       const playerCount = this.getPlayerCount()
 
@@ -272,9 +272,9 @@ export class Game implements OnInit {
       const safeOverTime = new Date(voteTime.getTime() + this.gameRules.getSafeLength())
 
       var gameobj = this
-      const voteTimer = this.scheduleRecuring(voteTime, this.gameRules.getDayCycleLength(), function() {gameobj.votingOpen()}, VOTE_OPEN_JK)
-      const voteCloseTimer = this.scheduleRecuring(voteCloseTime, this.gameRules.getDayCycleLength(), function() {gameobj.votingClose()}, VOTE_CLOSE_JK)
-      const safeOverTimer = this.scheduleRecuring(safeOverTime, this.gameRules.getDayCycleLength(), function() {gameobj.safetimeEnd()}, SAFE_OVER_JK)
+      const voteTimer = this.scheduleRecuring(voteTime, this.gameRules.dayCycleLength, function() {gameobj.votingOpen()}, VOTE_OPEN_JK)
+      const voteCloseTimer = this.scheduleRecuring(voteCloseTime, this.gameRules.dayCycleLength, function() {gameobj.votingClose()}, VOTE_CLOSE_JK)
+      const safeOverTimer = this.scheduleRecuring(safeOverTime, this.gameRules.dayCycleLength, function() {gameobj.safetimeEnd()}, SAFE_OVER_JK)
 
       var now = (new Date()).getTime()
       this.scheduleRecuring(new Date(now + 60000), 60000, function() {gameobj.gameTick()}, TICK_JK)

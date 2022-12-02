@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 export const SUCCESS = 10
 export const FAILURE = -10
 
+const MS_SCALE = 60000 //for scaling all minute numbers into miliseconds
+
 const MIN_MIN_PLAYERS = 5
 const MIN_FRACTION_KILLERS = 0.2
 
@@ -39,13 +41,13 @@ export class GameRules {
     minPlayers: number //number of minimum players
     fractionKillers: number //fractional ratio of civilians who are killers
 
-    gameLength: number //the number of minutes the game is long.
-    dayCycleLength: number //the number of minutes in the day cycle
-    safeLength: number //the number of minutes kills aren't allowed each cycle
-    voteLength: number //the number of minutes at the begining of safe time voting is allowed
+    gameLength: number //the number of miliseconds the game is long.
+    dayCycleLength: number //the number of miliseconds in the day cycle
+    safeLength: number //the number of miliseconds kills aren't allowed each cycle
+    voteLength: number //the number of miliseconds at the begining of safe time voting is allowed
     
-    //number of minutes after game start
-    voteTime: number //number of minutes 
+    //number of miliseconds after game start
+    voteTime: number //number of miliseconds 
 
     maxSoloKills: number //number of kills a single killer can do a day
     maxGlobalKills: number //number of kills per day allowed total across all killers
@@ -58,13 +60,13 @@ export class GameRules {
         this.minPlayers = MIN_MIN_PLAYERS
         this.fractionKillers = MIN_FRACTION_KILLERS
 
-        this.gameLength = DEF_GAME_LENGTH
-        this.dayCycleLength = DEF_CYCLE_LEN
+        this.gameLength = DEF_GAME_LENGTH * MS_SCALE
+        this.dayCycleLength = DEF_CYCLE_LEN * MS_SCALE
         
-        this.safeLength = this.dayCycleLength/3
-        this.voteLength = MIN_VOTE_LENGTH
+        this.safeLength = (this.dayCycleLength/3)
+        this.voteLength = MIN_VOTE_LENGTH * MS_SCALE
 
-        this.voteTime = DEF_VOTE_TIME
+        this.voteTime = DEF_VOTE_TIME * MS_SCALE
 
         this.maxSoloKills = MIN_MAX_KILL
         this.maxGlobalKills = DEF_MAX_GLOBAL_KILL
@@ -97,28 +99,29 @@ export class GameRules {
         return this.fractionKillers
     }
 
+    //game length in minutes
     getGameLength() {
-        return this.gameLength
+        return this.gameLength / MS_SCALE
     }
 
     getGameLengthHours() {
-        return (this.gameLength / 60)
+        return (this.gameLength / (60 * MS_SCALE))
     }
 
     getDayCycleLength() {
-        return this.dayCycleLength
+        return this.dayCycleLength / MS_SCALE
     }
 
     getSafeLength() {
-        return this.safeLength
+        return this.safeLength / MS_SCALE
     }
 
     getVoteLength() {
-        return this.voteLength
+        return this.voteLength / MS_SCALE
     }
 
     getVoteTime() {
-        return this.voteTime
+        return this.voteTime / MS_SCALE
     }
 
     getMaxSoloKill() {
@@ -161,10 +164,10 @@ export class GameRules {
             return FAILURE
         }
 
-        this.gameLength = gameMinutes
-        this.dayCycleLength = cycleMinutes
-        this.safeLength = safeMinutes
-        this.voteLength = voteMinutes
+        this.gameLength = (gameMinutes * MS_SCALE)
+        this.dayCycleLength = (cycleMinutes * MS_SCALE)
+        this.safeLength = (safeMinutes * MS_SCALE)
+        this.voteLength = (voteMinutes * MS_SCALE)
         return SUCCESS
     }
 
