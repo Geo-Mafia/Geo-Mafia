@@ -34,7 +34,12 @@ export class CampusMap implements OnInit {
     /* //Here is a dummy player you can test UI with (change coords to bubble you want):
     var P1 = new Player()
     P1.init(1, 'P1', {longitude: 0, latitude: 0,}, 1) */
-    this.playersBubble(global.player)
+    console.log("User ID " + global.player.userIDString)
+    console.log("List: ", global.playerlist)
+    var player = global.playerlist.values().get(global.player.userIDString)
+    console.log("player is: ", player)
+
+    this.playersBubble(player)
 
   }
 

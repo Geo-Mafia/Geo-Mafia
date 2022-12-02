@@ -146,7 +146,7 @@ export class HomeComponent implements OnInit {
               global.player.userIDString = result["id"];
               //global.player.username = result["displayName"];
               global.player.email = result["userToken"];
-
+              global.player.userID = Number(result["id"])
 
               //admin if the player is the first one registered
               databaseGet("game/users").then(res0 => {
@@ -235,6 +235,7 @@ export class HomeComponent implements OnInit {
                 person.userIDString = value["userIDString"]
 
                 global.playerlist.set(Number(key), person);
+                console.log("People: ", JSON.stringify(global.playerlist))
               }
               //console.log("Person 1 is : " + (global.playerlist.get(Number("101066060680979007193")) instanceof Player))
             })
