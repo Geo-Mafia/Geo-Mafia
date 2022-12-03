@@ -16,6 +16,8 @@ import { firebase } from "@nativescript/firebase"
 import { databaseAdd, databaseEventListener, databaseGet, databaseUpdate } from "../../modules/database"
 import { toUIString } from '@nativescript/core/utils/types'
 
+import { GameDataService } from '../services/game-data.service'
+
 /* Imports required for Location Aspect Code */
 import * as geolocation from '@nativescript/geolocation';
 import { Location } from '../player/player.component'
@@ -60,7 +62,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  constructor(private router: Router, private zone: NgZone) {
+  constructor(private router: Router, private zone: NgZone, private gameData: GameDataService) {
     // Use the component constructor to inject providers.
     if(global.loggedIn){
       this.is_component_loggedIn = new Observable(observer=>observer.next(true));
@@ -96,7 +98,14 @@ export class HomeComponent implements OnInit {
     this.votingOpen = false; //This information should be received from Database with Game Info!!!
     console.log("Can we see this when we exit the page and then come back inside the page")
     // Init your component properties here.
-    // Going to initialize a list of bubbles here;
+    
+    this.gameData.currentGame.subscribe(game => this.game = game)
+    this.gameData.messageReceived$.subscribe(message => {
+      if(message == "gameStart")
+        console.log("Start game pressed and ", JSON.stringify(this))
+        this.game.startGame()
+    })
+
     var map = new CampusMap();
     databaseAdd(MAP_PATH, map)
     var gameRules = new GameRules();

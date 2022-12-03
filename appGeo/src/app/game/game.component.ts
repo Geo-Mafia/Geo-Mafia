@@ -264,6 +264,7 @@ export class Game implements OnInit {
   }
 
   startGame() {
+    console.log("Start game pressed woo")
     if(this.preGameChecks() == FAILURE) {
       return FAILURE
     }

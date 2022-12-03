@@ -1,0 +1,8 @@
+<ActionBar>
+    <Label text="Manage Game Setings"></Label>
+</ActionBar>
+
+<StackLayout orientation="vertical">
+    <label>This is a menu </label>
+    <button text="Start game" *ngIf="this.gameActive" (tap)="activateStartGame()" class="btn btn-primary active"></button>
+</StackLayout>
