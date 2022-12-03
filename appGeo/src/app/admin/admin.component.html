@@ -1,0 +1,14 @@
+<ActionBar>
+    <Label text="Manage Game Setings"></Label>
+</ActionBar>
+
+<StackLayout orientation="vertical">
+    <label>This is a menu </label>
+    <button text="{{startEndButtonText}}" (tap)="activateGame()" class="btn btn-primary active"></button>
+    <label> The below buttons should be used with great discretion.</label>
+    <label> They will interupt the standard game cycle and voting procedure</label>
+    <label> and there are no guanratees that timing will function properly.</label>
+    <button text="Open Voting Period" (tap)="openVoting()" class="btn btn-primary active"></button>
+    <button text="Close Voting Period" (tap)="closeVoting()" class="btn btn-primary active"></button>
+    <button text="End Safety Period" (tap)="endSafety()" class="btn btn-primary active"></button>
+</StackLayout>

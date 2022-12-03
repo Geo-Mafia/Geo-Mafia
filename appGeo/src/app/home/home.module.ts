@@ -10,6 +10,7 @@ import { VotingComponent } from '../voting/voting.component'
 import {Bubble} from '../map/map.component'
 import {CampusMap} from '../map/campus-map.component'
 import {SnapshotComponent} from '../snapshot/snapshot.component'
+import { AdminComponent } from '../admin/admin.component'
 import { FormsModule }   from '@angular/forms'; // <-- NgModel lives here
 
 import { CommonModule } from '@angular/common';
@@ -20,7 +21,7 @@ import { NativeScriptModule } from "@nativescript/angular";
 
 @NgModule({
   imports: [NativeScriptCommonModule, HomeRoutingModule, FormsModule, NativeScriptFormsModule, CommonModule, ReactiveFormsModule],
-  declarations: [HomeComponent, Bubble, CampusMap, ChatComponent, KillingComponent, VotingComponent, SnapshotComponent, LocationComponent],
+  declarations: [HomeComponent, Bubble, CampusMap, ChatComponent, KillingComponent, VotingComponent, SnapshotComponent, LocationComponent, AdminComponent],
   schemas: [NO_ERRORS_SCHEMA],
 })
 export class HomeModule {}

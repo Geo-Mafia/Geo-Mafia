@@ -16,6 +16,9 @@ const ALIVE = 1
 
 export class SnapshotComponent implements OnInit {
   public snapshots: Array<any>;
+  public DEAD = 0
+  public ALIVE = 1
+  public is_alive: Boolean
 
   constructor() { 
     this.snapshots = [];
@@ -25,6 +28,15 @@ export class SnapshotComponent implements OnInit {
     this.snapshots = this.getSnapshots();
     databaseEventListener("game/snapshots", this.updateSnapshots.bind(this));
     console.log("got to snapshot");
+    if (global.player.alive == this.ALIVE){
+      //testing
+      this.is_alive = true;
+      console.log("We are in the case of having an alive player")
+    }
+    else{
+      this.is_alive = false;
+      console.log("We are in the case of having a dead player")
+    }
   }
 
   getSnapshots() {
