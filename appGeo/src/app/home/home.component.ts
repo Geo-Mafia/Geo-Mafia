@@ -3,7 +3,7 @@ import {Bubble} from '../map/map.component'
 import {Civilian, Killer, Player} from '../player/player.component'
 import {CampusMap} from '../map/campus-map.component'
 import { Chat } from '../chat/chat.component'
-import { Game } from '../game/game.component'
+import { Game, ACTIVE, INACTIVE } from '../game/game.component'
 import { GameRules } from '../game/game-rules.component'
 import { Observable } from 'rxjs'
 
@@ -176,7 +176,7 @@ export class HomeComponent implements OnInit {
 
       let options = {
         title: "Error",
-        message: "You already are signed in as: " + global.player.username,
+        message: "You already are signed in as: " + global.player.getUsername(),
         okButtonText: "OK"
       }
       alert(options);
@@ -272,7 +272,7 @@ export class HomeComponent implements OnInit {
             else { 
               global.player = res["value"];
               console.log("user already exists, will not add new data but will pull from the database");
-              console.log(global.player);
+              console.log("GP:", global.player);
               console.log("At this point in time the isKiller flag for globabl is: ", global.player.isKiller)
               global.result = res;
               this.zone.run(() => this.component_isLoggedIn = true)
@@ -371,6 +371,7 @@ export class HomeComponent implements OnInit {
               }
 
               console.log("Global player admin status", global.player.isAdmin)
+
               if(global.player.isAdmin == true) {
                 databaseEventListener(GAME_STARTED_PATH, this.startGameDatabase.bind(this))
               }
@@ -384,9 +385,6 @@ export class HomeComponent implements OnInit {
 
         }
       });
-        
-    }
-
   }
 
   getDatabaseGamerules() {
@@ -412,6 +410,7 @@ export class HomeComponent implements OnInit {
     })
 
     return gameRules
+    
   }
 
   private processGameMessage(message) {
@@ -426,6 +425,7 @@ export class HomeComponent implements OnInit {
     } else if(message = "endSafety") {
       this.game.safetimeEnd()
     }
+
   }
 
   saveGame() {

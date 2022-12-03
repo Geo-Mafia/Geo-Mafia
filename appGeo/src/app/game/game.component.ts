@@ -15,8 +15,8 @@ const STATUS_PATH = "settings/status"
 const GAMERULE_PATH = "settings/gameRules"
 const VOTE_OPEN_PATH = "settings/voteOpen"
 
-const INACTIVE = 0
-const ACTIVE = 1
+export const INACTIVE = 0
+export const ACTIVE = 1
 const UNSCHEDULED = 5
 const SCHEDULED = 6
 const CIVILIAN = 7
@@ -123,6 +123,7 @@ export class Game implements OnInit {
     player.userIDString = data["userIDString"]
     
     //console.log("updated player obj: " + JSON.stringify(player));
+
     let playerId = player.getUserID();
     this.players.set(playerId, player);
     // Update global playerlist
