@@ -385,6 +385,7 @@ export class HomeComponent implements OnInit {
 
         }
       });
+    }
   }
 
   getDatabaseGamerules() {
