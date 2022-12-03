@@ -31,10 +31,34 @@ export class CampusMap implements OnInit {
   }
   ngOnInit() : void {
 
+    let person
+    if(global.player["isKiller"]) {
+        person = new Killer()
+        person.isKiller = global.player["isKiller"]
+        person.max_daily_kill_count = global.player["max_daily_kill_count"]
+        person.remaining_daily_kill_count = global.player["remaining_daily_kill_count"]
+        person.total_kill_count = global.player["total_kill_count"]
+      } else {
+        person = new Civilian()
+    }
+    
+    person.alive = global.player.alive
+    person.databasePath = global.player["databasePath"]
+    person.userID = global.player["userID"]
+    person.username = global.player["username"]
+    //TODO: let location = new Location();
+    person.location = global.player["location"]
+    person.votes = global.player["votes"]
+    person.chat_lists = global.player["chat_lists"]
+    person.isAdmin = global.player["isAdmin"]
+    person.have_already_voted = global.player["have_already_voted"]
+    person.email = global.player["email"]
+    person.userIDString = global.player["userIDString"]
+
     /* //Here is a dummy player you can test UI with (change coords to bubble you want):
     var P1 = new Player()
     P1.init(1, 'P1', {longitude: 0, latitude: 0,}, 1) */
-    this.playersBubble(global.player)
+    this.playersBubble(person)
 
   }
 
@@ -49,14 +73,18 @@ export class CampusMap implements OnInit {
         this.checkBubble(bubb, pToCheck)
       }
 
+      console.log(pToCheck)
+
       //console.log("player location is: " + pToCheck.location)
 
       if(this.display == undefined){
+        console.log("Display undefined")
         //for when the first player is found to not be on campus
         this.offcampus.addPlayer(pToCheck)
         this.display = this.offcampus
         this.playerlist = this.offcampus.playerArray
-      }else if(!this.display.playerArray.includes(pToCheck) && pToCheck.alive){
+      }else if(!this.display.returnPlayers.has(pToCheck.getUserID()) && pToCheck.alive){
+        console.log("Display doesn't include player")
         //for when display has changed constantly and this player is offcampus
         this.offcampus.addPlayer(pToCheck)
         this.display = this.offcampus
@@ -66,6 +94,7 @@ export class CampusMap implements OnInit {
 
 
     checkBubble(checkIfIn : Bubble, pToCheck : Player){
+      //console.log(pToCheck)
       //this is a function that calls on the bubble that is iterated through
       //when this is called on a bubble if true will change the bubble to display to the Player
       if(checkIfIn.inBubble(pToCheck) && checkIfIn.List.has(pToCheck.userID)){
@@ -83,12 +112,12 @@ export class CampusMap implements OnInit {
           this.display = checkIfIn
           this.playerlist = checkIfIn.playerArray
           return
-        }else {
+        } else {
           checkIfIn.addPlayer(pToCheck)
           this.display = checkIfIn;
-          console.log("this is the display: " + this.Display)
+          console.log("this is the display: " + JSON.stringify(this.Display))
           this.playerlist = checkIfIn.playerArray //reassigning our shallow copy of names
-          console.log("this is the playerlist: " + this.playerlist)
+          console.log("this is the playerlist: " + JSON.stringify(this.playerlist))
         }
       } else if(!checkIfIn.inBubble(pToCheck) && checkIfIn.List.has(pToCheck.userID)){
         checkIfIn.removePlayer(pToCheck)
@@ -178,6 +207,21 @@ export class CampusMap implements OnInit {
       var Math = new Bubble()
       Math.init_bubble('Department of Mathematics', -87.59842846907647, -87.59827925417663, 41.79013282694458, 41.79046274079153)
       this.addToMap(Math.id, Math)
+      /*======================================================
+      ===============  Leftout of Campus  ===============
+      =====================================================*/
+      var Stuart = new Bubble()
+      Stuart.init_bubble('Stuart Hall', -87.59924829577339, -87.5990042147583, 41.78817352212575, 41.78863649530908)
+      this.addToMap(Stuart.id, Stuart)
+      var Divinity = new Bubble()
+      Divinity.init_bubble('University of Chicago Divinity School', -87.6003721413217, -87.59987459156014, 41.78872149002999, 41.789055468166204)
+      this.addToMap(Divinity.id, Divinity)
+      var Pick = new Bubble()
+      Pick.init_bubble('Pick Hall', -87.59841412875599, -87.59814993117372, 41.7887894857229, 41.789145461980354)
+      this.addToMap(Pick.id, Pick)
+      var Haskell = new Bubble()
+      Haskell.init_bubble('Haskell Hall', -87.60018684948152, -87.60000714148141, 41.788180693594654, 41.788651666232575)
+      this.addToMap(Haskell.id, Haskell)
     /*====================================================
       =============== Huthinson Courtyard ================
       =====================================================*/
@@ -327,7 +371,9 @@ export class CampusMap implements OnInit {
         takes in the global playerlists values to set up the map*/
         for (let user of global.playerlist.values()) {
           //console.log("User location is: " + user.location)
-          this.playerInBubble(user)
+          for (let bubb of this.MapOfCampus.values()) {
+            this.checkBubble(bubb, user)
+          }
         }
       }
 

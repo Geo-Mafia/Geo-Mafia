@@ -89,10 +89,41 @@ export class Game implements OnInit {
 
   updatePlayerDatabase(data: object) {
     // Update global player field
-    //global.player = data["value"];
-    // Need to change to hashmap
-    let player = data["value"];
-    console.log("updated player obj: " + JSON.stringify(player));
+    if(global.player.databasePath == data["databasePath"]) {
+      global.player = data["value"]
+    }
+    global.player = data["value"];
+    let player
+
+    if(this.getGameActive()) {
+      if(data["isKiller"]) {
+        player = new Killer()
+        player.isKiller = data["isKiller"]
+        player.max_daily_kill_count = data["max_daily_kill_count"]
+        player.remaining_daily_kill_count = data["remaining_daily_kill_count"]
+        player.total_kill_count = data["total_kill_count"]
+      } else {
+        player = new Civilian()
+      }
+    } else {
+      player = new Player();
+    }
+    
+    player.alive = data["alive"]
+    player.databasePath = data["databasePath"]
+    player.userID = data["userID"]
+    player.username = data["username"]
+    //TODO: let location = new Location();
+    player.location = data["location"]
+    player.votes = data["votes"]
+    player.chat_lists = data["chat_lists"]
+    player.isAdmin = data["isAdmin"]
+    player.have_already_voted = data["have_already_voted"]
+    player.email = data["email"]
+    player.userIDString = data["userIDString"]
+    
+    //console.log("updated player obj: " + JSON.stringify(player));
+
     let playerId = player.getUserID();
     this.players.set(playerId, player);
     // Update global playerlist
@@ -102,7 +133,16 @@ export class Game implements OnInit {
   }
 
   updateGameRulesDatabase(data: object) {
-    this.gameRules = data["value"]
+    this.gameRules.setTestingOverrule(data["testing_overrule"])
+    this.gameRules.setScheduledEnd(data["scheduledEnd"])
+    this.gameRules.setWipeoutEnd(data["wipeOutEnd"])
+    this.gameRules.setMinPlayers(data["minPlayers"])
+    this.gameRules.setFractionKillers(data["fractionKillers"])
+    this.gameRules.setGameDurations(data["gameLength"], data["dayCycleLength"],
+                                    data["safeLength"], data["voteLength"])
+    this.gameRules.voteTime = data["voteTime"]
+    this.gameRules.setMaxSoloKill(data["maxSoloKills"])
+    this.gameRules.setMaxGlobalKill(data["maxGlobalKills"])
     console.log("updated game rules: " + JSON.stringify(this.gameRules));
   }
 
@@ -122,6 +162,10 @@ export class Game implements OnInit {
   updateStatus(data: object) {
     this.gameActive = data["value"]
     console.log("updated status" + JSON.stringify(this.gameActive))
+
+    if(global.player.isAdmin && (this.getGameActive() == ACTIVE)) {
+      //this.scheduleEvent() TODO SCHEDULE GAME TICK
+    }
   }
 
   //schedules an event for a time in the future. Will run recursively if that time in the future is greater than setTimeout can support
@@ -173,7 +217,7 @@ export class Game implements OnInit {
 
   #startProcess() {
 
-    console.log("Starting game")
+    console.log("Starting game with " + JSON.stringify(this.gameRules))
 
       const playerCount = this.getPlayerCount()
 
@@ -233,12 +277,12 @@ export class Game implements OnInit {
       const safeOverTime = new Date(voteTime.getTime() + this.gameRules.getSafeLength())
 
       var gameobj = this
-      const voteTimer = this.scheduleRecuring(voteTime, this.gameRules.getDayCycleLength(), function() {gameobj.votingOpen()}, VOTE_OPEN_JK)
-      const voteCloseTimer = this.scheduleRecuring(voteCloseTime, this.gameRules.getDayCycleLength(), function() {gameobj.votingClose()}, VOTE_CLOSE_JK)
-      const safeOverTimer = this.scheduleRecuring(safeOverTime, this.gameRules.getDayCycleLength(), function() {gameobj.safetimeEnd()}, SAFE_OVER_JK)
+      const voteTimer = this.scheduleRecuring(voteTime, this.gameRules.dayCycleLength, function() {gameobj.votingOpen()}, VOTE_OPEN_JK)
+      const voteCloseTimer = this.scheduleRecuring(voteCloseTime, this.gameRules.dayCycleLength, function() {gameobj.votingClose()}, VOTE_CLOSE_JK)
+      const safeOverTimer = this.scheduleRecuring(safeOverTime, this.gameRules.dayCycleLength, function() {gameobj.safetimeEnd()}, SAFE_OVER_JK)
 
-      var now = (new Date()).getTime()
-      this.scheduleRecuring(new Date(now + 60000), 60000, function() {gameobj.gameTick()}, TICK_JK)
+      var now = this.startTime.getTime()
+      this.scheduleRecuring(new Date(now + 60000), 60000, function() {this.gameTick()}, TICK_JK)
 
       this.#setGameActive(ACTIVE)
       databaseUpdate(STATUS_PATH, this.gameActive)
@@ -467,6 +511,7 @@ export class Game implements OnInit {
   addPlayer(player) {
       this.players.set(player.getUserID(), player)
       //global.playerlist.set(player.getUserID(), player);
+      //console.log("Playerlist is ", this.getPlayers())
       return SUCCESS;
   }
 
