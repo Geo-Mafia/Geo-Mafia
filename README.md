@@ -22,6 +22,11 @@ for the iOS simulator. Check that your device is configured correctly by running
 ```bash
 tns doctor ios
 ```
+
+### Firebase Credentials
+Go to slack and download the GoogleService-Info.plist file and add that to the directory appGeo/App_Resources/iOS/
+(For TAs or Professor or Testers, we'll email the file - Can you email calvinmlee@uchicago.edu asking for it?). This is to keep the credentials secure, and not exposed to the public. 
+
 ### Apple Silicon ARM64 Processors (M1, M2) 
 There is compilation error when you do the commands above. The error is not fixable from our side, because it seems to be a human error coming from the installation. **Therefore, ARM64 Processors users must do the followings.** This is recommended to be done between ```npm install``` and ```tns run ios```, but it is okay even if  you fix it after the last command ```tns run ios```. It just will print out error that looks like this:
 ```
@@ -40,10 +45,6 @@ post_install do |installer|
 end
 ```
 It may seem like they are the same content, but there are indentation errors that cause the compilation problems for ARM64 users. 
-
-### Firebase Credentials
-Go to slack and download the GoogleService-Info.plist file and add that to the directory appGeo/App_Resources/iOS/
-(For TAs or Professor, we'll email the file). This is to keep the credentials secure, and not exposed to the public. 
 
 ## 2) How to Run
 Once you installed everything and the command above confirms that you have configured everything correctly, you may run the command 
