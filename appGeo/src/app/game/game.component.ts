@@ -264,6 +264,7 @@ export class Game implements OnInit {
   }
 
   startGame() {
+    console.log("Start game pressed woo")
     if(this.preGameChecks() == FAILURE) {
       return FAILURE
     }
@@ -339,6 +340,7 @@ export class Game implements OnInit {
      as a finished game
   */
   endGame() {
+      console.log("End game pressed")
       if(this.getGameActive() == INACTIVE) {
         return FAILURE;
       }
