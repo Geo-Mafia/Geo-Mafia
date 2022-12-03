@@ -10,24 +10,55 @@ import { Game } from '../game/game.component'
 
 export class AdminComponent implements OnInit {
 
-    private game: Game
-    public gameActive: boolean
+    public game: Game
+    public startEndButtonText: string
 
     constructor(private gameData: GameDataService) {
     }
 
     ngOnInit(): void {
         this.gameData.currentGame.subscribe(game => this.game = game)
-        this.gameActive = true
+        this.setStartButtonEndText()
     }
 
-    activateStartGame() {
-      console.log("Start Game Button pressed")
-      this.gameData.broadcast('startGame');
+    activateGame() {
+      console.log("Activate game button pressed")
+      if(this.game.gameActive == 0) {
+        this.gameData.broadcast("startGame");
+      } else {
+        this.gameData.broadcast("endGame");
+      }
+    }
+
+    openVoting() {
+      if(this.game.getGameActive() == 1) {
+        this.gameData.broadcast("openVoting")
+      }
+      
+    }
+
+    closeVoting() {
+      if(this.game.getGameActive() == 1) {
+        this.gameData.broadcast("closeVoting")
+      }
+    }
+
+    endSafety() {
+      if(this.game.getGameActive() == 1) {
+        this.gameData.broadcast("endSafety")
+      }
     }
 
     saveGame() {
       this.gameData.updateGame(this.game);
+    }
+
+    setStartButtonEndText() {
+      if(this.game.getGameActive() == 0) {
+        this.startEndButtonText = "Start Game"
+      } else {
+        this.startEndButtonText = "End Game"
+      }
     }
 
 }

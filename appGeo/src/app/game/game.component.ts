@@ -340,6 +340,7 @@ export class Game implements OnInit {
      as a finished game
   */
   endGame() {
+      console.log("End game pressed")
       if(this.getGameActive() == INACTIVE) {
         return FAILURE;
       }

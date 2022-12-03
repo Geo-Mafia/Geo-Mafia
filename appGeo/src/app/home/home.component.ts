@@ -24,7 +24,7 @@ import { Location } from '../player/player.component'
 /* End of imports required for Location Aspect Code */
 
 const VOTE_OPEN_PATH = "settings/voteOpen"
-const MAP_PATH = "/game/map"
+const MAP_PATH = "game/map"
 const GAMERULE_PATH = "settings/gameRules"
 
 @Component({
@@ -45,8 +45,11 @@ export class HomeComponent implements OnInit {
   public component_isLoggedIn: Boolean
   public is_component_loggedIn: Observable<Boolean>
   public is_component_not_loggedIn: Observable<Boolean>
+  public isAdmin: Observable<Boolean>
 
   public game: Game
+
+  public gameInfoMsg: string
 
   public latitude: number;
   public longitude: number;
@@ -67,6 +70,9 @@ export class HomeComponent implements OnInit {
     if(global.loggedIn){
       this.is_component_loggedIn = new Observable(observer=>observer.next(true));
       this.is_component_not_loggedIn = new Observable(observer=>observer.next(false));
+      if(global.player.isAdmin == true) {
+        this.isAdmin = new Observable(observer=>observer.next(true))
+      }
       if (global.player instanceof Killer || global.player.isKiller == true){
         this.isKiller = new Observable(observer=>observer.next(true));
         this.isCivilian = new Observable(observer=>observer.next(false));
@@ -100,17 +106,22 @@ export class HomeComponent implements OnInit {
     // Init your component properties here.
     
     this.gameData.currentGame.subscribe(game => this.game = game)
-    this.gameData.messageReceived$.subscribe(message => {
-      if(message == "gameStart")
-        console.log("Start game pressed and ", JSON.stringify(this))
-        this.game.startGame()
-    })
 
     var map = new CampusMap();
     databaseAdd(MAP_PATH, map)
     var gameRules = new GameRules();
     databaseAdd(GAMERULE_PATH, gameRules)
     this.game = new Game(gameRules, map, null)
+    databaseGet("settings/status").then(res => {
+      console.log(res)
+      this.game.gameActive = res["value"]
+    })
+
+    this.gameData.messageReceived$.subscribe(message => {
+      this.processGameMessage(message)
+    })
+
+    this.saveGame()
 
     geolocation.enableLocationRequest();
 
@@ -155,6 +166,11 @@ export class HomeComponent implements OnInit {
         this.isAlive = new Observable(observer=>observer.next(false));
         this.isDead = new Observable(observer=>observer.next(true));
       }
+      if(global.player.isAdmin == true) {
+        this.isAdmin = new Observable(observer=>observer.next(true))
+      } else {
+        this.isAdmin = new Observable(observer=>observer.next(false))
+      }
 
       let options = {
         title: "Error",
@@ -194,6 +210,11 @@ export class HomeComponent implements OnInit {
               }
               this.isAlive = new Observable(observer=>observer.next(true));
               this.isDead = new Observable(observer=>observer.next(false));
+              if(global.player.isAdmin == true) {
+                this.isAdmin = new Observable(observer=>observer.next(true))
+              } else {
+                this.isAdmin = new Observable(observer=>observer.next(false))
+              }
 
               //admin if the player is the first one registered
               databaseGet("game/users").then(res0 => {
@@ -231,6 +252,11 @@ export class HomeComponent implements OnInit {
                   this.isAlive = new Observable(observer=>observer.next(false));
                   this.isDead = new Observable(observer=>observer.next(true));
                 }
+                if(global.player.isAdmin == true) {
+                  this.isAdmin = new Observable(observer=>observer.next(true))
+                } else {
+                  this.isAdmin = new Observable(observer=>observer.next(false))
+                }
                 console.log(global.player);
 
                 databaseAdd('/game/users/' + userID, global.player)
@@ -266,6 +292,11 @@ export class HomeComponent implements OnInit {
                 this.isAlive = new Observable(observer=>observer.next(false));
                 this.isDead = new Observable(observer=>observer.next(true));
               }
+              if(global.player.isAdmin == true) {
+                this.isAdmin = new Observable(observer=>observer.next(true))
+              } else {
+                this.isAdmin = new Observable(observer=>observer.next(false))
+              }
               this.startWatchingLocation();
               global.loggedIn = true;
             }
@@ -290,6 +321,11 @@ export class HomeComponent implements OnInit {
               else{
                 this.isAlive = new Observable(observer=>observer.next(false));
                 this.isDead = new Observable(observer=>observer.next(true));
+              }
+              if(global.player.isAdmin == true) {
+                this.isAdmin = new Observable(observer=>observer.next(true))
+              } else {
+                this.isAdmin = new Observable(observer=>observer.next(false))
               }
               this.startWatchingLocation();
               console.log(global.loggedIn);
@@ -334,6 +370,24 @@ export class HomeComponent implements OnInit {
     if(global.player.isadmin == true) {
       databaseEventListener("src/game/gameStarted", this.startGameDatabase.bind(this))
     }
+  }
+
+  private processGameMessage(message) {
+    if(message == "startGame") {
+      this.game.startGame()
+    } else if(message == "endGame") {
+      this.game.endGame()
+    } else if(message == "startVote") {
+      this.game.votingOpen()
+    } else if(message = "endVote") {
+      this.game.votingClose()
+    } else if(message = "endSafety") {
+      this.game.safetimeEnd()
+    }
+  }
+
+  saveGame() {
+    this.gameData.updateGame(this.game);
   }
 
   updateVoteOpenDatabase(data: object) {
