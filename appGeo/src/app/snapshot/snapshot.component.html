@@ -3,10 +3,12 @@
 </ActionBar>
 
 <StackLayout>
+  <ScrollView (scroll)="onScroll($any($event))">
     <StackLayout orientation="vertical">
       <label>Game Snapshots: </label>
       <label>-------------</label>
       <label textWrap="True" *ngFor="let snapshot of snapshots">Snapshot ID: {{ snapshot.snapshot_id }}, Snapshot Bubble ID: {{ snapshot.snapshot_bubble_id }}, Time: {{ snapshot.snapshot_time }}, Content: {{ snapshot.snapshot_content }}</label>
-      <button (tap)="createSnapshot()" class="btn btn-primary active" text="Create Snapshot"></button>
+      <button (tap)="createSnapshot()" *ngIf="this.is_alive" class="btn btn-primary active" text="Create Snapshot"></button>
     </StackLayout>
+  </ScrollView>
 </StackLayout>
