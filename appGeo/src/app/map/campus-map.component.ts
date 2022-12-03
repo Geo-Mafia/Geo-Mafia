@@ -207,6 +207,21 @@ export class CampusMap implements OnInit {
       var Math = new Bubble()
       Math.init_bubble('Department of Mathematics', -87.59842846907647, -87.59827925417663, 41.79013282694458, 41.79046274079153)
       this.addToMap(Math.id, Math)
+      /*======================================================
+      ===============  Leftout of Campus  ===============
+      =====================================================*/
+      var Stuart = new Bubble()
+      Stuart.init_bubble('Stuart Hall', -87.59924829577339, -87.5990042147583, 41.78817352212575, 41.78863649530908)
+      this.addToMap(Stuart.id, Stuart)
+      var Divinity = new Bubble()
+      Divinity.init_bubble('University of Chicago Divinity School', -87.6003721413217, -87.59987459156014, 41.78872149002999, 41.789055468166204)
+      this.addToMap(Divinity.id, Divinity)
+      var Pick = new Bubble()
+      Pick.init_bubble('Pick Hall', -87.59841412875599, -87.59814993117372, 41.7887894857229, 41.789145461980354)
+      this.addToMap(Pick.id, Pick)
+      var Haskell = new Bubble()
+      Haskell.init_bubble('Haskell Hall', -87.60018684948152, -87.60000714148141, 41.788180693594654, 41.788651666232575)
+      this.addToMap(Haskell.id, Haskell)
     /*====================================================
       =============== Huthinson Courtyard ================
       =====================================================*/
