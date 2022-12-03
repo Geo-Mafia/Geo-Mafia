@@ -413,8 +413,6 @@ export class HomeComponent implements OnInit {
     return gameRules
 
   }
-    
-  }
 
   private processGameMessage(message) {
     if(message == "startGame") {
