@@ -1,9 +1,9 @@
 import { Component, OnInit, NgZone } from '@angular/core'
 import {Bubble} from '../map/map.component'
-import {Killer, Player} from '../player/player.component'
+import {Civilian, Killer, Player} from '../player/player.component'
 import {CampusMap} from '../map/campus-map.component'
 import { Chat } from '../chat/chat.component'
-import { Game } from '../game/game.component'
+import { Game, ACTIVE, INACTIVE } from '../game/game.component'
 import { GameRules } from '../game/game-rules.component'
 import { Observable } from 'rxjs'
 
@@ -26,6 +26,7 @@ import { Location } from '../player/player.component'
 const VOTE_OPEN_PATH = "settings/voteOpen"
 const MAP_PATH = "game/map"
 const GAMERULE_PATH = "settings/gameRules"
+const GAME_STARTED_PATH = "game/gameStarted"
 
 @Component({
   selector: 'Home',
@@ -109,8 +110,8 @@ export class HomeComponent implements OnInit {
 
     var map = new CampusMap();
     databaseAdd(MAP_PATH, map)
-    var gameRules = new GameRules();
-    databaseAdd(GAMERULE_PATH, gameRules)
+    
+    var gameRules = this.getDatabaseGamerules()
     this.game = new Game(gameRules, map, null)
     databaseGet("settings/status").then(res => {
       console.log(res)
@@ -174,7 +175,7 @@ export class HomeComponent implements OnInit {
 
       let options = {
         title: "Error",
-        message: "You already are signed in as: " + global.player.username,
+        message: "You already are signed in as: " + global.player.getUsername(),
         okButtonText: "OK"
       }
       alert(options);
@@ -267,10 +268,11 @@ export class HomeComponent implements OnInit {
 
             }
             //already exists
-            else { 
-              global.player = res["value"];
+            else {
+              console.log("GP:", global.player);
+              this.constructGlobalPlayer(res)
               console.log("user already exists, will not add new data but will pull from the database");
-              console.log(global.player);
+              console.log("GP:", global.player);
               console.log("At this point in time the isKiller flag for globabl is: ", global.player.isKiller)
               global.result = res;
               this.zone.run(() => this.component_isLoggedIn = true)
@@ -336,21 +338,15 @@ export class HomeComponent implements OnInit {
             //at this point, global.player should be intitialized
             databaseGet("game/users").then(res => {
               for (const [key, value] of Object.entries(res)) {
-                let person = new Player();
-                person.alive = value["alive"]
-                person.databasePath = value["databasePath"]
-                person.userID = value["userID"]
-                person.username = value["username"]
-                //TODO: let location = new Location();
-                person.location = value["location"]
-                person.votes = value["votes"]
-                person.chat_lists = value["chat_lists"]
-                person.isAdmin = value["isAdmin"]
-                person.have_already_voted = value["have_already_voted"]
-                person.email = value["email"]
-                person.userIDString = value["userIDString"]
+                let person = this.constructPlayer(value)
 
                 global.playerlist.set(Number(key), person);
+                this.game.addPlayer(person)
+              }
+
+              console.log("Global player admin status is ", global.player.IsAdmin)
+              if(global.player.isAdmin == true) {
+                databaseEventListener(GAME_STARTED_PATH, this.startGameDatabase.bind(this))
               }
               //console.log("Person 1 is : " + (global.playerlist.get(Number("101066060680979007193")) instanceof Player))
             })
@@ -359,17 +355,110 @@ export class HomeComponent implements OnInit {
           .catch(error => {
             console.log("error: " + error);
           });
+
         }
       });
-    
-    
-    
-    
+        
     }
 
-    if(global.player.isadmin == true) {
-      databaseEventListener("src/game/gameStarted", this.startGameDatabase.bind(this))
+  }
+
+  constructGlobalPlayer(value) {
+    if(this.game.getGameActive() == ACTIVE) {
+      if(value["isKiller"] == "true") {
+        global.player = new Killer()
+        global.player.setMaxKills(value["max_daily_kill_count"], value["remaining_daily_kill_count"])
+        global.player.total_kill_count = value["total_kill_count"]
+      } else {
+        global.player = new Civilian()
+      }
+    } else {
+      global.player = new Player()
     }
+    console.log("Global player: ", JSON.stringify(global.player))
+
+    global.player.init(value["userID"], value["username"], value["location"], value["alive"])
+
+    console.log("Global player: ", JSON.stringify(global.player))
+
+    global.player.isKiller = value["isKiller"]
+
+    console.log("Global player: ", JSON.stringify(global.player))
+    
+    global.player.databasePath = value["databasePath"]
+    global.player.userID = value["userID"]
+    global.player.username = value["username"]
+    //TODO: let location = new Location();
+    global.player.votes = value["votes"]
+    global.player.chat_lists = value["chat_lists"]
+    global.player.isAdmin = value["isAdmin"]
+    global.player.have_already_voted = value["have_already_voted"]
+    global.player.email = value["email"]
+    global.player.userIDString = value["userIDString"]
+
+    console.log("Global player: ", JSON.stringify(global.player))
+  }
+
+  constructPlayer(value): Player {
+
+    let player
+
+    if(this.game.getGameActive() == ACTIVE) {
+      if(value["isKiller"] == "true") {
+        player = new Killer()
+        player.setMaxKills(value["max_daily_kill_count"], value["remaining_daily_kill_count"])
+        player.total_kill_count = value["total_kill_count"]
+      } else {
+        player = new Civilian()
+      }
+    } else {
+      player = new Player()
+    }
+
+    player.init(value["userID"], value["username"])
+
+    player.isKiller = value["isKiller"]
+    player.alive = value["alive"]
+    player.databasePath = value["databasePath"]
+    player.userID = value["userID"]
+    player.username = value["username"]
+    //TODO: let location = new Location();
+    player.location = value["location"]
+    player.votes = value["votes"]
+    player.chat_lists = value["chat_lists"]
+    player.isAdmin = value["isAdmin"]
+    player.have_already_voted = value["have_already_voted"]
+    player.email = value["email"]
+    player.userIDString = value["userIDString"]
+
+    //console.log(player)
+
+    return player
+  }
+
+  getDatabaseGamerules() {
+
+    const gameRules = new GameRules()
+
+    databaseGet(GAMERULE_PATH).then(res => {
+      if(res == null) {
+        return
+      }
+
+      gameRules.setTestingOverrule(res["testing_overrule"])
+      gameRules.setScheduledEnd(res["scheduledEnd"])
+      gameRules.setWipeoutEnd(res["wipeOutEnd"])
+      gameRules.setMinPlayers(res["minPlayers"])
+      gameRules.setFractionKillers(res["fractionKillers"])
+      gameRules.setGameDurations(res["gameLength"], res["dayCycleLength"],
+                                 res["safeLength"], res["voteLength"])
+      gameRules.voteTime = res["voteTime"]
+      gameRules.setMaxSoloKill(res["maxSoloKills"])
+      gameRules.setMaxGlobalKill(res["maxGlobalKills"])
+
+    })
+
+    return gameRules
   }
 
   private processGameMessage(message) {
